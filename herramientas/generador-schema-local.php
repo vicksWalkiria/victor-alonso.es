@@ -107,6 +107,23 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
 
           <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="sc-image">URL de Foto de Negocio (opcional)</label>
+              <input type="url" class="form-input" id="sc-image" value="https://minegocio.com/foto-local.jpg" placeholder="https://minegocio.com/foto-local.jpg">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sc-price">Rango de Precios (opcional)</label>
+              <select class="form-select" id="sc-price">
+                <option value="">No especificar</option>
+                <option value="$" selected>Económico ($)</option>
+                <option value="$$">Moderado ($$)</option>
+                <option value="$$$">Caro ($$$)</option>
+                <option value="$$$$">Muy caro ($$$$)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
             <div class="form-group" style="grid-column: span 2">
               <label class="form-label" for="sc-street">Calle y número *</label>
               <input type="text" class="form-input" id="sc-street" value="Calle Ancha 10" required>
@@ -210,6 +227,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const scUrl = document.getElementById('sc-url');
     const scPhone = document.getElementById('sc-phone');
     const scLogo = document.getElementById('sc-logo');
+    const scImage = document.getElementById('sc-image');
+    const scPrice = document.getElementById('sc-price');
     const scStreet = document.getElementById('sc-street');
     const scPostal = document.getElementById('sc-postal');
     const scLocality = document.getElementById('sc-locality');
@@ -221,6 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function generateSchema() {
         const logoVal = scLogo.value.trim();
+        const imageVal = scImage.value.trim();
+        const priceVal = scPrice.value.trim();
         const sameAsVal = scSame.value.trim().split('\n').filter(url => url.trim() !== '');
 
         const schema = {
@@ -242,6 +263,14 @@ document.addEventListener('DOMContentLoaded', function() {
             schema["logo"] = logoVal;
         }
 
+        if (imageVal) {
+            schema["image"] = imageVal;
+        }
+
+        if (priceVal) {
+            schema["priceRange"] = priceVal;
+        }
+
         const lat = scLat.value.trim();
         const lng = scLng.value.trim();
         if (lat && lng) {
@@ -256,11 +285,15 @@ document.addEventListener('DOMContentLoaded', function() {
             schema["sameAs"] = sameAsVal;
         }
 
-        const jsonString = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 4)}\n<\/script>`;
-        schemaCode.textContent = jsonString;
+        // Generar JSON y aplicar escape de seguridad de trinchera frente a XSS
+        let jsonString = JSON.stringify(schema, null, 4);
+        jsonString = jsonString.replace(/<\/script>/ig, '<\\/script>');
+
+        const fullScript = `<script type="application/ld+json">\n${jsonString}\n<\/script>`;
+        schemaCode.textContent = fullScript;
     }
 
-    const inputs = [scType, scName, scUrl, scPhone, scLogo, scStreet, scPostal, scLocality, scLat, scLng, scSame];
+    const inputs = [scType, scName, scUrl, scPhone, scLogo, scImage, scPrice, scStreet, scPostal, scLocality, scLat, scLng, scSame];
     inputs.forEach(input => {
         if(input) {
             input.addEventListener('input', generateSchema);
