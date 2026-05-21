@@ -133,4 +133,69 @@ require __DIR__ . '/includes/breadcrumbs.php';
 </main>
 
 <script src="/assets/js/map.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Validaciones básicas antes del envío
+        const nombre = document.getElementById('nombre');
+        const email = document.getElementById('email');
+        const mensaje = document.getElementById('mensaje');
+        const legal = document.getElementById('legal');
+
+        if (!nombre.value.trim() || !email.value.trim() || !mensaje.value.trim()) {
+            alert('Por favor, rellena todos los campos obligatorios (*).');
+            return;
+        }
+
+        if (legal && !legal.checked) {
+            alert('Debes aceptar las condiciones legales para continuar.');
+            return;
+        }
+
+        const button = form.querySelector('button[type="submit"]');
+        const originalText = button.textContent;
+
+        // Feedback de carga
+        button.disabled = true;
+        button.textContent = 'Enviando mensaje...';
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redirección manual a tu propia página canónica de gracias
+                window.location.href = '/gracias/';
+            } else {
+                response.json().then(data => {
+                    if (data && data.errors) {
+                        alert('Error al enviar: ' + data.errors.map(err => err.message).join(', '));
+                    } else {
+                        alert('Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo.');
+                    }
+                    button.disabled = false;
+                    button.textContent = originalText;
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error de red en Formspree:', err);
+            alert('Error de red. Por favor, revisa tu conexión e inténtalo de nuevo.');
+            button.disabled = false;
+            button.textContent = originalText;
+        });
+    });
+});
+</script>
 <?php require __DIR__ . '/includes/footer.php'; ?>
