@@ -1,0 +1,315 @@
+/* Variables de colores */
+:root {
+    --fondo-claro: #1e1e1e;
+    --texto-claro: #f0f0f0;
+    --acento: #e67e22;
+    --acento-hover: #d35400;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #f0f0f0;
+}
+
+/* Encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    background: #1e1e1e;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--acento);
+}
+
+.navbar {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.navbar a:hover, .navbar a.active {
+    background: var(--acento);
+    color: #fff;
+}
+
+/* Menu en móvil */
+.bx-menu, .bx-moon {
+    font-size: 1.5rem;
+    color: #f0f0f0;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #1e1e1e;
+        z-index: 1001;
+    }
+
+    .navbar.active {
+        display: flex;
+    }
+}
+
+.bx-menu {
+    display: block;
+}
+
+/* Testimonios */
+.testimonios {
+    padding: 60px 10%;
+    background-color: #1e1e1e;
+    text-align: center;
+}
+
+.heading {
+    font-size: 2rem;
+    color: var(--acento);
+    margin-bottom: 20px;
+}
+
+.estrellas {
+    font-size: 1.5rem;
+    color: gold;
+    animation: parpadeo 1.5s infinite alternate;
+}
+
+@keyframes parpadeo {
+    0% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Estilos del Formulario de Contacto */
+.contacto {
+    padding: 60px 10%;
+    background: #121212;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background: #1e1e1e;
+    color: #f0f0f0;
+    margin-top: 5px;
+}
+
+.btn {
+    background: var(--acento);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: var(--acento-hover);
+}
+
+/* Estilo para el encabezado */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 5%;
+    background: var(--fondo-claro);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--acento);
+}
+
+/* Menú de Navegación */
+.navbar a {
+    font-size: 1.4rem;
+    color: var(--texto-claro);
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.navbar a:hover, .navbar a.active {
+    background-color: var(--acento); /* Fondo en color lila */
+    color: white; /* Texto en blanco */
+}
+
+/* Ajuste de espacio superior en la sección de inicio */
+.inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 120px 20px 40px; /* Más espacio superior para evitar superposición */
+    text-align: center;
+}
+
+/* Estilo para la imagen de perfil redonda */
+.imagen-perfil {
+    margin-bottom: 20px;
+}
+
+.imagen-perfil img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Imagen redonda */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 3px solid #e67e22; /* Borde de acento */
+}
+
+/* Ajuste específico para dispositivos móviles */
+@media (max-width: 768px) {
+    .inicio {
+        padding-top: 150px; /* Más espacio para dispositivos móviles */
+    }
+}
+
+/* Estilos de la sección de redes sociales */
+.redes-sociales a {
+    color: #6200ea;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.redes-sociales a:hover {
+    color: #4500b8;
+}
+
+/* Botón de WhatsApp flotante */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: black;
+    color: white;
+    font-size: 2rem;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.whatsapp-float:hover {
+    background-color: #1ebe57;
+}
+
+
+.texto-lila {
+    font-size: 2rem;
+    color: var(--acento);
+}
+
+.contenido-inicio h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.contenido-inicio p {
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 1.2rem;
+}
+
+.redes-sociales a {
+    color: var(--acento);
+    margin: 0 10px;
+    font-size: 2rem;
+}
+
+/* Botón personalizado */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--acento);
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: var(--acento-oscuro);
+}
+
+/* Sección de Servicios */
+.servicios {
+    padding: 60px 10%;
+    background: var(--fondo-claro);
+}
+
+.servicio {
+    background: #2b2b2b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #ddd;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.servicio:hover {
+    transform: scale(1.05);
+}
+
+.servicio i {
+    font-size: 3rem;
+    color: var(--acento);
+    margin-bottom: 10px;
+}
+
+/* Testimonios con Swiper */
+.testimonios {
+    background: var(--fondo-oscuro);
+    padding: 60px 10%;
+    text-align: center;
+}
+
+.testimonio {
+    background: var(--fondo-claro);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.swiper-pagination-bullet {
+    background: var(--acento);
+}
