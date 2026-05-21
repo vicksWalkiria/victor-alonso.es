@@ -29,26 +29,26 @@
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Servicios SEO</h3>
                 <ul role="list">
-                    <li><a href="/servicios/seo-albacete.php">SEO en Albacete</a></li>
-                    <li><a href="/servicios/seo-espana.php">SEO para España</a></li>
-                    <li><a href="/servicios/auditoria-seo.php">Auditoría SEO</a></li>
-                    <li><a href="/servicios/seo-tecnico.php">SEO Técnico</a></li>
+                    <li><a href="/servicios/seo-albacete">SEO en Albacete</a></li>
+                    <li><a href="/servicios/seo-espana">SEO para España</a></li>
+                    <li><a href="/servicios/auditoria-seo">Auditoría SEO</a></li>
+                    <li><a href="/servicios/seo-tecnico">SEO Técnico</a></li>
                 </ul>
             </div>
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">WordPress y Desarrollo</h3>
                 <ul role="list">
-                    <li><a href="/servicios/mantenimiento-wordpress.php">Mantenimiento WordPress</a></li>
-                    <li><a href="/servicios/desarrollo-wordpress.php">Desarrollo WordPress</a></li>
-                    <li><a href="/servicios/plugins-wordpress.php">Plugins a medida</a></li>
+                    <li><a href="/servicios/mantenimiento-wordpress">Mantenimiento WordPress</a></li>
+                    <li><a href="/servicios/desarrollo-wordpress">Desarrollo WordPress</a></li>
+                    <li><a href="/servicios/plugins-wordpress">Plugins a medida</a></li>
                 </ul>
             </div>
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Información</h3>
                 <ul role="list">
-                    <li><a href="/sobre-mi.php">Sobre mí</a></li>
-                    <li><a href="/casos-reales.php">Casos reales</a></li>
-                    <li><a href="/contacto.php">Contacto</a></li>
+                    <li><a href="/sobre-mi">Sobre mí</a></li>
+                    <li><a href="/casos-reales">Casos reales</a></li>
+                    <li><a href="/contacto">Contacto</a></li>
                     <a href="<?= h(SITE_WALKIRIA) ?>" target="_blank" rel="noopener noreferrer">Walkiria Apps</a>
                 </ul>
             </div>
