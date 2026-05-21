@@ -33,9 +33,13 @@ $_canonical  = SITE_URL . $page['canonical'];
     <meta name="twitter:description" content="<?= h($page['description']) ?>">
     <meta name="twitter:image" content="<?= h($page['og_image']) ?>">
 
-    <!-- CSS -->
-    <link rel="preload" href="/assets/css/styles.css" as="style">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <!-- CSS con Cache Busting dinámico -->
+    <?php 
+    $_css_path = dirname(__DIR__) . '/assets/css/styles.css';
+    $_css_version = file_exists($_css_path) ? filemtime($_css_path) : time();
+    ?>
+    <link rel="preload" href="/assets/css/styles.css?v=<?= $_css_version ?>" as="style">
+    <link rel="stylesheet" href="/assets/css/styles.css?v=<?= $_css_version ?>">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png">
