@@ -41,8 +41,10 @@ $_canonical  = SITE_URL . $page['canonical'];
     <link rel="preload" href="/assets/css/styles.css?v=<?= $_css_version ?>" as="style">
     <link rel="stylesheet" href="/assets/css/styles.css?v=<?= $_css_version ?>">
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/favicon.ico">
 
 <?php if (!empty($page['map'])): ?>
     <!-- Leaflet CSS y JS — solo en páginas con mapa -->
