@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/includes/config.php';
-require_once __DIR__ . '/includes/schema.php';
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/schema.php';
 
 $faq = [
   ['q' => '¿Qué diferencia hay entre SEO local y SEO orgánico?', 'a' => 'El SEO local trabaja la visibilidad en búsquedas con intención geográfica, como "fontanero en Albacete". Implica optimizar Google Business Profile, conseguir reseñas, citas NAP consistentes y contenidos que mencionen la localidad de forma natural. El SEO orgánico trabaja posicionamiento sin componente local. Ambos pueden coexistir en una misma estrategia.'],
@@ -26,8 +26,8 @@ $page = page_config([
   ],
 ]);
 
-require __DIR__ . '/../includes/header.php';
-require __DIR__ . '/../includes/breadcrumbs.php';
+require dirname(__DIR__) . '/includes/header.php';
+require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 
 <main id="main">
@@ -144,10 +144,10 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
   <?php
   $cta = ['title' => '¿Quieres saber cómo está tu web en Albacete?', 'subtitle' => 'Pídeme un primer análisis. Te digo qué está frenando tu posicionamiento y qué tiene sentido hacer.', 'btn_label' => 'Solicitar diagnóstico', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
-  require __DIR__ . '/../includes/cta.php';
+  require dirname(__DIR__) . '/includes/cta.php';
   ?>
 
 </main>
 
 <script src="/assets/js/map.js" defer></script>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>

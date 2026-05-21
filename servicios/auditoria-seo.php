@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/schema.php';
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Auditoría SEO | Diagnóstico técnico, de contenido y de arquitectura',
@@ -15,8 +15,8 @@ $page = page_config([
     ['label' => 'Auditoría SEO', 'url' => ''],
   ],
 ]);
-require __DIR__ . '/../includes/header.php';
-require __DIR__ . '/../includes/breadcrumbs.php';
+require dirname(__DIR__) . '/includes/header.php';
+require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
@@ -111,7 +111,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
   <?php
   $cta = ['title' => '¿Tu web necesita un diagnóstico?', 'subtitle' => 'Cuéntame qué está pasando. Te digo si tiene sentido hacer una auditoría o si hay acciones más urgentes primero.', 'btn_label' => 'Hablar sobre mi web', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
-  require __DIR__ . '/../includes/cta.php';
+  require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>

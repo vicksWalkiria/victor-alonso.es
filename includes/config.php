@@ -4,6 +4,9 @@
  * victor-alonso.es
  */
 
+// ─── Ruta base del proyecto ─────────────────────────────────────────────────
+define('BASE_DIR', dirname(__DIR__));  // public_html/
+
 // ─── Constantes globales ────────────────────────────────────────────────────
 
 define('SITE_NAME',         'Víctor Alonso SEO');

@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/schema.php';
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Plugins WordPress a medida | Automatizaciones, APIs y paneles',
@@ -15,8 +15,8 @@ $page = page_config([
     ['label' => 'Plugins a medida', 'url' => ''],
   ],
 ]);
-require __DIR__ . '/../includes/header.php';
-require __DIR__ . '/../includes/breadcrumbs.php';
+require dirname(__DIR__) . '/includes/header.php';
+require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
@@ -85,7 +85,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
   <?php
   $cta = ['title' => '¿Necesitas una funcionalidad que ningún plugin cubre bien?', 'subtitle' => 'Cuéntame qué hace falta. Te digo si tiene sentido desarrollarlo a medida.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
-  require __DIR__ . '/../includes/cta.php';
+  require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>

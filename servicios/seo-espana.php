@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/schema.php';
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'SEO para empresas en España | Enfoque técnico y estratégico',
@@ -15,8 +15,8 @@ $page = page_config([
     ['label' => 'SEO para España', 'url' => ''],
   ],
 ]);
-require __DIR__ . '/../includes/header.php';
-require __DIR__ . '/../includes/breadcrumbs.php';
+require dirname(__DIR__) . '/includes/header.php';
+require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
@@ -79,7 +79,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
   <?php
   $cta = ['title' => '¿Quieres analizar tu situación SEO?', 'subtitle' => 'Sin compromiso. Te digo qué está frenando tu posicionamiento y qué acciones tienen más sentido para tu negocio.', 'btn_label' => 'Solicitar primera valoración', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
-  require __DIR__ . '/../includes/cta.php';
+  require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>

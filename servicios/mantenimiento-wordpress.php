@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/config.php';
-require_once __DIR__ . '/../includes/schema.php';
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Mantenimiento WordPress | Seguridad, backups, WPO y soporte técnico',
@@ -15,8 +15,8 @@ $page = page_config([
     ['label' => 'Mantenimiento WordPress', 'url' => ''],
   ],
 ]);
-require __DIR__ . '/../includes/header.php';
-require __DIR__ . '/../includes/breadcrumbs.php';
+require dirname(__DIR__) . '/includes/header.php';
+require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
@@ -76,7 +76,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
   <?php
   $cta = ['title' => '¿Tu WordPress está actualizado y con backups?', 'subtitle' => 'Si no tienes respuesta clara a esas dos preguntas, merece la pena que hablemos.', 'btn_label' => 'Hablar sobre mantenimiento', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
-  require __DIR__ . '/../includes/cta.php';
+  require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>
-<?php require __DIR__ . '/../includes/footer.php'; ?>
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>
