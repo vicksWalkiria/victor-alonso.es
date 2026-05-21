@@ -253,7 +253,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 $result = [
-                    'url' => $url,
+                    'url' => $current_url,
+                    'url_inicial' => $url,
                     'status' => $info['http_code'],
                     'ttfb' => $ttfb,
                     'title' => $title,
@@ -326,7 +327,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
       <?php if ($result): ?>
         <div class="audit-results" style="margin-top:2.5rem">
-          <h3 style="margin-bottom:1.5rem;color:var(--orange)">Resultados del análisis para: <span style="color:#fff;font-weight:400"><?= h($result['url']) ?></span></h3>
+          <h3 style="margin-bottom:1.5rem;color:var(--orange)">Resultados del análisis para: <span style="color:#fff;font-weight:400"><?= h($result['url_inicial']) ?></span></h3>
 
           <?php if (!empty($result['redirect_chain'])): ?>
             <div class="redirect-chain-box card card--dark" style="margin-bottom:2.5rem; border-color:var(--orange)">
