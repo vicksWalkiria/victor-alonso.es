@@ -48,7 +48,7 @@
                 <ul role="list">
                     <li><a href="/sobre-mi">Sobre mí</a></li>
                     <li><a href="/casos-reales">Casos reales</a></li>
-                    <li><a href="/herramientas">Herramientas SEO</a></li>
+                    <li><a href="/herramientas/">Herramientas SEO</a></li>
                     <li><a href="/contacto">Contacto</a></li>
                     <li><a href="<?= h(SITE_WALKIRIA) ?>" target="_blank" rel="noopener noreferrer">Walkiria Apps</a></li>
                 </ul>

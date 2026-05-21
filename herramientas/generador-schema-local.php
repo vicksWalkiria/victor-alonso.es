@@ -10,7 +10,7 @@ $page = page_config([
     'schema_types' => [],
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
-        ['label' => 'Herramientas', 'url' => '/herramientas'],
+        ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Generador Schema Local', 'url' => ''],
     ],
 ]);
