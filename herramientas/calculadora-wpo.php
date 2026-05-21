@@ -2,6 +2,7 @@
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 require_once dirname(__DIR__) . '/includes/ratings-helper.php';
+require_once dirname(__DIR__) . '/includes/wpo-psi-helper.php';
 
 // ─── 1. INTERCEPTAR ACCIÓN AJAX DE ANÁLISIS WPO ──────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'wpo_analyze') {
@@ -33,115 +34,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     }
 
-    // Preparar petición a Google PageSpeed Insights API
-    $api_base = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
-    $params = [
-        'url'      => $url,
-        'strategy' => 'mobile',
-        'category' => 'performance'
-    ];
+    $url = wpo_psi_normalize_url($url);
 
-    if (defined('GOOGLE_PSI_API_KEY') && !empty(GOOGLE_PSI_API_KEY)) {
-        $params['key'] = GOOGLE_PSI_API_KEY;
-    }
-
-    $api_url = $api_base . '?' . http_build_query($params);
-
-    // Ejecutar llamada vía cURL
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $api_url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 50); // PSI puede ser lento, le damos buen margen
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'VictorAlonsoSEOBot/1.0');
-
-    $response = curl_exec($ch);
-
-    if (curl_errno($ch)) {
-        $error_msg = curl_error($ch);
-        echo json_encode(['success' => false, 'message' => 'Error de conexión con Google: ' . $error_msg]);
-        curl_close($ch);
+    // Caché por URL (12 h): evita agotar la cuota de Google (~60 req / 100 s por clave)
+    $cached = wpo_psi_cache_get($url);
+    if ($cached !== null) {
+        echo json_encode(wpo_psi_build_response($cached, $visits, $ticket, $conversion, true));
         exit;
     }
 
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    $data = json_decode($response, true);
-
-    if ($http_code !== 200 || isset($data['error'])) {
-        $error_msg = $data['error']['message'] ?? 'Error desconocido al invocar la API de PageSpeed.';
-        if ($http_code === 429) {
-            $error_msg = 'Límite de cuota excedido. Inténtalo en unos minutos.';
-        } elseif ($http_code === 403 && stripos($error_msg, 'IP address restriction') !== false) {
-            $error_msg = 'La clave de PageSpeed tiene restricción de IP y el servidor no está autorizado. Añade la IP del servidor en Google Cloud Console → Credentials.';
-        }
-        echo json_encode(['success' => false, 'message' => 'Google PSI devolvió un error: ' . $error_msg]);
+    $ip = wpo_psi_client_ip();
+    $wait = wpo_psi_rate_limit_remaining($ip);
+    if ($wait > 0) {
+        echo json_encode([
+            'success' => false,
+            'message' => "Demasiados análisis seguidos. Espera {$wait} s antes de analizar otra URL nueva (Google limita la cuota por minuto).",
+        ]);
         exit;
     }
 
-    if (!isset($data['lighthouseResult'])) {
-        echo json_encode(['success' => false, 'message' => 'No se han podido extraer datos de rendimiento para esta URL.']);
+    wpo_psi_rate_limit_touch($ip);
+    $fetch = wpo_psi_fetch($url);
+
+    if (!$fetch['ok']) {
+        echo json_encode(['success' => false, 'message' => $fetch['message']]);
         exit;
     }
 
-    // Extraer métricas críticas
-    $lh = $data['lighthouseResult'];
-    $score = isset($lh['categories']['performance']['score']) ? $lh['categories']['performance']['score'] * 100 : 0;
-    
-    $audits = $lh['audits'] ?? [];
-    $lcp_ms = isset($audits['largest-contentful-paint']['numericValue']) ? $audits['largest-contentful-paint']['numericValue'] : 0;
-    $lcp_s = round($lcp_ms / 1000, 2);
-    
-    $cls = isset($audits['cumulative-layout-shift']['displayValue']) ? $audits['cumulative-layout-shift']['displayValue'] : 'N/A';
-    if ($cls === 'N/A' && isset($audits['cumulative-layout-shift']['numericValue'])) {
-        $cls = round($audits['cumulative-layout-shift']['numericValue'], 3);
-    }
-
-    $tbt_ms = isset($audits['total-blocking-time']['numericValue']) ? $audits['total-blocking-time']['numericValue'] : 0;
-    $tbt_display = round($tbt_ms) . ' ms';
-
-    // Lógica Financiera de Impacto WPO (Pérdidas)
-    // Ingreso Proyectado = Visitas * Conversión (%) * Ticket Medio
-    $projected_revenue = $visits * ($conversion / 100) * $ticket;
-
-    // Penalización: 7% por cada segundo por encima de 2.5s
-    $delay = max(0.0, $lcp_s - 2.5);
-    $loss_percentage = $delay * 0.07;
-
-    // Acotar pérdida máxima al 90% para evitar absurdos lógicos en webs extremas
-    if ($loss_percentage > 0.90) {
-        $loss_percentage = 0.90;
-    }
-
-    $revenue_lost = $projected_revenue * $loss_percentage;
-
-    $tier = 'red';
-    if ($score >= 90) {
-        $tier = 'green';
-    } elseif ($score >= 50) {
-        $tier = 'orange';
-    }
-
-    // Responder con éxito
-    echo json_encode([
-        'success' => true,
-        'data'    => [
-            'score'        => round($score),
-            'tier'         => $tier,
-            'metrics'      => [
-                'lcp' => $lcp_s . ' s',
-                'cls' => $cls,
-                'tbt' => $tbt_display
-            ],
-            'financials'   => [
-                'projected_revenue' => round($projected_revenue, 2),
-                'revenue_lost'      => round($revenue_lost, 2),
-                'loss_percentage'   => round($loss_percentage * 100, 1)
-            ]
-        ]
-    ]);
+    wpo_psi_cache_set($url, $fetch['payload']);
+    echo json_encode(wpo_psi_build_response($fetch['payload'], $visits, $ticket, $conversion));
     exit;
 }
 
@@ -263,6 +184,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <span id="res-loss-val">0</span> € <span style="font-size: 1.3rem; color: var(--muted); font-weight: 500;">/ mes</span>
             </div>
             <p style="color: var(--muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto; line-height: 1.5;">Esta cifra representa el impacto financiero estimado derivado de la reducción de la tasa de conversión móvil por un LCP superior a 2.5 segundos.</p>
+            <p id="res-cache-note" class="wpo-cache-note" style="display: none;"></p>
           </div>
 
           <!-- METRICS GRID -->
@@ -474,6 +396,14 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('res-lcp-val').innerText = d.metrics.lcp;
             document.getElementById('res-cls-val').innerText = d.metrics.cls;
 
+            const cacheNote = document.getElementById('res-cache-note');
+            if (d.cache_note) {
+                cacheNote.innerText = d.cache_note;
+                cacheNote.style.display = 'block';
+            } else {
+                cacheNote.style.display = 'none';
+            }
+
             // Configurar barra de color del score
             const scoreBar = document.getElementById('res-score-bar');
             if (d.tier === 'green') {
@@ -548,6 +478,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .form-hint { color: var(--muted); font-size: 0.82rem; margin-top: 0.4rem; line-height: 1.45; }
 .wpo-state-card { margin-top: 0; }
 .card--dark .wpo-muted { color: #9ca3af; }
+.wpo-cache-note { font-size: 0.82rem; color: #9ca3af; margin-top: 0.75rem; font-style: italic; }
 @keyframes spin {
   to { transform: rotate(360deg); }
 }

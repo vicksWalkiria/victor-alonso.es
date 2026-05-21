@@ -1,1 +1,5 @@
-node_modules/\n.DS_Store\n.env
+node_modules/
+.DS_Store
+.env
+data/wpo-psi-cache/
+data/wpo-psi-rate/
