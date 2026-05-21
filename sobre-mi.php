@@ -30,9 +30,9 @@ require __DIR__ . '/includes/breadcrumbs.php';
 
       <div class="about-img-wrap">
         <img
-          src="https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg"
+          src="/assets/img/victor-alonso.webp"
           alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
-          width="680" height="900"
+          width="360" height="360"
           loading="lazy"
         >
       </div>

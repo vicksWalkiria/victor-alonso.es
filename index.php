@@ -37,9 +37,9 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="hero-img-wrap">
         <img
-          src="https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg"
+          src="/assets/img/victor-alonso.webp"
           alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
-          width="480" height="600"
+          width="360" height="360"
           fetchpriority="high"
         >
       </div>
@@ -202,9 +202,9 @@ require __DIR__ . '/includes/header.php';
     <div class="container auth-grid">
       <div class="auth-img-wrap">
         <img
-          src="https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg"
+          src="/assets/img/victor-alonso.webp"
           alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
-          width="500" height="500"
+          width="360" height="360"
           loading="lazy"
         >
       </div>
