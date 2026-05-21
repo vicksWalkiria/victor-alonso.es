@@ -45,8 +45,9 @@ $_canonical  = SITE_URL . $page['canonical'];
     <link rel="icon" type="image/png" href="/favicon.png">
 
 <?php if (!empty($page['map'])): ?>
-    <!-- Leaflet CSS — solo en páginas con mapa -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <!-- Leaflet CSS y JS — solo en páginas con mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous" defer></script>
 <?php endif; ?>
 
     <!-- JSON-LD Schemas -->

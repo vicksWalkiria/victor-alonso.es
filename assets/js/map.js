@@ -11,43 +11,31 @@
 
   // Oficina: Calle Iris 25, Albacete
 
-  function loadLeaflet(callback) {
-    if (window.L) { callback(); return; }
-
-    var script = document.createElement('script');
-    script.setAttribute('integrity', 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=');
-    script.setAttribute('crossorigin', 'anonymous');
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.onload = callback;
-    document.head.appendChild(script);
-  }
-
   function initMap() {
-    loadLeaflet(function () {
-      var lat = 38.9978354, lng = -1.8567414;
-      var map = L.map('map').setView([lat, lng], 16);
+    if (!window.L) return;
+    var lat = 38.9978354, lng = -1.8567414;
+    var map = L.map('map').setView([lat, lng], 16);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19
-      }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map);
 
-      var icon = L.icon({
-        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      });
-
-      L.marker([lat, lng], { icon: icon })
-        .addTo(map)
-        .bindPopup(
-          '<strong>Víctor Alonso SEO</strong><br>' +
-          'Calle Iris 25, Albacete<br>' +
-          '<a href="tel:+34675946486">+34 675 946 486</a>'
-        )
-        .openPopup();
+    var icon = L.icon({
+      iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+      iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34],
+      shadowSize: [41, 41]
     });
+
+    L.marker([lat, lng], { icon: icon })
+      .addTo(map)
+      .bindPopup(
+        '<strong>Víctor Alonso SEO</strong><br>' +
+        'Calle Iris 25, Albacete<br>' +
+        '<a href="tel:+34675946486">+34 675 946 486</a>'
+      )
+      .openPopup();
   }
 
   // Carga diferida con IntersectionObserver
