@@ -1,286 +1,297 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio | Víctor Alonso</title>
+<?php
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/schema.php';
 
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="styles.css">
+$page = page_config([
+    'title'        => 'Consultor SEO e Ingeniero Informático en Albacete',
+    'description'  => 'Víctor Alonso: consultor SEO técnico, ingeniero informático y desarrollador WordPress en Albacete. Diagnóstico real, estrategia ejecutable, implementación propia.',
+    'canonical'    => '/',
+    'body_class'   => 'page-home',
+    'schema_types' => ['LocalBusiness'],
+    'active_nav'   => 'inicio',
+    'breadcrumbs'  => [],
+]);
 
-    <!-- Íconos de Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+require __DIR__ . '/includes/header.php';
+?>
 
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    
-    <!-- Meta Title -->
-	<meta name="title" content="Portafolio de Víctor Alonso | Ingeniero Informático y SEO en Albacete">
+<main id="main">
 
-	<!-- Meta Description -->
-	<meta name="description" content="Descubre los servicios de Víctor Alonso: experto en SEO, mantenimiento web, plugins personalizados y diseño web con 5 años de experiencia ayudando a empresas a crecer online.">
-
-	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="/favicon.png">
-
-	!-- Open Graph Meta Tags -->
-	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://www.victor-alonso.es/">
-	<meta property="og:title" content="Portafolio de Víctor Alonso | Ingeniero Informático y SEO en Albacete">
-	<meta property="og:description" content="Conoce los servicios de Víctor Alonso en SEO, desarrollo web y más, con experiencia en optimización de empresas en el entorno digital.">
-	<meta property="og:image" content="https://www.victor-alonso.es/social.webp">
-	<meta property="og:locale" content="es_ES">
-
-	<!-- Social Media Specific Tags -->
-	<!-- Telegram -->
-	<meta property="telegram:title" content="Portafolio de Víctor Alonso">
-	<meta property="telegram:description" content="Ingeniero Informático y SEO en Albacete. ¡Descubre mis servicios!">
-	<meta property="telegram:image" content="https://www.victor-alonso.es/social.webp">
-
-	<!-- Twitter -->
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:site" content="@vicks630">
-	<meta name="twitter:title" content="Portafolio de Víctor Alonso | Ingeniero Informático y SEO en Albacete">
-	<meta name="twitter:description" content="Expertise en SEO y desarrollo web. Conoce más sobre mi trabajo.">
-	<meta name="twitter:image" content="https://www.victor-alonso.es/social.webp">
-
-</head>
-<body>
-
-    <!-- Encabezado -->
-    <header class="header">
-
-        <nav class="navbar">
-            <a href="#sobre-mi">Sobre mí</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#testimonios">Testimonios</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-
-
-        <div class="bx bx-menu" id="icono-menu"></div>
-    </header>
-
-    <!-- Sección de Inicio -->
-    <section class="inicio" id="sobre-mi">
-        <div class="contenido-inicio">
-          <div class="imagen-perfil">
-               <img src="https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg" alt="Víctor Alonso">
-           </div>
-
-            <p class="texto-lila">Hola, soy</p>
-            <h1>SEO en Albacete</h1>
-            <p>Me llamo Víctor Alonso y soy ingeniero informático con 5 años de experiencia en SEO, ayudando a negocios a crecer online con servicios de SEO, mantenimiento web, plugins personalizados y diseño web.</p>
-            <div class="redes-sociales">
-                <a href="https://www.linkedin.com/in/vialonso/"><i class='bx bxl-linkedin'></i></a>
-                <a href="https://x.com/vicks630"><i class='bx bxl-twitter'></i></a>
-                <a href="https://github.com/vicksWalkiria"><i class='bx bxl-github'></i></a>
-                <a href="tel:+34675946486" class="telefono"><i class="bx bxs-phone"></i></a>
-                <a href="https://wa.me/34675946486" class="whatsapp-float" target="_blank" title="Escríbeme por WhatsApp">
-                    <i class="bx bxl-whatsapp"></i>
-                </a>
-            </div>
-            <p>También puedes visitar mi página de <a href="https://www.walkiriaapps.com" class="btn">Desarrollador Web</a></p>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <span class="hero-eyebrow">SEO · Desarrollo Web · WordPress</span>
+        <h1 id="hero-heading">
+          No todo problema SEO<br>se arregla publicando<br><span>más contenido.</span>
+        </h1>
+        <p class="hero-desc">
+          Soy Víctor Alonso: ingeniero informático y consultor SEO técnico en Albacete.
+          Reviso lo que no funciona, priorizo lo que importa y lo implemento directamente.
+          Sin intermediarios, sin humo.
+        </p>
+        <div class="hero-actions">
+          <a href="/contacto.php" class="btn btn--primary btn--lg">Solicitar diagnóstico SEO</a>
+          <a href="#servicios" class="btn btn--ghost btn--lg">Ver servicios</a>
         </div>
-    </section>
+      </div>
+      <div class="hero-img-wrap">
+        <img
+          src="https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg"
+          alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
+          width="480" height="600"
+          fetchpriority="high"
+        >
+      </div>
+    </div>
+  </section>
 
-    <!-- Sección Servicios -->
-    <section class="servicios" id="servicios">
-        <h2 class="heading">Mis <span>Servicios</span></h2>
-        <div class="contenedor-servicios">
-            <div class="servicio">
-                <i class='bx bx-line-chart'></i>
-                <h3>SEO y Posicionamiento Web</h3>
-                <p>Optimización avanzada en motores de búsqueda para mejorar la visibilidad de tu negocio en línea.</p>
-            </div>
-            <div class="servicio">
-                <i class='bx bxs-wrench'></i>
-                <h3>Mantenimiento Web</h3>
-                <p>Aseguro que tu sitio esté siempre actualizado, seguro y funcionando de manera óptima.</p>
-            </div>
-            <div class="servicio">
-                <i class='bx bx-extension'></i>
-                <h3>Plugins a Medida</h3>
-                <p>Desarrollo de soluciones personalizadas para satisfacer las necesidades específicas de tu sitio web.</p>
-            </div>
-            <div class="servicio">
-                <i class='bx bx-palette'></i>
-                <h3>Diseño Web</h3>
-                <p>Diseños visualmente atractivos que se adaptan a las necesidades de cada negocio.</p>
-            </div>
+  <!-- Problemas reales -->
+  <section class="section" aria-labelledby="problemas-heading">
+    <div class="container">
+      <span class="section-label">El diagnóstico primero</span>
+      <h2 class="section-title" id="problemas-heading">Síntomas que veo con frecuencia</h2>
+      <p class="section-intro">Antes de proponer soluciones, reviso por qué tu web no está funcionando como debería. Estos son los problemas más habituales que encuentro.</p>
+      <div class="problems-grid" style="margin-top:2rem">
+        <div class="problem-item">
+          <div class="problem-bullet" aria-hidden="true"></div>
+          <div>
+            <h3>Web que no convierte</h3>
+            <p>El tráfico llega pero no genera contactos ni ventas. Suele ser un problema de arquitectura, contenido o velocidad, no de volumen.</p>
+          </div>
         </div>
-    </section>
-
-    <!-- Sección de Testimonios -->
-    <section class="testimonios" id="testimonios">
-        <h2 class="heading">Lo que dicen <span>mis clientes</span></h2>
-        <div class="contenedor-testimonios swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="testimonio swiper-slide">
-                    <h3>David Lara Arroyo</h3>
-                    <p class="estrellas">★★★★★</p>
-                    <p>Hace 8 semanas</p>
-                    <p>"Nos ha ayudado con un WordPress infectado, rápido y formal."</p>
-                </div>
-                <div class="testimonio swiper-slide">
-                    <h3>Sonia Gual</h3>
-                    <p class="estrellas">★★★★★</p>
-                    <p>Hace 10 semanas</p>
-                    <p>"Víctor no solo resolvió el problema, sino que me dio herramientas para ser más independiente en futuras incidencias. ¡Gran profesional!"</p>
-                </div>
-                <div class="testimonio swiper-slide">
-                    <h3>Pedro dehierro</h3>
-                    <p class="estrellas">★★★★★</p>
-                    <p>Hace 47 semanas</p>
-                    <p>"Arregló todo cuando tuve problemas con mi web. Gracias!"</p>
-                </div>
-            </div>
-            <div class="swiper-pagination"></div>
+        <div class="problem-item">
+          <div class="problem-bullet" aria-hidden="true"></div>
+          <div>
+            <h3>Tráfico que cae tras un update de Google</h3>
+            <p>Contenido que no responde a la intención de búsqueda, páginas que canibalizan entre sí o señales técnicas débiles.</p>
+          </div>
         </div>
-    </section>
+        <div class="problem-item">
+          <div class="problem-bullet" aria-hidden="true"></div>
+          <div>
+            <h3>WordPress lento</h3>
+            <p>Plugins acumulados, imágenes sin optimizar, temas inflados o falta de caché. Un WPO mal resuelto lastra el Core Web Vitals y el posicionamiento.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-bullet" aria-hidden="true"></div>
+          <div>
+            <h3>Errores de indexación</h3>
+            <p>Google no rastrea bien tus páginas clave, indexa las que no debe o tu sitemap no refleja la arquitectura real del sitio.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-bullet" aria-hidden="true"></div>
+          <div>
+            <h3>Contenido que no ataca intención de búsqueda</h3>
+            <p>Páginas escritas pensando en el producto, no en cómo busca el usuario. El resultado es posicionamiento para keywords sin tráfico cualificado.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-bullet" aria-hidden="true"></div>
+          <div>
+            <h3>Falta de medición real</h3>
+            <p>Analytics mal configurado, sin conversiones definidas o con datos contaminados. Sin medir bien, no se puede mejorar nada con criterio.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Formulario de Contacto -->
-    <section id="contacto" class="contacto">
-        <h2 class="heading">¿Hablamos?</h2>
-        <form action="https://formspree.io/f/xwpkllpr" method="POST">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" name="nombre" required>
+  <!-- Metodología -->
+  <section class="section section--dark" aria-labelledby="metodologia-heading">
+    <div class="container">
+      <span class="section-label" style="color:var(--orange)">Cómo trabajo</span>
+      <h2 class="section-title" id="metodologia-heading" style="color:#fff">Metodología, no ocurrencias</h2>
+      <p class="section-intro" style="color:rgba(255,255,255,.65);margin-bottom:2.5rem">Prefiero priorizar 10 acciones ejecutables antes que entregar una auditoría de 80 páginas que nadie implementa.</p>
+      <div class="method-steps">
+        <div class="method-step">
+          <h3>Diagnóstico</h3>
+          <p>Revisión técnica, de contenido y de arquitectura. Separo síntomas de causas reales.</p>
+        </div>
+        <div class="method-step">
+          <h3>Priorización</h3>
+          <p>Ordeno las acciones por impacto potencial vs. esfuerzo. No todo tiene el mismo retorno.</p>
+        </div>
+        <div class="method-step">
+          <h3>Implementación</h3>
+          <p>Ejecuto directamente los cambios técnicos. No solo recomendaciones que luego nadie aplica.</p>
+        </div>
+        <div class="method-step">
+          <h3>Medición</h3>
+          <p>Compruebo que los cambios tienen efecto real en Search Console, Analytics y posiciones.</p>
+        </div>
+        <div class="method-step">
+          <h3>Iteración</h3>
+          <p>El SEO no es un proyecto único. Ajusto según datos, no según tendencias del sector.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            <label for="correo">Correo</label>
-            <input type="email" id="correo" name="correo" required>
+  <!-- Servicios -->
+  <section class="section section--alt" id="servicios" aria-labelledby="servicios-heading">
+    <div class="container">
+      <span class="section-label">Lo que hago</span>
+      <h2 class="section-title" id="servicios-heading">Servicios</h2>
+      <p class="section-intro" style="margin-bottom:2rem">SEO, desarrollo web y mantenimiento técnico para negocios que necesitan algo más que textos bonitos.</p>
+      <div class="cards-grid">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3>SEO en Albacete</h3>
+          <p>SEO local técnico para negocios en Albacete. Google Business Profile, arquitectura, contenido local y medición.</p>
+          <a href="/servicios/seo-albacete.php" class="card-link">Ver servicio →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>SEO para España</h3>
+          <p>Estrategia SEO nacional con enfoque técnico, clusters de contenido, arquitectura de información y análisis de intención.</p>
+          <a href="/servicios/seo-espana.php" class="card-link">Ver servicio →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <h3>Auditoría SEO</h3>
+          <p>Revisión completa del estado técnico, arquitectura, contenido, indexación y WPO. Entregable priorizado por impacto.</p>
+          <a href="/servicios/auditoria-seo.php" class="card-link">Ver servicio →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <h3>SEO Técnico</h3>
+          <p>Rastreo, indexación, renderizado, Core Web Vitals, canonicals, sitemaps, datos estructurados, JS SEO y migraciones.</p>
+          <a href="/servicios/seo-tecnico.php" class="card-link">Ver servicio →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Mantenimiento WordPress</h3>
+          <p>Actualizaciones, backups, seguridad, limpieza de malware, WPO y soporte técnico continuo.</p>
+          <a href="/servicios/mantenimiento-wordpress.php" class="card-link">Ver servicio →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+          </div>
+          <h3>Desarrollo WordPress</h3>
+          <p>Temas a medida, CPT, campos personalizados, rendimiento y SEO técnico desde la base del código.</p>
+          <a href="/servicios/desarrollo-wordpress.php" class="card-link">Ver servicio →</a>
+        </article>
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M12 12v.01"/></svg>
+          </div>
+          <h3>Plugins a medida</h3>
+          <p>Automatizaciones, shortcodes, integraciones con APIs, formularios y paneles de administración personalizados.</p>
+          <a href="/servicios/plugins-wordpress.php" class="card-link">Ver servicio →</a>
+        </article>
+      </div>
+    </div>
+  </section>
 
-            <label for="mensaje">Cuéntame tu proyecto</label>
-            <textarea id="mensaje" name="mensaje" required></textarea>
+  <!-- Autoridad -->
+  <section class="section" aria-labelledby="sobre-heading">
+    <div class="container auth-grid">
+      <div class="auth-img-wrap">
+        <img
+          src="https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg"
+          alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
+          width="500" height="500"
+          loading="lazy"
+        >
+      </div>
+      <div class="auth-text">
+        <span class="section-label">Quién soy</span>
+        <h2 id="sobre-heading">Ingeniero informático que hace SEO.<br>Y desarrollador que entiende por qué posiciona.</h2>
+        <p>Me llamo Víctor Alonso. Soy ingeniero informático con años de experiencia en SEO técnico, desarrollo WordPress, PHP y analítica web. Trabajo desde Albacete para empresas en España y fuera.</p>
+        <p>La combinación de perfil técnico y conocimiento SEO me permite ir más allá del informe: detecto problemas en el código, en la arquitectura y en el contenido, y los resuelvo directamente.</p>
+        <div class="auth-tags" aria-label="Especialidades">
+          <span class="auth-tag">SEO Técnico</span>
+          <span class="auth-tag">PHP / WordPress</span>
+          <span class="auth-tag">Core Web Vitals</span>
+          <span class="auth-tag">Laravel</span>
+          <span class="auth-tag">Datos estructurados</span>
+          <span class="auth-tag">Google Analytics 4</span>
+          <span class="auth-tag">Search Console</span>
+          <span class="auth-tag">WPO</span>
+        </div>
+        <a href="/sobre-mi.php" class="btn btn--primary">Más sobre mí</a>
+      </div>
+    </div>
+  </section>
 
-            <input type="hidden" name="_subject" value="nuevo contacto SEO">
-            <input type="hidden" name="_replyto" value="victor@walkiriaapps.com">
+  <!-- Casos reales preview -->
+  <section class="section section--alt" aria-labelledby="casos-heading">
+    <div class="container">
+      <span class="section-label">Sin inventar cifras</span>
+      <h2 class="section-title" id="casos-heading">Casos y situaciones reales</h2>
+      <p class="section-intro" style="margin-bottom:2rem">Proyectos anonimizados con el contexto, el problema, el diagnóstico y lo que se puede aprender de cada uno.</p>
+      <div class="cards-grid">
+        <article class="card">
+          <h3>WordPress infectado</h3>
+          <p>Un cliente llega con la web penalizada en Chrome. Revisión del servidor, limpieza de malware, hardening y restauración de la reputación en Google Safe Browsing.</p>
+        </article>
+        <article class="card">
+          <h3>Caída de tráfico tras migración</h3>
+          <p>Cambio de dominio sin redirecciones bien planificadas. Pérdida de autoridad y posiciones. Diagnóstico en Search Console, análisis de cobertura y plan de recuperación.</p>
+        </article>
+        <article class="card">
+          <h3>Web lenta sin saber por qué</h3>
+          <p>LCP de 6 segundos en móvil. Análisis de cascada de carga, imágenes sin optimizar, CSS render-blocking y plugins con scripts externos innecesarios.</p>
+        </article>
+      </div>
+      <div style="margin-top:2rem">
+        <a href="/casos-reales.php" class="btn btn--secondary">Ver todos los casos</a>
+      </div>
+    </div>
+  </section>
 
-            <button type="submit" class="btn">¡Hablemos!</button>
-        </form>
-    </section>
+  <!-- Testimonios -->
+  <section class="section section--dark" aria-labelledby="testimonios-heading">
+    <div class="container">
+      <span class="section-label" style="color:var(--orange)">Lo que dicen</span>
+      <h2 class="section-title" id="testimonios-heading" style="color:#fff">Clientes reales</h2>
+      <div class="testimonials-grid" style="margin-top:2rem">
+        <blockquote class="testimonial">
+          <p class="testimonial-stars" aria-label="5 de 5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"Nos ayudó con un WordPress infectado, rápido y formal. Explicó qué había pasado y cómo evitarlo."</p>
+          <footer class="testimonial-author">David Lara Arroyo</footer>
+        </blockquote>
+        <blockquote class="testimonial">
+          <p class="testimonial-stars" aria-label="5 de 5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"No solo resolvió el problema, sino que me dio herramientas para ser más independiente en futuras incidencias."</p>
+          <footer class="testimonial-author">Sonia Gual</footer>
+        </blockquote>
+        <blockquote class="testimonial">
+          <p class="testimonial-stars" aria-label="5 de 5 estrellas">★★★★★</p>
+          <p class="testimonial-text">"Arregló todo cuando tuve problemas con mi web. Rápido, directo y sin complicaciones innecesarias."</p>
+          <footer class="testimonial-author">Pedro de Hierro</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
 
-    <!-- Enlace a Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script type="application/ld+json">
-	{
-	  "@context": "https://schema.org",
-	  "@type": "Person",
-	  "name": "Víctor Alonso",
-	  "jobTitle": "SEO y Desarrollador Web",
-	  "description": "Ingeniero Informático y experto en SEO con 5 años de experiencia, ayudando a empresas a optimizar su presencia online.",
-	  "url": "https://www.victor-alonso.es",
-	  "sameAs": [
-	    "https://www.linkedin.com/in/vialonso/",
-	    "https://x.com/vicks630",
-	    "https://github.com/vicksWalkiria"
-	  ],
-	  "image": "https://walkiriaapps.com/wp-content/uploads/2021/11/victor-alonso-desarrollador-freelance.jpeg",
-	  "address": {
-	    "@type": "PostalAddress",
-	    "addressLocality": "Albacete",
-	    "addressCountry": "ES"
-	  },
-	  "contactPoint": {
-	    "@type": "ContactPoint",
-	    "telephone": "+34675946486",
-	    "contactType": "customer service",
-	    "areaServed": "ES",
-	    "availableLanguage": "es"
-	  }
-	}
-    </script>
-    
-    <script type="application/ld+json">
-	{
-	  "@context": "https://schema.org",
-	  "@type": "Organization",
-	  "name": "Víctor Alonso SEO",
-	  "url": "https://www.victor-alonso.es",
-	  "logo": "https://www.victor-alonso.es/favicon.png",
-	  "sameAs": [
-	    "https://www.linkedin.com/in/vialonso/",
-	    "https://x.com/vicks630",
-	    "https://github.com/vicksWalkiria"
-	  ],
-	  "contactPoint": {
-	    "@type": "ContactPoint",
-	    "telephone": "+34675946486",
-	    "contactType": "customer service",
-	    "areaServed": "ES",
-	    "availableLanguage": "es"
-	  }
-	}
-	</script>
-	
-	<script type="application/ld+json">
-	{
-	  "@context": "https://schema.org",
-	  "@type": "Service",
-	  "serviceType": "SEO y Posicionamiento Web",
-	  "provider": {
-	    "@type": "Person",
-	    "name": "Víctor Alonso"
-	  },
-	  "areaServed": "ES",
-	  "description": "Optimización avanzada en motores de búsqueda para mejorar la visibilidad de tu negocio en línea."
-	}
-	</script>
+  <!-- CTA final -->
+  <?php
+  $cta = [
+    'title'     => '¿Tienes dudas sobre tu posicionamiento web?',
+    'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración sin compromiso.',
+    'btn_label' => 'Solicitar diagnóstico SEO',
+    'btn_href'  => '/contacto.php',
+    'whatsapp'  => true,
+    'variant'   => 'orange',
+  ];
+  require __DIR__ . '/includes/cta.php';
+  ?>
 
-	<script type="application/ld+json">
-	{
-	  "@context": "https://schema.org",
-	  "@type": "Service",
-	  "serviceType": "Mantenimiento Web",
-	  "provider": {
-	    "@type": "Person",
-	    "name": "Víctor Alonso"
-	  },
-	  "areaServed": "ES",
-	  "description": "Aseguro que tu sitio esté siempre actualizado, seguro y funcionando de manera óptima."
-	}
-	</script>
-	
-	
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Víctor Alonso SEO",
-  "image": "https://www.victor-alonso.es/social.webp",
-  "@id": "https://www.victor-alonso.es",
-  "url": "https://www.victor-alonso.es",
-  "telephone": "+34675946486",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Albacete",
-    "addressCountry": "ES"
-  },
-  "sameAs": [
-    "https://www.linkedin.com/in/vialonso/",
-    "https://x.com/vicks630",
-    "https://github.com/vicksWalkiria"
-  ]
-}
-</script>
+</main>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Portafolio de Víctor Alonso",
-  "url": "https://www.victor-alonso.es",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://www.victor-alonso.es/?s={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-
-
-
-    <!-- Script personalizado -->
-    <script src="scripts.js"></script>
-</body>
-</html>
+<?php require __DIR__ . '/includes/footer.php'; ?>
