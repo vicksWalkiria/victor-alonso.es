@@ -39,6 +39,7 @@ foreach ($_env_candidates as $_env_file) {
 // ─── Constantes globales ────────────────────────────────────────────────────
 $_psi_key = $_ENV['GOOGLE_PSI_API_KEY'] ?? getenv('GOOGLE_PSI_API_KEY');
 define('GOOGLE_PSI_API_KEY', (is_string($_psi_key) && $_psi_key !== '') ? $_psi_key : '');
+define('GA_MEASUREMENT_ID', 'G-1KM86F56R1');
 
 define('SITE_NAME',         'Víctor Alonso SEO');
 define('SITE_URL',          'https://www.victor-alonso.es');

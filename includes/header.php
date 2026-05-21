@@ -10,6 +10,16 @@ $_canonical  = SITE_URL . $page['canonical'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= h(GA_MEASUREMENT_ID) ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<?= h(GA_MEASUREMENT_ID) ?>');
+    </script>
+
     <title><?= $_full_title ?></title>
     <meta name="description" content="<?= h($page['description']) ?>">
     <link rel="canonical" href="<?= h($_canonical) ?>">
