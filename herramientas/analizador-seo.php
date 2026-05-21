@@ -458,6 +458,58 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </table>
             </div>
           </div>
+
+          <!-- Glosario Didáctico de Métricas y Cabeceras -->
+          <div class="criterio-section" style="margin-top:3.5rem; border-top: 1px solid var(--border); padding-top:3rem;">
+            <span class="section-label">Glosario de trinchera</span>
+            <h2 style="margin-bottom:1.5rem">¿Qué significa cada métrica del análisis?</h2>
+            
+            <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem;">
+              <div>
+                <h3 style="color:#fff; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Etiquetas SEO On-Page</h3>
+                <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Etiqueta Title</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">Es el título oficial de la página web de cara a los buscadores. Aparece como el enlace principal azul en los resultados de búsqueda de Google. Debe ser persuasivo, descriptivo y contener la palabra clave principal de tu negocio.</span>
+                  </li>
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Meta Description</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">El extracto o resumen de texto que aparece debajo del título en los buscadores. Aunque no posiciona de forma directa, una buena meta descripción incita a hacer clic sobre tu enlace, incrementando el CTR (porcentaje de clics por impresiones).</span>
+                  </li>
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Etiqueta Canonical</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">Le indica a Google cuál es la URL original y oficial de una página web. Es una directiva vital si tienes parámetros de rastreo o variaciones de página, ya que evita penalizaciones por duplicidad de contenido en buscadores.</span>
+                  </li>
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Cabecera H1</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">El título visual principal en tu contenido. Cada página web debe contar con un único y exclusivo encabezado H1 para estructurar semánticamente el contenido y dejar claro de qué trata tu página web de un solo vistazo.</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 style="color:#fff; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cabeceras de Seguridad y Servidor</h3>
+                <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">X-Frame-Options</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">Evita ataques de secuestro de clics (<em>Clickjacking</em>). Esta cabecera le prohíbe a navegadores ajenos incrustar tu sitio web en marcos (<code>&lt;iframe&gt;</code>) externos y maliciosos diseñados para engañar a tus usuarios.</span>
+                  </li>
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">X-Content-Type-Options</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">Protege tu servidor de inyecciones de código bloqueando el <em>MIME Sniffing</em>. Fuerza al navegador a seguir rígidamente el tipo de archivo declarado (por ejemplo, impidiendo que un archivo de texto plano o una imagen se interprete como código JavaScript ejecutable).</span>
+                  </li>
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Referrer-Policy</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">Regula el nivel de privacidad de tu sitio controlando la cantidad de datos que envías a terceras webs cuando un usuario pulsa un enlace externo (evitando la filtración de URLs internas o tokens de sesión en el referer).</span>
+                  </li>
+                  <li>
+                    <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Content-Security-Policy (CSP)</strong>
+                    <span style="font-size:0.9rem; color:var(--text); line-height:1.5; display:block;">Es la directiva definitiva de seguridad web. Establece un listado estricto y de confianza de qué orígenes, dominios y recursos pueden cargar y ejecutar código en tu web, neutralizando por completo inyecciones de virus y scripts maliciosos (ataques XSS).</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
           
           <!-- Cómo funciona la herramienta (Transparencia Técnica) -->
           <div class="criterio-section" style="margin-top:4rem; border-top: 1px solid var(--border); padding-top:4rem;">
