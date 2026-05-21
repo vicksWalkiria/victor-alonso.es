@@ -16,7 +16,7 @@
 
     var script = document.createElement('script');
     script.setAttribute('integrity', 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=');
-    script.setAttribute('crossorigin', '');
+    script.setAttribute('crossorigin', 'anonymous');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
     script.onload = callback;
     document.head.appendChild(script);
