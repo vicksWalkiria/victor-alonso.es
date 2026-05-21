@@ -65,12 +65,21 @@
     });
   });
 
-  // ── Header scroll shadow ─────────────────────────────────────────────────
+  // ── Header scroll shadow (rAF para evitar reflows forzados en scroll) ───
   const header = document.querySelector('.site-header');
   if (header) {
-    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
+    let scrollTicking = false;
+    const updateScrollState = () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+      scrollTicking = false;
+    };
+    const onScroll = () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(updateScrollState);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    requestAnimationFrame(updateScrollState);
   }
 
   // ── FAQ accordion ────────────────────────────────────────────────────────

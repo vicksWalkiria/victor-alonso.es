@@ -11,14 +11,11 @@ $_canonical  = SITE_URL . $page['canonical'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= h(GA_MEASUREMENT_ID) ?>"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '<?= h(GA_MEASUREMENT_ID) ?>');
-    </script>
+<?php if (GA_MEASUREMENT_ID !== ''): ?>
+    <!-- GA4: preconnect solo; el script se carga diferido al final para no penalizar LCP/TBT -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+<?php endif; ?>
 
     <title><?= $_full_title ?></title>
     <meta name="description" content="<?= h($page['description']) ?>">
@@ -65,6 +62,6 @@ $_canonical  = SITE_URL . $page['canonical'];
     <!-- JSON-LD Schemas -->
     <?php render_schemas($page); ?>
 </head>
-<body class="<?= h($page['body_class']) ?>">
+<body class="<?= h($page['body_class']) ?>"<?= GA_MEASUREMENT_ID !== '' ? ' data-ga-id="' . h(GA_MEASUREMENT_ID) . '"' : '' ?>>
 
 <?php require __DIR__ . '/nav.php'; ?>

@@ -74,4 +74,11 @@
     </div>
 </footer>
 
+<?php if (GA_MEASUREMENT_ID !== ''): ?>
+<?php
+$_ga_js_path = dirname(__DIR__) . '/assets/js/analytics-deferred.js';
+$_ga_js_version = file_exists($_ga_js_path) ? filemtime($_ga_js_path) : time();
+?>
+<script src="/assets/js/analytics-deferred.js?v=<?= $_ga_js_version ?>" defer></script>
+<?php endif; ?>
 <script src="/assets/js/main.js" defer></script>
