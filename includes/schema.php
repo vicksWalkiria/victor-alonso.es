@@ -93,14 +93,16 @@ function _schema_local_business(): void {
         'founder'     => ['@id' => SITE_URL . '/#person'],
         'address'     => [
             '@type'           => 'PostalAddress',
+            'streetAddress'   => 'Calle Iris 25',
             'addressLocality' => SITE_LOCALITY,
             'addressRegion'   => 'Castilla-La Mancha',
+            'postalCode'      => '02005',
             'addressCountry'  => SITE_COUNTRY,
         ],
         'geo' => [
             '@type'     => 'GeoCoordinates',
-            'latitude'  => '38.9942',
-            'longitude' => '-1.8585',
+            'latitude'  => '38.9978354',
+            'longitude' => '-1.8567414',
         ],
         'areaServed' => [
             ['@type' => 'City', 'name' => 'Albacete'],

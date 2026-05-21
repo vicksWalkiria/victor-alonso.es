@@ -56,6 +56,7 @@
                 <h3 class="footer-nav-title">Contacto</h3>
                 <address>
                     <p><strong>Víctor Alonso SEO</strong></p>
+                    <p><?= h(SITE_ADDRESS) ?></p>
                     <p><?= h(SITE_LOCALITY) ?>, España</p>
                     <p><a href="tel:<?= h(SITE_PHONE_RAW) ?>"><?= h(SITE_PHONE) ?></a></p>
                     <p><a href="mailto:<?= h(SITE_EMAIL) ?>"><?= h(SITE_EMAIL) ?></a></p>

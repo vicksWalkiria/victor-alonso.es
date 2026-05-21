@@ -16,6 +16,7 @@ define('SITE_PHONE_RAW',    '+34675946486');
 define('SITE_EMAIL',        'victor@walkiriaapps.com');
 define('SITE_LOCALITY',     'Albacete');
 define('SITE_COUNTRY',      'ES');
+define('SITE_ADDRESS',      'Calle Iris 25, 02005 Albacete');
 define('SITE_LANG',         'es-ES');
 define('SITE_TWITTER',      '@vicks630');
 define('SITE_LINKEDIN',     'https://www.linkedin.com/in/vialonso/');

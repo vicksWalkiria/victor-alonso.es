@@ -9,6 +9,8 @@
   var MAP_EL = document.getElementById('map');
   if (!MAP_EL) return;
 
+  // Oficina: Calle Iris 25, Albacete
+
   function loadLeaflet(callback) {
     if (window.L) { callback(); return; }
 
@@ -22,8 +24,8 @@
 
   function initMap() {
     loadLeaflet(function () {
-      var lat = 38.9942, lng = -1.8585;
-      var map = L.map('map').setView([lat, lng], 13);
+      var lat = 38.9978354, lng = -1.8567414;
+      var map = L.map('map').setView([lat, lng], 16);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -41,7 +43,7 @@
         .addTo(map)
         .bindPopup(
           '<strong>Víctor Alonso SEO</strong><br>' +
-          'Albacete, Castilla-La Mancha<br>' +
+          'Calle Iris 25, Albacete<br>' +
           '<a href="tel:+34675946486">+34 675 946 486</a>'
         )
         .openPopup();
