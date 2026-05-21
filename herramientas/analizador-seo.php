@@ -20,36 +20,107 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             $error = 'El formato de la URL no es válido.';
         } else {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HEADER, true);
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 6);
-            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'VictorAlonsoSEOBot/1.0 (+https://www.victor-alonso.es/herramientas/analizador-seo)');
+            $redirect_chain = [];
+            $max_redirects = 5;
+            $redirect_count = 0;
+            $current_url = $url;
+            $html_content = '';
+            $headers = [];
+            $info = [];
+            $ttfb_total = 0;
+            $bucle_detectado = false;
+            $visitadas = [$current_url];
 
-            $start_time = microtime(true);
-            $response = curl_exec($ch);
-            $ttfb = round((microtime(true) - $start_time) * 1000);
+            while ($redirect_count <= $max_redirects) {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $current_url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_HEADER, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($ch, CURLOPT_USERAGENT, 'VictorAlonsoSEOBot/1.0 (+https://www.victor-alonso.es/herramientas/analizador-seo)');
 
-            if (curl_errno($ch)) {
-                $error = 'No se ha podido conectar con el servidor: ' . curl_error($ch);
-            } else {
+                $start_time = microtime(true);
+                $response = curl_exec($ch);
+                $step_ttfb = round((microtime(true) - $start_time) * 1000);
+                $ttfb_total += $step_ttfb;
+
+                if (curl_errno($ch)) {
+                    $error = 'No se ha podido conectar con el servidor: ' . curl_error($ch);
+                    curl_close($ch);
+                    break;
+                }
+
                 $info = curl_getinfo($ch);
                 $header_size = $info['header_size'];
                 $headers_raw = substr($response, 0, $header_size);
                 $html_content = substr($response, $header_size);
                 
-                $headers = [];
+                $step_headers = [];
                 foreach (explode("\r\n", $headers_raw) as $line) {
                     if (strpos($line, ':') !== false) {
                         list($key, $val) = explode(':', $line, 2);
-                        $headers[strtolower(trim($key))] = trim($val);
+                        $step_headers[strtolower(trim($key))] = trim($val);
                     }
                 }
+
+                $status_code = $info['http_code'];
+
+                // Si es redirección (3xx)
+                if ($status_code >= 300 && $status_code < 400 && isset($step_headers['location'])) {
+                    $location = $step_headers['location'];
+                    
+                    // Resolver URL relativa a absoluta si es necesario
+                    if (!preg_match('~^https?://~i', $location)) {
+                        $parsed_origin = parse_url($current_url);
+                        $base = $parsed_origin['scheme'] . '://' . $parsed_origin['host'];
+                        if (isset($parsed_origin['port'])) {
+                            $base .= ':' . $parsed_origin['port'];
+                        }
+                        if (strpos($location, '/') === 0) {
+                            $location = $base . $location;
+                        } else {
+                            $path = isset($parsed_origin['path']) ? dirname($parsed_origin['path']) : '';
+                            $location = $base . '/' . ltrim($path . '/' . $location, '/');
+                        }
+                    }
+
+                    $redirect_chain[] = [
+                        'from' => $current_url,
+                        'to' => $location,
+                        'status' => $status_code,
+                        'ttfb' => $step_ttfb
+                    ];
+
+                    // Evitar bucles infinitos comparando si ya la visitamos
+                    if (in_array($location, $visitadas)) {
+                        $bucle_detectado = true;
+                        $error = '¡Bucle infinito de redirecciones detectado! La URL está atrapada en un ciclo sin fin.';
+                        curl_close($ch);
+                        break;
+                    }
+
+                    $visitadas[] = $location;
+                    $current_url = $location;
+                    $redirect_count++;
+                    curl_close($ch);
+                } else {
+                    // Es 200, 404, 500, etc. Rompemos y procesamos el contenido
+                    $headers = $step_headers;
+                    curl_close($ch);
+                    break;
+                }
+            }
+
+            if ($redirect_count > $max_redirects && !$bucle_detectado) {
+                $error = 'La URL supera el límite máximo de 5 redirecciones. Esto consume Crawl Budget en exceso y confunde a los rastreadores.';
+            }
+
+            if (empty($error)) {
+                $ttfb = $ttfb_total; // TTFB acumulado de toda la cadena
 
                 libxml_use_internal_errors(true);
                 $dom = new DOMDocument();
@@ -165,6 +236,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ];
                 }
 
+                if (count($redirect_chain) > 0) {
+                    if (count($redirect_chain) === 1) {
+                        $diagnostico[] = [
+                            'type' => 'warning',
+                            'title' => 'Redirección detectada (código ' . $redirect_chain[0]['status'] . ')',
+                            'desc' => 'La URL consultada redirige a ' . $redirect_chain[0]['to'] . '. Hemos analizado de forma transparente la página de destino final.'
+                        ];
+                    } else {
+                        $diagnostico[] = [
+                            'type' => 'danger',
+                            'title' => 'Cadena de redirecciones encadenada (' . count($redirect_chain) . ' saltos)',
+                            'desc' => 'El rastreador ha tenido que dar ' . count($redirect_chain) . ' saltos antes de llegar al destino. Esto consume Crawl Budget de Google inútilmente y ralentiza al usuario. Enlaza siempre directamente al destino final.'
+                        ];
+                    }
+                }
+
                 $result = [
                     'url' => $url,
                     'status' => $info['http_code'],
@@ -175,7 +262,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'h1s' => $h1s,
                     'robots' => $meta_robots ? $meta_robots : ($headers['x-robots-tag'] ?? 'index, follow'),
                     'security' => $security_headers,
-                    'diagnostico' => $diagnostico
+                    'diagnostico' => $diagnostico,
+                    'redirect_chain' => $redirect_chain
                 ];
             }
             curl_close($ch);
@@ -239,6 +327,45 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <?php if ($result): ?>
         <div class="audit-results" style="margin-top:2.5rem">
           <h3 style="margin-bottom:1.5rem;color:var(--orange)">Resultados del análisis para: <span style="color:#fff;font-weight:400"><?= h($result['url']) ?></span></h3>
+
+          <?php if (!empty($result['redirect_chain'])): ?>
+            <div class="redirect-chain-box card card--dark" style="margin-bottom:2.5rem; border-color:var(--orange)">
+              <h4 style="margin-bottom:1rem; color:var(--orange); display:flex; align-items:center; gap:0.5rem">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M4 4l5 5"/>
+                </svg>
+                Cadena de Redirecciones Detectada (<?= count($result['redirect_chain']) ?> saltos)
+              </h4>
+              <div style="display:flex; flex-direction:column; gap:0.75rem">
+                <?php foreach ($result['redirect_chain'] as $idx => $step): ?>
+                  <div style="display:flex; align-items:flex-start; gap:0.75rem; font-size:0.9rem;">
+                    <span style="background:var(--orange); color:#fff; font-weight:700; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.8rem; margin-top: 2px;">
+                      <?= $idx + 1 ?>
+                    </span>
+                    <div style="word-break:break-all; line-height:1.4">
+                      <strong style="color:#fff"><?= h($step['from']) ?></strong>
+                      <div style="font-size:0.8rem; margin-top:0.15rem;">
+                        <span class="status-orange" style="font-weight:600">HTTP <?= h($step['status']) ?> Redirección</span> 
+                        <span style="color:var(--muted)">en <?= h($step['ttfb']) ?>ms</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="padding-left:7px; color:var(--orange); font-size:0.8rem; margin-top:-0.25rem;">↓</div>
+                <?php endforeach; ?>
+                <div style="display:flex; align-items:flex-start; gap:0.75rem; font-size:0.9rem;">
+                  <span style="background:#2ecc71; color:#fff; font-weight:700; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.8rem; margin-top: 2px;">
+                    ✓
+                  </span>
+                  <div style="word-break:break-all; line-height:1.4">
+                    <span style="color:var(--muted)">Destino Final:</span> <strong style="color:#2ecc71"><?= h($result['url']) ?></strong>
+                    <div style="font-size:0.8rem; margin-top:0.15rem">
+                      <span class="status-green" style="font-weight:600">HTTP <?= h($result['status']) ?> OK</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php endif; ?>
 
           <div class="results-summary-grid">
             <div class="summary-metric">
