@@ -300,9 +300,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-    'title'        => 'Analizador Técnico de URLs en vivo gratis | Víctor Alonso',
+    'title'        => 'Analizador SEO gratuito de TTFB y redirecciones',
     'description'  => 'Introduce cualquier dirección y analiza al instante la respuesta HTTP, velocidad TTFB, canonicals, robots y cabeceras de seguridad web.',
-    'canonical'    => '/herramientas/analizador-seo',
+    'canonical'    => '/herramientas/analizador-seo/',
     'body_class'   => 'page-analizador-seo',
     'schema_types' => ['WebApplication'],
     'rating_id'    => 'analizador-seo',

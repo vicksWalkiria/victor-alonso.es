@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Desarrollo WordPress | Temas a medida, CPT y rendimiento técnico',
+  'title'        => 'Desarrollo WordPress profesional y temas a medida',
   'description'  => 'Desarrollo WordPress técnico: temas a medida, custom post types, campos personalizados, rendimiento y SEO desde la base. Sin plantillas genéricas ni código inflado.',
   'canonical'    => '/servicios/desarrollo-wordpress/',
   'body_class'   => 'page-servicio',

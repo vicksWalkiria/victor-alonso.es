@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'SEO Técnico | Rastreo, indexación, Core Web Vitals y migraciones',
+  'title'        => 'SEO Técnico para resolver problemas de indexación y WPO',
   'description'  => 'Servicio de SEO técnico: análisis de rastreo, indexación, renderizado, Core Web Vitals, canonicals, datos estructurados, JS SEO y migraciones web.',
   'canonical'    => '/servicios/seo-tecnico/',
   'body_class'   => 'page-servicio',

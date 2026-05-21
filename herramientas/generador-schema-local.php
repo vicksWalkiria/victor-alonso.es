@@ -30,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 $page = page_config([
-    'title'        => 'Generador Schema JSON-LD LocalBusiness gratis | Víctor Alonso',
+    'title'        => 'Generador de Schema LocalBusiness JSON-LD',
     'description'  => 'Genera gratis el marcado estructurado de datos de Schema.org en formato JSON-LD recomendado por Google para posicionamiento SEO local.',
-    'canonical'    => '/herramientas/generador-schema-local',
+    'canonical'    => '/herramientas/generador-schema-local/',
     'body_class'   => 'page-generador-schema',
     'schema_types' => ['WebApplication'],
     'rating_id'    => 'generador-schema-local',

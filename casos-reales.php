@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Casos reales | Diagnósticos y resolución de problemas SEO y WordPress',
+  'title'        => 'Casos de estudio SEO y problemas resueltos',
   'description'  => 'Casos reales anonimizados: WordPress infectado, caídas de tráfico, migraciones fallidas, webs lentas, proyectos sin arquitectura y ecommerce con problemas técnicos.',
   'canonical'    => '/casos-reales/',
   'body_class'   => 'page-casos',

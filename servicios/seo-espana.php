@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'SEO para empresas en España | Enfoque técnico y estratégico',
+  'title'        => 'Consultor SEO en España para empresas',
   'description'  => 'Servicio de SEO nacional con arquitectura de información, clusters de contenido, SEO técnico, análisis de intención y medición real. Sin contenido IA genérico.',
   'canonical'    => '/servicios/seo-espana/',
   'body_class'   => 'page-servicio',

@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Plugins WordPress a medida | Automatizaciones, APIs y paneles',
+  'title'        => 'Desarrollo de Plugins WordPress a medida',
   'description'  => 'Desarrollo de plugins WordPress a medida: shortcodes, formularios, integraciones con APIs, WooCommerce, paneles de administración personalizados. Código seguro y mantenible.',
   'canonical'    => '/servicios/plugins-wordpress/',
   'body_class'   => 'page-servicio',

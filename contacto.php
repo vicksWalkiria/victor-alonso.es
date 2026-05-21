@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Contacto | Cuéntame qué ocurre con tu web',
+  'title'        => 'Contacto y primera valoración gratuita',
   'description'  => 'Contacta con Víctor Alonso para servicios de SEO, desarrollo WordPress o mantenimiento web. Teléfono, WhatsApp o formulario. Albacete y toda España.',
   'canonical'    => '/contacto/',
   'body_class'   => 'page-contacto',

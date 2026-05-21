@@ -11,7 +11,7 @@ $faq = [
 ];
 
 $page = page_config([
-  'title'        => 'SEO en Albacete | Consultor SEO técnico para empresas',
+  'title'        => 'SEO en Albacete para empresas y negocios',
   'description'  => 'Consultor SEO en Albacete para negocios que necesitan mejorar visibilidad, tráfico cualificado y rendimiento web con una estrategia técnica, medible y realista.',
   'canonical'    => '/servicios/seo-albacete/',
   'body_class'   => 'page-servicio page-seo-albacete',
@@ -47,14 +47,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p>Trabajo con tres capas que deben funcionar juntas:</p>
         <ul class="checklist" style="margin:1.5rem 0">
           <li class="checklist-item"><div><strong>Google Business Profile</strong> Verificado, completo, con categorías correctas, horario actualizado, fotos y gestión de reseñas. El punto de entrada más visible en búsquedas locales.</div></li>
-          <li class="checklist-item"><div><strong>Arquitectura web local</strong> Páginas de servicio específicas por localidad o zona, enlazado interno estratégico y estructura que Google puede rastrear sin problemas.</div></li>
+          <li class="checklist-item"><div><strong>Arquitectura web local</strong> Páginas de servicio específicas por localidad o zona, enlazado interno estratégico y estructura que Google puede rastrear sin problemas como explico en mi servicio de <a href="/servicios/seo-tecnico/" style="color:var(--orange)">SEO Técnico</a>.</div></li>
           <li class="checklist-item"><div><strong>Contenido con intención local</strong> No relleno de keywords. Páginas que responden a lo que un usuario de Albacete busca realmente cuando necesita tu servicio.</div></li>
           <li class="checklist-item"><div><strong>Autoridad y citas NAP</strong> Menciones coherentes del nombre, dirección y teléfono en directorios relevantes. Una señal de confianza para el algoritmo local.</div></li>
           <li class="checklist-item"><div><strong>Conversión</strong> De nada sirve posicionar si la web no convierte. Velocidad, claridad y llamadas a la acción forman parte de la estrategia.</div></li>
         </ul>
 
         <h2>Qué suelo revisar en una auditoría SEO local</h2>
-        <p>Cuando analizo un proyecto local en Albacete, reviso en este orden:</p>
+        <p>Cuando analizo un proyecto local en Albacete mediante una <a href="/servicios/auditoria-seo/" style="color:var(--orange)">Auditoría SEO completa</a>, reviso en este orden:</p>
         <ol style="display:grid;gap:.6rem;margin:1rem 0 1.5rem;padding-left:1.25rem;list-style:decimal;font-size:.92rem;color:var(--muted)">
           <li>Estado del perfil de Google Business Profile y categorías seleccionadas.</li>
           <li>Coherencia de NAP (nombre, dirección, teléfono) en la web, GBP y directorios.</li>
@@ -72,7 +72,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <ul class="checklist" style="margin:1rem 0 1.5rem">
           <li class="checklist-item">Tener una sola página de servicios genérica en lugar de páginas específicas por servicio y zona.</li>
           <li class="checklist-item">GBP sin verificar o con información desactualizada (horario, descripción, fotos).</li>
-          <li class="checklist-item">Web en WordPress con WPO pésimo: LCP superior a 4 segundos en móvil.</li>
+          <li class="checklist-item">Web en WordPress con WPO pésimo: LCP superior a 4 segundos en móvil. Esto lo soluciono directamente mediante mi servicio de <a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">mantenimiento de WordPress</a> enfocado a rendimiento.</li>
           <li class="checklist-item">Contenido copiado de competidores o generado con IA sin revisión, que no responde a intención real.</li>
           <li class="checklist-item">NAP inconsistente: el teléfono en la web no coincide con el del GBP ni con el de los directorios.</li>
           <li class="checklist-item">Ninguna estrategia de reseñas. Google interpreta pocas reseñas como señal de baja popularidad local.</li>

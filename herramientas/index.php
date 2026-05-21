@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Herramientas SEO Técnico Gratuitas | Víctor Alonso',
+    'title'        => 'Herramientas SEO técnico gratuitas',
     'description'  => 'Echale un ojo a nuestras herramientas SEO gratuitas creadas a medida para auditoría web en vivo y generación de datos estructurados Schema JSON-LD.',
     'canonical'    => '/herramientas/',
     'body_class'   => 'page-herramientas-hub',
