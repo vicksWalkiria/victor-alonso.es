@@ -128,8 +128,8 @@ function render_rating_widget($tool_id, $title = '¿Te ha sido útil esta herram
                 
                 const value = this.getAttribute('data-value');
                 
-                // Petición AJAX POST
-                fetch('/herramientas/analizador-seo', {
+                // Petición AJAX POST dinámica al pathname actual
+                fetch(window.location.pathname, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
