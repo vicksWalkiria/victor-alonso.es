@@ -330,6 +330,23 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </table>
             </div>
           </div>
+          
+          <!-- Cómo funciona la herramienta (Transparencia Técnica) -->
+          <div class="criterio-section" style="margin-top:4rem; border-top: 1px solid var(--border); padding-top:4rem;">
+            <span class="section-label">Especificaciones técnicas</span>
+            <h2>Cómo funciona este analizador (y por qué es tan rápido)</h2>
+            <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem; margin-top:2rem;">
+              <div>
+                <h3 style="color:var(--orange); font-size:1.1rem; margin-bottom:.5rem;">1. Medición de TTFB real en Servidor</h3>
+                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">No es una simulación visual. Cuando envías el formulario, nuestro servidor ejecuta una petición física en tiempo real a través de <strong>cURL multi-opción</strong>. El sistema registra el instante exacto en microsegundos (<code>microtime(true)</code>) justo antes de lanzar la conexión y en el momento exacto en que el servidor remoto entrega el primer byte de datos. Restando ambos valores obtenemos el TTFB científico real.</p>
+              </div>
+              <div>
+                <h3 style="color:var(--orange); font-size:1.1rem; margin-bottom:.5rem;">2. ¿Por qué se procesa de forma casi instantánea?</h3>
+                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">Esta herramienta está alojada en la infraestructura Cloud de alto rendimiento de <strong>Oracle Cloud</strong> con conexiones troncales de fibra óptica empresariales. A diferencia de un navegador web común o Lighthouse (que tiene que descargar imágenes, CSS, ejecutar scripts pesados de terceros y renderizar el árbol DOM), nuestro bot <strong>solo descarga el código HTML plano</strong> de la página, resolviendo la conexión de servidor a servidor en milisegundos.</p>
+                <p style="font-size:.92rem; color:var(--muted); line-height:1.6; margin-top:0.75rem;"><em>Nota: Si analizas esta misma web (victor-alonso.es), el servidor se conectará a sí mismo mediante la interfaz local (loopback), eliminando la latencia externa de red y arrojando registros de respuesta de entre 10ms y 20ms.</em></p>
+              </div>
+            </div>
+          </div>
 
         </div>
       <?php endif; ?>
