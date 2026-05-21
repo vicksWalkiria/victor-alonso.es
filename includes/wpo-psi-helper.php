@@ -162,8 +162,9 @@ function wpo_psi_fetch(string $url): array {
         'strategy' => 'mobile',
         'category' => 'performance',
     ];
-    if (defined('GOOGLE_PSI_API_KEY') && GOOGLE_PSI_API_KEY !== '') {
-        $params['key'] = GOOGLE_PSI_API_KEY;
+    $api_key = defined('GOOGLE_PSI_API_KEY') ? GOOGLE_PSI_API_KEY : '';
+    if (is_string($api_key) && $api_key !== '') {
+        $params['key'] = $api_key;
     }
 
     $ch = curl_init();

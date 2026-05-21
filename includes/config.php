@@ -7,9 +7,19 @@
 define('BASE_DIR', dirname(__DIR__));  // public_html/
 
 // ─── Carga de variables de entorno (.env fuera del repo) ──────────────────────
-$_env_file = dirname(BASE_DIR) . '/.env';
-if (file_exists($_env_file)) {
+// Hestia/PHP-FPM: open_basedir suele permitir private/ pero no el .env del directorio padre.
+$_env_candidates = [
+    dirname(BASE_DIR) . '/private/.env',
+    dirname(BASE_DIR) . '/.env',
+];
+foreach ($_env_candidates as $_env_file) {
+    if (!is_readable($_env_file)) {
+        continue;
+    }
     $_env_lines = file($_env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if ($_env_lines === false) {
+        continue;
+    }
     foreach ($_env_lines as $_env_line) {
         if (strpos(trim($_env_line), '#') === 0) continue;
         if (strpos($_env_line, '=') !== false) {
@@ -23,10 +33,12 @@ if (file_exists($_env_file)) {
             }
         }
     }
+    break;
 }
 
 // ─── Constantes globales ────────────────────────────────────────────────────
-define('GOOGLE_PSI_API_KEY', $_ENV['GOOGLE_PSI_API_KEY'] ?? getenv('GOOGLE_PSI_API_KEY') ?? '');
+$_psi_key = $_ENV['GOOGLE_PSI_API_KEY'] ?? getenv('GOOGLE_PSI_API_KEY');
+define('GOOGLE_PSI_API_KEY', (is_string($_psi_key) && $_psi_key !== '') ? $_psi_key : '');
 
 define('SITE_NAME',         'Víctor Alonso SEO');
 define('SITE_URL',          'https://www.victor-alonso.es');
