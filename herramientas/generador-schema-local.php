@@ -62,7 +62,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <div class="tool-intro">
         <h2>Estructura la información de tu negocio</h2>
-        <p>Rellena los datos de tu empresa a continuación. Generaremos en tiempo real el bloque estructurado en formato JSON-LD. Copia el código e instálalo en el `<head>` de tu página web.</p>
+        <p>Rellena los datos de tu empresa a continuación. Generaremos en tiempo real el bloque estructurado en formato JSON-LD. Copia el código e instálalo en el <code>&lt;head&gt;</code> de tu página web.</p>
       </div>
 
       <div class="schema-tool-grid">
