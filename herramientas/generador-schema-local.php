@@ -303,6 +303,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     generateSchema();
 
+    // Lógica UX de Auto-Limpieza inteligente al hacer foco en valores de ejemplo
+    const defaultValues = {
+        'sc-name': 'Mi Negocio SEO',
+        'sc-url': 'https://minegocio.com',
+        'sc-phone': '+34 600 000 000',
+        'sc-image': 'https://minegocio.com/foto-local.jpg',
+        'sc-street': 'Calle Ancha 10',
+        'sc-postal': '02001',
+        'sc-locality': 'Albacete',
+        'sc-lat': '38.9942',
+        'sc-lng': '-1.8585'
+    };
+
+    Object.keys(defaultValues).forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('focus', function() {
+                if (this.value === defaultValues[id]) {
+                    this.value = '';
+                    generateSchema();
+                }
+            });
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.value = defaultValues[id];
+                    generateSchema();
+                }
+            });
+        }
+    });
+
     btnCopy.addEventListener('click', function() {
         navigator.clipboard.writeText(schemaCode.textContent).then(() => {
             const originalText = btnCopy.textContent;
