@@ -35,6 +35,15 @@ function render_schemas(array $page): void {
     if (in_array('ContactPage', $types)) {
         _schema_contact_page($page['canonical']);
     }
+
+    if (in_array('WebApplication', $types) && !empty($page['rating_id'])) {
+        require_once __DIR__ . '/ratings-helper.php';
+        $ratings = get_ratings();
+        $rating_data = $ratings[$page['rating_id']] ?? null;
+        if ($rating_data) {
+            _schema_web_application($page['title'], $page['description'], $page['canonical'], $rating_data);
+        }
+    }
 }
 
 // ─── Schemas privados ────────────────────────────────────────────────────────
@@ -200,5 +209,26 @@ function _schema_contact_page(string $canonical): void {
         'url'          => SITE_URL . $canonical,
         'name'         => 'Contacto — Víctor Alonso SEO',
         'mainEntity'   => ['@id' => SITE_URL . '/#person'],
+    ]);
+}
+
+function _schema_web_application(string $name, string $description, string $canonical, array $rating_data): void {
+    _print_schema([
+        '@context'          => 'https://schema.org',
+        '@type'             => 'WebApplication',
+        'name'              => $name,
+        'description'       => $description,
+        'url'               => SITE_URL . $canonical,
+        'applicationCategory' => 'BusinessApplication',
+        'operatingSystem'   => 'All',
+        'browserRequirements' => 'Requires HTML5, CSS3, JavaScript',
+        'provider'          => ['@id' => SITE_URL . '/#person'],
+        'aggregateRating'   => [
+            '@type'       => 'AggregateRating',
+            'ratingValue' => (string)$rating_data['average'],
+            'ratingCount' => (string)$rating_data['count'],
+            'bestRating'  => '5',
+            'worstRating' => '1'
+        ]
     ]);
 }

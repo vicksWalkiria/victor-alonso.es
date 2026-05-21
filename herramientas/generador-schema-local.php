@@ -1,13 +1,41 @@
 <?php
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
+require_once dirname(__DIR__) . '/includes/ratings-helper.php';
+
+// Interceptar acción AJAX de votación
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'rate') {
+    header('Content-Type: application/json');
+    $tool_id = trim($_POST['tool_id'] ?? '');
+    $rating = (int)($_POST['rating'] ?? 0);
+    
+    // Evitar que voten dos veces (Cookie por 1 año)
+    if (isset($_COOKIE['voted_' . $tool_id])) {
+        echo json_encode(['success' => false, 'message' => 'Ya has valorado esta herramienta.']);
+        exit;
+    }
+    
+    $res = save_vote($tool_id, $rating);
+    if ($res) {
+        setcookie('voted_' . $tool_id, '1', time() + (365 * 24 * 60 * 60), '/');
+        echo json_encode([
+            'success' => true,
+            'count' => $res['count'],
+            'average' => $res['average']
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error al registrar valoración.']);
+    }
+    exit;
+}
 
 $page = page_config([
     'title'        => 'Generador Schema JSON-LD LocalBusiness gratis | Víctor Alonso',
     'description'  => 'Genera gratis el marcado estructurado de datos de Schema.org en formato JSON-LD recomendado por Google para posicionamiento SEO local.',
     'canonical'    => '/herramientas/generador-schema-local',
     'body_class'   => 'page-generador-schema',
-    'schema_types' => [],
+    'schema_types' => ['WebApplication'],
+    'rating_id'    => 'generador-schema-local',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
@@ -152,6 +180,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
         </div>
       </div>
+
+      <!-- Widget de Votación y Rich Snippet -->
+      <?php render_rating_widget('generador-schema-local'); ?>
 
     </div>
   </section>
