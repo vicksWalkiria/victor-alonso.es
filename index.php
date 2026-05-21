@@ -37,7 +37,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="hero-img-wrap">
         <img
-          src="/assets/img/victor-alonso-v2.webp"
+          src="/assets/img/victor-alonso-v3.webp"
           alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
           width="360" height="360"
           fetchpriority="high"
@@ -202,7 +202,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container auth-grid">
       <div class="auth-img-wrap">
         <img
-          src="/assets/img/victor-alonso-v2.webp"
+          src="/assets/img/victor-alonso-v3.webp"
           alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
           width="360" height="360"
           loading="lazy"

@@ -30,7 +30,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
 
       <div class="about-img-wrap">
         <img
-          src="/assets/img/victor-alonso-v2.webp"
+          src="/assets/img/victor-alonso-v3.webp"
           alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
           width="360" height="360"
           loading="lazy"

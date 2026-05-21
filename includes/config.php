@@ -24,7 +24,7 @@ define('SITE_GITHUB',       'https://github.com/vicksWalkiria');
 define('SITE_TWITTER_URL',  'https://x.com/vicks630');
 define('SITE_WALKIRIA',     'https://www.walkiriaapps.com');
 define('SITE_IMAGE',        'https://www.victor-alonso.es/social.webp');
-define('SITE_AUTHOR_IMAGE', 'https://www.victor-alonso.es/assets/img/victor-alonso-v2.webp');
+define('SITE_AUTHOR_IMAGE', 'https://www.victor-alonso.es/assets/img/victor-alonso-v3.webp');
 define('FORMSPREE',         'https://formspree.io/f/xwpkllpr');
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
