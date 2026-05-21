@@ -41,7 +41,7 @@ function h(string $str): string {
  * Opciones disponibles:
  *   title        string  Título de la página (sin el sufijo de marca)
  *   description  string  Meta description
- *   canonical    string  Ruta relativa, ej: '/servicios/seo-albacete.php'
+ *   canonical    string  Ruta relativa, ej: '/servicios/seo-albacete'
  *   og_image     string  URL absoluta de imagen OG (por defecto: SITE_IMAGE)
  *   body_class   string  Clase CSS del body
  *   schema_types array   Tipos de schema a renderizar, ej: ['Service', 'FAQPage']

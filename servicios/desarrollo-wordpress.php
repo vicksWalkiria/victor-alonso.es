@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Desarrollo WordPress | Temas a medida, CPT y rendimiento técnico',
   'description'  => 'Desarrollo WordPress técnico: temas a medida, custom post types, campos personalizados, rendimiento y SEO desde la base. Sin plantillas genéricas ni código inflado.',
-  'canonical'    => '/servicios/desarrollo-wordpress.php',
+  'canonical'    => '/servicios/desarrollo-wordpress',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_name' => 'Desarrollo WordPress',
@@ -59,14 +59,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card">
           <h3 style="color:var(--orange);margin-bottom:.75rem">Cuéntame tu proyecto</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Descripción del proyecto, plataforma actual, requisitos técnicos y plazo estimado.</p>
-          <a href="/contacto.php" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Relacionado</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/plugins-wordpress.php" style="color:var(--orange)">→ Plugins a medida</a></li>
-            <li><a href="/servicios/mantenimiento-wordpress.php" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
-            <li><a href="/servicios/seo-tecnico.php" style="color:var(--orange)">→ SEO Técnico</a></li>
+            <li><a href="/servicios/plugins-wordpress" style="color:var(--orange)">→ Plugins a medida</a></li>
+            <li><a href="/servicios/mantenimiento-wordpress" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
+            <li><a href="/servicios/seo-tecnico" style="color:var(--orange)">→ SEO Técnico</a></li>
           </ul>
         </div>
       </aside>
@@ -74,7 +74,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Tienes un proyecto WordPress en mente?', 'subtitle' => 'Cuéntame qué necesitas. Sin compromiso, te digo si puedo ayudarte y cómo lo plantearía.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Tienes un proyecto WordPress en mente?', 'subtitle' => 'Cuéntame qué necesitas. Sin compromiso, te digo si puedo ayudarte y cómo lo plantearía.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>

@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Plugins WordPress a medida | Automatizaciones, APIs y paneles',
   'description'  => 'Desarrollo de plugins WordPress a medida: shortcodes, formularios, integraciones con APIs, WooCommerce, paneles de administración personalizados. Código seguro y mantenible.',
-  'canonical'    => '/servicios/plugins-wordpress.php',
+  'canonical'    => '/servicios/plugins-wordpress',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_name' => 'Plugins WordPress a medida',
@@ -70,13 +70,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card">
           <h3 style="color:var(--orange);margin-bottom:.75rem">¿Tienes una funcionalidad en mente?</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Explícame qué necesitas y te digo si es viable, cuánto costaría desarrollarlo y cuánto tardaría.</p>
-          <a href="/contacto.php" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Relacionado</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/desarrollo-wordpress.php" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
-            <li><a href="/servicios/mantenimiento-wordpress.php" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
+            <li><a href="/servicios/desarrollo-wordpress" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
+            <li><a href="/servicios/mantenimiento-wordpress" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
           </ul>
         </div>
       </aside>
@@ -84,7 +84,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Necesitas una funcionalidad que ningún plugin cubre bien?', 'subtitle' => 'Cuéntame qué hace falta. Te digo si tiene sentido desarrollarlo a medida.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Necesitas una funcionalidad que ningún plugin cubre bien?', 'subtitle' => 'Cuéntame qué hace falta. Te digo si tiene sentido desarrollarlo a medida.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>

@@ -5,13 +5,13 @@
 $_nav = $page['active_nav'] ?? 'inicio';
 
 $_services = [
-    ['href' => '/servicios/seo-albacete.php',            'label' => 'SEO en Albacete'],
-    ['href' => '/servicios/seo-espana.php',              'label' => 'SEO para España'],
-    ['href' => '/servicios/auditoria-seo.php',           'label' => 'Auditoría SEO'],
-    ['href' => '/servicios/seo-tecnico.php',             'label' => 'SEO Técnico'],
-    ['href' => '/servicios/mantenimiento-wordpress.php', 'label' => 'Mantenimiento WordPress'],
-    ['href' => '/servicios/desarrollo-wordpress.php',    'label' => 'Desarrollo WordPress'],
-    ['href' => '/servicios/plugins-wordpress.php',       'label' => 'Plugins a medida'],
+    ['href' => '/servicios/seo-albacete',            'label' => 'SEO en Albacete'],
+    ['href' => '/servicios/seo-espana',              'label' => 'SEO para España'],
+    ['href' => '/servicios/auditoria-seo',           'label' => 'Auditoría SEO'],
+    ['href' => '/servicios/seo-tecnico',             'label' => 'SEO Técnico'],
+    ['href' => '/servicios/mantenimiento-wordpress', 'label' => 'Mantenimiento WordPress'],
+    ['href' => '/servicios/desarrollo-wordpress',    'label' => 'Desarrollo WordPress'],
+    ['href' => '/servicios/plugins-wordpress',       'label' => 'Plugins a medida'],
 ];
 ?>
 <header class="site-header" role="banner">

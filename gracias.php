@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Mensaje recibido | Gracias por contactar',
   'description'  => 'He recibido tu mensaje. Te respondo en breve con una primera valoración.',
-  'canonical'    => '/gracias.php',
+  'canonical'    => '/gracias',
   'body_class'   => 'page-gracias',
   'schema_types' => [],
   'noindex'      => true,

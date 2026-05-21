@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Contacto | Cuéntame qué ocurre con tu web',
   'description'  => 'Contacta con Víctor Alonso para servicios de SEO, desarrollo WordPress o mantenimiento web. Teléfono, WhatsApp o formulario. Albacete y toda España.',
-  'canonical'    => '/contacto.php',
+  'canonical'    => '/contacto',
   'body_class'   => 'page-contacto',
   'schema_types' => ['ContactPage'],
   'active_nav'   => 'contacto',
@@ -89,7 +89,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
 
           <input type="hidden" name="_subject" value="Nuevo contacto — victor-alonso.es">
           <input type="hidden" name="_replyto" value="<?= h(SITE_EMAIL) ?>">
-          <input type="hidden" name="_next" value="<?= h(SITE_URL) ?>/gracias.php">
+          <input type="hidden" name="_next" value="<?= h(SITE_URL) ?>/gracias">
 
           <button type="submit" class="btn btn--primary btn--lg">Enviar mensaje</button>
         </form>

@@ -7,7 +7,7 @@
  *     'title'      => 'Texto del CTA',
  *     'subtitle'   => 'Subtexto opcional',
  *     'btn_label'  => 'Texto botón principal',
- *     'btn_href'   => '/contacto.php',
+ *     'btn_href'   => '/contacto',
  *     'whatsapp'   => true,   // Mostrar botón WhatsApp secundario
  *     'variant'    => 'dark', // 'dark' | 'light' | 'orange'
  *   ];
@@ -16,7 +16,7 @@ $cta = $cta ?? [
     'title'     => '¿Tienes dudas sobre tu posicionamiento web?',
     'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración sin compromiso.',
     'btn_label' => 'Solicitar diagnóstico SEO',
-    'btn_href'  => '/contacto.php',
+    'btn_href'  => '/contacto',
     'whatsapp'  => true,
     'variant'   => 'dark',
 ];

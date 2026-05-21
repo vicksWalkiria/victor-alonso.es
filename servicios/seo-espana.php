@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 $page = page_config([
   'title'        => 'SEO para empresas en España | Enfoque técnico y estratégico',
   'description'  => 'Servicio de SEO nacional con arquitectura de información, clusters de contenido, SEO técnico, análisis de intención y medición real. Sin contenido IA genérico.',
-  'canonical'    => '/servicios/seo-espana.php',
+  'canonical'    => '/servicios/seo-espana',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_name' => 'SEO para empresas en España',
@@ -63,14 +63,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card">
           <h3 style="color:var(--orange);margin-bottom:.75rem">¿Hablamos de tu proyecto?</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame tu sector, tu web y tus objetivos. Te digo si tiene sentido trabajar juntos y por dónde empezaría.</p>
-          <a href="/contacto.php" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Servicios relacionados</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/auditoria-seo.php" style="color:var(--orange)">→ Auditoría SEO</a></li>
-            <li><a href="/servicios/seo-tecnico.php" style="color:var(--orange)">→ SEO Técnico</a></li>
-            <li><a href="/servicios/seo-albacete.php" style="color:var(--orange)">→ SEO en Albacete</a></li>
+            <li><a href="/servicios/auditoria-seo" style="color:var(--orange)">→ Auditoría SEO</a></li>
+            <li><a href="/servicios/seo-tecnico" style="color:var(--orange)">→ SEO Técnico</a></li>
+            <li><a href="/servicios/seo-albacete" style="color:var(--orange)">→ SEO en Albacete</a></li>
           </ul>
         </div>
       </aside>
@@ -78,7 +78,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Quieres analizar tu situación SEO?', 'subtitle' => 'Sin compromiso. Te digo qué está frenando tu posicionamiento y qué acciones tienen más sentido para tu negocio.', 'btn_label' => 'Solicitar primera valoración', 'btn_href' => '/contacto.php', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Quieres analizar tu situación SEO?', 'subtitle' => 'Sin compromiso. Te digo qué está frenando tu posicionamiento y qué acciones tienen más sentido para tu negocio.', 'btn_label' => 'Solicitar primera valoración', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>
