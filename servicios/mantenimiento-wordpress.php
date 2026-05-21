@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Mantenimiento WordPress | Seguridad, backups, WPO y soporte técnico',
   'description'  => 'Servicio de mantenimiento WordPress: actualizaciones, backups automatizados, seguridad, limpieza de malware, optimización de rendimiento y soporte técnico continuo.',
-  'canonical'    => '/servicios/mantenimiento-wordpress',
+  'canonical'    => '/servicios/mantenimiento-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_name' => 'Mantenimiento WordPress',
@@ -59,14 +59,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card">
           <h3 style="color:var(--orange);margin-bottom:.75rem">¿Necesitas mantenimiento?</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame tu situación actual. Si tienes una urgencia, escríbeme directamente por WhatsApp.</p>
-          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+          <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
           <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp urgencias</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Relacionado</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/desarrollo-wordpress" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
-            <li><a href="/servicios/plugins-wordpress" style="color:var(--orange)">→ Plugins a medida</a></li>
+            <li><a href="/servicios/desarrollo-wordpress/" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
+            <li><a href="/servicios/plugins-wordpress/" style="color:var(--orange)">→ Plugins a medida</a></li>
             <li><a href="/casos-reales" style="color:var(--orange)">→ Casos reales</a></li>
           </ul>
         </div>
@@ -75,7 +75,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Tu WordPress está actualizado y con backups?', 'subtitle' => 'Si no tienes respuesta clara a esas dos preguntas, merece la pena que hablemos.', 'btn_label' => 'Hablar sobre mantenimiento', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Tu WordPress está actualizado y con backups?', 'subtitle' => 'Si no tienes respuesta clara a esas dos preguntas, merece la pena que hablemos.', 'btn_label' => 'Hablar sobre mantenimiento', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>

@@ -143,7 +143,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>SEO en Albacete</h3>
           <p>SEO local técnico para negocios en Albacete. Google Business Profile, arquitectura, contenido local y medición.</p>
-          <a href="/servicios/seo-albacete" class="card-link">Ver servicio →</a>
+          <a href="/servicios/seo-albacete/" class="card-link">Ver servicio →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -151,7 +151,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>SEO para España</h3>
           <p>Estrategia SEO nacional con enfoque técnico, clusters de contenido, arquitectura de información y análisis de intención.</p>
-          <a href="/servicios/seo-espana" class="card-link">Ver servicio →</a>
+          <a href="/servicios/seo-espana/" class="card-link">Ver servicio →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -159,7 +159,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Auditoría SEO</h3>
           <p>Revisión completa del estado técnico, arquitectura, contenido, indexación y WPO. Entregable priorizado por impacto.</p>
-          <a href="/servicios/auditoria-seo" class="card-link">Ver servicio →</a>
+          <a href="/servicios/auditoria-seo/" class="card-link">Ver servicio →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -167,7 +167,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>SEO Técnico</h3>
           <p>Rastreo, indexación, renderizado, Core Web Vitals, canonicals, sitemaps, datos estructurados, JS SEO y migraciones.</p>
-          <a href="/servicios/seo-tecnico" class="card-link">Ver servicio →</a>
+          <a href="/servicios/seo-tecnico/" class="card-link">Ver servicio →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -175,7 +175,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Mantenimiento WordPress</h3>
           <p>Actualizaciones, backups, seguridad, limpieza de malware, WPO y soporte técnico continuo.</p>
-          <a href="/servicios/mantenimiento-wordpress" class="card-link">Ver servicio →</a>
+          <a href="/servicios/mantenimiento-wordpress/" class="card-link">Ver servicio →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -183,7 +183,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Desarrollo WordPress</h3>
           <p>Temas a medida, CPT, campos personalizados, rendimiento y SEO técnico desde la base del código.</p>
-          <a href="/servicios/desarrollo-wordpress" class="card-link">Ver servicio →</a>
+          <a href="/servicios/desarrollo-wordpress/" class="card-link">Ver servicio →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -191,7 +191,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Plugins a medida</h3>
           <p>Automatizaciones, shortcodes, integraciones con APIs, formularios y paneles de administración personalizados.</p>
-          <a href="/servicios/plugins-wordpress" class="card-link">Ver servicio →</a>
+          <a href="/servicios/plugins-wordpress/" class="card-link">Ver servicio →</a>
         </article>
       </div>
     </div>
@@ -223,7 +223,7 @@ require __DIR__ . '/includes/header.php';
           <span class="auth-tag">Search Console</span>
           <span class="auth-tag">WPO</span>
         </div>
-        <a href="/sobre-mi" class="btn btn--primary">Más sobre mí</a>
+        <a href="/sobre-mi/" class="btn btn--primary">Más sobre mí</a>
       </div>
     </div>
   </section>
@@ -249,7 +249,7 @@ require __DIR__ . '/includes/header.php';
         </article>
       </div>
       <div style="margin-top:2rem">
-        <a href="/casos-reales" class="btn btn--secondary">Ver todos los casos</a>
+        <a href="/casos-reales/" class="btn btn--secondary">Ver todos los casos</a>
       </div>
     </div>
   </section>
@@ -285,7 +285,7 @@ require __DIR__ . '/includes/header.php';
     'title'     => '¿Tienes dudas sobre tu posicionamiento web?',
     'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración sin compromiso.',
     'btn_label' => 'Solicitar diagnóstico SEO',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

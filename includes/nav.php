@@ -5,13 +5,13 @@
 $_nav = $page['active_nav'] ?? 'inicio';
 
 $_services = [
-    ['href' => '/servicios/seo-albacete',            'label' => 'SEO en Albacete'],
-    ['href' => '/servicios/seo-espana',              'label' => 'SEO para España'],
-    ['href' => '/servicios/auditoria-seo',           'label' => 'Auditoría SEO'],
-    ['href' => '/servicios/seo-tecnico',             'label' => 'SEO Técnico'],
-    ['href' => '/servicios/mantenimiento-wordpress', 'label' => 'Mantenimiento WordPress'],
-    ['href' => '/servicios/desarrollo-wordpress',    'label' => 'Desarrollo WordPress'],
-    ['href' => '/servicios/plugins-wordpress',       'label' => 'Plugins a medida'],
+    ['href' => '/servicios/seo-albacete/',            'label' => 'SEO en Albacete'],
+    ['href' => '/servicios/seo-espana/',              'label' => 'SEO para España'],
+    ['href' => '/servicios/auditoria-seo/',           'label' => 'Auditoría SEO'],
+    ['href' => '/servicios/seo-tecnico/',             'label' => 'SEO Técnico'],
+    ['href' => '/servicios/mantenimiento-wordpress/', 'label' => 'Mantenimiento WordPress'],
+    ['href' => '/servicios/desarrollo-wordpress/',    'label' => 'Desarrollo WordPress'],
+    ['href' => '/servicios/plugins-wordpress/',       'label' => 'Plugins a medida'],
 ];
 ?>
 <header class="site-header" role="banner">
@@ -39,16 +39,16 @@ $_services = [
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="/sobre-mi" class="nav-link<?= $_nav === 'sobre-mi' ? ' active' : '' ?>">Sobre mí</a>
+                    <a href="/sobre-mi/" class="nav-link<?= $_nav === 'sobre-mi' ? ' active' : '' ?>">Sobre mí</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/casos-reales" class="nav-link<?= $_nav === 'casos' ? ' active' : '' ?>">Casos reales</a>
+                    <a href="/casos-reales/" class="nav-link<?= $_nav === 'casos' ? ' active' : '' ?>">Casos reales</a>
                 </li>
                 <li class="nav-item">
                     <a href="/herramientas/" class="nav-link<?= $_nav === 'herramientas' ? ' active' : '' ?>">Herramientas</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/contacto" class="nav-link nav-link--cta<?= $_nav === 'contacto' ? ' active' : '' ?>">Contacto</a>
+                    <a href="/contacto/" class="nav-link nav-link--cta<?= $_nav === 'contacto' ? ' active' : '' ?>">Contacto</a>
                 </li>
             </ul>
         </nav>

@@ -13,7 +13,7 @@ $faq = [
 $page = page_config([
   'title'        => 'SEO en Albacete | Consultor SEO técnico para empresas',
   'description'  => 'Consultor SEO en Albacete para negocios que necesitan mejorar visibilidad, tráfico cualificado y rendimiento web con una estrategia técnica, medible y realista.',
-  'canonical'    => '/servicios/seo-albacete',
+  'canonical'    => '/servicios/seo-albacete/',
   'body_class'   => 'page-servicio page-seo-albacete',
   'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
   'service_name' => 'SEO en Albacete',
@@ -126,16 +126,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card" style="margin-bottom:1.5rem">
           <h3 style="color:var(--orange);margin-bottom:.75rem">Solicitar diagnóstico SEO</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame qué ocurre con tu web y te respondo con una primera valoración sin compromiso.</p>
-          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+           <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
           <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp</a>
         </div>
         <div class="card">
           <h3 style="margin-bottom:.75rem">Otros servicios</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/auditoria-seo" style="color:var(--orange)">→ Auditoría SEO</a></li>
-            <li><a href="/servicios/seo-tecnico" style="color:var(--orange)">→ SEO Técnico</a></li>
-            <li><a href="/servicios/seo-espana" style="color:var(--orange)">→ SEO para España</a></li>
-            <li><a href="/servicios/mantenimiento-wordpress" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
+            <li><a href="/servicios/auditoria-seo/" style="color:var(--orange)">→ Auditoría SEO</a></li>
+            <li><a href="/servicios/seo-tecnico/" style="color:var(--orange)">→ SEO Técnico</a></li>
+            <li><a href="/servicios/seo-espana/" style="color:var(--orange)">→ SEO para España</a></li>
+            <li><a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
           </ul>
         </div>
       </aside>
@@ -143,7 +143,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Quieres saber cómo está tu web en Albacete?', 'subtitle' => 'Pídeme un primer análisis. Te digo qué está frenando tu posicionamiento y qué tiene sentido hacer.', 'btn_label' => 'Solicitar diagnóstico', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Quieres saber cómo está tu web en Albacete?', 'subtitle' => 'Pídeme un primer análisis. Te digo qué está frenando tu posicionamiento y qué tiene sentido hacer.', 'btn_label' => 'Solicitar diagnóstico', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 

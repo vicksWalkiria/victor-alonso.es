@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Sobre mí | Víctor Alonso, consultor SEO e ingeniero informático',
   'description'  => 'Ingeniero informático y consultor SEO técnico en Albacete. Experiencia en SEO, WordPress, PHP, Laravel, analítica web y optimización de rendimiento. Por qué combino SEO y desarrollo.',
-  'canonical'    => '/sobre-mi',
+  'canonical'    => '/sobre-mi/',
   'body_class'   => 'page-sobre-mi',
   'schema_types' => ['AboutPage'],
   'active_nav'   => 'sobre-mi',
@@ -78,7 +78,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
           <a href="<?= h(SITE_LINKEDIN) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" aria-label="Ver perfil de LinkedIn de Víctor Alonso">LinkedIn</a>
           <a href="<?= h(SITE_GITHUB) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" aria-label="Ver GitHub de Víctor Alonso">GitHub</a>
           <a href="<?= h(SITE_WALKIRIA) ?>" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" aria-label="Ver Walkiria Apps">Walkiria Apps</a>
-          <a href="/contacto" class="btn btn--primary">Contactar</a>
+          <a href="/contacto/" class="btn btn--primary">Contactar</a>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Quieres trabajar juntos?', 'subtitle' => 'Cuéntame tu proyecto o la situación de tu web. Te respondo con una valoración inicial.', 'btn_label' => 'Enviar mensaje', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Quieres trabajar juntos?', 'subtitle' => 'Cuéntame tu proyecto o la situación de tu web. Te respondo con una valoración inicial.', 'btn_label' => 'Enviar mensaje', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];
   require __DIR__ . '/includes/cta.php';
   ?>
 

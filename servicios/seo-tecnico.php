@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 $page = page_config([
   'title'        => 'SEO Técnico | Rastreo, indexación, Core Web Vitals y migraciones',
   'description'  => 'Servicio de SEO técnico: análisis de rastreo, indexación, renderizado, Core Web Vitals, canonicals, datos estructurados, JS SEO y migraciones web.',
-  'canonical'    => '/servicios/seo-tecnico',
+  'canonical'    => '/servicios/seo-tecnico/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_name' => 'SEO Técnico',
@@ -78,14 +78,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card">
           <h3 style="color:var(--orange);margin-bottom:.75rem">Diagnóstico técnico</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame tu situación. Te digo por dónde empezaría.</p>
-          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+          <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Relacionado</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/auditoria-seo" style="color:var(--orange)">→ Auditoría SEO</a></li>
-            <li><a href="/servicios/desarrollo-wordpress" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
-            <li><a href="/servicios/mantenimiento-wordpress" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
+            <li><a href="/servicios/auditoria-seo/" style="color:var(--orange)">→ Auditoría SEO</a></li>
+            <li><a href="/servicios/desarrollo-wordpress/" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
+            <li><a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
           </ul>
         </div>
       </aside>
@@ -93,7 +93,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Tu web tiene problemas técnicos que frenan el posicionamiento?', 'subtitle' => 'Cuéntame qué está pasando. Te hago una valoración inicial sin compromiso.', 'btn_label' => 'Hablar sobre mi web', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Tu web tiene problemas técnicos que frenan el posicionamiento?', 'subtitle' => 'Cuéntame qué está pasando. Te hago una valoración inicial sin compromiso.', 'btn_label' => 'Hablar sobre mi web', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>

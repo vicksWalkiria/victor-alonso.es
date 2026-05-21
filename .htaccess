@@ -17,6 +17,11 @@ Options -Indexes
   RewriteCond %{REQUEST_URI} ^(.*)//(.*)$
   RewriteRule . %1/%2 [R=301,L]
 
+  # 3.5. Forzar barra final (trailing slash) si no es un archivo físico
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !(.*)/$
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [R=301,L]
+
   # 4. Redirigir .php → URL limpia (301 permanente)
   #    Evita tocar archivos reales como favicon.png, social.webp, etc.
   RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]

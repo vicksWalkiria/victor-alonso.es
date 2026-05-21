@@ -5,7 +5,7 @@ require_once __DIR__ . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Casos reales | Diagnósticos y resolución de problemas SEO y WordPress',
   'description'  => 'Casos reales anonimizados: WordPress infectado, caídas de tráfico, migraciones fallidas, webs lentas, proyectos sin arquitectura y ecommerce con problemas técnicos.',
-  'canonical'    => '/casos-reales',
+  'canonical'    => '/casos-reales/',
   'body_class'   => 'page-casos',
   'schema_types' => [],
   'active_nav'   => 'casos',
@@ -202,7 +202,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Tu caso se parece a alguno de estos?', 'subtitle' => 'Cuéntame qué está pasando con tu web. Identificar bien el problema es el primer paso.', 'btn_label' => 'Hablar sobre mi situación', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Tu caso se parece a alguno de estos?', 'subtitle' => 'Cuéntame qué está pasando con tu web. Identificar bien el problema es el primer paso.', 'btn_label' => 'Hablar sobre mi situación', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];
   require __DIR__ . '/includes/cta.php';
   ?>
 

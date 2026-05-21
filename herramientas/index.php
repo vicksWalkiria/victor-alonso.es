@@ -51,7 +51,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <li class="checklist-item">Análisis de cabeceras OWASP frente a vulnerabilidades.</li>
             </ul>
           </div>
-          <a href="/herramientas/analizador-seo" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Analizador SEO</a>
+          <a href="/herramientas/analizador-seo/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Analizador SEO</a>
         </article>
 
         <!-- CARD 2: GENERADOR DE SCHEMA -->
@@ -73,7 +73,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <li class="checklist-item">Código copiable con un clic y validación instantánea.</li>
             </ul>
           </div>
-          <a href="/herramientas/generador-schema-local" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Generador Schema</a>
+          <a href="/herramientas/generador-schema-local/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Generador Schema</a>
         </article>
 
       </div>
@@ -87,7 +87,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Necesitas un desarrollo de herramienta a medida?',
     'subtitle'  => 'Desde un estimador de presupuestos hasta integraciones con APIs externas de SEO o automatización de informes. Si puedes imaginarlo, lo puedo programar.',
     'btn_label' => 'Hablemos de tu idea técnica',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

@@ -5,7 +5,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 $page = page_config([
   'title'        => 'Auditoría SEO | Diagnóstico técnico, de contenido y de arquitectura',
   'description'  => 'Auditoría SEO completa: estado técnico, indexación, arquitectura, contenido, WPO y datos estructurados. Entregable priorizado por impacto, no un informe de 100 páginas.',
-  'canonical'    => '/servicios/auditoria-seo',
+  'canonical'    => '/servicios/auditoria-seo/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_name' => 'Auditoría SEO',
@@ -95,13 +95,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card">
           <h3 style="color:var(--orange);margin-bottom:.75rem">Pedir auditoría</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame tu web, tu sector y tu situación actual. Te digo cómo plantearía el análisis.</p>
-          <a href="/contacto" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
+          <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Relacionado</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/seo-tecnico" style="color:var(--orange)">→ SEO Técnico</a></li>
-            <li><a href="/servicios/seo-albacete" style="color:var(--orange)">→ SEO en Albacete</a></li>
+            <li><a href="/servicios/seo-tecnico/" style="color:var(--orange)">→ SEO Técnico</a></li>
+            <li><a href="/servicios/seo-albacete/" style="color:var(--orange)">→ SEO en Albacete</a></li>
             <li><a href="/casos-reales" style="color:var(--orange)">→ Casos reales</a></li>
           </ul>
         </div>
@@ -110,7 +110,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <?php
-  $cta = ['title' => '¿Tu web necesita un diagnóstico?', 'subtitle' => 'Cuéntame qué está pasando. Te digo si tiene sentido hacer una auditoría o si hay acciones más urgentes primero.', 'btn_label' => 'Hablar sobre mi web', 'btn_href' => '/contacto', 'whatsapp' => true, 'variant' => 'dark'];
+  $cta = ['title' => '¿Tu web necesita un diagnóstico?', 'subtitle' => 'Cuéntame qué está pasando. Te digo si tiene sentido hacer una auditoría o si hay acciones más urgentes primero.', 'btn_label' => 'Hablar sobre mi web', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 </main>
