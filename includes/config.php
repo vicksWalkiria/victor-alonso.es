@@ -3,11 +3,30 @@
  * config.php — Configuración global del sitio
  * victor-alonso.es
  */
-
 // ─── Ruta base del proyecto ─────────────────────────────────────────────────
 define('BASE_DIR', dirname(__DIR__));  // public_html/
 
+// ─── Carga de variables de entorno (.env fuera del repo) ──────────────────────
+$_env_file = dirname(BASE_DIR) . '/.env';
+if (file_exists($_env_file)) {
+    $_env_lines = file($_env_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($_env_lines as $_env_line) {
+        if (strpos(trim($_env_line), '#') === 0) continue;
+        if (strpos($_env_line, '=') !== false) {
+            list($_env_key, $_env_val) = explode('=', $_env_line, 2);
+            $_env_key = trim($_env_key);
+            $_env_val = trim(trim($_env_val), '"\'');
+            if (!empty($_env_key)) {
+                putenv("{$_env_key}={$_env_val}");
+                $_ENV[$_env_key] = $_env_val;
+                $_SERVER[$_env_key] = $_env_val;
+            }
+        }
+    }
+}
+
 // ─── Constantes globales ────────────────────────────────────────────────────
+define('GOOGLE_PSI_API_KEY', $_ENV['GOOGLE_PSI_API_KEY'] ?? getenv('GOOGLE_PSI_API_KEY') ?? '');
 
 define('SITE_NAME',         'Víctor Alonso SEO');
 define('SITE_URL',          'https://www.victor-alonso.es');

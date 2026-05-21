@@ -76,6 +76,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <a href="/herramientas/generador-schema-local/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Generador Schema</a>
         </article>
 
+        <!-- CARD 3: CALCULADORA WPO -->
+        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12" y2="18"></line>
+                <line x1="8" y1="14" x2="16" y2="14"></line>
+                <line x1="8" y1="10" x2="16" y2="10"></line>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Calculadora de Pérdidas WPO</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Conecta el rendimiento técnico de tu web con tus ingresos. Analiza la URL en vivo con Google PageSpeed y calcula de forma científica cuánto dinero dejas de facturar debido a tiempos de carga móviles lentos.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Llamada en vivo a la API oficial de Google PageSpeed.</li>
+              <li class="checklist-item">Cálculo de pérdidas según estudios oficiales de conversión.</li>
+              <li class="checklist-item">Simulador interactivo adaptado a tu volumen y ticket medio.</li>
+              <li class="checklist-item">Informe de rendimiento y sugerencias de WPO quirúrgico.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/calculadora-wpo/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder a la Calculadora WPO</a>
+        </article>
+
       </div>
 
     </div>

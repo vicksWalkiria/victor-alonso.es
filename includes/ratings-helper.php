@@ -20,6 +20,11 @@ function get_ratings() {
             'count' => 36,
             'sum' => 176,
             'average' => 4.9
+        ],
+        'calculadora-wpo' => [
+            'count' => 52,
+            'sum' => 255,
+            'average' => 4.9
         ]
     ];
 
