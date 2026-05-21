@@ -74,6 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $error_msg = $data['error']['message'] ?? 'Error desconocido al invocar la API de PageSpeed.';
         if ($http_code === 429) {
             $error_msg = 'Límite de cuota excedido. Inténtalo en unos minutos.';
+        } elseif ($http_code === 403 && stripos($error_msg, 'IP address restriction') !== false) {
+            $error_msg = 'La clave de PageSpeed tiene restricción de IP y el servidor no está autorizado. Añade la IP del servidor en Google Cloud Console → Credentials.';
         }
         echo json_encode(['success' => false, 'message' => 'Google PSI devolvió un error: ' . $error_msg]);
         exit;
@@ -199,43 +201,43 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="section">
     <div class="container">
 
+      <div class="tool-intro">
+        <h2>Simulador de impacto financiero</h2>
+        <p>Introduce los datos aproximados de tu negocio para estimar el dinero que dejas de ingresar por cada segundo de retraso en la carga.</p>
+      </div>
+
       <!-- CALCULATOR COMPONENT -->
-      <div class="wpo-calculator-wrapper" style="max-width: 860px; margin: 0 auto; background: var(--dark-card); border: 1px solid #2a2a2a; border-radius: 16px; padding: 2.5rem; box-shadow: var(--shadow-md);">
+      <div class="wpo-calculator-wrapper">
         
-        <div id="wpo-form-container">
-          <div style="text-align: center; margin-bottom: 2rem;">
-            <h2 style="color: #fff; font-size: 1.6rem; margin-bottom: 0.5rem;">Simulador de Impacto Financiero</h2>
-            <p style="color: var(--muted); font-size: 0.95rem;">Introduce los datos aproximados de tu negocio para estimar el dinero que dejas de ingresar por cada segundo de retraso en la carga.</p>
-          </div>
-
-          <form id="wpo-calc-form" style="display: grid; gap: 1.5rem;">
-            <div>
-              <label for="wpo-url" style="display: block; font-weight: 600; color: #fff; margin-bottom: 0.5rem; font-size: 0.9rem;">URL de tu web a analizar <span style="color:var(--orange)">*</span></label>
-              <input type="url" id="wpo-url" name="url" required placeholder="https://tuweb.com" style="width: 100%; padding: 0.85rem 1rem; border-radius: var(--radius); border: 1px solid #3a3a3a; background: #111; color: #fff; font-size: 0.95rem;">
+        <div id="wpo-form-container" class="card wpo-form-card">
+          <form id="wpo-calc-form">
+            <div class="form-group">
+              <label class="form-label" for="wpo-url">URL de tu web a analizar <span>*</span></label>
+              <input type="url" class="form-input" id="wpo-url" name="url" required placeholder="https://tuweb.com">
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem;">
-              <div>
-                <label for="wpo-visits" style="display: block; font-weight: 600; color: #fff; margin-bottom: 0.5rem; font-size: 0.9rem;">Visitas mensuales <span style="color:var(--orange)">*</span></label>
-                <input type="number" id="wpo-visits" name="visits" required min="1" placeholder="Ej. 15000" style="width: 100%; padding: 0.85rem 1rem; border-radius: var(--radius); border: 1px solid #3a3a3a; background: #111; color: #fff; font-size: 0.95rem;">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="wpo-visits">Visitas mensuales <span>*</span></label>
+                <input type="number" class="form-input" id="wpo-visits" name="visits" required min="1" placeholder="Ej. 15000">
               </div>
 
-              <div>
-                <label for="wpo-ticket" style="display: block; font-weight: 600; color: #fff; margin-bottom: 0.5rem; font-size: 0.9rem;">Ticket Medio / Valor de Cliente (€) <span style="color:var(--orange)">*</span></label>
-                <input type="number" id="wpo-ticket" name="ticket" required min="1" step="0.01" placeholder="Ej. 65" style="width: 100%; padding: 0.85rem 1rem; border-radius: var(--radius); border: 1px solid #3a3a3a; background: #111; color: #fff; font-size: 0.95rem;">
+              <div class="form-group">
+                <label class="form-label" for="wpo-ticket">Ticket medio / valor de cliente (€) <span>*</span></label>
+                <input type="number" class="form-input" id="wpo-ticket" name="ticket" required min="1" step="0.01" placeholder="Ej. 65">
               </div>
             </div>
 
-            <div>
-              <label for="wpo-conversion" style="display: block; font-weight: 600; color: #fff; margin-bottom: 0.5rem; font-size: 0.9rem;">Tasa de conversión estimada (%)</label>
-              <input type="number" id="wpo-conversion" name="conversion" step="0.01" value="1.5" style="width: 100%; padding: 0.85rem 1rem; border-radius: var(--radius); border: 1px solid #3a3a3a; background: #111; color: #fff; font-size: 0.95rem;">
-              <p style="color: var(--muted); font-size: 0.8rem; margin-top: 0.4rem; line-height: 1.4;">¿No sabes este dato? El 1.5% es la media en España. Usa 1% para una estimación conservadora o ajústalo si conoces tu tasa.</p>
+            <div class="form-group">
+              <label class="form-label" for="wpo-conversion">Tasa de conversión estimada (%)</label>
+              <input type="number" class="form-input" id="wpo-conversion" name="conversion" step="0.01" value="1.5">
+              <p class="form-hint">¿No sabes este dato? El 1,5% es la media en España. Usa 1% para una estimación conservadora o ajústalo si conoces tu tasa.</p>
             </div>
 
-            <div id="wpo-error" style="display: none; padding: 1rem; border-radius: var(--radius); background: rgba(231,76,60,0.15); border: 1px solid #e74c3c; color: #f5b7b1; font-size: 0.9rem; font-weight: 500;"></div>
+            <div id="wpo-error" class="diag-alert diag-alert--danger" style="display: none; margin-bottom: 1rem;" role="alert"></div>
 
-            <div style="text-align: center; margin-top: 1rem;">
-              <button type="submit" class="btn btn--primary btn--lg" style="width: 100%; justify-content: center; font-size: 1.05rem;">
+            <div class="wpo-form-actions">
+              <button type="submit" class="btn btn--primary btn--lg">
                 Analizar rendimiento e impacto económico
               </button>
             </div>
@@ -243,14 +245,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- LOADING STATE -->
-        <div id="wpo-loading" style="display: none; text-align: center; padding: 3rem 0;">
+        <div id="wpo-loading" class="card card--dark wpo-state-card" style="display: none; text-align: center;">
           <div class="wpo-spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-radius: 50%; border-top-color: var(--orange); animation: spin 1s linear infinite;"></div>
           <h3 style="color: #fff; font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Conectando con Google PageSpeed...</h3>
           <p style="color: var(--muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.5;">Estamos lanzando un análisis móvil completo de tu URL con Lighthouse. Esto ejecuta celdas de simulación reales en los servidores de Google y puede tardar de 30 a 50 segundos. Ten paciencia.</p>
         </div>
 
         <!-- RESULTS STATE -->
-        <div id="wpo-results" style="display: none; margin-top: 1rem; padding-top: 1rem;">
+        <div id="wpo-results" class="card card--dark wpo-state-card" style="display: none;">
           
           <div style="text-align: center; margin-bottom: 2.5rem;">
             <span style="display: inline-block; background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.25); color: #f87171; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.35rem 0.8rem; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem;">
@@ -538,6 +540,14 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
+.wpo-calculator-wrapper { max-width: 860px; margin: 0 auto; }
+.wpo-form-card { margin-bottom: 0; }
+.wpo-form-card #wpo-calc-form { display: grid; gap: 0.25rem; }
+.wpo-form-actions { text-align: center; margin-top: 1.25rem; }
+.wpo-form-actions .btn { width: 100%; justify-content: center; font-size: 1.05rem; }
+.form-hint { color: var(--muted); font-size: 0.82rem; margin-top: 0.4rem; line-height: 1.45; }
+.wpo-state-card { margin-top: 0; }
+.card--dark .wpo-muted { color: #9ca3af; }
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
