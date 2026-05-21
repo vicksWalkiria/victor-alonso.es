@@ -293,3 +293,72 @@ strong { font-weight: 600; }
   .method-steps { grid-template-columns: 1fr; }
   .footer-nav { grid-template-columns: 1fr; }
 }
+
+/* ── Sección de Herramientas SEO ─────────────────── */
+.tools-tabs { display: flex; gap: .75rem; border-bottom: 2px solid var(--border); margin-bottom: 2.5rem; padding-bottom: 2px; overflow-x: auto; }
+.tool-tab { padding: .75rem 1.25rem; font-weight: 600; font-size: .95rem; color: var(--muted); border-bottom: 3px solid transparent; transition: color var(--transition), border-color var(--transition); white-space: nowrap; margin-bottom: -2px; }
+.tool-tab:hover { color: var(--orange); }
+.tool-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+.tool-panel { display: none; }
+.tool-panel.active { display: block; animation: fadeIn .3s ease-in-out; }
+
+.tool-intro { margin-bottom: 2.5rem; max-width: 800px; }
+.tool-intro h2 { margin-bottom: .5rem; }
+.tool-intro p { color: var(--muted); font-size: 1.05rem; }
+
+.form-group-row { display: grid; grid-template-columns: 1fr auto; gap: .75rem; }
+
+/* Resultados de Auditoría */
+.results-summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.summary-metric { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-align: center; display: flex; flex-direction: column; justify-content: center; }
+.metric-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: .25rem; }
+.metric-value { font-size: 1.6rem; font-weight: 700; color: var(--black); }
+
+.status-green { color: #2ecc71 !important; }
+.status-orange { color: #e67e22 !important; }
+.status-red { color: #e74c3c !important; }
+
+/* Alertas de diagnóstico */
+.diag-alert { padding: 1rem 1.25rem; border-radius: var(--radius); border-left: 4px solid var(--border); background: var(--bg); margin-bottom: .75rem; }
+.diag-alert--success { border-left-color: #2ecc71; background: rgba(46, 204, 113, 0.05); }
+.diag-alert--warning { border-left-color: #e67e22; background: rgba(230, 126, 34, 0.05); }
+.diag-alert--danger { border-left-color: #e74c3c; background: rgba(231, 76, 60, 0.05); }
+.diag-alert-title { font-weight: 600; font-size: .95rem; margin-bottom: .2rem; }
+.diag-alert-desc { font-size: .88rem; color: var(--muted); }
+
+/* Tablas Técnicas */
+.tech-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.tech-table { width: 100%; border-collapse: collapse; margin-top: .75rem; font-size: .9rem; border: 1px solid var(--border); }
+.tech-table th, .tech-table td { padding: .75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+.tech-table th { background: var(--bg); font-weight: 600; width: 180px; color: var(--text); border-right: 1px solid var(--border); }
+.tech-table td { color: var(--muted); word-break: break-all; }
+
+/* Schema Tool Grid */
+.schema-tool-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem; align-items: start; }
+.schema-code-box { background: var(--black); border-radius: var(--radius); border: 1px solid #2A2A2A; padding: 1.25rem; overflow: auto; max-height: 480px; margin: 0; }
+.schema-code-box code { font-family: 'Courier New', Courier, monospace; font-size: .82rem; color: #a6e22e; white-space: pre-wrap; }
+
+/* Criterio técnico - Secciones non-commodity */
+.criterio-section { padding-top: 4rem; border-top: 1px solid var(--border); }
+.criterio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.criterio-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; }
+.criterio-card h3 { font-size: 1.1rem; color: var(--black); margin-bottom: .75rem; border-bottom: 2px solid var(--orange); padding-bottom: .35rem; display: inline-block; }
+.criterio-card p { font-size: .92rem; color: var(--text); line-height: 1.6; margin-bottom: 1rem; }
+.criterio-card p:last-child { margin-bottom: 0; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .tech-details-grid, .schema-tool-grid { grid-template-columns: 1fr; }
+  .results-summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-group-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .results-summary-grid { grid-template-columns: 1fr; }
+}
+

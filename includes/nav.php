@@ -39,13 +39,16 @@ $_services = [
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="/sobre-mi.php" class="nav-link<?= $_nav === 'sobre-mi' ? ' active' : '' ?>">Sobre mí</a>
+                    <a href="/sobre-mi" class="nav-link<?= $_nav === 'sobre-mi' ? ' active' : '' ?>">Sobre mí</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/casos-reales.php" class="nav-link<?= $_nav === 'casos' ? ' active' : '' ?>">Casos reales</a>
+                    <a href="/casos-reales" class="nav-link<?= $_nav === 'casos' ? ' active' : '' ?>">Casos reales</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/contacto.php" class="nav-link nav-link--cta<?= $_nav === 'contacto' ? ' active' : '' ?>">Contacto</a>
+                    <a href="/herramientas" class="nav-link<?= $_nav === 'herramientas' ? ' active' : '' ?>">Herramientas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacto" class="nav-link nav-link--cta<?= $_nav === 'contacto' ? ' active' : '' ?>">Contacto</a>
                 </li>
             </ul>
         </nav>
