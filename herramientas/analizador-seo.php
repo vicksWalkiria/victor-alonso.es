@@ -57,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $ttfb_total = 0;
             $bucle_detectado = false;
             $visitadas = [$current_url];
+            $ssl_invalid_detected = false;
 
             while ($redirect_count <= $max_redirects) {
                 $ch = curl_init();
@@ -66,14 +67,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
                 curl_setopt($ch, CURLOPT_TIMEOUT, 5);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
                 curl_setopt($ch, CURLOPT_USERAGENT, 'VictorAlonsoSEOBot/1.0 (+https://www.victor-alonso.es/herramientas/analizador-seo)');
 
-                $start_time = microtime(true);
                 $response = curl_exec($ch);
-                $step_ttfb = round((microtime(true) - $start_time) * 1000);
-                $ttfb_total += $step_ttfb;
+                
+                // Si falla por problemas de certificado SSL, activamos la alerta y reintentamos desactivando la verificación estricta para poder auditar
+                if (curl_errno($ch) && (curl_errno($ch) == 60 || curl_errno($ch) == 51 || stripos(curl_error($ch), 'ssl') !== false || stripos(curl_error($ch), 'certificate') !== false)) {
+                    $ssl_invalid_detected = true;
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+                    $response = curl_exec($ch);
+                }
 
                 if (curl_errno($ch)) {
                     $error = 'No se ha podido conectar con el servidor: ' . curl_error($ch);
@@ -82,6 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 $info = curl_getinfo($ch);
+                $step_ttfb = round($info['starttransfer_time'] * 1000);
+                $ttfb_total += $step_ttfb;
+
                 $header_size = $info['header_size'];
                 $headers_raw = substr($response, 0, $header_size);
                 $html_content = substr($response, $header_size);
@@ -211,6 +220,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ];
                 }
 
+                if ($ssl_invalid_detected) {
+                    $diagnostico[] = [
+                        'type' => 'danger',
+                        'title' => 'Certificado SSL inválido o no verificable',
+                        'desc' => 'El bot de auditoría ha detectado problemas severos con la autenticidad o vigencia de tu certificado SSL. Hemos desactivado la comprobación estricta de firma de pares para poder leer los datos, pero los navegadores y Googlebot mostrarán advertencias graves de seguridad a tus usuarios.'
+                    ];
+                }
+
+                if (empty($canonical)) {
+                    $diagnostico[] = [
+                        'type' => 'warning',
+                        'title' => 'Falta etiqueta Canonical',
+                        'desc' => 'Falta etiqueta Canonical. Añade una etiqueta canonical absoluta apuntando a la URL final indexable, sin parámetros ni redirecciones para evitar fragmentar o diluir la autoridad de tus enlaces.'
+                    ];
+                }
+
                 if (empty($title)) {
                     $diagnostico[] = [
                         'type' => 'danger',
@@ -243,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $diagnostico[] = [
                         'type' => 'warning',
                         'title' => 'Múltiples cabeceras H1',
-                        'desc' => 'Hemos detectado ' . count($h1s) . ' etiquetas H1. Aunque HTML5 lo permite, en SEO es mejor tener una única H1 clara para evitar diluir el foco semántico.'
+                        'desc' => 'Hemos detectado ' . count($h1s) . ' etiquetas H1. Revisa plantilla, builder o bloque hero; normalmente este error viene de duplicar el título de página y el título visual. Aunque HTML5 lo permite, en SEO es mejor tener una única H1 clara para evitar diluir el foco semántico.'
                     ];
                 }
 
@@ -259,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $diagnostico[] = [
                         'type' => 'danger',
                         'title' => 'Página con directiva NOINDEX activa',
-                        'desc' => 'Esta URL está bloqueada para los buscadores. Google no la indexará bajo ninguna circunstancia.'
+                        'desc' => 'Esta URL está bloqueada para los buscadores. Google tenderá a excluir esta URL del índice mientras la directiva siga activa.'
                     ];
                 }
 
@@ -279,6 +304,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
 
+                $has_security_warnings = false;
+                foreach ($security_headers as $key => $val) {
+                    if (empty($val)) {
+                        $has_security_warnings = true;
+                        break;
+                    }
+                }
+                if ($has_security_warnings) {
+                    $diagnostico[] = [
+                        'type' => 'warning',
+                        'title' => 'Faltan cabeceras de seguridad recomendadas',
+                        'desc' => 'Tu servidor no entrega algunas de las cabeceras HTTP de protección básica (como CSP, X-Frame-Options o Referrer-Policy). Esto no sustituye una auditoría de seguridad, pero sí detecta síntomas básicos de una configuración web descuidada.'
+                    ];
+                }
+
+                // Capa de Scoring Avanzada
+                $score = 100;
+                $main_risk = 'Ninguno crítico detectado';
+                $recommended_priority = 'Mantener buenas prácticas y monitorizar periódicamente la indexabilidad.';
+                
+                foreach ($diagnostico as $diag) {
+                    if ($diag['type'] === 'danger') {
+                        $score -= 15;
+                    } elseif ($diag['type'] === 'warning') {
+                        $score -= 7;
+                    }
+                }
+                $score = max(10, min(100, $score));
+                
+                // Determinar el riesgo principal y prioridad recomendada basado en los fallos
+                $has_noindex = false;
+                $has_ssl = false;
+                $has_ttfb = false;
+                $has_h1 = false;
+                $has_canonical = false;
+                $has_redirect = false;
+                
+                foreach ($diagnostico as $diag) {
+                    if (stripos($diag['title'], 'noindex') !== false) $has_noindex = true;
+                    if (stripos($diag['title'], 'SSL') !== false) $has_ssl = true;
+                    if (stripos($diag['title'], 'TTFB') !== false || stripos($diag['title'], 'tiempo de respuesta') !== false) $has_ttfb = true;
+                    if (stripos($diag['title'], 'H1') !== false || stripos($diag['title'], 'cabecera H1') !== false) $has_h1 = true;
+                    if (stripos($diag['title'], 'canonical') !== false || stripos($diag['title'], 'Canonical') !== false) $has_canonical = true;
+                    if (stripos($diag['title'], 'redirección') !== false || stripos($diag['title'], 'redirecciones') !== false) $has_redirect = true;
+                }
+                
+                if ($has_noindex) {
+                    $main_risk = 'Página oculta para buscadores (Directiva NOINDEX activa)';
+                    $recommended_priority = 'Eliminar la directiva noindex en las metaetiquetas robots o en las cabeceras HTTP si deseas indexar esta URL.';
+                } elseif ($has_ssl) {
+                    $main_risk = 'Certificado SSL inválido o no verificado';
+                    $recommended_priority = 'Corregir la configuración del servidor web, instalar o renovar el certificado SSL (Let\'s Encrypt o similar) inmediatamente.';
+                } elseif ($has_redirect) {
+                    $main_risk = 'Cadena de redirecciones encadenadas o saltos indirectos';
+                    $recommended_priority = 'Apuntar todos los enlaces internos y canonicals directamente a la URL de destino final.';
+                } elseif ($has_ttfb) {
+                    $main_risk = 'TTFB y latencia del servidor web elevados';
+                    $recommended_priority = 'Optimizar el backend de base de datos, configurar caché de servidor o migrar a un alojamiento web optimizado para WPO/WordPress.';
+                } elseif ($has_canonical) {
+                    $main_risk = 'Inconsistencia en la etiqueta canonical';
+                    $recommended_priority = 'Añadir una etiqueta canonical absoluta apuntando a la URL final indexable, sin parámetros ni redirecciones.';
+                } elseif ($has_h1) {
+                    $main_risk = 'Errores de estructura o jerarquía semántica H1';
+                    $recommended_priority = 'Asegurar la existencia de un único encabezado H1 por página, eliminando duplicidades en bloques hero o builders.';
+                }
+
                 $result = [
                     'url' => $current_url,
                     'url_inicial' => $url,
@@ -291,7 +382,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'robots' => $meta_robots ? $meta_robots : ($headers['x-robots-tag'] ?? 'index, follow'),
                     'security' => $security_headers,
                     'diagnostico' => $diagnostico,
-                    'redirect_chain' => $redirect_chain
+                    'redirect_chain' => $redirect_chain,
+                    'score' => $score,
+                    'main_risk' => $main_risk,
+                    'recommended_priority' => $recommended_priority
                 ];
             }
             curl_close($ch);
@@ -395,6 +489,53 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </div>
             </div>
           <?php endif; ?>
+
+          <!-- Cuadro de Salud Técnica de la URL -->
+          <div class="health-scoring-container card card--dark" style="margin-bottom:2.5rem; display:grid; grid-template-columns: 240px 1fr; gap:2rem; align-items:center; border:1px solid rgba(255,255,255,0.08); background: #0b101c; padding: 2rem; border-radius: 12px;">
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:relative;">
+              <svg width="130" height="130" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                <!-- Círculo de fondo -->
+                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8" />
+                <!-- Círculo animado -->
+                <?php 
+                  $radius = 40;
+                  $circumference = 2 * M_PI * $radius;
+                  $offset = $circumference - ($result['score'] / 100) * $circumference;
+                  $stroke_color = '#2ecc71';
+                  if ($result['score'] < 50) {
+                      $stroke_color = '#e74c3c';
+                  } elseif ($result['score'] < 80) {
+                      $stroke_color = 'var(--orange)';
+                  }
+                ?>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="<?= $stroke_color ?>" stroke-width="8" 
+                        stroke-dasharray="<?= $circumference ?>" stroke-dashoffset="<?= $offset ?>" 
+                        stroke-linecap="round" style="transition: stroke-dashoffset 1s ease-out;" />
+              </svg>
+              <!-- Texto central -->
+              <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center;">
+                <span style="font-size:1.8rem; font-weight:800; color:#fff; line-height:1;"><?= $result['score'] ?></span>
+                <span style="font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:3px;">/ 100</span>
+              </div>
+              <span style="font-size:0.95rem; font-weight:700; color:#fff; margin-top:0.75rem;">Salud Técnica</span>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; justify-content:center; gap:1.2rem;">
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--muted); font-weight:700; letter-spacing:1px; display:block; margin-bottom:0.25rem;">Riesgo Principal Detectado</span>
+                <span style="font-size:1.15rem; font-weight:700; color:#fff; display:block;">
+                  <?= h($result['main_risk']) ?>
+                </span>
+              </div>
+              
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; color:var(--muted); font-weight:700; letter-spacing:1px; display:block; margin-bottom:0.25rem;">Prioridad de Optimización</span>
+                <p style="font-size:0.95rem; line-height:1.5; color:#cbd5e1; margin:0;">
+                  <?= h($result['recommended_priority']) ?>
+                </p>
+              </div>
+            </div>
+          </div>
 
           <div class="results-summary-grid">
             <div class="summary-metric">

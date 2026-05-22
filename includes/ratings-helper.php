@@ -86,21 +86,21 @@ function render_rating_widget($tool_id, $title = '¿Te ha sido útil esta herram
     // Comprobar si ya ha votado (usando cookies)
     $has_voted = isset($_COOKIE['voted_' . $tool_id]);
     ?>
-    <div class="rating-widget card card--dark" style="margin-top: 3.5rem; text-align: center; border-color: rgba(232, 104, 26, 0.2); padding: 2rem;">
+    <div class="rating-widget card card--dark" style="margin-top: 3.5rem; text-align: center; border-color: rgba(232, 104, 26, 0.2); padding: 2rem; background: #0b101c; border: 1px solid rgba(255,255,255,0.05);">
         <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #fff;"><?= h($title) ?></h3>
-        <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1.25rem;">Ayúdanos a mejorar valorando este recurso técnico. ¡Solo te tomará un clic!</p>
+        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1.25rem;">Ayúdanos a mejorar valorando este recurso técnico. ¡Solo te tomará un clic!</p>
         
         <div class="stars-container" style="display: inline-flex; gap: 0.5rem; justify-content: center; font-size: 2rem; direction: rtl; cursor: pointer; margin-bottom: 1rem;" data-tool="<?= h($tool_id) ?>" data-voted="<?= $has_voted ? 'true' : 'false' ?>">
             <?php for ($i = 5; $i >= 1; $i--): ?>
                 <span class="star-item" data-value="<?= $i ?>" style="color: <?= $has_voted && $i <= round($tool_data['average']) ? 'var(--orange)' : 'rgba(255,255,255,0.15)' ?>; transition: color 0.2s ease-in-out;">★</span>
             <?php endfor; ?>
         </div>
-
-        <div class="rating-status" style="font-size: 0.9rem; color: var(--text);">
+ 
+        <div class="rating-status" style="font-size: 0.9rem; color: #ffffff;">
             <?php if ($has_voted): ?>
-                <span style="color: #2ecc71; font-weight: 600;">✓ ¡Gracias por tu valoración!</span> Nota media: <strong><?= $tool_data['average'] ?></strong>/5 de <strong><?= $tool_data['count'] ?></strong> valoraciones de trinchera.
+                <span style="color: #2ecc71; font-weight: 600;">✓ ¡Gracias por tu valoración!</span> Nota media: <strong style="color: #fff;"><?= $tool_data['average'] ?></strong>/5 de <strong style="color: #fff;"><?= $tool_data['count'] ?></strong> valoraciones de trinchera.
             <?php else: ?>
-                Nota media: <strong><?= $tool_data['average'] ?></strong>/5 de <strong><?= $tool_data['count'] ?></strong> valoraciones de trinchera.
+                Nota media: <strong style="color: #fff;"><?= $tool_data['average'] ?></strong>/5 de <strong style="color: #fff;"><?= $tool_data['count'] ?></strong> valoraciones de trinchera.
             <?php endif; ?>
         </div>
     </div>
