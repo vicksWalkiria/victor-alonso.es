@@ -246,7 +246,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                         
                         <div class="form-group">
                             <label class="form-label" for="raw-xml">O pega el código plano del Sitemap XML</label>
-                            <textarea class="form-textarea" id="raw-xml" rows="5" placeholder="<?xml version='1.0' encoding='UTF-8'?>&#10;<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>&#10;  <url>&#10;    <loc>https://tuweb.com/pagina</loc>&#10;  </url>&#10;</urlset>" style="font-family: monospace; font-size: .82rem;"></textarea>
+                            <textarea class="form-textarea" id="raw-xml" rows="5" placeholder="&lt;?xml version='1.0' encoding='UTF-8'?&gt;&#10;&lt;urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'&gt;&#10;  &lt;url&gt;&#10;    &lt;loc&gt;https://tuweb.com/pagina&lt;/loc&gt;&#10;  &lt;/url&gt;&#10;&lt;/urlset&gt;" style="font-family: monospace; font-size: .82rem;"></textarea>
                         </div>
                         <button class="btn btn--primary" id="btn-parse-local" style="width: 100%; justify-content: center; padding: 1.1rem; margin-top: 1rem;">
                             Procesar XML pegado
