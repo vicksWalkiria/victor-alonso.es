@@ -5,8 +5,8 @@ require_once dirname(__DIR__) . '/includes/ratings-helper.php';
 
 @set_time_limit(120);
 
-// Descargar y limpiar el contenido semántico principal de una URL
-function fetch_clean_semantic_text($url) {
+// Descargar y limpiar el contenido semántico principal de una URL con validación de SSL y códigos de estado
+function fetch_clean_semantic_text($url, &$error_msg = null) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -14,8 +14,8 @@ function fetch_clean_semantic_text($url) {
     curl_setopt($ch, CURLOPT_ENCODING, '');
     curl_setopt($ch, CURLOPT_TIMEOUT, 20);
     curl_setopt($ch, CURLOPT_MAXREDIRS, 6);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
     
     // Simular Googlebot Móvil exacto
     $googlebot = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
@@ -23,9 +23,26 @@ function fetch_clean_semantic_text($url) {
     
     $html = curl_exec($ch);
     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curl_error = curl_error($ch);
+    $curl_errno = curl_errno($ch);
     curl_close($ch);
     
-    if ($http_code !== 200 || !$html) {
+    if ($curl_errno !== 0) {
+        if ($curl_errno === 60 || $curl_errno === 51) {
+            $error_msg = 'Error de seguridad SSL: El certificado SSL de esta URL está vencido, no es válido o está mal configurado. Esto penaliza severamente el posicionamiento orgánico en motores de búsqueda.';
+        } else {
+            $error_msg = 'Error de conexión a la URL (' . $curl_errno . '): ' . $curl_error;
+        }
+        return false;
+    }
+    
+    if ($http_code !== 200) {
+        $error_msg = 'Error HTTP ' . $http_code . ' en servidor de destino. Comprueba que responde correctamente con un código HTTP 200.';
+        return false;
+    }
+    
+    if (!$html) {
+        $error_msg = 'La página de destino está vacía o el contenido HTML es ilegible.';
         return false;
     }
     
@@ -122,9 +139,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             exit;
         }
         
-        $text1 = fetch_clean_semantic_text($url1);
+        $error_msg1 = '';
+        $text1 = fetch_clean_semantic_text($url1, $error_msg1);
         if (!$text1) {
-            echo json_encode(['success' => false, 'message' => 'No he podido descargar ni limpiar el contenido de la URL principal. Comprueba que sea accesible públicamente.']);
+            echo json_encode(['success' => false, 'message' => 'No he podido descargar ni procesar la URL principal. ' . ($error_msg1 ?: 'Comprueba que sea accesible públicamente.')]);
             exit;
         }
         
@@ -134,7 +152,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 echo json_encode(['success' => false, 'message' => 'La segunda URL para la brecha semántica no es válida.']);
                 exit;
             }
-            $text2 = fetch_clean_semantic_text($url2);
+            $error_msg2 = '';
+            $text2 = fetch_clean_semantic_text($url2, $error_msg2);
+            if (!$text2) {
+                echo json_encode(['success' => false, 'message' => 'No he podido descargar ni procesar la segunda URL (competidor). ' . ($error_msg2 ?: 'Comprueba que sea accesible públicamente.')]);
+                exit;
+            }
         }
         
         echo json_encode([
@@ -173,7 +196,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     <div class="container">
       <span class="hero-eyebrow">SEO Semántico Avanzado y NLP</span>
       <h1 id="semantic-h1">Extractor de <span>Entidades Semánticas</span></h1>
-      <p class="page-hero-desc">Descubre el mapa mental que Google extrae de tu contenido. Mapea triples semánticos, construye grafos de conocimiento e identifica brechas semánticas.</p>
+      <p class="page-hero-desc">Visualiza una aproximación semántica de tu contenido: entidades, relaciones y posibles brechas frente a competidores.</p>
     </div>
   </section>
 
@@ -181,8 +204,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     <div class="container">
       
       <div class="tool-intro">
-        <h2>Visualiza tus contenidos a través de los ojos de un algoritmo semántico</h2>
-        <p>Introduce la URL de tu artículo o landing. Mi servidor limpiará el contenido de código ruidoso, mi motor de lenguaje natural extraerá las entidades nombradas y relaciones lógicas, y te presentaré un <strong>grafo interactivo con físicas en Canvas</strong> y un análisis comparativo contra tus competidores.</p>
+        <h2>Aproxima el mapa semántico que un sistema NLP puede extraer de tu contenido</h2>
+        <p>Introduce la URL de tu artículo o landing. Mi servidor limpiará el contenido de código ruidoso, mi motor de lenguaje natural extraerá las entidades nombradas y relaciones lógicas mediante reglas NLP y un diccionario técnico de ontología propio, permitiéndote auditar el grafo semántico aproximado y las brechas de cobertura frente a tus competidores.</p>
       </div>
 
       <div class="extractor-grid">
@@ -218,11 +241,19 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <!-- Dashboard Completo de Resultados (Oculto inicialmente) -->
         <div id="results-panel" style="display: none;">
             
+            <!-- Aviso de precisión profesional -->
+            <div class="card card--dark" style="padding: 1.1rem 1.5rem; border-radius: 1rem; border-left: 4px solid var(--orange); margin-bottom: 1.5rem; background: rgba(232,104,26,0.03); display: flex; align-items: flex-start; gap: 1rem; text-align: left;">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 0.15rem;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <p style="font-size: .8rem; color: #cbd5e1; margin: 0; line-height: 1.5;">
+                    <strong>Aviso de precisión profesional:</strong> Este análisis es una aproximación técnica útil y no sustituye una auditoría semántica manual. La herramienta usa extracción NLP ligera, diccionario de ontología técnica y heurísticas de proximidad para detectar patrones conceptuales y brechas, no para replicar exactamente el Knowledge Graph oficial de Google.
+                </p>
+            </div>
+            
             <!-- Pestañas de Visualización & Exportaciones -->
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                 <div class="tab-container" style="display: flex; gap: 1rem;">
-                    <button class="tab-btn active" onclick="switchVisualTab('tab-graph')">Grafo de Conocimiento</button>
-                    <button class="tab-btn" onclick="switchVisualTab('tab-list')">Lista de Entidades & Triples</button>
+                    <button class="tab-btn active" onclick="switchVisualTab('tab-graph')">Grafo semántico aproximado</button>
+                    <button class="tab-btn" onclick="switchVisualTab('tab-list')">Lista de Entidades & Relaciones</button>
                     <button class="tab-btn" id="btn-tab-gap" onclick="switchVisualTab('tab-gap')" style="display: none;">Análisis de Brecha Semántica</button>
                 </div>
                 <div style="display: flex; gap: .75rem; flex-wrap: wrap;">
@@ -241,9 +272,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div id="tab-graph" class="tab-visual-content active">
                 <div class="card card--dark" style="padding: 1.5rem; border-radius: 1.5rem; position: relative;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-                        <div>
+                        <div style="text-align: left;">
                             <h3 style="color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">Visualizador del Grafo Semántico</h3>
-                            <p style="font-size: .8rem; color: var(--muted); margin: 0;">Interactúa con el grafo: arrastra los nodos, haz zoom con la rueda o doble clic en el fondo para centrar.</p>
+                            <p style="font-size: .8rem; color: var(--muted); margin: 0;">Interactúa con el grafo: arrastra los nodos, haz zoom o filtra categorías abajo.</p>
                         </div>
                         <div class="legend" style="display: flex; gap: .75rem; flex-wrap: wrap; font-size: .7rem;">
                             <span class="legend-badge org">Organizaciones / Marcas</span>
@@ -252,6 +283,26 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                             <span class="legend-badge concept">Conceptos SEO / Temas</span>
                             <span class="legend-badge place">Lugares / Ubicaciones</span>
                         </div>
+                    </div>
+                    
+                    <!-- Filtros interactivos de tipo de entidad -->
+                    <div style="display: flex; gap: 1.2rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                        <span style="font-size: .75rem; color: var(--muted); font-weight: 800; text-transform: uppercase;">Mostrar en Grafo:</span>
+                        <label style="display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: #cbd5e1; cursor: pointer; user-select: none;">
+                            <input type="checkbox" id="filter-org" checked onchange="triggerFilterUpdate()" style="accent-color: #e8681a; cursor: pointer;"> <span style="color: #e8681a; font-weight: bold;">Organizaciones</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: #cbd5e1; cursor: pointer; user-select: none;">
+                            <input type="checkbox" id="filter-person" checked onchange="triggerFilterUpdate()" style="accent-color: #2ecc71; cursor: pointer;"> <span style="color: #2ecc71; font-weight: bold;">Personas</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: #cbd5e1; cursor: pointer; user-select: none;">
+                            <input type="checkbox" id="filter-tech" checked onchange="triggerFilterUpdate()" style="accent-color: #3498db; cursor: pointer;"> <span style="color: #3498db; font-weight: bold;">Tecnologías</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: #cbd5e1; cursor: pointer; user-select: none;">
+                            <input type="checkbox" id="filter-concept" checked onchange="triggerFilterUpdate()" style="accent-color: #9b59b6; cursor: pointer;"> <span style="color: #9b59b6; font-weight: bold;">Conceptos SEO</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: #cbd5e1; cursor: pointer; user-select: none;">
+                            <input type="checkbox" id="filter-place" checked onchange="triggerFilterUpdate()" style="accent-color: #f1c40f; cursor: pointer;"> <span style="color: #f1c40f; font-weight: bold;">Lugares</span>
+                        </label>
                     </div>
 
                     <div style="background: #060911; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.04); overflow: hidden; position: relative; height: 500px;">
@@ -276,7 +327,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     
                     <!-- Columna de Entidades -->
                     <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem;">
-                        <h3 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem;">Entidades Encontradas (<span id="total-entities-count">0</span>)</h3>
+                        <h3 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem; text-align: left;">Entidades Encontradas (<span id="total-entities-count">0</span>)</h3>
                         <div id="entities-list-wrapper" style="max-height: 400px; overflow-y: auto; padding-right: .5rem;">
                             <!-- Inyectado dinámicamente -->
                         </div>
@@ -284,7 +335,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
                     <!-- Columna de Triples Semánticos -->
                     <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem;">
-                        <h3 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem;">Relaciones Semánticas (Triples)</h3>
+                        <h3 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem; text-align: left;">Relaciones Detectadas</h3>
                         <div id="triples-list-wrapper" style="max-height: 400px; overflow-y: auto; padding-right: .5rem;">
                             <!-- Inyectado dinámicamente -->
                         </div>
@@ -297,33 +348,74 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div id="tab-gap" class="tab-visual-content" style="display: none;">
                 <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
                     
+                    <!-- Panel de Score de Cobertura Semántica y Diagnóstico de Riesgo -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: .5rem;">
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 1px solid rgba(255,255,255,0.04); position: relative;">
+                            <span style="font-size: .75rem; font-weight: 800; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem;">Cobertura Semántica Estimada</span>
+                            <div style="position: relative; width: 100px; height: 100px; display: flex; justify-content: center; align-items: center;">
+                                <svg width="100" height="100" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="6" />
+                                    <circle cx="50" cy="50" r="42" fill="none" id="score-ring" stroke="var(--orange)" stroke-width="6" stroke-dasharray="263.89" stroke-dashoffset="263.89" style="transition: stroke-dashoffset 0.8s ease;" />
+                                </svg>
+                                <span id="score-text" style="position: absolute; font-size: 1.5rem; font-weight: 900; color: #fff;">0%</span>
+                            </div>
+                        </div>
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; display: flex; flex-direction: column; justify-content: center; border: 1px solid rgba(255,255,255,0.04); text-align: left;">
+                            <h4 style="font-size: .75rem; font-weight: 800; text-transform: uppercase; color: var(--muted); margin: 0 0 .5rem 0;">Diagnóstico de Riesgo Editorial</h4>
+                            <div style="margin-bottom: .5rem;">
+                                <span id="gap-risk-badge" class="badge" style="background: rgba(231,76,60,0.15); color: #e74c3c; padding: .3rem .6rem; border-radius: .4rem; font-size: .65rem; font-weight: 800; text-transform: uppercase;">Cargando...</span>
+                            </div>
+                            <p id="gap-risk-desc" style="font-size: .75rem; color: #cbd5e1; margin: 0; line-height: 1.45;"></p>
+                        </div>
+                    </div>
+                    
                     <!-- Stats comparativos -->
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--orange);">
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--orange); text-align: left;">
                             <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Entidades Comunes</span>
                             <span id="gap-common" style="display: block; font-size: 2rem; font-weight: 900; color: #fff; margin-top: .25rem;">0</span>
                         </div>
-                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #2ecc71;">
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #2ecc71; text-align: left;">
                             <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Tus Entidades Únicas</span>
                             <span id="gap-unique1" style="display: block; font-size: 2rem; font-weight: 900; color: #2ecc71; margin-top: .25rem;">0</span>
                         </div>
-                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #e74c3c;">
-                            <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Entidades Únicas del Competidor</span>
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #e74c3c; text-align: left;">
+                            <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Entidades en Competidor</span>
                             <span id="gap-unique2" style="display: block; font-size: 2rem; font-weight: 900; color: #e74c3c; margin-top: .25rem;">0</span>
                         </div>
-                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #3498db;">
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #3498db; text-align: left;">
                             <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Solapamiento Semántico</span>
                             <span id="gap-overlap-pct" style="display: block; font-size: 2rem; font-weight: 900; color: #3498db; margin-top: .25rem;">0%</span>
                         </div>
                     </div>
 
                     <!-- Cuadro de sugerencias de brecha semántica -->
-                    <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem; border: 1px dashed rgba(231,76,60,0.3);">
-                        <h3 style="color: #e74c3c; font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;">Oportunidades de Relevancia (Conceptos que te faltan):</h3>
-                        <p style="font-size: .9rem; color: #cbd5e1; margin-bottom: 1.5rem;">He detectado las siguientes entidades conceptuales fuertes en el contenido de tu competidor que están ausentes en tu contenido. Integrarlas en tu texto aumentará tu relevancia semántica a ojos de los algoritmos de búsqueda:</p>
+                    <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem; border: 1px dashed rgba(231,76,60,0.3); text-align: left;">
+                        <h3 style="color: #e74c3c; font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;">Oportunidades de Cobertura (Conceptos potencialmente no cubiertos):</h3>
+                        <p style="font-size: .9rem; color: #cbd5e1; margin-bottom: 1.5rem;">He detectado las siguientes entidades conceptuales fuertes en el contenido de tu competidor que están ausentes en tu texto. Integrarlas con sentido puede ayudarte a cubrir mejor el contexto temático de la consulta:</p>
                         
-                        <div id="gap-keywords-box" style="display: flex; flex-wrap: wrap; gap: .75rem;">
+                        <div id="gap-keywords-box" style="display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 2rem;">
                             <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <!-- Tabla de Prioridad Editorial -->
+                    <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem; border: 1px solid rgba(255,255,255,0.04); text-align: left;">
+                        <h3 style="color: #fff; font-size: 1.15rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem;">Prioridad Editorial de Entidades para Optimizar</h3>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: .8rem;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid rgba(255,255,255,0.08); color: var(--muted); font-weight: 800;">
+                                        <th style="padding: .75rem .5rem;">Entidad Ausente</th>
+                                        <th style="padding: .75rem .5rem;">Categoría</th>
+                                        <th style="padding: .75rem .5rem; text-align: center;">Frecuencia Competidor</th>
+                                        <th style="padding: .75rem .5rem;">Acción Recomendada</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="editorial-table-body">
+                                    <!-- Inyectado dinámicamente -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -922,6 +1014,43 @@ function renderSemanticGap(entities1, entities2) {
     const overlapPct = union > 0 ? Math.round((common / union) * 100) : 0;
     document.getElementById('gap-overlap-pct').textContent = `${overlapPct}%`;
     
+    // Cobertura Semántica Estimada
+    const totalCompetitorEntities = entities2.length;
+    const semanticCoverage = totalCompetitorEntities > 0 ? Math.round((common / totalCompetitorEntities) * 100) : 100;
+    
+    // Actualizar anillo circular SVG
+    const ring = document.getElementById('score-ring');
+    const scoreText = document.getElementById('score-text');
+    if (ring && scoreText) {
+        const radius = 42;
+        const circumference = 2 * Math.PI * radius; // 263.89
+        const offset = circumference - (semanticCoverage / 100) * circumference;
+        ring.style.strokeDashoffset = offset;
+        scoreText.textContent = `${semanticCoverage}%`;
+    }
+    
+    // Actualizar diagnóstico de riesgo editorial
+    const riskBadge = document.getElementById('gap-risk-badge');
+    const riskDesc = document.getElementById('gap-risk-desc');
+    if (riskBadge && riskDesc) {
+        if (semanticCoverage < 35) {
+            riskBadge.textContent = 'Riesgo Crítico';
+            riskBadge.style.background = 'rgba(231,76,60,0.15)';
+            riskBadge.style.color = '#e74c3c';
+            riskDesc.innerHTML = 'Tu artículo tiene una cobertura conceptual muy deficiente frente a este competidor. Es altamente probable que los motores de búsqueda perciban tu contenido como poco profundo o incompleto para resolver la intención de búsqueda del usuario.';
+        } else if (semanticCoverage < 70) {
+            riskBadge.textContent = 'Cobertura Intermedia';
+            riskBadge.style.background = 'rgba(241,196,15,0.15)';
+            riskBadge.style.color = '#f1c40f';
+            riskDesc.innerHTML = 'Tu cobertura semántica es aceptable pero mejorable. Existen oportunidades importantes para profundizar en conceptos técnicos secundarios que tu competidor sí está analizando en detalle.';
+        } else {
+            riskBadge.textContent = 'Relevancia Sólida';
+            riskBadge.style.background = 'rgba(46,204,113,0.15)';
+            riskBadge.style.color = '#2ecc71';
+            riskDesc.innerHTML = 'Excelente nivel de cobertura temático. Tu contenido cubre de forma robusta la mayoría de las entidades y conceptos relevantes del competidor. Concéntrate en la legibilidad y la experiencia del usuario.';
+        }
+    }
+    
     // Inyectar brecha semántica (Keywords del competidor que te faltan)
     const gapBox = document.getElementById('gap-keywords-box');
     gapBox.innerHTML = '';
@@ -935,6 +1064,44 @@ function renderSemanticGap(entities1, entities2) {
             badge.textContent = `+ ${ent.name}`;
             gapBox.appendChild(badge);
         });
+    }
+    
+    // Rellenar Tabla de Prioridad Editorial
+    const tableBody = document.getElementById('editorial-table-body');
+    if (tableBody) {
+        tableBody.innerHTML = '';
+        if (unique2List.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #2ecc71; padding: 2rem 0; font-weight: 700;">¡Ninguna brecha detectada! Tu cobertura es óptima.</td></tr>';
+        } else {
+            // Ordenar por frecuencia del competidor de mayor a menor
+            const sortedUnique2 = [...unique2List].sort((a, b) => b.frequency - a.frequency);
+            
+            sortedUnique2.forEach(ent => {
+                let action = '';
+                let priorityBadge = '';
+                
+                if (ent.frequency >= 5) {
+                    action = '<strong>Prioridad Alta:</strong> Crear un bloque explicativo dedicado o sección H2/H3 específica sobre este concepto.';
+                    priorityBadge = `<span class="badge" style="background: rgba(231,76,60,0.1); color: #e74c3c; border: 1px solid rgba(231,76,60,0.2); font-size: .65rem; padding: .2rem .5rem;">Crítica (${ent.frequency})</span>`;
+                } else if (ent.frequency >= 2) {
+                    action = '<strong>Prioridad Media:</strong> Añadir ejemplos prácticos e integrar de forma natural el término en párrafos explicativos.';
+                    priorityBadge = `<span class="badge" style="background: rgba(241,196,15,0.1); color: #f1c40f; border: 1px solid rgba(241,196,15,0.2); font-size: .65rem; padding: .2rem .5rem;">Importante (${ent.frequency})</span>`;
+                } else {
+                    action = '<strong>Prioridad Baja:</strong> Considerar su mención en oraciones de soporte para ampliar la riqueza del contexto semántico.';
+                    priorityBadge = `<span class="badge" style="background: rgba(52,152,219,0.1); color: #3498db; border: 1px solid rgba(52,152,219,0.2); font-size: .65rem; padding: .2rem .5rem;">Recomendada (${ent.frequency})</span>`;
+                }
+                
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.04)';
+                tr.innerHTML = `
+                    <td style="padding: 1rem .5rem; font-weight: 700; color: #fff; text-align: left;">${ent.name}</td>
+                    <td style="padding: 1rem .5rem; text-align: left;"><span class="legend-badge ${ent.type}" style="font-size: .65rem; padding: .2rem .5rem; border-radius: .3rem; display: inline-block;">${ent.type.toUpperCase()}</span></td>
+                    <td style="padding: 1rem .5rem; text-align: center;">${priorityBadge}</td>
+                    <td style="padding: 1rem .5rem; color: #cbd5e1; text-align: left;">${action}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
     }
 }
 
@@ -1126,6 +1293,28 @@ function updatePhysics() {
     });
 }
 
+// Comprobar si un nodo es visible basado en los filtros interactivos
+function isNodeVisible(type) {
+    const showOrg = document.getElementById('filter-org') ? document.getElementById('filter-org').checked : true;
+    const showPerson = document.getElementById('filter-person') ? document.getElementById('filter-person').checked : true;
+    const showTech = document.getElementById('filter-tech') ? document.getElementById('filter-tech').checked : true;
+    const showConcept = document.getElementById('filter-concept') ? document.getElementById('filter-concept').checked : true;
+    const showPlace = document.getElementById('filter-place') ? document.getElementById('filter-place').checked : true;
+    
+    if (type === 'org') return showOrg;
+    if (type === 'person') return showPerson;
+    if (type === 'tech') return showTech;
+    if (type === 'concept') return showConcept;
+    if (type === 'place') return showPlace;
+    return true;
+}
+
+// Handler de cambio de filtros
+function triggerFilterUpdate() {
+    // La simulación de físicas e inercia está activa en bucle continuo,
+    // por lo que el Canvas se redibujará automáticamente en el próximo frame.
+}
+
 // Pintar el lienzo en Canvas
 function drawGraph() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -1136,6 +1325,9 @@ function drawGraph() {
     
     // 1. Dibujar líneas de aristas (links)
     links.forEach(link => {
+        // Ocultar arista si alguna de las dos entidades asociadas está desactivada en el filtro
+        if (!isNodeVisible(link.source.type) || !isNodeVisible(link.target.type)) return;
+        
         ctx.beginPath();
         ctx.moveTo(link.source.x, link.source.y);
         ctx.lineTo(link.target.x, link.target.y);
@@ -1155,6 +1347,9 @@ function drawGraph() {
     
     // 2. Dibujar nodos
     nodes.forEach(node => {
+        // Ocultar nodo si está desactivado en el filtro interactivo
+        if (!isNodeVisible(node.type)) return;
+        
         // Determinar colores premium
         let color = '#3498db'; // tech por defecto
         let glowColor = 'rgba(52,152,219,0.3)';
@@ -1214,8 +1409,8 @@ function setupCanvasInteraction() {
     canvas.addEventListener('mousedown', function(e) {
         const mouse = getCanvasMouseCoords(e);
         
-        // Comprobar si se ha pulsado sobre un nodo
-        const hit = nodes.find(node => Math.hypot(node.x - mouse.x, node.y - mouse.y) < node.radius);
+        // Comprobar si se ha pulsado sobre un nodo (solo nodos visibles)
+        const hit = nodes.find(node => isNodeVisible(node.type) && Math.hypot(node.x - mouse.x, node.y - mouse.y) < node.radius);
         
         if (hit) {
             dragNode = hit;
@@ -1239,8 +1434,8 @@ function setupCanvasInteraction() {
             transform.x = e.clientX - startPan.x;
             transform.y = e.clientY - startPan.y;
         } else {
-            // Lógica de hover en nodos y tooltip interactivo
-            const hit = nodes.find(node => Math.hypot(node.x - mouse.x, node.y - mouse.y) < node.radius);
+            // Lógica de hover en nodos y tooltip interactivo (solo para nodos visibles)
+            const hit = nodes.find(node => isNodeVisible(node.type) && Math.hypot(node.x - mouse.x, node.y - mouse.y) < node.radius);
             
             if (hit) {
                 canvas.style.cursor = 'pointer';
