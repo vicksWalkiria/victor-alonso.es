@@ -206,6 +206,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ];
 
                 $diagnostico = [];
+
+                if ($info['http_code'] >= 400) {
+                    $diagnostico[] = [
+                        'type' => 'danger',
+                        'title' => 'La URL devuelve un error HTTP ' . $info['http_code'],
+                        'desc' => 'La página no está respondiendo correctamente. Si esta URL debe posicionar, corrige el estado HTTP antes de trabajar cualquier optimización SEO.'
+                    ];
+                } elseif ($info['http_code'] !== 200 && $info['http_code'] < 300) {
+                    $diagnostico[] = [
+                        'type' => 'warning',
+                        'title' => 'Estado HTTP poco habitual',
+                        'desc' => 'La URL no devuelve un 200 estándar. Conviene revisar si este comportamiento es intencionado.'
+                    ];
+                }
+
                 if ($ttfb > 600) {
                     $diagnostico[] = [
                         'type' => 'warning',
@@ -319,53 +334,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ];
                 }
 
-                // Capa de Scoring Avanzada
+                // Capa de Scoring Avanzada y Ponderada Justamente
                 $score = 100;
-                $main_risk = 'Ninguno crítico detectado';
-                $recommended_priority = 'Mantener buenas prácticas y monitorizar periódicamente la indexabilidad.';
                 
-                foreach ($diagnostico as $diag) {
-                    if ($diag['type'] === 'danger') {
-                        $score -= 15;
-                    } elseif ($diag['type'] === 'warning') {
-                        $score -= 7;
-                    }
+                if ($is_noindex) {
+                    $score -= 30;
                 }
+                if ($ssl_invalid_detected) {
+                    $score -= 25;
+                }
+                if ($info['http_code'] >= 400) {
+                    $score -= 20;
+                } elseif ($info['http_code'] !== 200 && $info['http_code'] < 300) {
+                    $score -= 10;
+                }
+                if (count($redirect_chain) > 0) {
+                    $score -= 15;
+                }
+                if ($ttfb > 600) {
+                    $score -= 12;
+                }
+                if (empty($canonical)) {
+                    $score -= 8;
+                }
+                if (empty($title)) {
+                    $score -= 15;
+                } elseif (mb_strlen($title) > 65) {
+                    $score -= 5;
+                }
+                if (empty($meta_desc)) {
+                    $score -= 4;
+                }
+                if (count($h1s) === 0) {
+                    $score -= 8;
+                } elseif (count($h1s) > 1) {
+                    $score -= 5;
+                }
+                if ($has_security_warnings) {
+                    $score -= 6;
+                }
+                
                 $score = max(10, min(100, $score));
                 
                 // Determinar el riesgo principal y prioridad recomendada basado en los fallos
-                $has_noindex = false;
-                $has_ssl = false;
-                $has_ttfb = false;
-                $has_h1 = false;
-                $has_canonical = false;
-                $has_redirect = false;
+                $main_risk = 'Ninguno crítico detectado';
+                $recommended_priority = 'Mantener buenas prácticas y monitorizar periódicamente la indexabilidad.';
                 
-                foreach ($diagnostico as $diag) {
-                    if (stripos($diag['title'], 'noindex') !== false) $has_noindex = true;
-                    if (stripos($diag['title'], 'SSL') !== false) $has_ssl = true;
-                    if (stripos($diag['title'], 'TTFB') !== false || stripos($diag['title'], 'tiempo de respuesta') !== false) $has_ttfb = true;
-                    if (stripos($diag['title'], 'H1') !== false || stripos($diag['title'], 'cabecera H1') !== false) $has_h1 = true;
-                    if (stripos($diag['title'], 'canonical') !== false || stripos($diag['title'], 'Canonical') !== false) $has_canonical = true;
-                    if (stripos($diag['title'], 'redirección') !== false || stripos($diag['title'], 'redirecciones') !== false) $has_redirect = true;
-                }
-                
-                if ($has_noindex) {
+                if ($is_noindex) {
                     $main_risk = 'Página oculta para buscadores (Directiva NOINDEX activa)';
                     $recommended_priority = 'Eliminar la directiva noindex en las metaetiquetas robots o en las cabeceras HTTP si deseas indexar esta URL.';
-                } elseif ($has_ssl) {
+                } elseif ($ssl_invalid_detected) {
                     $main_risk = 'Certificado SSL inválido o no verificado';
                     $recommended_priority = 'Corregir la configuración del servidor web, instalar o renovar el certificado SSL (Let\'s Encrypt o similar) inmediatamente.';
-                } elseif ($has_redirect) {
+                } elseif ($info['http_code'] >= 400) {
+                    $main_risk = 'Error de estado HTTP (' . $info['http_code'] . ')';
+                    $recommended_priority = 'Resolver el problema en el servidor, base de datos o CMS para que la URL devuelva un estado 200 OK.';
+                } elseif (count($redirect_chain) > 1) {
                     $main_risk = 'Cadena de redirecciones encadenadas o saltos indirectos';
                     $recommended_priority = 'Apuntar todos los enlaces internos y canonicals directamente a la URL de destino final.';
-                } elseif ($has_ttfb) {
+                } elseif ($ttfb > 600) {
                     $main_risk = 'TTFB y latencia del servidor web elevados';
                     $recommended_priority = 'Optimizar el backend de base de datos, configurar caché de servidor o migrar a un alojamiento web optimizado para WPO/WordPress.';
-                } elseif ($has_canonical) {
+                } elseif (empty($canonical)) {
                     $main_risk = 'Inconsistencia en la etiqueta canonical';
                     $recommended_priority = 'Añadir una etiqueta canonical absoluta apuntando a la URL final indexable, sin parámetros ni redirecciones.';
-                } elseif ($has_h1) {
+                } elseif (empty($title)) {
+                    $main_risk = 'Ausencia de la etiqueta Title';
+                    $recommended_priority = 'Escribir una etiqueta Title única y descriptiva de entre 50 y 65 caracteres.';
+                } elseif (count($h1s) !== 1) {
                     $main_risk = 'Errores de estructura o jerarquía semántica H1';
                     $recommended_priority = 'Asegurar la existencia de un único encabezado H1 por página, eliminando duplicidades en bloques hero o builders.';
                 }
@@ -410,6 +446,16 @@ $page = page_config([
 require dirname(__DIR__) . '/includes/header.php';
 require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
+
+<style>
+@media (max-width: 768px) {
+  .health-scoring-container {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+    justify-items: center;
+  }
+}
+</style>
 
 <main id="main">
 
@@ -687,7 +733,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem; margin-top:2rem;">
               <div>
                 <h3 style="color:var(--orange); font-size:1.1rem; margin-bottom:.5rem;">1. Medición de TTFB real en Servidor</h3>
-                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">No es una simulación visual. Cuando envías el formulario, nuestro servidor ejecuta una petición física en tiempo real a través de <strong>cURL multi-opción</strong>. El sistema registra el instante exacto en microsegundos (<code>microtime(true)</code>) justo antes de lanzar la conexión y en el momento exacto en que el servidor remoto entrega el primer byte de datos. Restando ambos valores obtenemos el TTFB científico real.</p>
+                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">No es una simulación visual. Cuando envías el formulario, nuestro servidor ejecuta una petición física en tiempo real a través de <strong>cURL</strong>. La herramienta monitoriza el parámetro <code>CURLINFO_STARTTRANSFER_TIME</code> para obtener el registro exacto del instante en que se recibe la respuesta inicial del servidor remoto. Con esta métrica obtenemos una estimación bastante precisa del tiempo hasta primer byte desde el servidor donde se ejecuta la herramienta.</p>
               </div>
               <div>
                 <h3 style="color:var(--orange); font-size:1.1rem; margin-bottom:.5rem;">2. ¿Por qué se procesa de forma casi instantánea?</h3>
@@ -719,7 +765,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           <div class="criterio-card">
             <h3>Cabeceras de seguridad y SEO: la conexión indirecta</h3>
-            <p>¿Qué tiene que ver `X-Frame-Options` con posicionar? Directamente, nada. Indirectamente, todo. No tener estas directivas facilita ataques como el Clickjacking o inyecciones de Scripts maliciosos que insertan enlaces ocultos. Si Google detecta malware en tu web, te penalizará en horas mandando tu tráfico a cero.</p>
+            <p>¿Qué tiene que ver `X-Frame-Options` con posicionar? Directamente, nada. Indirectamente, todo. No tener estas directivas facilita ataques como el Clickjacking o inyecciones de Scripts maliciosos que insertan enlaces ocultos. Si Google detecta malware en tu web, puede mostrar advertencias de seguridad, reducir drásticamente la confianza del resultado y hundir el tráfico orgánico hasta que se resuelva el problema.</p>
           </div>
         </div>
       </div>
