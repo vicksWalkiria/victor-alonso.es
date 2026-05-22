@@ -17,8 +17,9 @@ Options -Indexes
   RewriteCond %{REQUEST_URI} ^(.*)//(.*)$
   RewriteRule . %1/%2 [R=301,L]
 
-  # 3.5. Forzar barra final (trailing slash) si no es un archivo físico
+  # 3.5. Forzar barra final (trailing slash) si no es un archivo físico ni .ico
   RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !\.(ico|png|jpg|jpeg|webp|svg|css|js|xml|json|txt|pdf|woff2?)$ [NC]
   RewriteCond %{REQUEST_URI} !(.*)/$
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [R=301,L]
 
@@ -65,7 +66,7 @@ Options -Indexes
 </IfModule>
 
 # ─── Proteger archivos sensibles ──────────────────────────────────────────────
-<FilesMatch "^\.">
+<FilesMatch "^\.(?!well-known)">
   Order allow,deny
   Deny from all
 </FilesMatch>
@@ -78,6 +79,14 @@ Options -Indexes
 # Bloquear acceso directo a /includes/
 <IfModule mod_rewrite.c>
   RewriteRule ^includes/ - [F,L]
+</IfModule>
+
+# ─── 410 Gone: URLs inexistentes que generan ruido en logs ────────────────────
+# (Cloudflare email-protection, Apple App Site Association)
+<IfModule mod_rewrite.c>
+  RewriteRule ^cdn-cgi/l/email-protection/?$ - [G,L]
+  RewriteRule ^apple-app-site-association/?$ - [G,L]
+  RewriteRule ^\.well-known/apple-app-site-association/?$ - [G,L]
 </IfModule>
 
 # ─── Página de error personalizada (opcional) ─────────────────────────────────
