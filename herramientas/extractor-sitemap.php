@@ -205,7 +205,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <div class="tool-intro">
         <h2>Audita la indexabilidad de tu arquitectura web</h2>
-        <p>Introduce la URL de tu sitemap XML o sitemap index. Nuestro servidor descargará recursivamente la estructura, clasificará los tipos de URLs, auditará métricas técnicas y te permitirá exportarlas listas para Screaming Frog, GSC o Excel.</p>
+        <p>Introduce la URL de tu sitemap XML o sitemap index. Mi servidor descargará recursivamente la estructura, clasificará los tipos de URLs, auditará métricas técnicas y te permitirá exportarlas listas para Screaming Frog, GSC o Excel.</p>
       </div>
 
       <div class="extractor-grid">

@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
     'title'        => 'Herramientas SEO técnico gratuitas',
-    'description'  => 'Echale un ojo a nuestras herramientas SEO gratuitas creadas a medida para auditoría web en vivo y generación de datos estructurados Schema JSON-LD.',
+    'description'  => 'Échale un ojo a mis herramientas SEO gratuitas creadas a medida para auditoría web en vivo y generación de datos estructurados Schema JSON-LD.',
     'canonical'    => '/herramientas/',
     'body_class'   => 'page-herramientas-hub',
     'schema_types' => [],
@@ -43,7 +43,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </svg>
             </div>
             <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Analizador Técnico de URLs</h2>
-            <p style="margin-bottom:1.5rem;font-size:.95rem">Nuestra auditoría express en vivo. Introduce cualquier URL y analizaremos su código de respuesta HTTP, el tiempo de respuesta del servidor (TTFB real), etiquetas básicas de SEO On-Page, directivas de rastreo (`noindex`) y las cabeceras de seguridad indispensables.</p>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Mi auditoría express en vivo. Introduce cualquier URL y analizaremos su código de respuesta HTTP, el tiempo de respuesta del servidor (TTFB real), etiquetas básicas de SEO On-Page, directivas de rastreo (`noindex`) y las cabeceras de seguridad indispensables.</p>
             <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
               <li class="checklist-item">Cálculo del TTFB exacto en milisegundos.</li>
               <li class="checklist-item">Validación de etiquetas Title, Meta Description y H1.</li>
@@ -112,7 +112,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </svg>
             </div>
             <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Extractor & Auditor de Sitemaps</h2>
-            <p style="margin-bottom:1.5rem;font-size:.95rem">Nuestra herramienta de trinchera para indexabilidad. Extrae de forma recursiva todas las URLs de sitemaps XML e índices anidados, audita longitudes de enlace críticas para dispositivos móviles y expórtalas en un clic.</p>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Mi herramienta de trinchera para indexabilidad. Extrae de forma recursiva todas las URLs de sitemaps XML e índices anidados, audita longitudes de enlace críticas para dispositivos móviles y expórtalas en un clic.</p>
             <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
               <li class="checklist-item">Rastreo recursivo de sub-sitemaps automático.</li>
               <li class="checklist-item">Auditoría visual de URLs críticas (>75 chars).</li>
