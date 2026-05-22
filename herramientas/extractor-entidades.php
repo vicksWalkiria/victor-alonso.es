@@ -250,17 +250,18 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                             <span class="legend-badge person">Personas</span>
                             <span class="legend-badge tech">Tecnologías / Frameworks</span>
                             <span class="legend-badge concept">Conceptos SEO / Temas</span>
+                            <span class="legend-badge place">Lugares / Ubicaciones</span>
                         </div>
                     </div>
 
                     <div style="background: #060911; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.04); overflow: hidden; position: relative; height: 500px;">
                         <canvas id="graph-canvas" width="1000" height="500" style="display: block; cursor: grab;"></canvas>
                         
-                        <!-- Panel flotante de controles de zoom -->
-                        <div style="position: absolute; bottom: 1rem; right: 1rem; display: flex; gap: .5rem; z-index: 10;">
+                        <!-- Panel flotante de controles de zoom (vertical estilo Google Maps) -->
+                        <div style="position: absolute; bottom: 1rem; right: 1rem; display: flex; flex-direction: column; gap: .5rem; z-index: 10; align-items: flex-end;">
                             <button class="zoom-btn" onclick="zoomGraph(1.2)">+</button>
                             <button class="zoom-btn" onclick="zoomGraph(0.8)">&minus;</button>
-                            <button class="zoom-btn" onclick="resetGraphView()">Centrar</button>
+                            <button class="zoom-btn" onclick="resetGraphView()" style="width: auto; min-width: 38px; padding: 0 .6rem; font-size: .65rem; text-transform: uppercase; white-space: nowrap;">Centrar</button>
                         </div>
                         
                         <!-- Tooltip del nodo flotante -->
@@ -410,6 +411,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .legend-badge.person { background: rgba(46,204,113,0.15); border: 1px solid #2ecc71; color: #2ecc71; }
 .legend-badge.tech { background: rgba(52,152,219,0.15); border: 1px solid #3498db; color: #3498db; }
 .legend-badge.concept { background: rgba(155,89,182,0.15); border: 1px solid #9b59b6; color: #9b59b6; }
+.legend-badge.place { background: rgba(241,196,15,0.15); border: 1px solid #f1c40f; color: #f1c40f; }
 
 .zoom-btn {
     background: rgba(11,17,30,0.9);
@@ -452,6 +454,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .ent-badge.person { background: rgba(46,204,113,0.15); color: #2ecc71; }
 .ent-badge.tech { background: rgba(52,152,219,0.15); color: #3498db; }
 .ent-badge.concept { background: rgba(155,89,182,0.15); color: #9b59b6; }
+.ent-badge.place { background: rgba(241,196,15,0.15); color: #f1c40f; }
 
 .triple-card {
     padding: .85rem 1.1rem;
@@ -919,11 +922,31 @@ function buildGraphData(entities, triples) {
     // Centrar la vista del Grafo por defecto
     resetGraphView();
     
-    // 1. Crear nodos a partir de las entidades
+    // 1. Crear nodos a partir de las entidades distribuidas cerca de su centro orbital
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
     entities.forEach((ent, i) => {
-        // Disposición orbital inicial aleatoria
+        let targetX = centerX;
+        let targetY = centerY;
+        
+        // Coordenada destino por tipo para inicializar en su nube respectiva
+        if (ent.type === 'org') {
+            targetX = centerX - 240;
+            targetY = centerY - 50;
+        } else if (ent.type === 'person') {
+            targetX = centerX - 60;
+            targetY = centerY - 140;
+        } else if (ent.type === 'tech') {
+            targetX = centerX + 240;
+            targetY = centerY - 50;
+        } else if (ent.type === 'concept' || ent.type === 'place') {
+            targetX = centerX + 60;
+            targetY = centerY + 140;
+        }
+        
+        // Disposición inicial orbital aleatoria cerca de su centro de atracción
         const angle = Math.random() * Math.PI * 2;
-        const radius = 50 + Math.random() * 150;
+        const radius = 10 + Math.random() * 40;
         
         nodes.push({
             id: ent.name,
@@ -932,8 +955,8 @@ function buildGraphData(entities, triples) {
             weight: ent.weight,
             frequency: ent.frequency,
             radius: 12 + ent.weight * 1.5,
-            x: canvas.width / 2 + Math.cos(angle) * radius,
-            y: canvas.height / 2 + Math.sin(angle) * radius,
+            x: targetX + Math.cos(angle) * radius,
+            y: targetY + Math.sin(angle) * radius,
             vx: 0,
             vy: 0
         });
@@ -1029,14 +1052,32 @@ function updatePhysics() {
         }
     });
     
-    // 3. Gravedad hacia el centro del lienzo
+    // 3. Gravedad hacia su centro orbital por categoría (color) para agrupar por constelaciones
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     nodes.forEach(node => {
         if (node === dragNode) return;
         
-        const dx = centerX - node.x;
-        const dy = centerY - node.y;
+        let targetX = centerX;
+        let targetY = centerY;
+        
+        // Asignar centros orbitales específicos por categoría
+        if (node.type === 'org') {
+            targetX = centerX - 240;
+            targetY = centerY - 50;
+        } else if (node.type === 'person') {
+            targetX = centerX - 60;
+            targetY = centerY - 140;
+        } else if (node.type === 'tech') {
+            targetX = centerX + 240;
+            targetY = centerY - 50;
+        } else if (node.type === 'concept' || node.type === 'place') {
+            targetX = centerX + 60;
+            targetY = centerY + 140;
+        }
+        
+        const dx = targetX - node.x;
+        const dy = targetY - node.y;
         
         node.vx += dx * kGravity;
         node.vy += dy * kGravity;
@@ -1092,6 +1133,9 @@ function drawGraph() {
         } else if (node.type === 'concept') {
             color = '#9b59b6';
             glowColor = 'rgba(155,89,182,0.3)';
+        } else if (node.type === 'place') {
+            color = '#f1c40f'; // amarillo oro para lugares
+            glowColor = 'rgba(241,196,15,0.3)';
         }
         
         // Halo de neón difuminado en hover/drag
