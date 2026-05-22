@@ -325,9 +325,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <!-- Botones de Acción / Exportación -->
                 <div style="display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 2rem;">
                     <button class="btn btn--primary" id="btn-copy-all">Copiar todas las URLs</button>
-                    <button class="btn btn--secondary" id="btn-download-csv">Exportar a CSV</button>
+                    <button class="btn btn--primary" id="btn-download-csv" style="background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #ffffff !important;">Exportar a CSV</button>
                     <button class="btn btn--ghost" id="btn-download-json">Exportar a JSON</button>
-                    <button class="btn btn--danger" onclick="resetTool()" style="margin-left: auto;">Limpiar Herramienta</button>
+                    <button class="btn btn--ghost" onclick="resetTool()" style="margin-left: auto; color: #e74c3c !important; border-color: rgba(231,76,60,0.3) !important;">Limpiar Herramienta</button>
                 </div>
 
                 <!-- Tabla de URLs Auditada -->
