@@ -100,6 +100,29 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <a href="/herramientas/calculadora-wpo/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder a la Calculadora WPO</a>
         </article>
 
+        <!-- CARD 4: EXTRACTOR DE SITEMAP -->
+        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+                <path d="M10 6.5h4v11h-4M14 17.5h7"></path>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Extractor & Auditor de Sitemaps</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Nuestra herramienta de trinchera para indexabilidad. Extrae de forma recursiva todas las URLs de sitemaps XML e índices anidados, audita longitudes de enlace críticas para dispositivos móviles y expórtalas en un clic.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Rastreo recursivo de sub-sitemaps automático.</li>
+              <li class="checklist-item">Auditoría visual de URLs críticas (>75 chars).</li>
+              <li class="checklist-item">Extracción de imágenes, prioridad y lastmod.</li>
+              <li class="checklist-item">Exportación profesional a CSV, JSON y TXT.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/extractor-sitemap/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Extractor Sitemap</a>
+        </article>
+
       </div>
 
     </div>
