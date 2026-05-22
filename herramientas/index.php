@@ -123,6 +123,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <a href="/herramientas/extractor-sitemap/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Extractor Sitemap</a>
         </article>
 
+        <!-- CARD 5: EXTRACTOR SEMÁNTICO -->
+        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Extractor Semántico & Grafos</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Mi herramienta de minería lingüística. Extrae entidades nombradas, mapea triples semánticos (Sujeto-Verbo-Objeto) y detecta brechas de cobertura semántica (Semantic Gap) frente a tus competidores.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Modelado de Grafo interactivo en HTML5 Canvas con físicas.</li>
+              <li class="checklist-item">Minería NLP para Personas, Ubicaciones y Marcas.</li>
+              <li class="checklist-item">Auditoría comparativa de solapamiento de entidades en vivo.</li>
+              <li class="checklist-item">Detección automática de brechas semánticas clave de SEO.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/extractor-entidades/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Extractor Semántico</a>
+        </article>
+
       </div>
 
     </div>

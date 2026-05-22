@@ -1,0 +1,1132 @@
+<?php
+require_once dirname(__DIR__) . '/includes/config.php';
+require_once dirname(__DIR__) . '/includes/schema.php';
+require_once dirname(__DIR__) . '/includes/ratings-helper.php';
+
+@set_time_limit(120);
+
+// Descargar y limpiar el contenido semántico principal de una URL
+function fetch_clean_semantic_text($url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_ENCODING, '');
+    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 6);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    
+    // Simular Googlebot Móvil exacto
+    $googlebot = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)';
+    curl_setopt($ch, CURLOPT_USERAGENT, $googlebot);
+    
+    $html = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    
+    if ($http_code !== 200 || !$html) {
+        return false;
+    }
+    
+    // Decodificación gzip de seguridad redundante
+    if (substr($html, 0, 2) === "\x1f\x8b") {
+        $decoded = @gzdecode($html);
+        if ($decoded) {
+            $html = $decoded;
+        }
+    }
+    
+    // Desactivar temporalmente reporte de errores en carga de DOM
+    $internalErrors = libxml_use_internal_errors(true);
+    $dom = new DOMDocument();
+    @$dom->loadHTML('<?xml encoding="UTF-8">' . $html);
+    libxml_clear_errors();
+    libxml_use_internal_errors($internalErrors);
+    
+    $xpath = new DOMXPath($dom);
+    
+    // Eliminar elementos ruidosos que falsean el análisis semántico
+    $noise_tags = ['script', 'style', 'header', 'footer', 'nav', 'aside', 'noscript', 'iframe', 'svg'];
+    foreach ($noise_tags as $tag) {
+        $nodes = $xpath->query('//' . $tag);
+        foreach ($nodes as $node) {
+            $node->parentNode->removeChild($node);
+        }
+    }
+    
+    // Intentar buscar contenedores de contenido principal
+    $content_containers = [
+        '//main',
+        '//article',
+        '//div[@id="content"]',
+        '//div[contains(@class, "content")]',
+        '//div[contains(@class, "post")]',
+        '//body'
+    ];
+    
+    $text_content = '';
+    foreach ($content_containers as $query) {
+        $container = $xpath->query($query)->item(0);
+        if ($container) {
+            $text_content = $container->textContent;
+            break;
+        }
+    }
+    
+    if (!$text_content) {
+        $text_content = $dom->textContent;
+    }
+    
+    // Limpieza de espacios en blanco
+    $text_content = preg_replace('/\s+/', ' ', $text_content);
+    $text_content = trim($text_content);
+    
+    // Cortar textos excesivamente largos para no desbordar memoria del navegador
+    if (mb_strlen($text_content) > 25000) {
+        $text_content = mb_substr($text_content, 0, 25000) . '...';
+    }
+    
+    return $text_content;
+}
+
+// Interceptar API de Extracción Ajax
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    if ($_POST['action'] === 'rate') {
+        header('Content-Type: application/json');
+        $tool_id = trim($_POST['tool_id'] ?? '');
+        $rating = (int)($_POST['rating'] ?? 0);
+        
+        if (isset($_COOKIE['voted_' . $tool_id])) {
+            echo json_encode(['success' => false, 'message' => 'Ya has valorado esta herramienta.']);
+            exit;
+        }
+        
+        $res = save_vote($tool_id, $rating);
+        if ($res) {
+            setcookie('voted_' . $tool_id, '1', time() + (365 * 24 * 60 * 60), '/');
+            echo json_encode(['success' => true, 'count' => $res['count'], 'average' => $res['average']]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error al registrar valoración.']);
+        }
+        exit;
+    }
+    
+    if ($_POST['action'] === 'extract_entities') {
+        header('Content-Type: application/json');
+        $url1 = trim($_POST['url1'] ?? '');
+        $url2 = trim($_POST['url2'] ?? '');
+        
+        if (!$url1 || filter_var($url1, FILTER_VALIDATE_URL) === false) {
+            echo json_encode(['success' => false, 'message' => 'La URL principal proporcionada no es válida.']);
+            exit;
+        }
+        
+        $text1 = fetch_clean_semantic_text($url1);
+        if (!$text1) {
+            echo json_encode(['success' => false, 'message' => 'No he podido descargar ni limpiar el contenido de la URL principal. Comprueba que sea accesible públicamente.']);
+            exit;
+        }
+        
+        $text2 = '';
+        if ($url2) {
+            if (filter_var($url2, FILTER_VALIDATE_URL) === false) {
+                echo json_encode(['success' => false, 'message' => 'La segunda URL para la brecha semántica no es válida.']);
+                exit;
+            }
+            $text2 = fetch_clean_semantic_text($url2);
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'url1' => $url1,
+            'text1' => $text1,
+            'url2' => $url2,
+            'text2' => $text2
+        ]);
+        exit;
+    }
+}
+
+// Configuración de Página
+$page = page_config([
+    'title'        => 'Extractor de Entidades Semánticas y Grafos de Conocimiento',
+    'description'  => 'Audita la cobertura de entidades semánticas de tu web. Extrae triples, agrupa temáticas y compara brechas de entidades frente a tus competidores.',
+    'canonical'    => '/herramientas/extractor-entidades/',
+    'body_class'   => 'page-extractor-entidades',
+    'schema_types' => ['WebApplication'],
+    'rating_id'    => 'extractor-entidades',
+    'active_nav'   => 'herramientas',
+    'breadcrumbs'  => [
+        ['label' => 'Herramientas', 'url' => '/herramientas/'],
+        ['label' => 'Extractor Semántico de Entidades', 'url' => ''],
+    ],
+]);
+
+require dirname(__DIR__) . '/includes/header.php';
+require dirname(__DIR__) . '/includes/breadcrumbs.php';
+?>
+
+<main id="main">
+
+  <section class="page-hero" aria-labelledby="semantic-h1">
+    <div class="container">
+      <span class="hero-eyebrow">SEO Semántico Avanzado y NLP</span>
+      <h1 id="semantic-h1">Extractor de <span>Entidades Semánticas</span></h1>
+      <p class="page-hero-desc">Descubre el mapa mental que Google extrae de tu contenido. Mapea triples semánticos, construye grafos de conocimiento e identifica brechas semánticas.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      
+      <div class="tool-intro">
+        <h2>Visualiza tus contenidos a través de los ojos de un algoritmo semántico</h2>
+        <p>Introduce la URL de tu artículo o landing. Mi servidor limpiará el contenido de código ruidoso, mi motor de lenguaje natural extraerá las entidades nombradas y relaciones lógicas, y te presentaré un <strong>grafo interactivo con físicas en Canvas</strong> y un análisis comparativo contra tus competidores.</p>
+      </div>
+
+      <div class="extractor-grid">
+        
+        <!-- Bloque de Entrada / Configuración -->
+        <div class="card card--dark border-orange" style="padding: 2.5rem; border-radius: 1.5rem; margin-bottom: 2rem;">
+            <h3 style="color: var(--orange); margin-bottom: 1.25rem; font-size: 1.3rem; font-weight: 800; text-transform: uppercase;">1. Configurar Análisis Semántico</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                <div class="form-group">
+                    <label class="form-label" for="sm-url1">URL Principal (Tu página o artículo) *</label>
+                    <input type="url" class="form-input" id="sm-url1" value="https://www.victor-alonso.es/sobre-mi/" placeholder="https://tuweb.com/tu-articulo/" style="font-family: monospace;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="sm-url2">URL de Competidor (Opcional - Para Brecha Semántica)</label>
+                    <input type="url" class="form-input" id="sm-url2" placeholder="https://competidor.com/su-articulo/" style="font-family: monospace;">
+                </div>
+            </div>
+
+            <button class="btn btn--primary" id="btn-analyze-entities" style="width: 100%; justify-content: center; padding: 1.1rem;">
+                <span id="btn-text">Extraer Entidades y Modelar Grafo</span>
+                <span id="btn-loader" class="loader-spinner" style="display: none;"></span>
+            </button>
+        </div>
+
+        <!-- Pantalla de carga animada -->
+        <div id="loading-overlay" class="card card--dark" style="display: none; padding: 3rem; text-align: center; border-radius: 1.5rem; margin-bottom: 2rem;">
+            <div class="loader-spinner" style="width: 50px; height: 50px; border-width: 5px; border-top-color: var(--orange); margin: 0 auto 1.5rem;"></div>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;" id="loading-title">Scrapeando contenido de forma limpia...</h3>
+            <p style="color: var(--muted); font-size: .9rem;" id="loading-status">Llamando a mi servidor web para descargar el texto libre de scripts y cabeceras...</p>
+        </div>
+
+        <!-- Dashboard Completo de Resultados (Oculto inicialmente) -->
+        <div id="results-panel" style="display: none;">
+            
+            <!-- Pestañas de Visualización -->
+            <div class="tab-container" style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
+                <button class="tab-btn active" onclick="switchVisualTab('tab-graph')">Grafo de Conocimiento</button>
+                <button class="tab-btn" onclick="switchVisualTab('tab-list')">Lista de Entidades & Triples</button>
+                <button class="tab-btn" id="btn-tab-gap" onclick="switchVisualTab('tab-gap')" style="display: none;">Análisis de Brecha Semántica</button>
+            </div>
+
+            <!-- Pestaña 1: Grafo en Canvas -->
+            <div id="tab-graph" class="tab-visual-content active">
+                <div class="card card--dark" style="padding: 1.5rem; border-radius: 1.5rem; position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h3 style="color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">Visualizador del Grafo Semántico</h3>
+                            <p style="font-size: .8rem; color: var(--muted); margin: 0;">Interactúa con el grafo: arrastra los nodos, haz zoom con la rueda o doble clic en el fondo para centrar.</p>
+                        </div>
+                        <div class="legend" style="display: flex; gap: .75rem; flex-wrap: wrap; font-size: .7rem;">
+                            <span class="legend-badge org">Organizaciones / Marcas</span>
+                            <span class="legend-badge person">Personas</span>
+                            <span class="legend-badge tech">Tecnologías / Frameworks</span>
+                            <span class="legend-badge concept">Conceptos SEO / Temas</span>
+                        </div>
+                    </div>
+
+                    <div style="background: #060911; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.04); overflow: hidden; position: relative; height: 500px;">
+                        <canvas id="graph-canvas" width="1000" height="500" style="display: block; cursor: grab;"></canvas>
+                        
+                        <!-- Panel flotante de controles de zoom -->
+                        <div style="position: absolute; bottom: 1rem; right: 1rem; display: flex; gap: .5rem; z-index: 10;">
+                            <button class="zoom-btn" onclick="zoomGraph(1.2)">+</button>
+                            <button class="zoom-btn" onclick="zoomGraph(0.8)">&minus;</button>
+                            <button class="zoom-btn" onclick="resetGraphView()">Centrar</button>
+                        </div>
+                        
+                        <!-- Tooltip del nodo flotante -->
+                        <div id="graph-tooltip" style="position: absolute; background: rgba(11,17,30,0.95); border: 1px solid var(--orange); border-radius: .5rem; padding: .5rem 1rem; color: #fff; font-size: .75rem; display: none; pointer-events: none; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 20;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pestaña 2: Lista de Entidades & Triples -->
+            <div id="tab-list" class="tab-visual-content" style="display: none;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                    
+                    <!-- Columna de Entidades -->
+                    <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem;">
+                        <h3 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem;">Entidades Encontradas (<span id="total-entities-count">0</span>)</h3>
+                        <div id="entities-list-wrapper" style="max-height: 400px; overflow-y: auto; padding-right: .5rem;">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Columna de Triples Semánticos -->
+                    <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem;">
+                        <h3 style="color: #fff; font-size: 1.2rem; font-weight: 800; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: .75rem;">Relaciones Semánticas (Triples)</h3>
+                        <div id="triples-list-wrapper" style="max-height: 400px; overflow-y: auto; padding-right: .5rem;">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Pestaña 3: Análisis de Brecha Semántica -->
+            <div id="tab-gap" class="tab-visual-content" style="display: none;">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                    
+                    <!-- Stats comparativos -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--orange);">
+                            <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Entidades Comunes</span>
+                            <span id="gap-common" style="display: block; font-size: 2rem; font-weight: 900; color: #fff; margin-top: .25rem;">0</span>
+                        </div>
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #2ecc71;">
+                            <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Tus Entidades Únicas</span>
+                            <span id="gap-unique1" style="display: block; font-size: 2rem; font-weight: 900; color: #2ecc71; margin-top: .25rem;">0</span>
+                        </div>
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #e74c3c;">
+                            <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Entidades Únicas del Competidor</span>
+                            <span id="gap-unique2" style="display: block; font-size: 2rem; font-weight: 900; color: #e74c3c; margin-top: .25rem;">0</span>
+                        </div>
+                        <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #3498db;">
+                            <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted);">Solapamiento Semántico</span>
+                            <span id="gap-overlap-pct" style="display: block; font-size: 2rem; font-weight: 900; color: #3498db; margin-top: .25rem;">0%</span>
+                        </div>
+                    </div>
+
+                    <!-- Cuadro de sugerencias de brecha semántica -->
+                    <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem; border: 1px dashed rgba(231,76,60,0.3);">
+                        <h3 style="color: #e74c3c; font-size: 1.25rem; font-weight: 800; margin-bottom: 1rem;">Oportunidades de Relevancia (Conceptos que te faltan):</h3>
+                        <p style="font-size: .9rem; color: #cbd5e1; margin-bottom: 1.5rem;">He detectado las siguientes entidades conceptuales fuertes en el contenido de tu competidor que están ausentes en tu contenido. Integrarlas en tu texto aumentará tu relevancia semántica a ojos de los algoritmos de búsqueda:</p>
+                        
+                        <div id="gap-keywords-box" style="display: flex; flex-wrap: wrap; gap: .75rem;">
+                            <!-- Inyectado dinámicamente -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+
+      <!-- Sección de Criterio Técnico SEO "Non-Commodity" -->
+      <div class="criterio-section" style="margin-top: 5rem;">
+        <span class="section-label">Procesamiento de Lenguaje Natural y SEO</span>
+        <h2>¿Por qué Google clasifica tus contenidos por Entidades y no por Keywords?</h2>
+        
+        <div class="criterio-grid">
+          <div class="criterio-card">
+            <h3>Del "Strings to Things" de Google</h3>
+            <p>En el año 2012, Google introdujo el Knowledge Graph iniciando la transición de "cadenas de texto" a "cosas". Los algoritmos modernos (BERT, MUM) no analizan la repetición de palabras clave independientes.</p>
+            <p>Mapean entidades (conceptos reales, marcas, personas) y miden su relación (predicados). Si tu web habla de "desarrollo web" pero carece de entidades de soporte lógicas como "bases de datos", "código limpio" o "servidores", carecerá de relevancia semántica a ojos del buscador.</p>
+          </div>
+
+          <div class="criterio-card">
+            <h3>La importancia del NAP en SEO Local</h3>
+            <p>En SEO local, la consistencia NAP (Nombre, Dirección, Teléfono) es una relación de entidad en el Grafo de Google. Si tu marcado Schema, tu web y tus directorios declaran exactamente las mismas coordenadas y relaciones físicas, Google consolida tu entidad local aumentando directamente tu visibilidad en Google Maps.</p>
+          </div>
+
+          <div class="criterio-card">
+            <h3>La minería de brecha semántica (Semantic Gap)</h3>
+            <p>La optimización on-page científica consiste en auditar a las webs que ya ocupan las primeras posiciones en Google, extraer su Grafo de Conocimiento e identificar qué nodos conceptuales están cubriendo ellos que tú has pasado por alto. No es añadir más texto; es dotar a tu contenido de mayor profundidad temática.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Valoraciones -->
+      <?php render_rating_widget('extractor-entidades'); ?>
+
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <?php
+  $cta = [
+    'title'     => '¿Quieres diseñar una estrategia de contenido semántico?',
+    'subtitle'  => 'Mapeo el universo conceptual de tu nicho, detecto brechas de indexación de tus competidores y diseño arquitecturas web semánticas orientadas a dominar el Grafo de Conocimiento.',
+    'btn_label' => 'Auditar mi semántica técnica',
+    'btn_href'  => '/contacto',
+    'whatsapp'  => true,
+    'variant'   => 'orange',
+  ];
+  require dirname(__DIR__) . '/includes/cta.php';
+  ?>
+
+</main>
+
+<!-- Inclusión de la librería NLP Compromise por CDN -->
+<script src="https://cdn.jsdelivr.net/npm/compromise@14.14.0/builds/compromise.min.js"></script>
+
+<style>
+/* Estilos premium de neón y badges */
+.tab-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--muted);
+    padding: .6rem 1.25rem;
+    border-radius: .75rem;
+    font-weight: 800;
+    font-size: .8rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+.tab-btn.active, .tab-btn:hover {
+    border-color: var(--orange);
+    color: #fff;
+    background: rgba(232,104,26,.08);
+}
+.legend-badge {
+    padding: .35rem .75rem;
+    border-radius: .5rem;
+    font-weight: 700;
+    color: #fff;
+}
+.legend-badge.org { background: rgba(232,104,26,0.15); border: 1px solid var(--orange); color: var(--orange); }
+.legend-badge.person { background: rgba(46,204,113,0.15); border: 1px solid #2ecc71; color: #2ecc71; }
+.legend-badge.tech { background: rgba(52,152,219,0.15); border: 1px solid #3498db; color: #3498db; }
+.legend-badge.concept { background: rgba(155,89,182,0.15); border: 1px solid #9b59b6; color: #9b59b6; }
+
+.zoom-btn {
+    background: rgba(11,17,30,0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    width: 38px;
+    height: 38px;
+    border-radius: .5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+.zoom-btn:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+.ent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .75rem 1rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: .75rem;
+    border: 1px solid rgba(255,255,255,0.03);
+    margin-bottom: .5rem;
+}
+.ent-badge {
+    font-size: .65rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: .2rem .5rem;
+    border-radius: .35rem;
+}
+.ent-badge.org { background: rgba(232,104,26,0.15); color: var(--orange); }
+.ent-badge.person { background: rgba(46,204,113,0.15); color: #2ecc71; }
+.ent-badge.tech { background: rgba(52,152,219,0.15); color: #3498db; }
+.ent-badge.concept { background: rgba(155,89,182,0.15); color: #9b59b6; }
+
+.triple-card {
+    padding: .85rem 1.1rem;
+    background: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: .75rem;
+    margin-bottom: .6rem;
+    font-size: .82rem;
+}
+.triple-sub { color: #fff; font-weight: 700; font-family: monospace; }
+.triple-pred { color: var(--orange); font-weight: 800; text-transform: uppercase; font-size: .75rem; margin: 0 .5rem; }
+.triple-obj { color: #cbd5e1; font-weight: 700; font-family: monospace; }
+
+.gap-keyword {
+    background: rgba(231,76,60,0.1);
+    color: #e74c3c;
+    border: 1px solid rgba(231,76,60,0.15);
+    padding: .4rem .9rem;
+    border-radius: 2rem;
+    font-size: .8rem;
+    font-weight: 700;
+    font-family: monospace;
+}
+</style>
+
+<script>
+// Ontología técnica y semántica personalizada (Español & Inglés)
+const techDictionary = {
+    'react': 'tech', 'reactjs': 'tech', 'angular': 'tech', 'vue': 'tech', 'vuejs': 'tech', 'nextjs': 'tech',
+    'php': 'tech', 'wordpress': 'tech', 'laravel': 'tech', 'symfony': 'tech', 'magento': 'tech', 'prestashop': 'tech',
+    'node': 'tech', 'nodejs': 'tech', 'javascript': 'tech', 'js': 'tech', 'css': 'tech', 'html': 'tech', 'sass': 'tech',
+    'android': 'tech', 'ios': 'tech', 'java': 'tech', 'kotlin': 'tech', 'swift': 'tech', 'flutter': 'tech',
+    'mysql': 'tech', 'postgresql': 'tech', 'mongodb': 'tech', 'redis': 'tech', 'docker': 'tech', 'git': 'tech',
+    'seo': 'concept', 'wpo': 'concept', 'sem': 'concept', 'analytics': 'concept', 'cro': 'concept', 'schema': 'concept',
+    'sitemap': 'concept', 'robots.txt': 'concept', 'canonical': 'concept', 'crawling': 'concept', 'indexación': 'concept',
+    'algoritmo': 'concept', 'entidad': 'concept', 'entidades': 'concept', 'nlp': 'concept', 'knowledge graph': 'concept',
+    'albacete': 'place', 'españa': 'place', 'madrid': 'place', 'barcelona': 'place', 'walkiria': 'org',
+    'walkiria apps': 'org', 'google': 'org', 'googlebot': 'org', 'screaming frog': 'org'
+};
+
+const customVerbs = [
+    'desarrolla', 'programa', 'optimiza', 'crea', 'fundó', 'diseña', 'gestiona',
+    'integra', 'utiliza', 'aplica', 'ayuda', 'posiciona', 'domina', 'ofrece', 'ofreciendo'
+];
+
+// Datos del análisis en memoria
+let analysisData = {
+    entities1: [],
+    entities2: [],
+    triples1: [],
+    triples2: [],
+    graph1: { nodes: [], links: [] }
+};
+
+// Configuración del canvas de física del Grafo
+const canvas = document.getElementById('graph-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [];
+let links = [];
+let dragNode = null;
+let transform = { x: 0, y: 0, scale: 1 };
+let isPanning = false;
+let startPan = { x: 0, y: 0 };
+let animationFrameId = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('btn-analyze-entities').addEventListener('click', startSemanticScraping);
+    
+    // Configurar interacciones del canvas
+    setupCanvasInteraction();
+});
+
+// Pestañas
+function switchVisualTab(tabId) {
+    document.querySelectorAll('.tab-visual-content').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById(tabId).style.display = 'block';
+    
+    // Activar botón respectivo
+    const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+    if (clickedBtn) clickedBtn.classList.add('active');
+    
+    // Si entramos al grafo, re-arrancar animación si se había pausado
+    if (tabId === 'tab-graph') {
+        startGraphSimulation();
+    }
+}
+
+// Scrapeo Ajax
+function startSemanticScraping() {
+    const url1 = document.getElementById('sm-url1').value.trim();
+    const url2 = document.getElementById('sm-url2').value.trim();
+    
+    if (!url1) {
+        alert('Introduce al menos la URL principal.');
+        return;
+    }
+    
+    // Reset e interfaces de carga
+    document.getElementById('btn-analyze-entities').disabled = true;
+    document.getElementById('btn-text').style.display = 'none';
+    document.getElementById('btn-loader').style.display = 'inline-block';
+    
+    document.getElementById('loading-overlay').style.display = 'block';
+    document.getElementById('results-panel').style.display = 'none';
+    document.getElementById('btn-tab-gap').style.display = 'none';
+    
+    // Parar simulación de grafo previa
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+    }
+    
+    const formData = new FormData();
+    formData.append('action', 'extract_entities');
+    formData.append('url1', url1);
+    formData.append('url2', url2);
+    
+    fetch('', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            processSemanticNLP(data);
+        } else {
+            alert(data.message);
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+    })
+    .catch(err => {
+        alert('Error de red al conectar con el servidor.');
+        document.getElementById('loading-overlay').style.display = 'none';
+    })
+    .finally(() => {
+        document.getElementById('btn-analyze-entities').disabled = false;
+        document.getElementById('btn-text').style.display = 'inline-block';
+        document.getElementById('btn-loader').style.display = 'none';
+    });
+}
+
+// Pipeline NLP & NER Reactivo
+function processSemanticNLP(data) {
+    document.getElementById('loading-status').textContent = 'Ejecutando minería semántica y clasificación NLP en navegador...';
+    
+    setTimeout(() => {
+        // 1. Extraer entidades URL 1
+        analysisData.entities1 = runNLPAnalysis(data.text1);
+        analysisData.triples1 = runTripleExtraction(data.text1, analysisData.entities1);
+        
+        // 2. Extraer entidades URL 2 si existe
+        if (data.text2) {
+            analysisData.entities2 = runNLPAnalysis(data.text2);
+            analysisData.triples2 = runTripleExtraction(data.text2, analysisData.entities2);
+            document.getElementById('btn-tab-gap').style.display = 'inline-block';
+            
+            // Procesar brecha semántica
+            renderSemanticGap(analysisData.entities1, analysisData.entities2);
+        }
+        
+        // 3. Generar Grafo
+        buildGraphData(analysisData.entities1, analysisData.triples1);
+        
+        // 4. Renderizar listas
+        renderLists();
+        
+        // Finalizar y mostrar panel
+        document.getElementById('loading-overlay').style.display = 'none';
+        document.getElementById('results-panel').style.display = 'block';
+        
+        switchVisualTab('tab-graph');
+    }, 100);
+}
+
+// Analizador de entidades base
+function runNLPAnalysis(text) {
+    // Usar compromise NLP
+    const doc = nlp(text);
+    
+    const entities = [];
+    const seen = new Set();
+    
+    // Extracciones estándar de Compromise
+    doc.people().json().forEach(p => addEntity(p.text, 'person', 3));
+    doc.organizations().json().forEach(o => addEntity(o.text, 'org', 3));
+    doc.places().json().forEach(pl => addEntity(pl.text, 'place', 3));
+    
+    // Heurística de Sustantivos Propios / Mayúsculas en Español
+    // Palabras consecutivas que empiezan por mayúsculas y no siguen punto
+    const regexProper = /\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*)\b/g;
+    let match;
+    while ((match = regexProper.exec(text)) !== null) {
+        const word = match[1].trim();
+        if (word.length > 3 && !seen.has(word.toLowerCase())) {
+            // Comprobar si es un nombre genérico de inicio de frase
+            const idx = match.index;
+            const before = text.substring(Math.max(0, idx - 3), idx).trim();
+            if (before.endsWith('.') || before.endsWith('?') || before.endsWith('!')) {
+                continue; // Probablemente es simplemente inicio de oración
+            }
+            addEntity(word, 'org', 2);
+        }
+    }
+    
+    // Mapeo Ontología Técnica / Marketing
+    const words = text.toLowerCase().split(/[\s,.:;()"'-]+/);
+    words.forEach(w => {
+        if (techDictionary[w]) {
+            // Darle prioridad ontológica y capitalización bonita
+            const prettyName = w.toUpperCase() === w ? w : w.charAt(0).toUpperCase() + w.slice(1);
+            addEntity(prettyName, techDictionary[w], 4);
+        }
+    });
+    
+    function addEntity(name, type, weight) {
+        const cleanName = name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+        if (cleanName.length < 3 || cleanName.length > 35) return;
+        
+        const lower = cleanName.toLowerCase();
+        if (seen.has(lower)) {
+            // Incrementar peso / frecuencia de la entidad
+            const existing = entities.find(e => e.name.toLowerCase() === lower);
+            if (existing) {
+                existing.frequency++;
+                existing.weight = Math.min(10, existing.weight + 0.5);
+            }
+            return;
+        }
+        
+        seen.add(lower);
+        entities.push({
+            name: cleanName,
+            type: type,
+            weight: weight,
+            frequency: 1
+        });
+    }
+    
+    // Ordenar por importancia / frecuencia y limitar a las top 35 para que el grafo sea limpio
+    return entities.sort((a,b) => (b.frequency * b.weight) - (a.frequency * a.weight)).slice(0, 35);
+}
+
+// Extractor de triples semánticos (Sujeto - Predicado - Objeto)
+function runTripleExtraction(text, entities) {
+    const triples = [];
+    const sentences = text.split(/[.?!]+/);
+    
+    sentences.forEach(sentence => {
+        // Encontrar qué entidades están presentes en esta oración
+        const presentEntities = entities.filter(ent => 
+            sentence.toLowerCase().includes(ent.name.toLowerCase())
+        );
+        
+        if (presentEntities.length >= 2) {
+            // Buscar verbos / conectores relacionales de la lista
+            const words = sentence.toLowerCase().split(/\s+/);
+            const foundVerb = customVerbs.find(verb => words.includes(verb));
+            
+            if (foundVerb) {
+                // Generar triple entre las dos primeras entidades
+                triples.push({
+                    subject: presentEntities[0].name,
+                    predicate: foundVerb,
+                    object: presentEntities[1].name
+                });
+            }
+        }
+    });
+    
+    return triples.slice(0, 20); // Limitar a las 20 mejores relaciones lógicas
+}
+
+// Renderizar listas en UI
+function renderLists() {
+    // 1. Lista de entidades
+    const listWrapper = document.getElementById('entities-list-wrapper');
+    listWrapper.innerHTML = '';
+    document.getElementById('total-entities-count').textContent = analysisData.entities1.length;
+    
+    analysisData.entities1.forEach(ent => {
+        const item = document.createElement('div');
+        item.className = 'ent-item';
+        item.innerHTML = `
+            <span style="font-weight: 700; color: #fff;">${ent.name}</span>
+            <div style="display: flex; gap: .5rem; align-items: center;">
+                <span style="font-size: .75rem; color: var(--muted); margin-right: .5rem;">Frecuencia: ${ent.frequency}</span>
+                <span class="ent-badge ${ent.type}">${ent.type}</span>
+            </div>
+        `;
+        listWrapper.appendChild(item);
+    });
+    
+    // 2. Lista de triples
+    const triplesWrapper = document.getElementById('triples-list-wrapper');
+    triplesWrapper.innerHTML = '';
+    
+    if (analysisData.triples1.length === 0) {
+        triplesWrapper.innerHTML = '<p style="color: var(--muted); font-size: .85rem; text-align: center; margin-top: 2rem;">No he podido deducir triples semánticos claros en base a los conectores verbales. Inténtalo con un artículo que contenga más enunciados descriptivos.</p>';
+    } else {
+        analysisData.triples1.forEach(tr => {
+            const card = document.createElement('div');
+            card.className = 'triple-card';
+            card.innerHTML = `
+                <span class="triple-sub">${tr.subject}</span>
+                <span class="triple-pred">${tr.predicate}</span>
+                <span class="triple-obj">${tr.object}</span>
+            `;
+            triplesWrapper.appendChild(card);
+        });
+    }
+}
+
+// Modelar Brecha Semántica comparativa
+function renderSemanticGap(entities1, entities2) {
+    const set1 = new Set(entities1.map(e => e.name.toLowerCase()));
+    const set2 = new Set(entities2.map(e => e.name.toLowerCase()));
+    
+    // Comunes
+    const common = entities1.filter(e => set2.has(e.name.toLowerCase())).length;
+    document.getElementById('gap-common').textContent = common;
+    
+    // Únicas
+    const unique1 = entities1.filter(e => !set2.has(e.name.toLowerCase())).length;
+    document.getElementById('gap-unique1').textContent = unique1;
+    
+    const unique2List = entities2.filter(e => !set1.has(e.name.toLowerCase()));
+    document.getElementById('gap-unique2').textContent = unique2List.length;
+    
+    // Solapamiento (Jaccard Index)
+    const union = new Set([...set1, ...set2]).size;
+    const overlapPct = union > 0 ? Math.round((common / union) * 100) : 0;
+    document.getElementById('gap-overlap-pct').textContent = `${overlapPct}%`;
+    
+    // Inyectar brecha semántica (Keywords del competidor que te faltan)
+    const gapBox = document.getElementById('gap-keywords-box');
+    gapBox.innerHTML = '';
+    
+    if (unique2List.length === 0) {
+        gapBox.innerHTML = '<p style="color: #2ecc71; font-weight: 700; font-size: .9rem;">¡Excelente! Cubres el 100% de las entidades detectadas en el artículo de tu competidor. No hay brecha semántica disponible.</p>';
+    } else {
+        unique2List.forEach(ent => {
+            const badge = document.createElement('span');
+            badge.className = 'gap-keyword';
+            badge.textContent = `+ ${ent.name}`;
+            gapBox.appendChild(badge);
+        });
+    }
+}
+
+// ----------------------------------------------------
+// MOTOR DE FÍSICA Y RENDERIZADO DEL GRAFO (CANVAS)
+// ----------------------------------------------------
+function buildGraphData(entities, triples) {
+    nodes = [];
+    links = [];
+    
+    // Centrar la vista del Grafo por defecto
+    resetGraphView();
+    
+    // 1. Crear nodos a partir de las entidades
+    entities.forEach((ent, i) => {
+        // Disposición orbital inicial aleatoria
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 50 + Math.random() * 150;
+        
+        nodes.push({
+            id: ent.name,
+            label: ent.name,
+            type: ent.type,
+            weight: ent.weight,
+            frequency: ent.frequency,
+            radius: 12 + ent.weight * 1.5,
+            x: canvas.width / 2 + Math.cos(angle) * radius,
+            y: canvas.height / 2 + Math.sin(angle) * radius,
+            vx: 0,
+            vy: 0
+        });
+    });
+    
+    // 2. Crear aristas a partir de los triples
+    triples.forEach(tr => {
+        // Comprobar que ambas entidades existan en nuestros nodos activos
+        const sourceNode = nodes.find(n => n.id === tr.subject);
+        const targetNode = nodes.find(n => n.id === tr.object);
+        
+        if (sourceNode && targetNode) {
+            links.push({
+                source: sourceNode,
+                target: targetNode,
+                label: tr.predicate
+            });
+        }
+    });
+    
+    // Iniciar bucle de físicas del Grafo
+    startGraphSimulation();
+}
+
+function startGraphSimulation() {
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+    }
+    
+    function step() {
+        updatePhysics();
+        drawGraph();
+        animationFrameId = requestAnimationFrame(step);
+    }
+    
+    animationFrameId = requestAnimationFrame(step);
+}
+
+// Algoritmo Force-Directed Physics (Atracción/Repulsión/Gravedad)
+function updatePhysics() {
+    const kRepulsion = 1200; // Coulomb constante
+    const kAttraction = 0.04; // Hooke constante
+    const kGravity = 0.015;   // Fuerza central
+    const friction = 0.88;    // Rozamiento para detener oscilación
+    
+    // 1. Repulsión entre todos los nodos
+    for (let i = 0; i < nodes.length; i++) {
+        const nodeA = nodes[i];
+        if (nodeA === dragNode) continue;
+        
+        for (let j = 0; j < nodes.length; j++) {
+            if (i === j) continue;
+            const nodeB = nodes[j];
+            
+            const dx = nodeA.x - nodeB.x;
+            const dy = nodeA.y - nodeB.y;
+            let dist = Math.hypot(dx, dy);
+            
+            if (dist < 1) dist = 1;
+            
+            // Fuerza inversamente proporcional al cuadrado de la distancia
+            const force = (kRepulsion * nodeA.weight * nodeB.weight) / (dist * dist);
+            
+            nodeA.vx += (dx / dist) * force * 0.1;
+            nodeA.vy += (dy / dist) * force * 0.1;
+        }
+    }
+    
+    // 2. Atracción entre nodos enlazados por aristas (links)
+    links.forEach(link => {
+        const nodeA = link.source;
+        const nodeB = link.target;
+        
+        const dx = nodeB.x - nodeA.x;
+        const dy = nodeB.y - nodeA.y;
+        const dist = Math.hypot(dx, dy);
+        
+        if (dist < 1) return;
+        
+        // Ley de Hooke: fuerza proporcional al estiramiento
+        const force = kAttraction * dist;
+        
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+        
+        if (nodeA !== dragNode) {
+            nodeA.vx += fx;
+            nodeA.vy += fy;
+        }
+        if (nodeB !== dragNode) {
+            nodeB.vx -= fx;
+            nodeB.vy -= fy;
+        }
+    });
+    
+    // 3. Gravedad hacia el centro del lienzo
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    nodes.forEach(node => {
+        if (node === dragNode) return;
+        
+        const dx = centerX - node.x;
+        const dy = centerY - node.y;
+        
+        node.vx += dx * kGravity;
+        node.vy += dy * kGravity;
+        
+        // Aplicar velocidad, damping y fricción
+        node.x += node.vx;
+        node.y += node.vy;
+        
+        node.vx *= friction;
+        node.vy *= friction;
+    });
+}
+
+// Pintar el lienzo en Canvas
+function drawGraph() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.save();
+    ctx.translate(transform.x, transform.y);
+    ctx.scale(transform.scale, transform.scale);
+    
+    // 1. Dibujar líneas de aristas (links)
+    links.forEach(link => {
+        ctx.beginPath();
+        ctx.moveTo(link.source.x, link.source.y);
+        ctx.lineTo(link.target.x, link.target.y);
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        
+        // Pintar texto del verbo conector en el centro de la línea
+        const midX = (link.source.x + link.target.x) / 2;
+        const midY = (link.source.y + link.target.y) / 2;
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = 'bold 7px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(link.label.toUpperCase(), midX, midY);
+    });
+    
+    // 2. Dibujar nodos
+    nodes.forEach(node => {
+        // Determinar colores premium
+        let color = '#3498db'; // tech por defecto
+        let glowColor = 'rgba(52,152,219,0.3)';
+        
+        if (node.type === 'org') {
+            color = '#e8681a'; // orange corporativo
+            glowColor = 'rgba(232,104,26,0.3)';
+        } else if (node.type === 'person') {
+            color = '#2ecc71';
+            glowColor = 'rgba(46,204,113,0.3)';
+        } else if (node.type === 'concept') {
+            color = '#9b59b6';
+            glowColor = 'rgba(155,89,182,0.3)';
+        }
+        
+        // Halo de neón difuminado en hover/drag
+        if (node === dragNode) {
+            ctx.shadowColor = color;
+            ctx.shadowBlur = 20;
+        } else {
+            ctx.shadowBlur = 0;
+        }
+        
+        // Dibujar círculo del nodo
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        
+        // Bordes de nodo elegantes
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        
+        // Quitar sombras para dibujar texto
+        ctx.shadowBlur = 0;
+        
+        // Dibujar texto de la entidad
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${Math.max(9, 8 + node.weight * 0.4)}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.label, node.x, node.y + node.radius + 12);
+    });
+    
+    ctx.restore();
+}
+
+// Eventos de interacción con el lienzo Canvas
+function setupCanvasInteraction() {
+    let hoveredNode = null;
+    const tooltip = document.getElementById('graph-tooltip');
+    
+    canvas.addEventListener('mousedown', function(e) {
+        const mouse = getCanvasMouseCoords(e);
+        
+        // Comprobar si se ha pulsado sobre un nodo
+        const hit = nodes.find(node => Math.hypot(node.x - mouse.x, node.y - mouse.y) < node.radius);
+        
+        if (hit) {
+            dragNode = hit;
+            canvas.style.cursor = 'grabbing';
+        } else {
+            isPanning = true;
+            startPan = { x: e.clientX - transform.x, y: e.clientY - transform.y };
+            canvas.style.cursor = 'grabbing';
+        }
+    });
+    
+    canvas.addEventListener('mousemove', function(e) {
+        const mouse = getCanvasMouseCoords(e);
+        
+        if (dragNode) {
+            dragNode.x = mouse.x;
+            dragNode.y = mouse.y;
+            dragNode.vx = 0;
+            dragNode.vy = 0;
+        } else if (isPanning) {
+            transform.x = e.clientX - startPan.x;
+            transform.y = e.clientY - startPan.y;
+        } else {
+            // Lógica de hover en nodos y tooltip interactivo
+            const hit = nodes.find(node => Math.hypot(node.x - mouse.x, node.y - mouse.y) < node.radius);
+            
+            if (hit) {
+                canvas.style.cursor = 'pointer';
+                if (hoveredNode !== hit) {
+                    hoveredNode = hit;
+                    
+                    // Mostrar y posicionar tooltip
+                    tooltip.style.display = 'block';
+                    tooltip.innerHTML = `
+                        <strong>${hit.label}</strong><br/>
+                        <span style="color:var(--orange)">Tipo:</span> ${hit.type.toUpperCase()}<br/>
+                        <span style="color:var(--orange)">Mención:</span> ${hit.frequency} veces
+                    `;
+                }
+                
+                // Mover tooltip con el cursor
+                const rect = canvas.getBoundingClientRect();
+                tooltip.style.left = `${e.clientX - rect.left + 15}px`;
+                tooltip.style.top = `${e.clientY - rect.top + 15}px`;
+                
+            } else {
+                canvas.style.cursor = 'grab';
+                hoveredNode = null;
+                tooltip.style.display = 'none';
+            }
+        }
+    });
+    
+    window.addEventListener('mouseup', function() {
+        if (dragNode || isPanning) {
+            dragNode = null;
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        }
+    });
+    
+    // Zoom con rueda
+    canvas.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        const zoomIntensity = 0.15;
+        const mouse = getCanvasMouseCoords(e);
+        
+        const wheel = e.deltaY < 0 ? 1 : -1;
+        const zoomFactor = Math.exp(wheel * zoomIntensity);
+        
+        // Zoom centrado en el cursor del ratón
+        transform.x -= mouse.x * (zoomFactor - 1) * transform.scale;
+        transform.y -= mouse.y * (zoomFactor - 1) * transform.scale;
+        transform.scale *= zoomFactor;
+        
+        // Limitar escala de zoom
+        transform.scale = Math.max(0.3, Math.min(3, transform.scale));
+    });
+    
+    // Doble clic para re-centrar
+    canvas.addEventListener('dblclick', resetGraphView);
+}
+
+function getCanvasMouseCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.clientX - rect.left;
+    const clientY = e.clientY - rect.top;
+    
+    // Transformar coordenadas de pantalla a coordenadas transformadas del Canvas
+    return {
+        x: (clientX - transform.x) / transform.scale,
+        y: (clientY - transform.y) / transform.scale
+    };
+}
+
+function zoomGraph(factor) {
+    transform.scale *= factor;
+    transform.scale = Math.max(0.3, Math.min(3, transform.scale));
+}
+
+function resetGraphView() {
+    transform.scale = 0.9;
+    transform.x = canvas.width * 0.05;
+    transform.y = canvas.height * 0.05;
+}
+
+function resetGraphViewCenter() {
+    resetGraphView();
+}
+</script>
+
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>
