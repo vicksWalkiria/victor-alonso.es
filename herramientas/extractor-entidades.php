@@ -386,7 +386,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .tab-btn.active, .tab-btn:hover {
     border-color: var(--orange);
     color: #fff;
-    background: rgba(232,104,26,.08);
+    background: var(--orange);
 }
 .legend-badge {
     padding: .35rem .75rem;
