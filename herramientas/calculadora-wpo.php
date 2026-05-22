@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // ─── 3. CARGA DE LA PÁGINA (GET) ─────────────────────────────────────────────
 $page = page_config([
-    'title'        => 'Calculadora de Pérdidas por WPO',
+    'title'        => 'Calculadora WPO: cuánto dinero pierde tu web por cargar lenta',
     'description'  => 'Simulador interactivo en vivo. Analiza tu web con Lighthouse de Google y calcula el dinero que pierdes por tiempos de carga lentos (LCP).',
     'canonical'    => '/herramientas/calculadora-wpo/',
     'body_class'   => 'page-calculadora-wpo',
@@ -114,8 +114,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="calc-h1">
     <div class="container">
-      <h1 id="calc-h1">Calculadora de Pérdidas por <span>WPO y Carga Lenta</span></h1>
-      <p class="page-hero-desc">Simulador de negocio en vivo. Conectamos el rendimiento técnico medido por Google PageSpeed Insights con las pérdidas de facturación reales de tu negocio por fricción en la tasa de conversión.</p>
+      <h1 id="calc-h1">Calculadora WPO: <span>cuánto dinero pierde tu web por cargar lenta</span></h1>
+      <p class="page-hero-desc">Simulador de negocio en vivo. Conectamos el rendimiento técnico medido por Google PageSpeed Insights con las pérdidas estimadas de facturación de tu negocio por fricción en la tasa de conversión.</p>
     </div>
   </section>
 
@@ -152,7 +152,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div class="form-group">
               <label class="form-label" for="wpo-conversion">Tasa de conversión estimada (%)</label>
               <input type="number" class="form-input" id="wpo-conversion" name="conversion" step="0.01" value="1.5">
-              <p class="form-hint">¿No sabes este dato? El 1,5% es la media en España. Usa 1% para una estimación conservadora o ajústalo si conoces tu tasa.</p>
+              <p class="form-hint">¿No sabes este dato? Puedes usar 1,5% como referencia inicial, 1% para una estimación conservadora o ajustarlo si conoces tu tasa real.</p>
             </div>
 
             <div id="wpo-error" class="diag-alert diag-alert--danger" style="display: none; margin-bottom: 1rem;" role="alert"></div>
@@ -203,6 +203,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <span>Pérdida de conversión aplicada:</span>
                 <strong id="res-form-loss-pct" style="color: var(--orange);">--</strong>
               </div>
+            </div>
+
+            <!-- Prioridad Recomendada UX -->
+            <div style="margin: 1rem auto 1.5rem; max-width: 480px; background: rgba(232,104,26,0.06); border: 1px dashed rgba(232,104,26,0.3); border-radius: 8px; padding: 0.9rem 1.1rem; font-size: 0.85rem; text-align: left; line-height: 1.45;">
+              <span style="display: block; color: var(--orange); font-weight: 700; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
+                <i class="fa-solid fa-circle-exclamation"></i> Prioridad recomendada para mitigar pérdidas:
+              </span>
+              <span style="color: #cbd5e1;">Revisar tiempo LCP, eliminar recursos que bloquean el renderizado, optimizar la carga de la imagen hero principal, activar la caché del servidor y auditar scripts de JavaScript de terceros.</span>
             </div>
 
             <p style="color: #94a3b8; font-size: 0.8rem; max-width: 580px; margin: 1.25rem auto 0; line-height: 1.45; font-style: italic;">
@@ -311,7 +319,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem;">
           <div>
             <h3 style="color: var(--orange); font-size: 1.1rem; margin-bottom: 0.5rem;">Conexión directa con Google Lighthouse</h3>
-            <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.6;">Al pulsar el botón, nuestro servidor se conecta directamente a la API oficial de <strong>Google PageSpeed Insights v5</strong>. Solicitamos un escaneo en entorno móvil emulado (que simula una conexión de red móvil promedio con hardware de gama media, que es el escenario de mayor estrés y realismo comercial). Extraemos directamente del JSON de respuesta el LCP, el CLS y el TBT reales calculados por Google.</p>
+            <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.6;">Al pulsar el botón, nuestro servidor se conecta directamente a la API oficial de <strong>Google PageSpeed Insights v5</strong>. Solicitamos un escaneo en entorno móvil emulado (que simula una conexión de red móvil promedio con hardware de gama media, que es el escenario de mayor estrés y realismo comercial). Extraemos del JSON de respuesta el LCP, CLS y TBT del informe Lighthouse móvil.</p>
           </div>
           <div>
             <h3 style="color: var(--orange); font-size: 1.1rem; margin-bottom: 0.5rem;">La fórmula matemática</h3>
