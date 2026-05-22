@@ -5,6 +5,11 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # 0. 410 Gone: URLs permanentemente eliminadas (deben ir ANTES del trailing slash)
+  RewriteRule ^cdn-cgi/l/email-protection/?$ - [G,L]
+  RewriteRule ^apple-app-site-association/?$ - [G,L]
+  RewriteRule ^\.well-known/apple-app-site-association/?$ - [G,L]
+
   # 1. Forzar HTTPS
   RewriteCond %{HTTPS} off
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
@@ -17,7 +22,7 @@ Options -Indexes
   RewriteCond %{REQUEST_URI} ^(.*)//(.*)$
   RewriteRule . %1/%2 [R=301,L]
 
-  # 3.5. Forzar barra final (trailing slash) si no es un archivo físico ni .ico
+  # 3.5. Forzar barra final (trailing slash) si no es un archivo físico ni extensión estática
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !\.(ico|png|jpg|jpeg|webp|svg|css|js|xml|json|txt|pdf|woff2?)$ [NC]
   RewriteCond %{REQUEST_URI} !(.*)/$
@@ -79,14 +84,6 @@ Options -Indexes
 # Bloquear acceso directo a /includes/
 <IfModule mod_rewrite.c>
   RewriteRule ^includes/ - [F,L]
-</IfModule>
-
-# ─── 410 Gone: URLs inexistentes que generan ruido en logs ────────────────────
-# (Cloudflare email-protection, Apple App Site Association)
-<IfModule mod_rewrite.c>
-  RewriteRule ^cdn-cgi/l/email-protection/?$ - [G,L]
-  RewriteRule ^apple-app-site-association/?$ - [G,L]
-  RewriteRule ^\.well-known/apple-app-site-association/?$ - [G,L]
 </IfModule>
 
 # ─── Página de error personalizada (opcional) ─────────────────────────────────
