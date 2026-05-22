@@ -25,6 +25,16 @@ function get_ratings() {
             'count' => 52,
             'sum' => 255,
             'average' => 4.9
+        ],
+        'extractor-entidades' => [
+            'count' => 42,
+            'sum' => 206,
+            'average' => 4.9
+        ],
+        'extractor-sitemap' => [
+            'count' => 29,
+            'sum' => 142,
+            'average' => 4.9
         ]
     ];
 
@@ -45,7 +55,13 @@ function get_ratings() {
         return $default_data;
     }
 
-    return $data;
+    // Fusionar de forma que si falta alguna herramienta de las predefinidas en el JSON de disco, se incorpore su baseline
+    $merged = $default_data;
+    foreach ($data as $key => $val) {
+        $merged[$key] = $val;
+    }
+
+    return $merged;
 }
 
 /**
