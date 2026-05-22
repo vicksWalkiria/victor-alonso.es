@@ -242,10 +242,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div id="results-panel" style="display: none;">
             
             <!-- Aviso de precisión profesional -->
-            <div class="card card--dark" style="padding: 1.1rem 1.5rem; border-radius: 1rem; border-left: 4px solid var(--orange); margin-bottom: 1.5rem; background: rgba(232,104,26,0.03); display: flex; align-items: flex-start; gap: 1rem; text-align: left;">
+            <div class="card card--dark" style="padding: 1.1rem 1.5rem; border-radius: 1rem; border: 1px solid rgba(232,104,26,0.3); border-left: 4px solid var(--orange); margin-bottom: 1.5rem; background: #0b101c; display: flex; align-items: flex-start; gap: 1rem; text-align: left;">
                 <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 0.15rem;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                <p style="font-size: .8rem; color: #cbd5e1; margin: 0; line-height: 1.5;">
-                    <strong>Aviso de precisión profesional:</strong> Este análisis es una aproximación técnica útil y no sustituye una auditoría semántica manual. La herramienta usa extracción NLP ligera, diccionario de ontología técnica y heurísticas de proximidad para detectar patrones conceptuales y brechas, no para replicar exactamente el Knowledge Graph oficial de Google.
+                <p style="font-size: .8rem; color: #ffffff; margin: 0; line-height: 1.6;">
+                    <strong style="color: var(--orange);">Aviso de precisión profesional:</strong> Este análisis es una aproximación técnica útil y no sustituye una auditoría semántica manual. La herramienta usa extracción NLP ligera, diccionario de ontología técnica y heurísticas de proximidad para detectar patrones conceptuales y brechas, no para replicar exactamente el Knowledge Graph oficial de Google.
                 </p>
             </div>
             
