@@ -218,11 +218,23 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <!-- Dashboard Completo de Resultados (Oculto inicialmente) -->
         <div id="results-panel" style="display: none;">
             
-            <!-- Pestañas de Visualización -->
-            <div class="tab-container" style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
-                <button class="tab-btn active" onclick="switchVisualTab('tab-graph')">Grafo de Conocimiento</button>
-                <button class="tab-btn" onclick="switchVisualTab('tab-list')">Lista de Entidades & Triples</button>
-                <button class="tab-btn" id="btn-tab-gap" onclick="switchVisualTab('tab-gap')" style="display: none;">Análisis de Brecha Semántica</button>
+            <!-- Pestañas de Visualización & Exportaciones -->
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div class="tab-container" style="display: flex; gap: 1rem;">
+                    <button class="tab-btn active" onclick="switchVisualTab('tab-graph')">Grafo de Conocimiento</button>
+                    <button class="tab-btn" onclick="switchVisualTab('tab-list')">Lista de Entidades & Triples</button>
+                    <button class="tab-btn" id="btn-tab-gap" onclick="switchVisualTab('tab-gap')" style="display: none;">Análisis de Brecha Semántica</button>
+                </div>
+                <div style="display: flex; gap: .75rem; flex-wrap: wrap;">
+                    <button class="tab-btn" id="btn-export-csv" style="border-color: rgba(46,204,113,0.3); color: #2ecc71; background: rgba(46,204,113,0.04); display: flex; align-items: center;">
+                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Exportar CSV
+                    </button>
+                    <button class="tab-btn" id="btn-export-png" style="border-color: rgba(52,152,219,0.3); color: #3498db; background: rgba(52,152,219,0.04); display: flex; align-items: center;">
+                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                        Exportar PNG
+                    </button>
+                </div>
             </div>
 
             <!-- Pestaña 1: Grafo en Canvas -->
@@ -508,9 +520,66 @@ let animationFrameId = null;
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('btn-analyze-entities').addEventListener('click', startSemanticScraping);
     
+    // Configurar exportaciones
+    document.getElementById('btn-export-csv').addEventListener('click', exportEntitiesToCSV);
+    document.getElementById('btn-export-png').addEventListener('click', exportGraphToPNG);
+    
     // Configurar interacciones del canvas
     setupCanvasInteraction();
 });
+
+// Exportar Grafo de Conocimiento Semántico como imagen PNG
+function exportGraphToPNG() {
+    if (nodes.length === 0) {
+        alert("Primero debes extraer entidades para generar el grafo.");
+        return;
+    }
+    
+    // Crear un canvas temporal para asegurar el fondo oscuro premium
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    // Dibujar fondo oscuro
+    tempCtx.fillStyle = '#060911';
+    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+    
+    // Pintar la imagen del canvas original
+    tempCtx.drawImage(canvas, 0, 0);
+    
+    const dataURL = tempCanvas.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.download = "grafo-conocimiento-semantico.png";
+    link.href = dataURL;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Exportar listado de entidades a un archivo CSV estructurado
+function exportEntitiesToCSV() {
+    if (analysisData.entities1.length === 0) {
+        alert("Primero debes extraer entidades.");
+        return;
+    }
+    
+    let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // BOM para Excel
+    csvContent += "Entidad,Tipo,Frecuencia\n";
+    
+    analysisData.entities1.forEach(ent => {
+        const escapedName = ent.name.replace(/"/g, '""');
+        csvContent += `"${escapedName}","${ent.type.toUpperCase()}",${ent.frequency}\n`;
+    });
+    
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "entidades-semanticas-victor-alonso.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
 // Pestañas
 function switchVisualTab(tabId) {
