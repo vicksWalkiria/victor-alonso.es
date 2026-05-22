@@ -805,34 +805,60 @@ function runNLPAnalysis(text) {
     return entities.sort((a,b) => (b.frequency * b.weight) - (a.frequency * a.weight)).slice(0, 35);
 }
 
-// Extractor de triples semánticos (Sujeto - Predicado - Objeto)
+// Extractor de triples semánticos (Sujeto - Predicado - Objeto) de precisión secuencial
 function runTripleExtraction(text, entities) {
     const triples = [];
     const sentences = text.split(/[.?!]+/);
+    const seenTriples = new Set();
     
     sentences.forEach(sentence => {
-        // Encontrar qué entidades están presentes en esta oración
-        const presentEntities = entities.filter(ent => 
-            sentence.toLowerCase().includes(ent.name.toLowerCase())
-        );
+        const sentenceLower = sentence.toLowerCase();
+        
+        // 1. Encontrar qué entidades están presentes y su posición exacta en la oración
+        const presentEntities = [];
+        entities.forEach(ent => {
+            const index = sentenceLower.indexOf(ent.name.toLowerCase());
+            if (index !== -1) {
+                presentEntities.push({
+                    name: ent.name,
+                    index: index
+                });
+            }
+        });
+        
+        // 2. Ordenar las entidades presentes por su orden de aparición real en la frase
+        presentEntities.sort((a, b) => a.index - b.index);
         
         if (presentEntities.length >= 2) {
-            // Buscar verbos / conectores relacionales de la lista
-            const words = sentence.toLowerCase().split(/\s+/);
-            const foundVerb = customVerbs.find(verb => words.includes(verb));
-            
-            if (foundVerb) {
-                // Generar triple entre las dos primeras entidades
-                triples.push({
-                    subject: presentEntities[0].name,
-                    predicate: foundVerb,
-                    object: presentEntities[1].name
-                });
+            // 3. Buscar el verbo/conector que esté entre las dos primeras entidades consecutivas
+            for (let i = 0; i < presentEntities.length - 1; i++) {
+                const entA = presentEntities[i];
+                const entB = presentEntities[i + 1];
+                
+                // Extraer el fragmento de texto entre ambas entidades para buscar el conector
+                const textBetween = sentenceLower.substring(entA.index + entA.name.length, entB.index);
+                
+                // Buscar si hay algún verbo conector de nuestra lista en este fragmento
+                const wordsBetween = textBetween.split(/[\s,.:;()]+/);
+                const foundVerb = customVerbs.find(verb => wordsBetween.includes(verb));
+                
+                if (foundVerb) {
+                    const tripleKey = `${entA.name}-${foundVerb}-${entB.name}`.toLowerCase();
+                    if (!seenTriples.has(tripleKey)) {
+                        seenTriples.add(tripleKey);
+                        triples.push({
+                            subject: entA.name,
+                            predicate: foundVerb,
+                            object: entB.name
+                        });
+                    }
+                    break; // Generar una relación fuerte por frase para evitar redundancias
+                }
             }
         }
     });
     
-    return triples.slice(0, 20); // Limitar a las 20 mejores relaciones lógicas
+    return triples.slice(0, 15); // Limitar a los 15 mejores triples lógicos
 }
 
 // Renderizar listas en UI
@@ -997,12 +1023,12 @@ function startGraphSimulation() {
 
 // Algoritmo Force-Directed Physics (Atracción/Repulsión/Gravedad)
 function updatePhysics() {
-    const kRepulsion = 1200; // Coulomb constante
+    const kRepulsion = 2600; // Aumentado fuertemente para un mayor espaciado general
     const kAttraction = 0.04; // Hooke constante
     const kGravity = 0.015;   // Fuerza central
     const friction = 0.88;    // Rozamiento para detener oscilación
     
-    // 1. Repulsión entre todos los nodos
+    // 1. Repulsión entre todos los nodos con zona de amortiguación de colisión de texto
     for (let i = 0; i < nodes.length; i++) {
         const nodeA = nodes[i];
         if (nodeA === dragNode) continue;
@@ -1017,8 +1043,17 @@ function updatePhysics() {
             
             if (dist < 1) dist = 1;
             
-            // Fuerza inversamente proporcional al cuadrado de la distancia
-            const force = (kRepulsion * nodeA.weight * nodeB.weight) / (dist * dist);
+            // Colchón elástico de colisión de texto (45px de seguridad)
+            const minSafeDistance = nodeA.radius + nodeB.radius + 45;
+            let force = 0;
+            
+            if (dist < minSafeDistance) {
+                // Si violan el espacio de texto seguro, se repelen con una fuerza elástica extremadamente potente
+                force = (minSafeDistance - dist) * 0.95;
+            } else {
+                // Ley de Coulomb estándar más fuerte
+                force = (kRepulsion * nodeA.weight * nodeB.weight) / (dist * dist);
+            }
             
             nodeA.vx += (dx / dist) * force * 0.1;
             nodeA.vy += (dy / dist) * force * 0.1;
