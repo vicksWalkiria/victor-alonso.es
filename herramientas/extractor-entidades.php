@@ -617,51 +617,54 @@ function processSemanticNLP(data) {
 
 // Analizador de entidades base
 function runNLPAnalysis(text) {
-    // Usar compromise NLP
-    const doc = nlp(text);
-    
-    const entities = [];
     const seen = new Set();
+    const entities = [];
     
-    // Extracciones estándar de Compromise
-    doc.people().json().forEach(p => addEntity(p.text, 'person', 3));
-    doc.organizations().json().forEach(o => addEntity(o.text, 'org', 3));
-    doc.places().json().forEach(pl => addEntity(pl.text, 'place', 3));
+    // Stopwords extendidas en Español e Inglés para limpiar ruido gramatical
+    const stopwords = new Set([
+        'que', 'qué', 'para', 'como', 'cómo', 'este', 'esta', 'estos', 'estas', 'ese', 'esa', 'esos', 'esas', 
+        'aquel', 'aquella', 'donde', 'dónde', 'cuando', 'cuándo', 'quien', 'quién', 'pero', 'por', 'con', 'sin', 
+        'sobre', 'tras', 'desde', 'hasta', 'entre', 'hacia', 'durante', 'mediante', 'excepto', 'salvo', 'incluso', 
+        'más', 'mas', 'muy', 'tan', 'tanto', 'todo', 'toda', 'todos', 'todas', 'nada', 'algo', 'alguno', 'alguna', 
+        'algunos', 'algunas', 'ninguno', 'ninguna', 'otro', 'otra', 'otros', 'otras', 'mismo', 'misma', 'mismos', 
+        'mismas', 'cuyo', 'cuya', 'cuyos', 'cuyas', 'este', 'esto', 'aquello', 'ellos', 'ellas', 'nosotros', 'nosotras', 
+        'usted', 'ustedes', 'suyo', 'suya', 'suyos', 'suyas', 'tuyo', 'tuya', 'tuyos', 'tuyas', 'mío', 'mía', 'míos', 
+        'mías', 'nuestro', 'nuestra', 'nuestros', 'nuestras', 'yo', 'me', 'mi', 'mis', 'tu', 'tus', 'su', 'sus', 
+        'el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'o', 'u', 'e', 'ni', 'si', 'no', 'del', 'al',
+        'perfil', 'proyectos', 'currículum', 'además', 'hola', 'quién', 'quiénes', 'quien', 'quienes', 'trabajo', 
+        'clientes', 'ver', 'interactivo', 'especialista', 'enfoque', 'práctico', 'técnico', 'quién', 'quien', 
+        'cómo', 'como', 'cuál', 'cual', 'cuáles', 'cuales', 'algún', 'cada', 'tienen', 'tiene', 'tenemos', 'tengo',
+        'soy', 'eres', 'es', 'somos', 'sois', 'son', 'fui', 'fuiste', 'fue', 'fuimos', 'fueron', 'hacer', 'hecho',
+        'hace', 'hacen', 'hacemos', 'hago', 'puedes', 'puede', 'pueden', 'podemos', 'puedo', 'saber', 'sabes',
+        'sabe', 'saben', 'sabemos', 'sé', 'quieres', 'quiere', 'quieren', 'queremos', 'quiero', 'esa', 'para', 'saber'
+    ]);
     
-    // Heurística de Sustantivos Propios / Mayúsculas en Español
-    // Palabras consecutivas que empiezan por mayúsculas y no siguen punto
-    const regexProper = /\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*)\b/g;
-    let match;
-    while ((match = regexProper.exec(text)) !== null) {
-        const word = match[1].trim();
-        if (word.length > 3 && !seen.has(word.toLowerCase())) {
-            // Comprobar si es un nombre genérico de inicio de frase
-            const idx = match.index;
-            const before = text.substring(Math.max(0, idx - 3), idx).trim();
-            if (before.endsWith('.') || before.endsWith('?') || before.endsWith('!')) {
-                continue; // Probablemente es simplemente inicio de oración
-            }
-            addEntity(word, 'org', 2);
-        }
-    }
-    
-    // Mapeo Ontología Técnica / Marketing
-    const words = text.toLowerCase().split(/[\s,.:;()"'-]+/);
-    words.forEach(w => {
-        if (techDictionary[w]) {
-            // Darle prioridad ontológica y capitalización bonita
-            const prettyName = w.toUpperCase() === w ? w : w.charAt(0).toUpperCase() + w.slice(1);
-            addEntity(prettyName, techDictionary[w], 4);
-        }
-    });
-    
+    // Función auxiliar para registrar la entidad con tipo y relevancia
     function addEntity(name, type, weight) {
-        const cleanName = name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+        let cleanName = name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "").trim();
+        
+        // Limpiar artículos o verbos iniciales de frases como "Soy Víctor Alonso" -> "Víctor Alonso"
+        const words = cleanName.split(/\s+/);
+        if (words.length > 1) {
+            const firstWord = words[0].toLowerCase();
+            if (firstWord === 'soy' || firstWord === 'el' || firstWord === 'la' || firstWord === 'los' || firstWord === 'las' || firstWord === 'un' || firstWord === 'una') {
+                cleanName = cleanName.substring(words[0].length).trim();
+            }
+        }
+        
         if (cleanName.length < 3 || cleanName.length > 35) return;
         
         const lower = cleanName.toLowerCase();
+        
+        // Evitar registrar stopwords directas
+        if (stopwords.has(lower) || lower === 'que' || lower === 'qué' || lower === 'para') return;
+        
+        // Si la frase se compone exclusivamente de stopwords, descartar
+        const wordsInPhrase = lower.split(/\s+/);
+        const allStopwords = wordsInPhrase.every(w => stopwords.has(w));
+        if (allStopwords) return;
+        
         if (seen.has(lower)) {
-            // Incrementar peso / frecuencia de la entidad
             const existing = entities.find(e => e.name.toLowerCase() === lower);
             if (existing) {
                 existing.frequency++;
@@ -679,7 +682,54 @@ function runNLPAnalysis(text) {
         });
     }
     
-    // Ordenar por importancia / frecuencia y limitar a las top 35 para que el grafo sea limpio
+    // FASE 1: Alta prioridad - Diccionario Ontológico Local (100% Precisión)
+    const textLower = text.toLowerCase();
+    Object.keys(techDictionary).forEach(key => {
+        const regexKey = new RegExp('\\b' + key.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\b', 'g');
+        const matches = textLower.match(regexKey);
+        if (matches) {
+            const prettyName = key.toUpperCase() === key ? key : key.charAt(0).toUpperCase() + key.slice(1);
+            addEntity(prettyName, techDictionary[key], 4);
+            
+            // Asignar el número exacto de apariciones reales
+            const count = matches.length;
+            const existing = entities.find(e => e.name.toLowerCase() === key);
+            if (existing) {
+                existing.frequency = count;
+                existing.weight = Math.min(10, 4 + count * 0.25);
+            }
+        }
+    });
+    
+    // FASE 2: Extracciones estándar de Compromise.js (Si no han sido pre-taggeadas)
+    const doc = nlp(text);
+    doc.people().json().forEach(p => addEntity(p.text, 'person', 3));
+    doc.organizations().json().forEach(o => addEntity(o.text, 'org', 3));
+    doc.places().json().forEach(pl => addEntity(pl.text, 'place', 3));
+    
+    // FASE 3: Heurística de Sustantivos Propios (Nombres Propios desconocidos de fallback)
+    const regexProper = /\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*)\b/g;
+    let match;
+    while ((match = regexProper.exec(text)) !== null) {
+        const word = match[1].trim();
+        const lowerWord = word.toLowerCase();
+        
+        // Evitar capturar stopwords capitalizadas
+        if (stopwords.has(lowerWord)) continue;
+        
+        if (word.length > 3 && !seen.has(lowerWord)) {
+            // Evitar palabras al inicio de frase tras puntuación
+            const idx = match.index;
+            const before = text.substring(Math.max(0, idx - 3), idx).trim();
+            if (before.endsWith('.') || before.endsWith('?') || before.endsWith('!')) {
+                continue; 
+            }
+            
+            addEntity(word, 'org', 2);
+        }
+    }
+    
+    // Ordenar por relevancia e importancia temática y limitar a las top 35
     return entities.sort((a,b) => (b.frequency * b.weight) - (a.frequency * a.weight)).slice(0, 35);
 }
 
