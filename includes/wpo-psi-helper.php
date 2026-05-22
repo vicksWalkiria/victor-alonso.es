@@ -230,7 +230,7 @@ function wpo_psi_build_response(array $psi, int $visits, float $ticket, float $c
     ];
     if ($from_cache && !empty($psi['cached_at'])) {
         $hours = max(1, (int)round((time() - $psi['cached_at']) / 3600));
-        $out['data']['cache_note'] = "Métricas de rendimiento en caché (hace ~{$hours} h). Los importes se recalculan con tus datos.";
+        $out['data']['cache_note'] = "Resultado cacheado para no consumir cuota de Google. Último análisis: hace ~{$hours} h (las pérdidas se recalculan con tus datos).";
     }
     return $out;
 }

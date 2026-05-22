@@ -169,7 +169,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div id="wpo-loading" class="card card--dark wpo-state-card" style="display: none; text-align: center;">
           <div class="wpo-spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-radius: 50%; border-top-color: var(--orange); animation: spin 1s linear infinite;"></div>
           <h3 style="color: #fff; font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Conectando con Google PageSpeed...</h3>
-          <p style="color: var(--muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.5;">Estamos lanzando un análisis móvil completo de tu URL con Lighthouse. Esto ejecuta celdas de simulación reales en los servidores de Google y puede tardar de 30 a 50 segundos. Ten paciencia.</p>
+          <p style="color: var(--muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.5;">El análisis puede tardar unos segundos porque Google ejecuta una auditoría móvil completa con Lighthouse.</p>
         </div>
 
         <!-- RESULTS STATE -->
@@ -183,8 +183,33 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div id="res-loss-container" style="font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 1.5rem 0; text-shadow: 0 4px 12px rgba(0,0,0,0.3);">
               <span id="res-loss-val">0</span> € <span style="font-size: 1.3rem; color: var(--muted); font-weight: 500;">/ mes</span>
             </div>
-            <p style="color: var(--muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto; line-height: 1.5;">Esta cifra representa el impacto financiero estimado derivado de la reducción de la tasa de conversión móvil por un LCP superior a 2.5 segundos.</p>
-            <p id="res-cache-note" class="wpo-cache-note" style="display: none;"></p>
+            <p style="color: var(--muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.5;">Esta cifra representa el impacto financiero estimado derivado de la reducción de la tasa de conversión móvil por un LCP superior a 2.5 segundos.</p>
+            
+            <!-- Detalle de la Fórmula de Simulación -->
+            <div id="res-formula-box" style="margin: 1.5rem auto; max-width: 480px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1.1rem 1.25rem; font-size: 0.88rem; text-align: left;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 0.4rem;">
+                <span>Facturación potencial estimada:</span>
+                <strong id="res-form-pot">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 0.4rem;">
+                <span>LCP móvil detectado:</span>
+                <strong id="res-form-lcp">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 0.4rem;">
+                <span>Exceso sobre umbral (2.5 s):</span>
+                <strong id="res-form-excess">--</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: #cbd5e1; padding-top: 0.2rem;">
+                <span>Pérdida de conversión aplicada:</span>
+                <strong id="res-form-loss-pct" style="color: var(--orange);">--</strong>
+              </div>
+            </div>
+
+            <p style="color: #94a3b8; font-size: 0.8rem; max-width: 580px; margin: 1.25rem auto 0; line-height: 1.45; font-style: italic;">
+              * Esta cifra es una simulación orientativa basada en tus datos introducidos y métricas sintéticas Lighthouse de Google. No sustituye datos reales de Analytics, ventas o CRM.
+            </p>
+
+            <p id="res-cache-note" class="wpo-cache-note" style="display: none; margin-top: 1.25rem;"></p>
           </div>
 
           <!-- METRICS GRID -->
@@ -217,7 +242,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem; padding: 1.25rem 0; border-top: 1px solid #2a2a2a; border-bottom: 1px solid #2a2a2a; margin-bottom: 2.5rem; font-size: 0.9rem;">
             <span style="color: var(--muted); font-weight: 600;"><i class="fa-solid fa-share-nodes" style="color: var(--orange); margin-right: 0.25rem;"></i> Compartir informe:</span>
             
-            <button type="button" onclick="wpoCopyReport()" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; background: #222; hover:background:#333; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s;">
+            <button type="button" onclick="wpoCopyReport()" class="wpo-btn-share" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; background: #222; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s; cursor: pointer;">
               <i class="fa-solid fa-copy"></i> Copiar
             </button>
 
@@ -240,7 +265,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             
             <div style="margin-top: 1.5rem;">
               <a id="res-cta-btn" href="/contacto/" class="btn btn--primary btn--lg" style="box-shadow: 0 4px 16px rgba(232,104,26,0.35); font-size: 1rem; font-weight: 700;">
-                Solicitar optimización de trinchera
+                Optimizar mi velocidad web
               </a>
             </div>
             <p style="color: #94a3b8; font-size: 0.75rem; margin-top: 0.75rem; font-style: italic;">Sin rodeos comerciales ni auditorías automáticas inútiles. Trato directo con ingeniero.</p>
@@ -268,13 +293,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
 
           <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
-            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">02.</span> El impacto de conversión es científico</h3>
-            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Estudios acumulados de Google, Amazon y Akamai demuestran que cada 1 segundo de retraso en la carga disminuye la conversión un 7%. Nuestro simulador aplica rigurosamente este ratio sobre tu volumen de negocio para cuantificar el dolor financiero real de tu mala infraestructura.</p>
+            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">02.</span> El impacto de conversión estimado</h3>
+            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Diversos estudios de rendimiento web han asociado los retrasos de carga con caídas relevantes en conversión. Para hacer una estimación conservadora, el simulador aplica una pérdida del 7% por cada segundo adicional sobre el umbral recomendado de LCP.</p>
           </div>
 
           <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
-            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">03.</span> El castigo oculto de Google</h3>
-            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Las Core Web Vitals (LCP, CLS) son factores oficiales de ranking. Si tu web carga lenta, no solo conviertes peor a los usuarios que llegan; Google degradará paulatinamente tu posicionamiento orgánico, disminuyendo tus visitas totales y multiplicando la pérdida de ingresos.</p>
+            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">03.</span> Experiencia de página y visibilidad</h3>
+            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Las Core Web Vitals forman parte de las señales de experiencia de página. Una web lenta no suele hundirse solo por eso, pero en igualdad de condiciones puede perder competitividad frente a resultados más rápidos y cómodos.</p>
           </div>
         </div>
       </div>
@@ -301,16 +326,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     </div>
   </section>
 
-  <!-- CTA FINAL -->
   <?php
   $cta = [
     'title'     => '¿Tu simulador arroja cifras rojas y lentitud?',
     'subtitle'  => 'No dejes dinero sobre la mesa por un hosting barato o código sin optimizar. Puedo meter tu web al quirófano WPO y arañar cada milisegundo.',
-    'btn_label' => 'Hablemos de optimizar tu velocidad',
+    'btn_label' => 'Optimizar mi velocidad web',
     'btn_href'  => '/contacto',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];
+
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
 
@@ -396,6 +421,16 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('res-lcp-val').innerText = d.metrics.lcp;
             document.getElementById('res-cls-val').innerText = d.metrics.cls;
 
+            // Rellenar desglose de la fórmula de simulación
+            const formatCurrency = (val) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
+            document.getElementById('res-form-pot').innerText = formatCurrency(d.financials.projected_revenue);
+            document.getElementById('res-form-lcp').innerText = d.metrics.lcp;
+            
+            const lcpSecs = parseFloat(d.metrics.lcp);
+            const excess = Math.max(0, lcpSecs - 2.5);
+            document.getElementById('res-form-excess').innerText = excess.toFixed(2) + ' s';
+            document.getElementById('res-form-loss-pct').innerText = d.financials.loss_percentage + ' %';
+
             const cacheNote = document.getElementById('res-cache-note');
             if (d.cache_note) {
                 cacheNote.innerText = d.cache_note;
@@ -428,7 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 ctaTitle.innerText = '¿Quieres mantener este nivel de velocidad de élite?';
                 ctaDesc.innerText = 'Tu web carga excepcionalmente rápido. Sin embargo, para maximizar las ventas, te aconsejo realizar revisiones frecuentes de indexación, arquitectura web y CRO para que sigas convirtiendo al 100%.';
-                ctaBtn.innerText = 'Solicitar auditoría de optimización de trinchera';
+                ctaBtn.innerText = 'Optimizar mi velocidad web';
             } else {
                 ctaBadge.innerText = 'Diagnóstico técnico';
                 ctaBadge.style.background = 'rgba(239,68,68,0.15)';
@@ -437,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 ctaTitle.innerText = '¿Quieres que resuelva los problemas que penalizan esta URL?';
                 ctaDesc.innerText = 'Analizaré de manera manual el LCP y TBT de tu web para crear un plan de optimización WPO quirúrgico que detenga la fuga de conversión.';
-                ctaBtn.innerText = 'Solicitar optimización de trinchera';
+                ctaBtn.innerText = 'Optimizar mi velocidad web';
             }
 
             // Configurar enlaces para compartir
@@ -479,6 +514,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .wpo-state-card { margin-top: 0; }
 .card--dark .wpo-muted { color: #9ca3af; }
 .wpo-cache-note { font-size: 0.82rem; color: #9ca3af; margin-top: 0.75rem; font-style: italic; }
+.wpo-btn-share:hover { background: #333 !important; }
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
