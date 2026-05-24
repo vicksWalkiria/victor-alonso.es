@@ -40,6 +40,9 @@ $_canonical  = SITE_URL . $page['canonical'];
     <meta name="twitter:description" content="<?= h($page['description']) ?>">
     <meta name="twitter:image" content="<?= h($page['og_image']) ?>">
 
+    <!-- Cookie Consent CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+
     <!-- CSS con Cache Busting dinámico -->
     <?php 
     $_css_path = dirname(__DIR__) . '/assets/css/styles.css';

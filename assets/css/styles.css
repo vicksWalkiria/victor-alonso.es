@@ -1936,3 +1936,43 @@ strong {
     height: 26px;
   }
 }
+
+/* ── Estilos Personalizados para Cookie Consent (vanilla-cookieconsent v3) ── */
+#cc-main {
+  --cc-font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --cc-bg: #16161a;
+  --cc-primary-color: #ffffff;
+  --cc-secondary-color: #a0a0a5;
+  --cc-btn-primary-bg: var(--orange, #E8681A);
+  --cc-btn-primary-hover-bg: #d05813;
+  --cc-btn-primary-color: #ffffff;
+  --cc-btn-secondary-bg: rgba(255, 255, 255, 0.08);
+  --cc-btn-secondary-hover-bg: rgba(255, 255, 255, 0.15);
+  --cc-btn-secondary-color: #ffffff;
+  --cc-btn-secondary-border: transparent;
+  --cc-cookie-category-block-bg: rgba(255, 255, 255, 0.03);
+  --cc-cookie-category-block-border: rgba(255, 255, 255, 0.06);
+  --cc-overlay-bg: rgba(0, 0, 0, 0.75);
+  --cc-modal-border-radius: 12px;
+}
+
+#cc-main .cc__link {
+  color: var(--orange, #E8681A) !important;
+  text-decoration: underline;
+}
+
+#cc-main .cc__link:hover {
+  color: #ff7d32 !important;
+}
+
+#cc-main .pm__section, 
+#cc-main .pm__section-title, 
+#cc-main .pm__section-desc, 
+#cc-main .pm__header,
+#cc-main .pm__footer {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+#cc-main .pm__section {
+  background: rgba(255, 255, 255, 0.01);
+}

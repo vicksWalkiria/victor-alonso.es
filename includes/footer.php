@@ -89,11 +89,11 @@
     </a>
 </div>
 
-<?php if (GA_MEASUREMENT_ID !== ''): ?>
+<!-- Cookie Consent JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
 <?php
-$_ga_js_path = dirname(__DIR__) . '/assets/js/analytics-deferred.js';
-$_ga_js_version = file_exists($_ga_js_path) ? filemtime($_ga_js_path) : time();
+$_cc_init_path = dirname(__DIR__) . '/assets/js/cookie-consent-init.js';
+$_cc_init_version = file_exists($_cc_init_path) ? filemtime($_cc_init_path) : time();
 ?>
-<script src="/assets/js/analytics-deferred.js?v=<?= $_ga_js_version ?>" defer></script>
-<?php endif; ?>
+<script defer src="/assets/js/cookie-consent-init.js?v=<?= $_cc_init_version ?>"></script>
 <script src="/assets/js/main.js" defer></script>
