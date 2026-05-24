@@ -312,11 +312,16 @@ async function run() {
     updateStatus('running', 'Cargando web en estado limpio (sin consentimiento)...', 25);
     capturedRequests = [];
     
-    const response = await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
-    result.final_url = page.url();
+    try {
+      const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      result.final_url = page.url();
+    } catch (gotoErr) {
+      console.warn('Timeout during initial goto, proceeding anyway...');
+      result.final_url = page.url();
+    }
     
     // Wait a brief period for deferred JS to run
-    await new Promise(r => setTimeout(r, 4000));
+    await new Promise(r => setTimeout(r, 6000));
     
     // Capture Phase 1 Data
     const initialCookies = await page.cookies();
@@ -419,8 +424,10 @@ async function run() {
       sessionStorage.clear();
     });
 
-    await page.goto(targetUrl, { waitUntil: 'load', timeout: 60000 });
-    await new Promise(r => setTimeout(r, 2000));
+    try {
+      await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+    } catch (gotoErr) {}
+    await new Promise(r => setTimeout(r, 4000));
 
     const acceptBtn = await findButton(page, 'accept');
     if (acceptBtn) {
