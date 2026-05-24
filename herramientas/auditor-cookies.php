@@ -1459,6 +1459,22 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
       </div>
 
+      <!-- Brotip de rendimiento y RGPD -->
+      <div style="background:#0b101c; border:1px solid var(--border); border-left:4px solid var(--orange); padding:1.5rem; border-radius:8px; margin:2rem 0 3rem 0; color:#cbd5e1; font-size:0.92rem; line-height:1.6;">
+        <h4 style="color:#fff; font-size:1.1rem; margin-top:0; margin-bottom:0.75rem; display:flex; align-items:center; gap:0.5rem;">
+          💡 Brotip para WordPress: ¿Cómo solucionarlo con plugins?
+        </h4>
+        <p style="margin-bottom:0.75rem;">Si usas WordPress y no quieres complicarte modificando el código de tus temas a mano (con <code>type="text/plain"</code>), existen plugins especializados que realizan este bloqueo automático de manera impecable:</p>
+        <ul style="margin:0; padding-left:1.25rem; display:flex; flex-direction:column; gap:0.5rem; color:#cbd5e1;">
+          <li><strong>Complianz (Mi recomendado):</strong> Es uno de los reyes del sector. Realiza un escaneo automático de cookies, genera los textos legales y bloquea los scripts de Google Analytics, Tag Manager o píxeles automáticamente antes de recibir el consentimiento.</li>
+          <li><strong>CookieYes:</strong> Muy visual, ligero y configurable desde un panel en la nube. Gestiona los consentimientos de forma rápida y bloquea la inyección inicial con eficacia.</li>
+          <li><strong>Real Cookie Banner / Borlabs Cookie:</strong> Dos opciones premium excelentes si buscas un control absoluto de scripts complejos, hojas de estilo o integraciones locales.</li>
+        </ul>
+        <p style="margin-top:0.75rem; margin-bottom:0; font-size:0.85rem; color:#64748b; font-style:italic;">
+          * Ojo: Si usas plugins de optimización WPO (como WP Rocket o LiteSpeed Cache), asegúrate de excluir el script del banner de cookies de la minificación y combinación de JS para que no tarde en cargarse o rompa su funcionalidad.
+        </p>
+      </div>
+
       <!-- Widget de Votación y Rich Snippet -->
       <?php render_rating_widget('auditor-cookies'); ?>
 
