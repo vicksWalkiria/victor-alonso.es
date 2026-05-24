@@ -639,7 +639,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </div>
 
       <!-- Formulario de entrada -->
-      <div class="card card--dark" style="margin-bottom: 3rem; border-color: rgba(255,255,255,0.06);">
+      <div class="card" style="margin-bottom: 3rem; background: #ffffff !important; border: 1px solid #111111 !important; border-top: 4px solid #e8681a !important; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important; border-radius: 8px !important; padding: 2rem;">
         
         <div class="tab-container">
           <button type="button" class="tab-button active" onclick="switchTab('subir-archivo')">Subir Archivo (.log, .txt)</button>
@@ -667,7 +667,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 rows="8" 
                 class="form-input" 
                 placeholder="127.0.0.1 - - [24/May/2026:11:45:22 +0200] &quot;GET /index.php HTTP/1.1&quot; 200 4502 &quot;-&quot; &quot;Googlebot/2.1&quot;..."
-                style="font-family: monospace; font-size: 0.85rem; width: 100%; border-radius: 6px;"
+                style="font-family: monospace; font-size: 0.85rem; width: 100%; border-radius: 6px; background: #ffffff; border: 1px solid #111111; color: #111111; padding: 0.75rem;"
               ></textarea>
             </div>
           </div>
