@@ -689,7 +689,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <div>
-              <h4>Cabeceras de Seguridad y Servidor</h4>
+              <h4 style="color:var(--orange); font-size:1rem; font-weight:700; margin-bottom:0.75rem;">Cabeceras de Seguridad y Servidor</h4>
               <table class="tech-table">
                 <tr>
                   <th>X-Frame-Options</th>
@@ -718,7 +718,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             
             <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem;">
               <div>
-                <h3 style="color:#fff; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Etiquetas SEO On-Page</h3>
+                <h3 style="color:var(--orange); font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Etiquetas SEO On-Page</h3>
                 <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
                   <li>
                     <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Etiqueta Title</strong>
@@ -740,7 +740,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </div>
               
               <div>
-                <h3 style="color:#fff; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cabeceras de Seguridad y Servidor</h3>
+                <h3 style="color:var(--orange); font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cabeceras de Seguridad y Servidor</h3>
                 <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
                   <li>
                     <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">X-Frame-Options</strong>
