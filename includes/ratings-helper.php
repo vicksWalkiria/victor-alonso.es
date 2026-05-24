@@ -35,6 +35,11 @@ function get_ratings() {
             'count' => 29,
             'sum' => 142,
             'average' => 4.9
+        ],
+        'analizador-logs' => [
+            'count' => 32,
+            'sum' => 157,
+            'average' => 4.9
         ]
     ];
 

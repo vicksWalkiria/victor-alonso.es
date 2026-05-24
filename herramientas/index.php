@@ -27,13 +27,34 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     </div>
   </section>
 
+  <style>
+  .tool-pill:hover {
+    background: var(--acento) !important;
+    color: #fff !important;
+    border-color: var(--acento) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.25);
+  }
+  </style>
+
   <section class="section">
     <div class="container">
       
+      <!-- Pastillas de Acceso Rápido (Autoscroll) -->
+      <div class="tools-pills-container" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem;justify-content:center;">
+        <span style="align-self:center;font-size:0.9rem;color:var(--muted);font-weight:600;margin-right:0.5rem">Accesos rápidos:</span>
+        <a href="#analizador-seo" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🔍 Analizador SEO</a>
+        <a href="#generador-schema" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">📦 Schema Local</a>
+        <a href="#calculadora-wpo" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🧮 Calculadora WPO</a>
+        <a href="#extractor-sitemap" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🗺️ Auditor Sitemap</a>
+        <a href="#extractor-entidades" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🧠 Extractor Semántico</a>
+        <a href="#analizador-logs" class="tool-pill" style="background:rgba(232,104,26,0.08);border:1px solid var(--acento);color:#fff;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:700;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">📊 Analizador de Logs</a>
+      </div>
+
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
         
         <!-- CARD 1: ANALIZADOR DE URL -->
-        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <article id="analizador-seo" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div class="card-icon" style="background: rgba(232,104,26,.1)">
               <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -55,7 +76,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </article>
 
         <!-- CARD 2: GENERADOR DE SCHEMA -->
-        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <article id="generador-schema" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div class="card-icon" style="background: rgba(232,104,26,.1)">
               <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -77,7 +98,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </article>
 
         <!-- CARD 3: CALCULADORA WPO -->
-        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <article id="calculadora-wpo" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div class="card-icon" style="background: rgba(232,104,26,.1)">
               <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -101,7 +122,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </article>
 
         <!-- CARD 4: EXTRACTOR DE SITEMAP -->
-        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <article id="extractor-sitemap" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div class="card-icon" style="background: rgba(232,104,26,.1)">
               <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -124,7 +145,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </article>
 
         <!-- CARD 5: EXTRACTOR SEMÁNTICO -->
-        <article class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <article id="extractor-entidades" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div class="card-icon" style="background: rgba(232,104,26,.1)">
               <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -145,6 +166,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </ul>
           </div>
           <a href="/herramientas/extractor-entidades/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Extractor Semántico</a>
+        </article>
+
+        <!-- CARD 6: ANALIZADOR DE LOGS -->
+        <article id="analizador-logs" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="2" y1="20" x2="22" y2="20"></line>
+                <line x1="12" y1="17" x2="12" y2="20"></line>
+                <line x1="7" y1="8" x2="17" y2="8"></line>
+                <line x1="7" y1="12" x2="13" y2="12"></line>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Analizador de Logs Apache & Nginx</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Mi herramienta para auditar el presupuesto de rastreo (Crawl Budget) y la salud del servidor. Sube tu archivo log de accesos o pega fragmentos para visualizar de manera segura el rastreo de bots de búsqueda, errores 404 recurrentes y picos de tráfico.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Identificación visual de Googlebot y otros buscadores.</li>
+              <li class="checklist-item">Reporte de errores 404 críticos para redireccionamiento 301.</li>
+              <li class="checklist-item">Detección de IPs sospechosas y scrapers de contenido.</li>
+              <li class="checklist-item">Procesamiento 100% privado y efímero en memoria (RGPD).</li>
+            </ul>
+          </div>
+          <a href="/herramientas/analizador-logs/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Analizador de Logs</a>
         </article>
 
       </div>
