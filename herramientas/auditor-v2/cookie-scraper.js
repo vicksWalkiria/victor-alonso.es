@@ -533,24 +533,32 @@ async function run() {
   } finally {
     result.completed_at = Math.floor(Date.now() / 1000);
     if (browser) {
-      await browser.close();
+      try {
+        await browser.close();
+      } catch (closeErr) {
+        console.error('Error closing browser:', closeErr.message);
+      }
     }
     
     // Save output report
-    const reportPath = path.join(reportsDir, 'result.json');
-    fs.writeFileSync(reportPath, JSON.stringify(result, null, 2));
+    try {
+      const reportPath = path.join(reportsDir, 'result.json');
+      fs.writeFileSync(reportPath, JSON.stringify(result, null, 2));
+    } catch (writeErr) {
+      console.error('Error writing result.json:', writeErr.message);
+    }
 
     // Mark completion in status.json
-    updateStatus(result.status, result.status === 'done' ? 'Auditoría completada con éxito.' : 'Error durante el análisis.', 100);
+    try {
+      updateStatus(result.status, result.status === 'done' ? 'Auditoría completada con éxito.' : 'Error durante el análisis.', 100);
+    } catch (statusErr) {}
 
     // Delete concurrency lock file if it exists
     const lockPath = path.resolve(__dirname, '../../data/reports/locks', `${auditId}.lock`);
     if (fs.existsSync(lockPath)) {
       try {
         fs.unlinkSync(lockPath);
-      } catch (e) {
-        console.error('Error al borrar el lock:', e.message);
-      }
+      } catch (e) {}
     }
   }
 }
