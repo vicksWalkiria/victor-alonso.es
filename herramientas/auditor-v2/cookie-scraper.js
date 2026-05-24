@@ -266,6 +266,7 @@ async function run() {
         '--no-zygote'
       ],
       defaultViewport: { width: 1280, height: 800 },
+      pipe: true,
       timeout: 60000
     });
 
