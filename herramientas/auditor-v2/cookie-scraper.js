@@ -309,7 +309,7 @@ async function run() {
     updateStatus('running', 'Cargando web en estado limpio (sin consentimiento)...', 25);
     capturedRequests = [];
     
-    await page.goto(targetUrl, { waitUntil: 'load', timeout: 15000 });
+    const response = await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
     result.final_url = page.url();
     
     // Wait a brief period for deferred JS to run
