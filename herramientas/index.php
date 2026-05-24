@@ -44,11 +44,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     box-shadow: 0 2px 5px rgba(232, 104, 26, 0.03);
   }
   .tool-pill:hover {
-    background: var(--acento) !important;
+    background: #e8681a !important;
     color: #ffffff !important;
-    border-color: var(--acento) !important;
+    border-color: #e8681a !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.2);
+    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.25);
   }
   </style>
 
