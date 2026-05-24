@@ -269,6 +269,8 @@ async function run() {
     });
 
     const page = await browser.newPage();
+    page.setDefaultNavigationTimeout(60000);
+    page.setDefaultTimeout(60000);
 
     // Set desktop User-Agent and spoof webdriver to bypass bot detection in CMPs
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
@@ -416,7 +418,7 @@ async function run() {
       sessionStorage.clear();
     });
 
-    await page.goto(targetUrl, { waitUntil: 'load', timeout: 15000 });
+    await page.goto(targetUrl, { waitUntil: 'load', timeout: 60000 });
     await new Promise(r => setTimeout(r, 2000));
 
     const acceptBtn = await findButton(page, 'accept');
