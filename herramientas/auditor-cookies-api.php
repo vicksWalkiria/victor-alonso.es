@@ -228,6 +228,44 @@ switch ($action) {
         echo json_encode($status_data);
         break;
 
+    case 'pdf':
+        $audit_id = $_GET['id'] ?? '';
+        
+        if (!preg_match('/^aud_[a-f0-9]{32}$/', $audit_id)) {
+            http_response_code(403);
+            exit('Acceso denegado: ID no válido.');
+        }
+
+        $report_dir = $base_dir . '/' . $audit_id;
+        $pdf_file = $report_dir . '/informe.pdf';
+
+        // Si el PDF no existe, lo generamos en el momento
+        if (!file_exists($pdf_file)) {
+            $node_bin = get_node_binary_path();
+            $script_path = __DIR__ . '/auditor-v2/generate-pdf.js';
+            
+            // Ejecutar el script síncronamente y esperar (tarda ~1-2s)
+            $cmd = sprintf(
+                '%s %s --id=%s 2>&1',
+                escapeshellarg($node_bin),
+                escapeshellarg($script_path),
+                escapeshellarg($audit_id)
+            );
+            $output = shell_exec($cmd);
+            
+            if (!file_exists($pdf_file)) {
+                http_response_code(500);
+                exit('Error al generar el PDF: ' . htmlspecialchars($output));
+            }
+        }
+
+        // Servir el PDF para descarga
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="auditoria-cookies-victor-alonso.pdf"');
+        header('Cache-Control: private, max-age=3600');
+        readfile($pdf_file);
+        exit;
+
     case 'image':
         $audit_id = $_GET['id'] ?? '';
         $phase = $_GET['phase'] ?? '';

@@ -1291,11 +1291,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
           
           <div style="display:flex; flex-direction:column; gap:2rem;">
-            <!-- Botón de descarga PDF -->
-            <button id="btn-download-pdf" class="btn btn--primary" style="align-self:flex-start; display:flex; align-items:center; gap:0.5rem; background:#E8681A; border:none; padding:0.75rem 1.25rem; font-weight:600; font-size:0.95rem;">
+            <!-- Botón de descarga PDF nativo -->
+            <a href="/herramientas/auditor-cookies-api.php?action=pdf&id=<?= h($r2['id']) ?>" id="btn-download-pdf" class="btn btn--primary" style="align-self:flex-start; display:flex; align-items:center; gap:0.5rem; background:#E8681A; border:none; padding:0.75rem 1.25rem; font-weight:600; font-size:0.95rem; text-decoration:none;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Descargar Informe PDF
-            </button>
+            </a>
 
             <div id="pdf-export-content" style="display:flex; flex-direction:column; gap:2rem;">
             
@@ -1800,107 +1800,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     </div>
   </section>
 
-  <!-- Script para Exportación a PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btnPdf = document.getElementById('btn-download-pdf');
-      const content = document.getElementById('pdf-export-content');
-      
-      if (btnPdf && content) {
-        btnPdf.addEventListener('click', () => {
-          // Cambiar el botón temporalmente
-          const originalText = btnPdf.innerHTML;
-          btnPdf.innerHTML = '⏳ Generando PDF...';
-          btnPdf.disabled = true;
+  <!-- Exportación PDF delegada a Backend (Puppeteer) -->
 
-          // Crear contenedor temporal para el clon
-          const tempContainer = document.createElement('div');
-          tempContainer.style.padding = '30px';
-          tempContainer.style.background = '#ffffff';
-          tempContainer.style.color = '#111111';
-
-          // Inyectar cabecera corporativa
-          const header = document.createElement('div');
-          header.style.marginBottom = '25px';
-          header.style.borderBottom = '1px solid #dddddd';
-          header.style.paddingBottom = '15px';
-          header.innerHTML = `
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-              <div style="background:#E8681A; color:#fff; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:18px;">VA</div>
-              <h1 style="margin:0; font-size:22px; color:#E8681A; font-family: sans-serif;">Víctor Alonso SEO</h1>
-            </div>
-            <h2 style="margin:0 0 8px 0; font-size:18px; color:#111111; font-family: sans-serif;">Informe de Auditoría de Cookies RGPD</h2>
-            <p style="margin:0; font-size:13px; color:#555555; line-height:1.5; font-family: sans-serif;">
-              Documento generado por la herramienta de auditoría avanzada de victor-alonso.es.<br>
-              A continuación se detallan las evidencias capturadas durante la simulación de navegación.
-            </p>
-          `;
-          
-          tempContainer.appendChild(header);
-
-          // Clonar el contenido de fases
-          const clone = content.cloneNode(true);
-          // Forzar estilos inline en el clon para asegurar que html2pdf los pilla bien
-          clone.style.margin = '0';
-          clone.style.fontFamily = 'sans-serif';
-          
-          // Parche de conversión a versión blanca / imprimible
-          clone.style.background = '#ffffff';
-          clone.style.color = '#111111';
-
-          clone.querySelectorAll('*').forEach(el => {
-            el.style.backgroundColor = '#ffffff';
-            el.style.color = '#111111';
-            el.style.boxShadow = 'none';
-            el.style.textShadow = 'none';
-            el.style.borderColor = '#dddddd';
-          });
-
-          clone.querySelectorAll('.card, .card--dark').forEach(el => {
-            el.style.background = '#ffffff';
-            el.style.color = '#111111';
-            el.style.border = '1px solid #dddddd';
-            el.style.borderRadius = '8px';
-          });
-
-          clone.querySelectorAll('h1, h2, h3, h4, strong').forEach(el => {
-            el.style.color = '#111111';
-          });
-
-          clone.querySelectorAll('.result-badge').forEach(el => {
-            el.style.color = '#111111';
-            el.style.background = '#f3f4f6';
-            el.style.border = '1px solid #dddddd';
-          });
-          
-          tempContainer.appendChild(clone);
-
-          // Opciones de html2pdf
-          const opt = {
-            margin:       [10, 10, 10, 10], // top, left, bottom, right
-            filename:     'auditoria-cookies-victor-alonso.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
-            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-          };
-
-          // Generar PDF (usando el nodo desconectado)
-          html2pdf().set(opt).from(tempContainer).save().then(() => {
-            btnPdf.innerHTML = originalText;
-            btnPdf.disabled = false;
-          }).catch(err => {
-            console.error('Error generando PDF:', err);
-            btnPdf.innerHTML = '❌ Error al generar';
-            setTimeout(() => {
-              btnPdf.innerHTML = originalText;
-              btnPdf.disabled = false;
-            }, 3000);
-          });
-        });
-      }
-    });
-  </script>
 
   <!-- CTA final -->
   <?php
