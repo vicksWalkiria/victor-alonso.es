@@ -1034,10 +1034,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div style="max-width:800px; margin:0 auto 2.5rem auto; color:#cbd5e1; font-size:0.95rem; line-height:1.6;">
         <p style="margin-bottom:1rem; font-weight:600; color:#fff; text-align:center;">¿Qué comprueba esta herramienta online?</p>
         <ul style="padding-left:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-bottom:1.5rem; list-style-type:none;">
-          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">🔍 <strong>Inyección de Cookies:</strong> Analiza si se depositan cookies no técnicas en la primera carga sin consentimiento.</li>
-          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">🚀 <strong>Bloqueo de Scripts:</strong> Verifica si etiquetas como Google Tag Manager, GA4 o Facebook Pixel se ejecutan directamente.</li>
-          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">📺 <strong>Iframes de Terceros:</strong> Detecta la carga de reproductores de vídeo, mapas o widgets antes de su aceptación.</li>
-          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">🛡️ <strong>Estructura Legal:</strong> Comprueba la presencia de enlaces visibles a la Política de Cookies, Privacidad y Aviso Legal.</li>
+          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">🔍 <strong>Inyección de Cookies:</strong> Analiza si se depositan cookies no técnicas en la primera carga sin consentimiento.</li>
+          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">🚀 <strong>Bloqueo de Scripts:</strong> Verifica si etiquetas como Google Tag Manager, GA4 o Facebook Pixel se ejecutan directamente.</li>
+          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">📺 <strong>Iframes de Terceros:</strong> Detecta la carga de reproductores de vídeo, mapas o widgets antes de su aceptación.</li>
+          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">🛡️ <strong>Estructura Legal:</strong> Comprueba la presencia de enlaces visibles a la Política de Cookies, Privacidad y Aviso Legal.</li>
         </ul>
       </div>
 
