@@ -1025,7 +1025,7 @@ function renderLists() {
         item.innerHTML = `
             <span style="font-weight: 700; color: #fff;">${ent.name}</span>
             <div style="display: flex; gap: .5rem; align-items: center;">
-                <span style="font-size: .75rem; color: var(--muted); margin-right: .5rem;">Frecuencia: ${ent.frequency}</span>
+                <span style="font-size: .75rem; color: #cbd5e1; margin-right: .5rem;">Frecuencia: ${ent.frequency}</span>
                 <span class="ent-badge ${ent.type}">${ent.type}</span>
             </div>
         `;
@@ -1037,7 +1037,7 @@ function renderLists() {
     triplesWrapper.innerHTML = '';
     
     if (analysisData.triples1.length === 0) {
-        triplesWrapper.innerHTML = '<p style="color: var(--muted); font-size: .85rem; text-align: center; margin-top: 2rem;">No he podido deducir triples semánticos claros en base a los conectores verbales. Inténtalo con un artículo que contenga más enunciados descriptivos.</p>';
+        triplesWrapper.innerHTML = '<p style="color: #cbd5e1; font-size: .85rem; text-align: center; margin-top: 2rem;">No he podido deducir triples semánticos claros en base a los conectores verbales. Inténtalo con un artículo que contenga más enunciados descriptivos.</p>';
     } else {
         analysisData.triples1.forEach(tr => {
             const card = document.createElement('div');
