@@ -10,6 +10,11 @@ Options -Indexes
   RewriteRule ^apple-app-site-association/?$ - [G,L]
   RewriteRule ^\.well-known/apple-app-site-association/?$ - [G,L]
 
+  # 0.5. Bloqueo inmediato de escaneos de vulnerabilidades comunes (CMS, Git, Env, Shells)
+  #      Evita sobrecargar PHP-FPM rechazando la petición a nivel de servidor (403 Forbidden)
+  RewriteCond %{REQUEST_URI} ^/(wp-login\.php|wp-admin|xmlrpc\.php|wp-content|wp-includes|wp-config\.php|wp-json|\.env|\.git|admin/controller|shell\.php|webshell\.php|phpinfo\.php|info\.php|backup\.(sql|zip|tar\.gz|rar)|actuator/health)(/.*)?$ [NC]
+  RewriteRule ^ - [F,L]
+
   # 1. Forzar HTTPS
   RewriteCond %{HTTPS} off
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
