@@ -111,9 +111,9 @@ function render_rating_widget($tool_id, $title = '¿Te ha sido útil esta herram
         <h3 style="font-size: 1.25rem; margin-bottom: 0.75rem; color: #fff;"><?= h($title) ?></h3>
         <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1.25rem;">Ayúdanos a mejorar valorando este recurso técnico. ¡Solo te tomará un clic!</p>
         
-        <div class="stars-container" style="display: inline-flex; gap: 0.5rem; justify-content: center; font-size: 2rem; direction: rtl; cursor: pointer; margin-bottom: 1rem;" data-tool="<?= h($tool_id) ?>" data-voted="<?= $has_voted ? 'true' : 'false' ?>">
+        <div class="stars-container" style="display: inline-flex; gap: 0.5rem; justify-content: center; font-size: 2.25rem; direction: rtl; cursor: pointer; margin-bottom: 1rem;" data-tool="<?= h($tool_id) ?>" data-voted="<?= $has_voted ? 'true' : 'false' ?>">
             <?php for ($i = 5; $i >= 1; $i--): ?>
-                <span class="star-item" data-value="<?= $i ?>" style="color: <?= $has_voted && $i <= round($tool_data['average']) ? 'var(--orange)' : 'rgba(255,255,255,0.15)' ?>; transition: color 0.2s ease-in-out;">★</span>
+                <span class="star-item" data-value="<?= $i ?>" style="color: <?= $has_voted && $i <= round($tool_data['average']) ? 'var(--orange)' : 'transparent' ?>; -webkit-text-stroke: 1.5px var(--orange); text-shadow: <?= $has_voted && $i <= round($tool_data['average']) ? '0 0 10px rgba(232, 104, 26, 0.3)' : 'none' ?>; transition: all 0.2s ease-in-out;">★</span>
             <?php endfor; ?>
         </div>
  
@@ -144,6 +144,7 @@ function render_rating_widget($tool_id, $title = '¿Te ha sido útil esta herram
             .stars-container:not([data-voted="true"]) .star-item:hover,
             .stars-container:not([data-voted="true"]) .star-item:hover ~ .star-item {
                 color: var(--orange) !important;
+                text-shadow: 0 0 10px rgba(232, 104, 26, 0.4) !important;
             }
         `;
         document.head.appendChild(style);
@@ -173,7 +174,8 @@ function render_rating_widget($tool_id, $title = '¿Te ha sido útil esta herram
                         const avg = Math.round(res.average);
                         stars.forEach(s => {
                             const val = parseInt(s.getAttribute('data-value'));
-                            s.style.color = val <= avg ? 'var(--orange)' : 'rgba(255,255,255,0.15)';
+                            s.style.color = val <= avg ? 'var(--orange)' : 'transparent';
+                            s.style.textShadow = val <= avg ? '0 0 10px rgba(232, 104, 26, 0.3)' : 'none';
                             s.style.cursor = 'default';
                         });
 

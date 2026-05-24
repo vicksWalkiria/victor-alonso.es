@@ -386,6 +386,21 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 
 <style>
+/* Sobrescribir botón CTA para tener un precioso y llamativo borde negro */
+.cta-block--orange .btn--primary {
+    border: 2px solid #111111 !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12) !important;
+    transition: all 0.3s ease !important;
+}
+.cta-block--orange .btn--primary:hover {
+    background: #111111 !important;
+    color: #ffffff !important;
+    border-color: #111111 !important;
+}
+
 /* Estilos premium para el dashboard con colores corporativos (Blanco, Naranja, Negro) */
 .tab-container {
     display: flex;
