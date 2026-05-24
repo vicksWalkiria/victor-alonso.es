@@ -1396,6 +1396,47 @@ function populateDateSelectors() {
     }
 }
 
+function humanizeUserAgent(uaStr, detectedBot) {
+    if (detectedBot) {
+        if (detectedBot.includes('Script') || detectedBot.includes('curl') || detectedBot.includes('python')) {
+            return `💻 Script / Scraper`;
+        }
+        return `🤖 ${detectedBot}`;
+    }
+    
+    if (!uaStr || uaStr === '-' || uaStr === 'Desconocido') {
+        return `👤 Usuario Legítimo`;
+    }
+    
+    const ua = uaStr.toLowerCase();
+    
+    // Detectar OS
+    let os = '';
+    if (ua.includes('windows')) os = 'Windows';
+    else if (ua.includes('android')) os = 'Android';
+    else if (ua.includes('iphone') || ua.includes('ipad')) os = 'iOS';
+    else if (ua.includes('macintosh') || ua.includes('mac os')) os = 'macOS';
+    else if (ua.includes('linux')) os = 'Linux';
+    
+    // Detectar Navegador
+    let browser = '';
+    if (ua.includes('firefox')) browser = 'Firefox';
+    else if (ua.includes('opr/') || ua.includes('opera')) browser = 'Opera';
+    else if (ua.includes('edg/')) browser = 'Edge';
+    else if (ua.includes('chrome')) browser = 'Chrome';
+    else if (ua.includes('safari') && !ua.includes('chrome')) browser = 'Safari';
+    
+    if (browser && os) {
+        return `👤 ${browser} (${os})`;
+    } else if (browser) {
+        return `👤 ${browser}`;
+    } else if (os) {
+        return `👤 Dispositivo (${os})`;
+    }
+    
+    return `👤 Usuario Legítimo`;
+}
+
 function renderHttpStatusDesglose(filteredEntries) {
     const contentDiv = document.getElementById('http-status-tab-content');
     if (!contentDiv) return;
@@ -1431,7 +1472,8 @@ function renderHttpStatusDesglose(filteredEntries) {
                 ip: entry[0],
                 time: entry[1].toString().padStart(2, '0') + ':00',
                 date: entry[7],
-                ua: entry[8] || 'Desconocido'
+                ua: entry[8] || 'Desconocido',
+                bot: entry[4] || ''
             });
         }
     });
@@ -1519,7 +1561,7 @@ function renderHttpStatusDesglose(filteredEntries) {
                                                             <tr style="border-bottom: 1px solid #f3f4f6;">
                                                                 <td style="padding: 0.35rem; font-family: monospace; font-weight: 600; color: #111111;">${escapeHtml(d.ip)}</td>
                                                                 <td style="padding: 0.35rem; color: #4b5563; white-space: nowrap;">${escapeHtml(d.date)} ${escapeHtml(d.time)}</td>
-                                                                <td style="padding: 0.35rem; color: #6b7280; font-family: monospace; font-size: 0.7rem; word-break: break-all;" title="${escapeHtml(d.ua)}">${escapeHtml(d.ua.length > 85 ? d.ua.substring(0, 82) + '...' : d.ua)}</td>
+                                                                <td style="padding: 0.35rem; color: #4b5563; font-weight: 600;" title="${escapeHtml(d.ua)}">${escapeHtml(humanizeUserAgent(d.ua, d.bot))}</td>
                                                             </tr>
                                                         `).join('')}
                                                         ${countObj.details.length > 30 ? `
