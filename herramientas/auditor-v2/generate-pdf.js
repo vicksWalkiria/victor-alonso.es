@@ -138,7 +138,7 @@ function buildCookiesHtml(reportData) {
         '<li><span class="badge badge-success">✓</span> No se han detectado problemas críticos.</li>' : 
         reportData.summary.findings.map(f => {
           let bClass = f.severity === 'alto' ? 'badge-danger' : (f.severity === 'medio' ? 'badge-warning' : 'badge-success');
-          return \`<li><span class="badge \${bClass}">\${f.severity.toUpperCase()}</span> \${f.message}</li>\`;
+          return `<li><span class="badge ${bClass}">${f.severity.toUpperCase()}</span> ${f.message}</li>`;
         }).join('')
       }
     </ul>
@@ -148,27 +148,27 @@ function buildCookiesHtml(reportData) {
     <div class="phase-card">
       <div class="phase-title">Fase 1: Carga Inicial (Sin consentimiento)</div>
       <div><span class="label">Cookies detectadas:</span> <strong>${p_init.cookies.length}</strong></div>
-      ${p_init.cookies.length > 0 ? \`<div style="margin-top:5px;"><span class="value">\${formatCookies(p_init.cookies)}</span></div>\` : ''}
-      ${p_init.consentMode ? \`<div style="margin-top:10px;"><span class="label">Google Consent Mode:</span> <span class="value">Detectado</span></div>\` : ''}
+      ${p_init.cookies.length > 0 ? `<div style="margin-top:5px;"><span class="value">${formatCookies(p_init.cookies)}</span></div>` : ''}
+      ${p_init.consentMode ? `<div style="margin-top:10px;"><span class="label">Google Consent Mode:</span> <span class="value">Detectado</span></div>` : ''}
     </div>
     <div class="phase-card">
       <div class="phase-title">Fase 2: Tras pulsar "Rechazar todo"</div>
       ${!p_rej.clicked ? 
-        \`<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para rechazar cookies.</div>\` : 
-        \`<div><span class="badge badge-success">✓</span> Botón "\${p_rej.buttonText}" pulsado.</div>
-         <div style="margin-top:10px;"><span class="label">Cookies post-rechazo:</span> <strong>\${p_rej.cookies.length}</strong></div>
-         \${p_rej.cookies.length > 0 ? \`<div style="margin-top:5px;"><span class="value">\${formatCookies(p_rej.cookies)}</span></div>\` : ''}
-        \`
+        `<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para rechazar cookies.</div>` : 
+        `<div><span class="badge badge-success">✓</span> Botón "${p_rej.buttonText}" pulsado.</div>
+         <div style="margin-top:10px;"><span class="label">Cookies post-rechazo:</span> <strong>${p_rej.cookies.length}</strong></div>
+         ${p_rej.cookies.length > 0 ? `<div style="margin-top:5px;"><span class="value">${formatCookies(p_rej.cookies)}</span></div>` : ''}
+        `
       }
     </div>
     <div class="phase-card">
       <div class="phase-title">Fase 3: Tras pulsar "Aceptar todo"</div>
       ${!p_acc.clicked ? 
-        \`<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para aceptar cookies.</div>\` : 
-        \`<div><span class="badge badge-success">✓</span> Botón "\${p_acc.buttonText}" pulsado.</div>
-         <div style="margin-top:10px;"><span class="label">Cookies cargadas:</span> <strong>\${p_acc.cookies.length}</strong></div>
-         \${p_acc.cookies.length > 0 ? \`<div style="margin-top:5px;"><span class="value">\${formatCookies(p_acc.cookies)}</span></div>\` : ''}
-        \`
+        `<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para aceptar cookies.</div>` : 
+        `<div><span class="badge badge-success">✓</span> Botón "${p_acc.buttonText}" pulsado.</div>
+         <div style="margin-top:10px;"><span class="label">Cookies cargadas:</span> <strong>${p_acc.cookies.length}</strong></div>
+         ${p_acc.cookies.length > 0 ? `<div style="margin-top:5px;"><span class="value">${formatCookies(p_acc.cookies)}</span></div>` : ''}
+        `
       }
     </div>
   </div>
@@ -253,7 +253,7 @@ function buildLogsHtml(reportData) {
         '<li><span class="badge badge-info">✓</span> No se han detectado problemas críticos en los patrones de rastreo.</li>' : 
         issues.map(f => {
           let bClass = f.type === 'error' ? 'badge-danger' : 'badge-warning';
-          return \`<li><span class="badge \${bClass}">\${f.type.toUpperCase()}</span> <strong>\${f.title}:</strong> \${f.desc}</li>\`;
+          return `<li><span class="badge ${bClass}">${f.type.toUpperCase()}</span> <strong>${f.title}:</strong> ${f.desc}</li>`;
         }).join('')
       }
     </ul>
@@ -264,7 +264,7 @@ function buildLogsHtml(reportData) {
       <div class="list-title">Top 10 URLs Más Rastreadas (Sin Estáticos)</div>
       <table>
         <tr><th>URL</th><th>Peticiones</th></tr>
-        ${reportData.top_urls_no_static ? Object.entries(reportData.top_urls_no_static).slice(0, 10).map(([url, count]) => \`<tr><td style="word-break: break-all;">\${url}</td><td>\${count}</td></tr>\`).join('') : ''}
+        ${reportData.top_urls_no_static ? Object.entries(reportData.top_urls_no_static).slice(0, 10).map(([url, count]) => `<tr><td style="word-break: break-all;">${url}</td><td>${count}</td></tr>`).join('') : ''}
       </table>
     </div>
     
@@ -272,7 +272,7 @@ function buildLogsHtml(reportData) {
       <div class="list-title">Top 10 Bots Detectados</div>
       <table>
         <tr><th>Agente</th><th>Peticiones</th></tr>
-        ${reportData.top_bots ? Object.entries(reportData.top_bots).slice(0, 10).map(([bot, count]) => \`<tr><td style="word-break: break-all;">\${bot}</td><td>\${count}</td></tr>\`).join('') : ''}
+        ${reportData.top_bots ? Object.entries(reportData.top_bots).slice(0, 10).map(([bot, count]) => `<tr><td style="word-break: break-all;">${bot}</td><td>${count}</td></tr>`).join('') : ''}
       </table>
     </div>
   </div>
@@ -282,7 +282,7 @@ function buildLogsHtml(reportData) {
     <table>
       <tr><th>URL Extraviada</th><th>Peticiones 404</th></tr>
       ${reportData.top_404s && Object.keys(reportData.top_404s).length > 0 ? 
-          Object.entries(reportData.top_404s).slice(0, 10).map(([url, count]) => \`<tr><td style="word-break: break-all;">\${url}</td><td>\${count}</td></tr>\`).join('') : 
+          Object.entries(reportData.top_404s).slice(0, 10).map(([url, count]) => `<tr><td style="word-break: break-all;">${url}</td><td>${count}</td></tr>`).join('') : 
           '<tr><td colspan="2" style="color:#2ecc71;">No se registraron errores 404 significativos.</td></tr>'
       }
     </table>
@@ -295,8 +295,6 @@ function buildLogsHtml(reportData) {
 </html>
 `;
 }
-}
-
 function buildEntidadesHtml(reportData) {
   const formatList = (list, isTriple = false) => {
     if (!list || list.length === 0) return '<li>No se detectaron datos.</li>';

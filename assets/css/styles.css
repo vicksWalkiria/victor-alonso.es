@@ -1041,6 +1041,22 @@ strong {
   resize: vertical;
 }
 
+/* Campos de formulario en tarjetas oscuras */
+.card--dark .form-input,
+.card--dark .form-textarea,
+.card--dark .form-select {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.card--dark .form-input:focus,
+.card--dark .form-textarea:focus,
+.card--dark .form-select:focus {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: var(--orange);
+}
+
 .form-check {
   display: flex;
   gap: .75rem;
