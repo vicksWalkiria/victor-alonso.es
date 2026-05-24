@@ -256,18 +256,16 @@ async function run() {
 
   try {
     browser = await puppeteer.launch({
-      executablePath: '/usr/bin/chromium-browser',
+      executablePath: '/usr/lib/chromium-browser/chromium-browser',
       headless: true,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-gpu',
-        '--no-zygote',
-        '--single-process'
+        '--no-zygote'
       ],
       defaultViewport: { width: 1280, height: 800 },
-      pipe: true,
       timeout: 60000
     });
 
