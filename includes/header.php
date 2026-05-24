@@ -21,7 +21,7 @@ $_canonical  = SITE_URL . $page['canonical'];
     <meta name="description" content="<?= h($page['description']) ?>">
     <link rel="canonical" href="<?= h($_canonical) ?>">
 <?php if ($page['noindex']): ?>
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex, follow">
 <?php endif; ?>
 
     <!-- Open Graph -->

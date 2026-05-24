@@ -31,6 +31,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
       <p>En cumplimiento del artículo 10 de la Ley 34/2002 de Servicios de la Sociedad de la Información (LSSICE), se informa de los datos del titular de este sitio web:</p>
       <ul>
         <li><strong>Nombre:</strong> Víctor Alonso</li>
+        <li><strong>NIF:</strong> 47087690C</li>
         <li><strong>Nombre comercial:</strong> Víctor Alonso SEO</li>
         <li><strong>Dirección:</strong> Calle Iris 25, 02005 Albacete (España)</li>
         <li><strong>Email:</strong> <a href="mailto:soy@victor-alonso.es">soy@victor-alonso.es</a></li>

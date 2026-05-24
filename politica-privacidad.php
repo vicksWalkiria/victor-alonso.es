@@ -31,6 +31,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
       <p>En cumplimiento del Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo (RGPD) y la Ley Orgánica 3/2018 de Protección de Datos Personales (LOPDGDD), te informamos de que el responsable del tratamiento de tus datos personales es:</p>
       <ul>
         <li><strong>Nombre:</strong> Víctor Alonso</li>
+        <li><strong>NIF:</strong> 47087690C</li>
         <li><strong>Nombre comercial:</strong> Víctor Alonso SEO</li>
         <li><strong>Dirección:</strong> Calle Iris 25, 02005 Albacete (España)</li>
         <li><strong>Email:</strong> <a href="mailto:soy@victor-alonso.es">soy@victor-alonso.es</a></li>
