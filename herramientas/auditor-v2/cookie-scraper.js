@@ -263,7 +263,8 @@ async function run() {
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-gpu',
-        '--no-zygote'
+        '--no-zygote',
+        '--single-process'
       ],
       defaultViewport: { width: 1280, height: 800 },
       timeout: 60000
