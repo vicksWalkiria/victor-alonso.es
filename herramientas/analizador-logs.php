@@ -36,6 +36,33 @@ $result = null;
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5 MB
 define('MAX_LINES', 15000); // 15.000 líneas
 
+/**
+ * Formatea fechas de log apache de "24/May/2026:00:07:51 +0000" a "24 de Mayo, 2026 — 00:07:51"
+ */
+function format_log_date($date_str) {
+    if (empty($date_str)) return '-';
+    $parts = explode(' ', $date_str);
+    $date_time_part = $parts[0];
+    
+    $dt = DateTime::createFromFormat('d/M/Y:H:i:s', $date_time_part);
+    if ($dt) {
+        $months = [
+            'Jan' => 'Enero', 'Feb' => 'Febrero', 'Mar' => 'Marzo', 'Apr' => 'Abril',
+            'May' => 'Mayo', 'Jun' => 'Junio', 'Jul' => 'Julio', 'Aug' => 'Agosto',
+            'Sep' => 'Septiembre', 'Oct' => 'Octubre', 'Nov' => 'Noviembre', 'Dec' => 'Diciembre'
+        ];
+        $day = $dt->format('d');
+        $month_en = $dt->format('M');
+        $month_es = $months[$month_en] ?? $month_en;
+        $year = $dt->format('Y');
+        $time = $dt->format('H:i:s');
+        
+        $tz_part = isset($parts[1]) ? ' (' . $parts[1] . ')' : '';
+        return "$day de $month_es, $year — $time$tz_part";
+    }
+    return $date_str;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stream = null;
     $source_name = '';
@@ -263,12 +290,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
     padding-bottom: 0.75rem;
 }
 .tab-button {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.08);
     color: var(--muted);
     padding: 0.6rem 1.2rem;
     border-radius: 6px;
@@ -278,8 +305,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     transition: all 0.3s;
 }
 .tab-button:hover {
-    color: #fff;
-    background: rgba(255,255,255,0.08);
+    color: #111;
+    background: rgba(0,0,0,0.04);
 }
 .tab-button.active {
     background: #e8681a !important;
@@ -295,7 +322,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
 .drag-area {
     border: 2px dashed rgba(232, 104, 26, 0.3);
-    background: rgba(232, 104, 26, 0.02);
+    background: rgba(232, 104, 26, 0.01);
     border-radius: 8px;
     padding: 2.5rem 1.5rem;
     text-align: center;
@@ -305,7 +332,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 }
 .drag-area:hover, .drag-area.dragover {
     border-color: #e8681a !important;
-    background: rgba(232, 104, 26, 0.06);
+    background: rgba(232, 104, 26, 0.05);
 }
 .drag-icon {
     font-size: 2.5rem;
@@ -314,7 +341,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 }
 .drag-text {
     font-size: 1rem;
-    color: #fff;
+    color: #111;
     margin-bottom: 0.5rem;
 }
 .drag-subtext {
@@ -329,26 +356,27 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     margin-bottom: 2.5rem;
 }
 .metric-box {
-    background: #111111 !important;
-    border: 1px solid rgba(232, 104, 26, 0.25) !important;
+    background: #ffffff !important;
+    border: 1px solid #111111 !important;
     border-left: 4px solid #e8681a !important; /* Detalle de marca naranja */
     border-radius: 8px;
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 .metric-box-label {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #cbd5e1 !important; /* Alto contraste */
-    font-weight: 600 !important;
+    color: #4b5563 !important; /* Alto contraste */
+    font-weight: 700 !important;
     margin-bottom: 0.5rem;
 }
 .metric-box-value {
-    font-size: 1.8rem;
-    font-weight: 800;
+    font-size: 1.6rem;
+    font-weight: 850;
     color: #e8681a !important; /* Naranja en las métricas principales */
 }
 
@@ -365,13 +393,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     font-size: 0.9rem;
 }
 .chart-bar-label {
-    width: 90px;
-    color: #cbd5e1;
+    width: 140px;
+    color: #111111;
     font-weight: 600;
     flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .chart-bar-track {
-    background: rgba(255,255,255,0.04);
+    background: rgba(0,0,0,0.04);
     height: 14px;
     border-radius: 7px;
     flex-grow: 1;
@@ -384,9 +415,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     transition: width 1s ease-out;
 }
 .chart-bar-value {
-    width: 60px;
+    width: 70px;
     text-align: right;
-    color: #fff;
+    color: #111111;
     font-weight: 700;
     flex-shrink: 0;
 }
@@ -403,7 +434,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     justify-content: space-between;
     height: 150px;
     padding-top: 1rem;
-    border-bottom: 2px solid rgba(255,255,255,0.08);
+    border-bottom: 2px solid rgba(0,0,0,0.08);
     margin-bottom: 0.5rem;
     gap: 4px;
 }
@@ -425,7 +456,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     transition: all 0.3s;
 }
 .timeline-bar:hover {
-    background: #fff;
+    background: #111111 !important;
 }
 .timeline-bar:hover::after {
     content: attr(data-tooltip);
@@ -433,14 +464,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%);
-    background: #000;
+    background: #111111;
     color: #fff;
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     white-space: nowrap;
     z-index: 10;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid #e8681a;
 }
 .timeline-label {
     font-size: 0.75rem;
@@ -451,18 +482,18 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .table-filter-input {
     width: 100%;
     max-width: 320px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: #ffffff;
+    border: 1px solid #111111;
     border-radius: 6px;
     padding: 0.5rem 0.75rem;
-    color: #fff;
+    color: #111111;
     font-size: 0.85rem;
     margin-bottom: 1rem;
     transition: all 0.3s;
 }
 .table-filter-input:focus {
     border-color: #e8681a !important;
-    background: rgba(255,255,255,0.06);
+    box-shadow: 0 0 0 2px rgba(232, 104, 26, 0.1);
     outline: none;
 }
 
@@ -490,42 +521,102 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     }
 }
 
-/* Sobrescribir tema para el Dashboard y Tablas (Blanco, Naranja y Negro de alto contraste) */
+/* Sobrescribir tema para el Dashboard y Tablas (Blanco, Naranja y Negro de alto contraste claro) */
 #dashboard {
-    color: #ffffff !important;
+    color: #111111 !important;
 }
 #dashboard .card--dark {
-    background: #111111 !important; /* Fondo negro sólido */
-    border: 1px solid rgba(232, 104, 26, 0.25) !important; /* Borde naranja sutil */
-    box-shadow: 0 4px 24px rgba(0,0,0,0.6) !important;
+    background: #ffffff !important; /* Fondo blanco sólido */
+    border: 1px solid #111111 !important; /* Borde negro de la marca */
+    border-top: 4px solid #e8681a !important; /* Cabecera naranja corporativo */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+    border-radius: 8px !important;
 }
 #dashboard p {
-    color: #cbd5e1 !important; /* Texto gris plateado súper claro */
+    color: #4b5563 !important; /* Texto gris intermedio súper legible */
 }
 #dashboard .tech-table {
-    border: 1px solid rgba(232, 104, 26, 0.25) !important;
-    background: #111111 !important;
+    border: 1px solid #111111 !important;
+    background: #ffffff !important;
+    border-collapse: collapse !important;
+    width: 100% !important;
 }
 #dashboard .tech-table th {
-    background: #1c1c1c !important; /* Encabezado gris oscuro/negro */
+    background: #111111 !important; /* Encabezado negro sólido corporativo */
     color: #ffffff !important; /* Texto blanco puro */
     font-weight: 700 !important;
-    border-bottom: 2px solid #e8681a !important; /* Línea de división naranja */
-    border-right: 1px solid rgba(232, 104, 26, 0.15) !important;
+    border-bottom: 2px solid #e8681a !important; /* Línea divisoria naranja */
+    border-right: 1px solid #333333 !important;
+    padding: 0.75rem 1rem !important;
 }
 #dashboard .tech-table td {
-    color: #f1f5f9 !important; /* Texto de celdas blanco roto brillante */
-    background: #111111 !important;
-    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    color: #111111 !important; /* Texto de celdas negro */
+    background: #ffffff !important;
+    border-bottom: 1px solid #eeeeee !important;
+    padding: 0.75rem 1rem !important;
 }
 #dashboard .tech-table tr:hover td {
-    background: rgba(232, 104, 26, 0.04) !important; /* Hover naranja translúcido */
+    background: #fff9f5 !important; /* Hover naranja translúcido ultra suave */
 }
 #dashboard .tech-table td.monospace-url {
-    color: #ff9f68 !important; /* URLs en un precioso tono naranja cálido de alta legibilidad */
+    color: #e8681a !important; /* URLs en un precioso tono naranja cálido corporativo */
     font-weight: 600 !important;
     font-family: monospace !important;
     font-size: 0.85rem !important;
+}
+
+/* Estilos de impresión premium y optimizados para PDF */
+@media print {
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    /* Ocultar la cabecera del sitio, footer, navegación lateral, migas, hero y formulario */
+    .site-header, .site-footer, .breadcrumbs, .page-hero, .tool-intro, #logsForm, .alert, .criterio-section, .tab-container, .table-filter-input, .btn-pdf-export {
+        display: none !important;
+    }
+    /* Ajustes de maquetación del dashboard */
+    #main, .container, #dashboard, .audit-results {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    #dashboard .card--dark {
+        border: 1px solid #111111 !important;
+        box-shadow: none !important;
+        margin-bottom: 2rem !important;
+        page-break-inside: avoid !important;
+    }
+    .metric-card-grid {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 1rem !important;
+    }
+    .metric-box {
+        border: 1px solid #111111 !important;
+        box-shadow: none !important;
+        padding: 1rem !important;
+        page-break-inside: avoid !important;
+    }
+    .tech-table th {
+        background: #111111 !important;
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    .tech-table td {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
 }
 </style>
 
@@ -600,9 +691,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <?php if ($result): ?>
         <div class="audit-results" id="dashboard" style="margin-top: 1rem;">
           
-          <h3 style="margin-bottom: 2rem; color: var(--orange); display: flex; align-items: center; gap: 0.5rem;">
-            <span>📊</span> Dashboard de Análisis: <span style="color: #fff; font-weight: 400;"><?= h($result['source_name']) ?></span>
-          </h3>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+            <h3 style="margin: 0; color: #e8681a; display: flex; align-items: center; gap: 0.5rem;">
+              <span>📊</span> Dashboard de Análisis: <span style="color: #111111; font-weight: 400;"><?= h($result['source_name']) ?></span>
+            </h3>
+            <button type="button" class="btn btn--secondary btn-pdf-export" onclick="window.print()" style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 1px solid #111111; background: #ffffff; color: #111111; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-weight: 600;">
+              <span>🖨️</span> Guardar en PDF / Imprimir
+            </button>
+          </div>
 
           <!-- Bloque de Métricas Principales -->
           <div class="metric-card-grid">
@@ -620,9 +716,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
             <div class="metric-box">
               <span class="metric-box-label">Fechas del Log</span>
-              <span class="metric-box-value" style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #cbd5e1; margin-top: 0.25rem;">
-                Inicio: <?= h($result['date_start']) ?><br>
-                Fin: <?= h($result['date_end']) ?>
+              <span class="metric-box-value" style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #111111; margin-top: 0.25rem;">
+                Inicio: <?= h(format_log_date($result['date_start'])) ?><br>
+                Fin: <?= h(format_log_date($result['date_end'])) ?>
               </span>
             </div>
           </div>
@@ -630,8 +726,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;">
             
             <!-- Códigos de Estado HTTP -->
-            <div class="card card--dark" style="margin: 0; background: #0b101c; border-color: rgba(255,255,255,0.05);">
-              <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <div class="card card--dark" style="margin: 0;">
+              <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
                 <span>🔌</span> Códigos de Respuesta HTTP
               </h4>
               <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Distribución de estados devueltos por el servidor.</p>
@@ -685,8 +781,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <!-- Actividad de Bots de Búsqueda y Crawlers -->
-            <div class="card card--dark" style="margin: 0; background: #0b101c; border-color: rgba(255,255,255,0.05);">
-              <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <div class="card card--dark" style="margin: 0;">
+              <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
                 <span>🤖</span> Top Crawlers y Motores de Búsqueda
               </h4>
               <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Visitas detectadas según firmas en el User-Agent.</p>
@@ -714,8 +810,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
 
           <!-- Timeline por horas -->
-          <div class="card card--dark" style="margin-bottom: 2.5rem; background: #0b101c; border-color: rgba(255,255,255,0.05);">
-            <h4 style="color: #fff; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <div class="card card--dark" style="margin-bottom: 2.5rem;">
+            <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
               <span>⏰</span> Actividad Temporal (Timeline por Horas)
             </h4>
             <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;">Frecuencia horaria para localizar picos de tráfico en el servidor.</p>
@@ -741,8 +837,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
 
           <!-- Pestañas de Tablas Detalladas -->
-          <div class="card card--dark" style="background: #0b101c; border-color: rgba(255,255,255,0.05);">
-            <div class="tab-container" style="border-bottom-color: rgba(255,255,255,0.05);">
+          <div class="card card--dark">
+            <div class="tab-container" style="border-bottom-color: rgba(0,0,0,0.05);">
               <button type="button" class="tab-button active" onclick="switchTableTab('table-urls-no-static')">URLs Indexables (HTML)</button>
               <button type="button" class="tab-button" onclick="switchTableTab('table-urls')">Todas las URLs</button>
               <button type="button" class="tab-button" onclick="switchTableTab('table-404s')" style="color: #ff6b6b;">Errores 404 (SEO Redir)</button>
@@ -753,40 +849,56 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div id="table-urls-no-static" class="table-tab-content" style="display: block;">
               <div class="card-header-flex">
                 <div>
-                  <h4 style="margin: 0; color: #fff;">Top URLs Indexables (Páginas HTML)</h4>
+                  <h4 style="margin: 0; color: #111111;">Top URLs Indexables (Páginas HTML)</h4>
                   <p style="font-size: 0.85rem; color: var(--muted); margin: 0.25rem 0 0 0;">Visualiza únicamente las rutas sin recursos estáticos (CSS, JS, imágenes...).</p>
                 </div>
                 <input type="text" class="table-filter-input" placeholder="Filtrar por URL..." onkeyup="filterTable(this, 'url-no-static-tbody')">
               </div>
-              <table class="tech-table">
-                <thead>
-                  <tr>
-                    <th>URL / Ruta</th>
-                    <th style="text-align: right; width: 140px;">Peticiones</th>
-                    <th style="text-align: right; width: 100px;">Porcentaje</th>
-                  </tr>
-                </thead>
-                <tbody id="url-no-static-tbody">
-                  <?php if (empty($result['top_urls_no_static'])): ?>
-                    <tr><td colspan="3" style="text-align:center; color: var(--muted);">No se encontraron URLs de páginas en este registro.</td></tr>
-                  <?php else: foreach ($result['top_urls_no_static'] as $url => $hits): 
-                      $pct = round(($hits / $result['parsed_lines']) * 100, 1);
-                  ?>
-                    <tr>
-                      <td class="monospace-url"><?= h($url) ?></td>
-                      <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
-                      <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
-                    </tr>
-                  <?php endforeach; endif; ?>
-                </tbody>
-              </table>
+              
+              <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1rem;">
+                <div style="flex: 1 1 500px; min-width: 0;">
+                  <table class="tech-table">
+                    <thead>
+                      <tr>
+                        <th>URL / Ruta</th>
+                        <th style="text-align: right; width: 140px;">Peticiones</th>
+                        <th style="text-align: right; width: 100px;">Porcentaje</th>
+                      </tr>
+                    </thead>
+                    <tbody id="url-no-static-tbody">
+                      <?php if (empty($result['top_urls_no_static'])): ?>
+                        <tr><td colspan="3" style="text-align:center; color: var(--muted);">No se encontraron URLs de páginas en este registro.</td></tr>
+                      <?php else: foreach ($result['top_urls_no_static'] as $url => $hits): 
+                          $pct = round(($hits / $result['parsed_lines']) * 100, 1);
+                      ?>
+                        <tr>
+                          <td class="monospace-url"><?= h($url) ?></td>
+                          <td style="text-align: right; font-weight: 700; color: #111111;"><?= number_format($hits, 0, ',', '.') ?></td>
+                          <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
+                        </tr>
+                      <?php endforeach; endif; ?>
+                    </tbody>
+                  </table>
+                </div>
+                
+                <!-- Canvas de Gráfico Donut de Tráfico (Top 5) -->
+                <?php if (!empty($result['top_urls_no_static'])): ?>
+                  <div style="flex: 0 0 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #ffffff; border: 1px solid #111111; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin: 0 auto; page-break-inside: avoid;">
+                    <h5 style="margin: 0 0 1.25rem 0; font-size: 0.85rem; color: #111111; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; text-align: center;">Distribución de Tráfico (Top 5)</h5>
+                    <div style="position: relative; width: 160px; height: 160px; display: flex; align-items: center; justify-content: center;">
+                      <canvas id="urlDonutChart" width="160" height="160" style="width: 160px; height: 160px;"></canvas>
+                    </div>
+                    <div id="donutLegend" style="display: flex; flex-direction: column; gap: 0.5rem; width: 100%; margin-top: 1.25rem; font-size: 0.75rem; color: #333333;"></div>
+                  </div>
+                <?php endif; ?>
+              </div>
             </div>
 
             <!-- Tabla 2: Todas las URLs -->
             <div id="table-urls" class="table-tab-content" style="display: none;">
               <div class="card-header-flex">
                 <div>
-                  <h4 style="margin: 0; color: #fff;">Top 10 URLs Solicitadas (Total)</h4>
+                  <h4 style="margin: 0; color: #111111;">Top 10 URLs Solicitadas (Total)</h4>
                   <p style="font-size: 0.85rem; color: var(--muted); margin: 0.25rem 0 0 0;">Incluye absolutamente todas las peticiones (páginas, imágenes, fuentes, etc).</p>
                 </div>
                 <input type="text" class="table-filter-input" placeholder="Filtrar por URL..." onkeyup="filterTable(this, 'url-tbody')">
@@ -807,7 +919,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   ?>
                     <tr>
                       <td class="monospace-url"><?= h($url) ?></td>
-                      <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
+                      <td style="text-align: right; font-weight: 700; color: #111111;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
                   <?php endforeach; endif; ?>
@@ -840,7 +952,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   ?>
                     <tr>
                       <td class="monospace-url" style="color: #ff6b6b !important;"><?= h($url) ?></td>
-                      <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
+                      <td style="text-align: right; font-weight: 700; color: #111111;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
                   <?php endforeach; endif; ?>
@@ -852,7 +964,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div id="table-ips" class="table-tab-content" style="display: none;">
               <div class="card-header-flex">
                 <div>
-                  <h4 style="margin: 0; color: #fff;">Top 10 Direcciones IP Activas</h4>
+                  <h4 style="margin: 0; color: #111111;">Top 10 Direcciones IP Activas</h4>
                   <p style="font-size: 0.85rem; color: var(--muted); margin: 0.25rem 0 0 0;">Identifica qué clientes consumen la mayor cantidad de recursos de tu web.</p>
                 </div>
                 <input type="text" class="table-filter-input" placeholder="Filtrar por IP..." onkeyup="filterTable(this, 'ip-tbody')">
@@ -872,8 +984,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                       $pct = round(($hits / $result['parsed_lines']) * 100, 1);
                   ?>
                     <tr>
-                      <td style="font-family: monospace; font-size: 0.85rem; color: #fff;"><?= h($ip) ?></td>
-                      <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
+                      <td style="font-family: monospace; font-size: 0.85rem; color: #111111;"><?= h($ip) ?></td>
+                      <td style="text-align: right; font-weight: 700; color: #111111;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
                   <?php endforeach; endif; ?>
@@ -1065,6 +1177,75 @@ document.addEventListener('DOMContentLoaded', function() {
     const dashboard = document.getElementById('dashboard');
     if (dashboard) {
         dashboard.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Dibujar gráfico circular Donut
+    const canvas = document.getElementById("urlDonutChart");
+    if (canvas) {
+        const ctx = canvas.getContext("2d");
+        const rawData = <?php echo isset($result['top_urls_no_static']) ? json_encode(array_slice($result['top_urls_no_static'], 0, 5, true)) : '{}'; ?>;
+        
+        const entries = Object.entries(rawData);
+        if (entries.length > 0) {
+            const totalHits = entries.reduce((acc, [_, val]) => acc + val, 0);
+            const colors = ["#e8681a", "#111111", "#4b5563", "#94a3b8", "#cbd5e1"];
+            
+            let startAngle = -0.5 * Math.PI; // Iniciar arriba
+            const legendContainer = document.getElementById("donutLegend");
+            if (legendContainer) legendContainer.innerHTML = "";
+            
+            // Asegurar resolución nítida en pantallas retina
+            const size = 160;
+            const devicePixelRatio = window.devicePixelRatio || 1;
+            canvas.width = size * devicePixelRatio;
+            canvas.height = size * devicePixelRatio;
+            canvas.style.width = size + "px";
+            canvas.style.height = size + "px";
+            ctx.scale(devicePixelRatio, devicePixelRatio);
+            
+            const center = size / 2;
+            const radius = size / 2 - 5;
+            
+            entries.forEach(([url, hits], index) => {
+                const pct = ((hits / totalHits) * 100).toFixed(1);
+                const sliceAngle = (hits / totalHits) * 2 * Math.PI;
+                const color = colors[index % colors.length];
+                
+                // Dibujar rebanada
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                ctx.moveTo(center, center);
+                ctx.arc(center, center, radius, startAngle, startAngle + sliceAngle);
+                ctx.closePath();
+                ctx.fill();
+                
+                startAngle += sliceAngle;
+                
+                // Añadir fila de leyenda
+                if (legendContainer) {
+                    const shortenedUrl = url.length > 22 ? url.substring(0, 20) + '...' : url;
+                    const item = document.createElement("div");
+                    item.style.display = "flex";
+                    item.style.alignItems = "center";
+                    item.style.gap = "0.5rem";
+                    item.innerHTML = `
+                        <span style="display:inline-block; width:8px; height:8px; background:${color}; border-radius:50%; flex-shrink:0;"></span>
+                        <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex-grow:1; font-weight:600;" title="${url}">${shortenedUrl}</span>
+                        <span style="font-weight:700; color:#111111; margin-left:auto;">${pct}%</span>
+                    `;
+                    legendContainer.appendChild(item);
+                }
+            });
+            
+            // Dibujar círculo central para convertirlo en Donut
+            ctx.beginPath();
+            ctx.fillStyle = "#ffffff";
+            ctx.arc(center, center, radius * 0.55, 0, 2 * Math.PI);
+            ctx.fill();
+        } else {
+            const parentCard = canvas.closest('div[style*="flex: 0 0 300px"]');
+            if (parentCard) parentCard.style.display = 'none';
+        }
     }
 });
 </script>
