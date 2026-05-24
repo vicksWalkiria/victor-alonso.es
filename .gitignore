@@ -3,4 +3,6 @@ node_modules/
 .env
 data/wpo-psi-cache/
 data/wpo-psi-rate/
+data/auditor_logs.json
+data/ratings.json
 scratch/

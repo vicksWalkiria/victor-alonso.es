@@ -43,6 +43,12 @@ function is_unsafe_url($url) {
         return true;
     }
 
+    // Bloquear puertos no estándar (solo 80 y 443 permitidos)
+    $port = $parsed['port'] ?? null;
+    if ($port !== null && !in_array((int)$port, [80, 443], true)) {
+        return true;
+    }
+
     $host = trim($parsed['host']);
     
     // Eliminar corchetes si es una dirección IPv6 directa
@@ -105,6 +111,98 @@ function is_unsafe_url($url) {
     return false;
 }
 
+/**
+ * Controla el límite de solicitudes por IP (10 solicitudes en 10 minutos) y guarda el log de peticiones.
+ */
+function check_rate_limit_and_log($url_audited) {
+    $log_file = dirname(__DIR__) . '/data/auditor_logs.json';
+    $dir = dirname($log_file);
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    // Ofuscar IP con hash md5 y salt para cumplir con GDPR
+    $ip_hash = md5($ip . 'cookie_audit_salt_55');
+    $now = time();
+
+    $logs = [];
+    if (file_exists($log_file)) {
+        $logs = json_decode(@file_get_contents($log_file), true) ?: [];
+    }
+
+    $cleaned_logs = [];
+    $ip_count = 0;
+    $domain_last_request_time = 0;
+
+    $parsed_current = parse_url($url_audited);
+    $current_domain = strtolower($parsed_current['host'] ?? '');
+
+    foreach ($logs as $entry) {
+        // Conservar histórico de las últimas 24 horas en el log, pero usar 10 min para rate limit
+        if ($now - $entry['timestamp'] < 86400) {
+            $cleaned_logs[] = $entry;
+        }
+        
+        if ($now - $entry['timestamp'] < 600) {
+            if ($entry['ip_hash'] === $ip_hash) {
+                $ip_count++;
+            }
+            
+            $parsed_entry = parse_url($entry['url']);
+            $entry_domain = strtolower($parsed_entry['host'] ?? '');
+            if ($entry_domain === $current_domain && $entry['ip_hash'] === $ip_hash) {
+                if ($entry['timestamp'] > $domain_last_request_time) {
+                    $domain_last_request_time = $entry['timestamp'];
+                }
+            }
+        }
+    }
+
+    // Validar límite de tasa
+    if ($ip_count >= 10) {
+        return 'Has superado el límite de análisis permitido (10 solicitudes cada 10 minutos). Por favor, espera un momento.';
+    }
+
+    // Validar anti-loop de análisis del mismo dominio
+    if ($domain_last_request_time > 0 && ($now - $domain_last_request_time) < 10) {
+        return 'Por favor, espera al menos 10 segundos antes de volver a analizar el mismo dominio.';
+    }
+
+    // Registrar solicitud
+    $cleaned_logs[] = [
+        'ip_hash'   => $ip_hash,
+        'timestamp' => $now,
+        'url'       => $url_audited,
+        'error'     => ''
+    ];
+
+    @file_put_contents($log_file, json_encode($cleaned_logs, JSON_PRETTY_PRINT), LOCK_EX);
+    return true;
+}
+
+/**
+ * Registra un error de conexión técnica en el log para diagnóstico interno
+ */
+function log_audit_error($url_audited, $error_msg) {
+    $log_file = dirname(__DIR__) . '/data/auditor_logs.json';
+    if (!file_exists($log_file)) return;
+
+    $logs = json_decode(@file_get_contents($log_file), true) ?: [];
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $ip_hash = md5($ip . 'cookie_audit_salt_55');
+
+    // Buscar la última petición de esta IP y actualizar el mensaje de error
+    for ($i = count($logs) - 1; $i >= 0; $i--) {
+        if ($logs[$i]['ip_hash'] === $ip_hash && $logs[$i]['url'] === $url_audited) {
+            $logs[$i]['error'] = $error_msg;
+            break;
+        }
+    }
+
+    @file_put_contents($log_file, json_encode($logs, JSON_PRETTY_PRINT), LOCK_EX);
+}
+
 $error = null;
 $result = null;
 $url = '';
@@ -125,6 +223,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
         } elseif (is_unsafe_url($url)) {
             $error = 'La dirección URL introducida está restringida o no es segura.';
         } else {
+            // Verificar límite de tasa y registrar log
+            $rate_limit_res = check_rate_limit_and_log($url);
+            if ($rate_limit_res !== true) {
+                $error = $rate_limit_res;
+            } else {
             $redirect_chain = [];
             $max_redirects = 5;
             $redirect_count = 0;
@@ -146,6 +249,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
                 curl_setopt($ch, CURLOPT_USERAGENT, 'VictorAlonsoCookieBot/1.0 (+https://www.victor-alonso.es/herramientas/auditor-cookies)');
 
+                // Prevenir DNS Rebinding antes de iniciar la solicitud
+                if (is_unsafe_url($current_url)) {
+                    $error = 'La dirección URL de destino no es segura y ha sido bloqueada.';
+                    curl_close($ch);
+                    break;
+                }
+
                 $response = curl_exec($ch);
                 
                 // Reintentar si falla SSL para poder auditar de todas formas
@@ -153,11 +263,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                     $ssl_invalid_detected = true;
                     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
                     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+                    
+                    // Revalidar IP del redirect/esquema antes del segundo intento
+                    if (is_unsafe_url($current_url)) {
+                        $error = 'La dirección URL de destino no es segura y ha sido bloqueada.';
+                        curl_close($ch);
+                        break;
+                    }
+                    
                     $response = curl_exec($ch);
                 }
 
                 if (curl_errno($ch)) {
-                    $error = 'No se ha podido establecer conexión con la web: ' . curl_error($ch);
+                    $raw_err = curl_error($ch);
+                    log_audit_error($url, "cURL Error en $current_url: " . $raw_err);
+                    $error = 'No se ha podido establecer conexión con la web indicada. Revisa que la URL sea pública y accesible.';
                     curl_close($ch);
                     break;
                 }
@@ -355,6 +475,257 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 }
                 unset($p_info);
 
+                // 1. Detección de Banners y CMPs
+                $banner_patterns = [
+                    'Cookiebot' => '/(cookiebot\.com|id="cookiebanner"|id="CybotCookiebotDialog")/i',
+                    'CookieYes' => '/(cookieyes\.com|id="cookieyes-banner"|class="[^"]*cookieyes-consent[^"]*")/i',
+                    'Complianz' => '/(complianz\.io|class="[^"]*cmplz-cookiebanner[^"]*")/i',
+                    'OneTrust' => '/(onetrust\.com|id="onetrust-banner-sdk"|class="[^"]*onetrust-consent[^"]*")/i',
+                    'Didomi' => '/(didomi\.io|id="didomi-host"|class="[^"]*didomi-popup[^"]*")/i',
+                    'Iubenda' => '/(iubenda\.com|id="iubenda-cs-banner"|class="[^"]*iubenda-cs[^"]*")/i',
+                    'Axeptio' => '/(axeptio\.eu|id="axeptio_overlay"|class="[^"]*axeptio[^"]*")/i',
+                    'Osano' => '/(osano\.com|class="[^"]*osano-cookie[^"]*")/i',
+                    'Termly' => '/(termly\.io|id="termly-consent[^"]*")/i',
+                    'Quantcast Choice' => '/(quantcast\.mgr\.consensu\.org|id="qc-cmp2-container")/i'
+                ];
+
+                $detected_cmp = 'Desconocido o personalizado';
+                $banner_detected = false;
+
+                foreach ($banner_patterns as $cmp_name => $cmp_pattern) {
+                    if (preg_match($cmp_pattern, $html_content)) {
+                        $detected_cmp = $cmp_name;
+                        $banner_detected = true;
+                    }
+                }
+
+                // Si no se ha detectado un CMP de marca pero el HTML contiene clases comunes de banners genéricos
+                if (!$banner_detected) {
+                    $generic_banner_patterns = [
+                        '/class="[^"]*(cookie-banner|cookie-consent|cc-window|cc-banner)[^"]*"/i',
+                        '/id="[^"]*(cookie-banner|cookie-consent|cc-window|cc-banner)[^"]*"/i'
+                    ];
+                    foreach ($generic_banner_patterns as $g_pat) {
+                        if (preg_match($g_pat, $html_content)) {
+                            $banner_detected = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Detección de Google Consent Mode / Parámetros
+                $consent_mode_detected = false;
+                $consent_mode_patterns = [
+                    '/gtag\([\'"]consent[\'"]/i',
+                    '/gcd=/i',
+                    '/gcs=/i',
+                    '/data-cookiecategory=/i',
+                    '/data-consent=/i',
+                    '/data-category=/i',
+                    '/CookieConsent/i'
+                ];
+                foreach ($consent_mode_patterns as $cm_pat) {
+                    if (preg_match($cm_pat, $html_content)) {
+                        $consent_mode_detected = true;
+                        break;
+                    }
+                }
+
+                // Detección de botones de Aceptar / Rechazar aproximados
+                $accept_button_detected = false;
+                $reject_button_detected = false;
+
+                // Patrones comunes para botones de consentimiento
+                $accept_patterns = [
+                    '/accept-cookies/i', '/btn-accept/i', '/cookie-accept/i', '/cky-btn-accept/i',
+                    '/cmplz-accept/i', '/>\s*(Aceptar todo|Aceptar|Entendido|Permitir todas)\s*</i'
+                ];
+                $reject_patterns = [
+                    '/reject-cookies/i', '/btn-reject/i', '/cookie-reject/i', '/cky-btn-reject/i',
+                    '/cmplz-deny/i', '/>\s*(Rechazar todo|Rechazar|Denegar|Solo necesarias)\s*</i'
+                ];
+
+                foreach ($accept_patterns as $a_pat) {
+                    if (preg_match($a_pat, $html_content)) {
+                        $accept_button_detected = true;
+                        break;
+                    }
+                }
+                foreach ($reject_patterns as $r_pat) {
+                    if (preg_match($r_pat, $html_content)) {
+                        $reject_button_detected = true;
+                        break;
+                    }
+                }
+
+                // 2. Extracción de iframes de terceros
+                $detected_iframes = [];
+                $iframe_providers = [
+                    'YouTube' => [
+                        'pattern' => '/(youtube\.com|youtu\.be)/i',
+                        'desc'    => 'Reproductor de vídeo incrustado de YouTube. Deposita cookies publicitarias y de seguimiento de Google.',
+                        'severity' => 'Alto'
+                    ],
+                    'Google Maps' => [
+                        'pattern' => '/(google\.com\/maps|google\.es\/maps|maps\.google)/i',
+                        'desc'    => 'Mapas interactivos de Google. Instala cookies de tracking de preferencias y geolocalización.',
+                        'severity' => 'Alto'
+                    ],
+                    'reCAPTCHA' => [
+                        'pattern' => '/(google\.com\/recaptcha|recaptcha\.net)/i',
+                        'desc'    => 'Sistema de seguridad anti-bot de Google. Rastrea el comportamiento del usuario con fines publicitarios y analíticos.',
+                        'severity' => 'Alto'
+                    ],
+                    'Vimeo' => [
+                        'pattern' => '/player\.vimeo\.com/i',
+                        'desc'    => 'Reproductor de vídeo incrustado de Vimeo. Genera cookies de estadísticas y preferencias.',
+                        'severity' => 'Alto'
+                    ],
+                    'Calendly' => [
+                        'pattern' => '/calendly\.com/i',
+                        'desc'    => 'Widget para agendar reuniones de Calendly. Utiliza cookies analíticas propias y de terceros.',
+                        'severity' => 'Medio'
+                    ],
+                    'Facebook' => [
+                        'pattern' => '/facebook\.com\/plugins/i',
+                        'desc'    => 'Plugins sociales de Facebook (como botones de Me gusta o feeds). Realiza tracking activo de usuarios.',
+                        'severity' => 'Alto'
+                    ],
+                    'Instagram' => [
+                        'pattern' => '/instagram\.com\/embed/i',
+                        'desc'    => 'Publicaciones o feeds integrados de Instagram. Rastrea hábitos del usuario.',
+                        'severity' => 'Alto'
+                    ],
+                    'TikTok' => [
+                        'pattern' => '/tiktok\.com\/embed/i',
+                        'desc'    => 'Vídeos integrados de TikTok. Recopila identificadores y datos de navegación.',
+                        'severity' => 'Alto'
+                    ],
+                    'Twitter / X' => [
+                        'pattern' => '/platform\.twitter\.com/i',
+                        'desc'    => 'Widgets de publicaciones integradas de Twitter/X. Almacena cookies de seguimiento social.',
+                        'severity' => 'Alto'
+                    ]
+                ];
+
+                if (preg_match_all('/<iframe\b([^>]*)>/is', $html_content, $iframe_tags, PREG_SET_ORDER)) {
+                    foreach ($iframe_tags as $iframe) {
+                        $attrs = $iframe[1];
+                        $src = '';
+                        if (preg_match('/src=["\']([^"\']+)["\']/i', $attrs, $src_match)) {
+                            $src = $src_match[1];
+                        }
+                        
+                        foreach ($iframe_providers as $prov_name => $prov_info) {
+                            if ($src && preg_match($prov_info['pattern'], $src)) {
+                                $detected_iframes[$prov_name] = [
+                                    'name'     => $prov_name,
+                                    'src'      => substr($src, 0, 60) . (strlen($src) > 60 ? '...' : ''),
+                                    'severity' => $prov_info['severity'],
+                                    'desc'     => $prov_info['desc']
+                                ];
+                            }
+                        }
+                    }
+                }
+
+                // 3. Peticiones externas por dominio (Script, Link, Img, Iframe)
+                $external_requests = [];
+                
+                // Extraer dominios de scripts
+                if (preg_match_all('/<script\b[^>]*src=["\']([^"\']+)["\']/is', $html_content, $scripts_found)) {
+                    foreach ($scripts_found[1] as $s_url) {
+                        $parsed_u = parse_url($s_url);
+                        $d = $parsed_u['host'] ?? '';
+                        if ($d) {
+                            $external_requests[strtolower($d)][] = 'Script';
+                        }
+                    }
+                }
+                
+                // Extraer dominios de stylesheets y links de preconnect/prefetch
+                if (preg_match_all('/<link\b[^>]*(href|rel)=["\']([^"\']+)["\']/is', $html_content, $links_found, PREG_SET_ORDER)) {
+                    foreach ($links_found as $l_item) {
+                        $href = '';
+                        $rel = '';
+                        if (preg_match('/href=["\']([^"\']+)["\']/i', $l_item[0], $href_m)) {
+                            $href = $href_m[1];
+                        }
+                        if (preg_match('/rel=["\']([^"\']+)["\']/i', $l_item[0], $rel_m)) {
+                            $rel = $rel_m[1];
+                        }
+                        $parsed_u = parse_url($href);
+                        $d = $parsed_u['host'] ?? '';
+                        if ($d) {
+                            $type = 'Recurso / Enlace';
+                            if (stripos($rel, 'stylesheet') !== false) {
+                                $type = 'Estilo (CSS)';
+                            } elseif (stripos($rel, 'preconnect') !== false || stripos($rel, 'dns-prefetch') !== false) {
+                                $type = 'Preconexión DNS';
+                            }
+                            $external_requests[strtolower($d)][] = $type;
+                        }
+                    }
+                }
+                
+                // Extraer dominios de imágenes externas
+                if (preg_match_all('/<img\b[^>]*src=["\']([^"\']+)["\']/is', $html_content, $imgs_found)) {
+                    foreach ($imgs_found[1] as $img_url) {
+                        if (strpos($img_url, 'data:') === 0) continue; // ignorar base64
+                        $parsed_u = parse_url($img_url);
+                        $d = $parsed_u['host'] ?? '';
+                        if ($d) {
+                            $external_requests[strtolower($d)][] = 'Imagen';
+                        }
+                    }
+                }
+
+                // Extraer dominios de iframes
+                if (preg_match_all('/<iframe\b[^>]*src=["\']([^"\']+)["\']/is', $html_content, $iframes_found)) {
+                    foreach ($iframes_found[1] as $ifr_url) {
+                        $parsed_u = parse_url($ifr_url);
+                        $d = $parsed_u['host'] ?? '';
+                        if ($d) {
+                            $external_requests[strtolower($d)][] = 'Iframe (Incrustado)';
+                        }
+                    }
+                }
+
+                // Filtrar dominios de primer nivel propios (first-party)
+                $own_host = parse_url($url, PHP_URL_HOST) ?? '';
+                if ($own_host) {
+                    $own_host_parts = explode('.', strtolower($own_host));
+                    $own_domain = implode('.', array_slice($own_host_parts, -2)); // ej: victor-alonso.es
+                } else {
+                    $own_domain = '';
+                }
+
+                $formatted_requests = [];
+                foreach ($external_requests as $domain => $types) {
+                    // Ignorar subdominios de sí mismo
+                    if ($own_domain && (strpos($domain, $own_domain) !== false)) {
+                        continue;
+                    }
+                    
+                    $types = array_unique($types);
+                    
+                    // Asignar riesgo de dominio externo
+                    $d_risk = 'Medio';
+                    $d_name = strtolower($domain);
+                    if (strpos($d_name, 'google') !== false || strpos($d_name, 'facebook') !== false || 
+                        strpos($d_name, 'doubleclick') !== false || strpos($d_name, 'hotjar') !== false ||
+                        strpos($d_name, 'clarity') !== false || strpos($d_name, 'tiktok') !== false ||
+                        strpos($d_name, 'cookiebot') !== false || strpos($d_name, 'cookieyes') !== false) {
+                        $d_risk = 'Alto';
+                    }
+                    
+                    $formatted_requests[] = [
+                        'domain' => $domain,
+                        'types'  => implode(', ', $types),
+                        'risk'   => $d_risk
+                    ];
+                }
+
                 // Calcular la puntuación de cumplimiento
                 $score = 100;
                 $violations = [];
@@ -383,7 +754,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                     $score -= 35;
                 }
 
-                // 3. Páginas legales faltantes
+                // 3. Iframes de terceros no bloqueados
+                $unblocked_iframes_count = 0;
+                foreach ($detected_iframes as $ifr_name => $ifr_data) {
+                    $unblocked_iframes_count++;
+                    $violations[] = "Se ha detectado un iframe de <strong>{$ifr_name}</strong> que se carga directamente sin bloqueo de consentimiento.";
+                }
+                if ($unblocked_iframes_count > 0) {
+                    $score -= 20;
+                }
+
+                // 4. Páginas legales faltantes
                 foreach ($legal_pages as $p_name => $p_data) {
                     if (!$p_data['found']) {
                         $score -= 10;
@@ -424,16 +805,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                     'detected_scripts' => $detected_scripts,
                     'legal_pages'      => $legal_pages,
                     'violations'       => $violations,
-                    'redirects'        => $redirect_chain
+                    'redirects'        => $redirect_chain,
+                    'detected_cmp'     => $detected_cmp,
+                    'banner_detected'  => $banner_detected,
+                    'consent_mode'     => $consent_mode_detected,
+                    'accept_btn'       => $accept_button_detected,
+                    'reject_btn'       => $reject_button_detected,
+                    'detected_iframes' => $detected_iframes,
+                    'external_requests'=> $formatted_requests
                 ];
+            }
             }
         }
     }
 }
 
 $page = page_config([
-    'title'        => 'Auditor de Cookies RGPD: comprueba si tu web carga cookies antes de aceptar',
-    'description'  => 'Analiza si tu web instala cookies, GA4, píxeles o scripts de seguimiento antes del consentimiento. Auditor gratuito de cookies RGPD basado en criterios AEPD.',
+    'title'        => 'Auditor de Cookies RGPD Gratis | Comprobar cookies de una web',
+    'description'  => 'Audita online si tu web cumple con el RGPD y la AEPD. Detecta cookies de analítica, marketing e iframes cargados antes del consentimiento.',
     'canonical'    => '/herramientas/auditor-cookies/',
     'body_class'   => 'page-herramientas-auditor-cookies',
     'active_nav'   => 'herramientas',
@@ -441,6 +830,26 @@ $page = page_config([
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Auditor de Cookies', 'url' => ''],
     ],
+    'schema_types' => ['WebApplication', 'FAQPage'],
+    'rating_id'    => 'auditor-cookies',
+    'faq_items'    => [
+        [
+            'q' => '¿Cómo funciona el Auditor de Cookies?',
+            'a' => 'El auditor realiza peticiones cURL simulando una primera visita sin consentimiento previo. Analiza las cabeceras HTTP Set-Cookie, las etiquetas script incrustadas, iframes de terceros y conexiones externas para diagnosticar qué recursos se cargan antes de que el usuario interactúe con el banner de consentimiento.'
+        ],
+        [
+            'q' => '¿Qué cookies se consideran seguras para cargar antes del consentimiento?',
+            'a' => 'Únicamente las cookies estrictamente necesarias para el funcionamiento técnico de la web (como guardar el estado de la sesión o las preferencias de idioma/consentimiento). Las cookies de analítica (Google Analytics, Hotjar) y marketing (Facebook Pixel, TikTok Pixel) requieren consentimiento explícito antes de ser depositadas.'
+        ],
+        [
+            'q' => '¿Por qué mi web tiene un Score bajo si tengo banner de cookies?',
+            'a' => 'Muchos banners o CMPs de cookies son meramente estéticos (visuales) pero no bloquean la ejecución técnica real de los scripts en segundo plano. Si las etiquetas de Google Tag Manager o GA4 se cargan directamente en el HTML de tu sitio sin tipo "text/plain" o sin control condicional, seguirán instalando cookies de seguimiento en la primera carga.'
+        ],
+        [
+            'q' => '¿Es obligatorio ofrecer un botón de rechazar cookies?',
+            'a' => 'Sí. Conforme a las últimas directrices de la AEPD y el Reglamento General de Protección de Datos (RGPD), las páginas web deben ofrecer la opción de rechazar todas las cookies no necesarias al mismo nivel de visibilidad y con la misma facilidad que la opción de aceptarlas. No se permiten botones escondidos o flujos complejos para el rechazo.'
+        ]
+    ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -450,7 +859,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="tool-h1">
     <div class="container">
-      <h1 id="tool-h1">Auditor de <span>Cookies y Privacidad RGPD</span></h1>
+      <h1 id="tool-h1">Auditor de Cookies <span>RGPD Gratis</span></h1>
       <p class="page-hero-desc">Audita tu web en vivo. Nuestro bot analiza si tu página respeta los estándares del RGPD/LOPDGDD bloqueando correctamente los scripts de seguimiento y las cookies de terceros antes de que el usuario haga clic en aceptar.</p>
     </div>
   </section>
@@ -573,6 +982,17 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="section">
     <div class="container">
       
+      <!-- Explicación del Auditor de Cookies -->
+      <div style="max-width:800px; margin:0 auto 2.5rem auto; color:#cbd5e1; font-size:0.95rem; line-height:1.6;">
+        <p style="margin-bottom:1rem; font-weight:600; color:#fff; text-align:center;">¿Qué comprueba esta herramienta online?</p>
+        <ul style="padding-left:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-bottom:1.5rem; list-style-type:none;">
+          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">🔍 <strong>Inyección de Cookies:</strong> Analiza si se depositan cookies no técnicas en la primera carga sin consentimiento.</li>
+          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">🚀 <strong>Bloqueo de Scripts:</strong> Verifica si etiquetas como Google Tag Manager, GA4 o Facebook Pixel se ejecutan directamente.</li>
+          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">📺 <strong>Iframes de Terceros:</strong> Detecta la carga de reproductores de vídeo, mapas o widgets antes de su aceptación.</li>
+          <li style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.05);">🛡️ <strong>Estructura Legal:</strong> Comprueba la presencia de enlaces visibles a la Política de Cookies, Privacidad y Aviso Legal.</li>
+        </ul>
+      </div>
+
       <!-- Formulario de Entrada -->
       <div class="card card--dark" style="margin-bottom:3rem;">
         <form method="POST" action="" style="display:flex; flex-direction:column; gap:1.25rem;">
@@ -629,7 +1049,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:0.5rem;">Se han detectado los siguientes riesgos legales que podrían ser objeto de sanción por la AEPD (Agencia Española de Protección de Datos):</p>
                 <ul class="violation-list">
                   <?php foreach ($result['violations'] as $violation): ?>
-                    <li class="violation-item"><?= h($violation) ?></li>
+                    <li class="violation-item"><?= strip_tags($violation, '<strong><code>') ?></li>
                   <?php endforeach; ?>
                 </ul>
               <?php endif; ?>
@@ -691,6 +1111,44 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </div>
             </div>
 
+            <!-- Estado del Banner y CMP Detectado -->
+            <div class="card card--dark" style="padding:2rem;">
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Estado de Gestión de Consentimiento (Banner / CMP)</h3>
+              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1.5rem;">Análisis automatizado de la presencia de herramientas para la obtención del consentimiento y su configuración:</p>
+              
+              <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem;">
+                <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
+                  <span style="font-size:0.8rem; color:#64748b; display:block; margin-bottom:0.25rem;">Gestor detectado (CMP)</span>
+                  <strong style="color:#fff; font-size:1.05rem;"><?= h($result['detected_cmp']) ?></strong>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
+                  <span style="font-size:0.8rem; color:#64748b; display:block; margin-bottom:0.25rem;">Presencia de Banner</span>
+                  <strong style="color:#fff; font-size:1.05rem;">
+                    <?= $result['banner_detected'] ? '🟢 Detectado' : '🔴 No detectado en el HTML' ?>
+                  </strong>
+                </div>
+
+                <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
+                  <span style="font-size:0.8rem; color:#64748b; display:block; margin-bottom:0.25rem;">Google Consent Mode</span>
+                  <strong style="color:#fff; font-size:1.05rem;">
+                    <?= $result['consent_mode'] ? '🟢 Configurado' : '⚪ Sin indicios en el HTML' ?>
+                  </strong>
+                </div>
+              </div>
+
+              <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05); font-size:0.88rem; color:#94a3b8; display:flex; flex-direction:column; gap:0.5rem;">
+                <div>
+                  <strong>¿Opción de aceptación explícita?:</strong> 
+                  <?= $result['accept_btn'] ? '🟢 Detectada (Botón de aceptación aproximado encontrado)' : '⚠️ No se ha detectado claramente un botón con texto de aceptar. Revisa visualmente.' ?>
+                </div>
+                <div>
+                  <strong>¿Opción de rechazo al mismo nivel?:</strong> 
+                  <?= $result['reject_btn'] ? '🟢 Detectada (Botón de rechazo aproximado encontrado)' : '🔴 No se detecta un botón con texto claro para rechazar. La AEPD exige ofrecer el botón de rechazar al mismo nivel de visibilidad que el de aceptar.' ?>
+                </div>
+              </div>
+            </div>
+
             <!-- Menú Legal / Enlaces obligatorios -->
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Presencia de Páginas Legales Obligatorias</h3>
@@ -705,6 +1163,72 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <?php endforeach; ?>
               </div>
             </div>
+
+            <?php if (!empty($result['detected_iframes'])): ?>
+              <!-- Iframes de Terceros Detectados -->
+              <div class="card card--dark" style="padding:2rem;">
+                <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Incrustados (Iframes) de Terceros</h3>
+                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Elementos embebidos en el HTML inicial que conectan con servicios externos. Deben estar bloqueados hasta obtener el consentimiento:</p>
+                <div style="overflow-x:auto;">
+                  <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
+                    <thead>
+                      <tr style="border-bottom:1px solid var(--border); color:#fff;">
+                        <th style="padding:0.75rem 0.5rem;">Servicio</th>
+                        <th style="padding:0.75rem 0.5rem;">Dirección URL del Iframe</th>
+                        <th style="padding:0.75rem 0.5rem;">Riesgo RGPD</th>
+                        <th style="padding:0.75rem 0.5rem;">Impacto en Privacidad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($result['detected_iframes'] as $ifr): ?>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05); color:#cbd5e1;">
+                          <td style="padding:0.75rem 0.5rem;"><strong><?= h($ifr['name']) ?></strong></td>
+                          <td style="padding:0.75rem 0.5rem; font-family:monospace; font-size:0.8rem; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= h($ifr['src']) ?></td>
+                          <td style="padding:0.75rem 0.5rem;">
+                            <span class="result-badge <?= $ifr['severity'] === 'Alto' ? 'badge-danger' : 'badge-warning' ?>">
+                              <?= h($ifr['severity']) ?>
+                            </span>
+                          </td>
+                          <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#94a3b8;"><?= h($ifr['desc']) ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            <?php endif; ?>
+
+            <?php if (!empty($result['external_requests'])): ?>
+              <!-- Peticiones de Red a Dominios Externos -->
+              <div class="card card--dark" style="padding:2rem;">
+                <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Conexiones a Dominios de Terceros</h3>
+                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Dominios externos a los que el navegador realiza peticiones durante la carga del HTML inicial (scripts, CSS, fuentes, imágenes, preconexiones, etc.):</p>
+                <div style="overflow-x:auto;">
+                  <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
+                    <thead>
+                      <tr style="border-bottom:1px solid var(--border); color:#fff;">
+                        <th style="padding:0.75rem 0.5rem;">Dominio de Tercero</th>
+                        <th style="padding:0.75rem 0.5rem;">Tipos de Recursos</th>
+                        <th style="padding:0.75rem 0.5rem;">Riesgo de Privacidad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($result['external_requests'] as $req): ?>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05); color:#cbd5e1;">
+                          <td style="padding:0.75rem 0.5rem; font-family:monospace;"><strong><?= h($req['domain']) ?></strong></td>
+                          <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#94a3b8;"><?= h($req['types']) ?></td>
+                          <td style="padding:0.75rem 0.5rem;">
+                            <span class="result-badge <?= $req['risk'] === 'Alto' ? 'badge-danger' : 'badge-warning' ?>">
+                              <?= h($req['risk']) ?>
+                            </span>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            <?php endif; ?>
 
             <!-- Tabla de Cookies de 1er Impacto -->
             <div class="card card--dark" style="padding:2rem;">
@@ -812,19 +1336,19 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <!-- Sección de Criterio Técnico y RGPD -->
       <div class="criterio-section" style="margin-top:4rem">
         <span class="section-label">Desde la trinchera legal</span>
-        <h2>Por qué la AEPD está multando a las webs con el consentimiento de cookies</h2>
+        <h2>El criterio de la AEPD sobre el consentimiento de cookies</h2>
         
         <div class="criterio-grid">
           <div class="criterio-card">
             <h3>El falso banner de "Aceptar" y "Aceptar"</h3>
             <p>Muchos desarrolladores cometen el error de instalar un banner visual y creer que están en regla. Sin embargo, la normativa de cookies europea y española dicta que <strong>el botón de rechazar debe estar al mismo nivel de visibilidad</strong> que el de aceptar.</p>
-            <p>Si tu banner obliga al usuario a navegar por 3 pantallas para denegar o carece de botón directo de rechazo en su pantalla inicial, tu web está infringiendo la ley de forma flagrante y puede recibir denuncias.</p>
+            <p>Si tu banner obliga al usuario a navegar por 3 pantallas para denegar o carece de botón directo de rechazo en su pantalla inicial, tu web está incumpliendo con las directrices vigentes y se expone a posibles reclamaciones o sanciones administrativas.</p>
           </div>
           
           <div class="criterio-card">
             <h3>La trampa de Google Analytics 4 (GA4)</h3>
             <p>Para la ley europea, un identificador de usuario único (como el ID del parámetro <code>_ga</code> que usa Analytics) es considerado un <strong>dato personal</strong>. Por lo tanto, no se puede almacenar en el navegador ni transmitir a servidores de Google antes de que el usuario lo autorice de forma afirmativa.</p>
-            <p>Muchas plantillas de WordPress inyectan GA4 de forma dura en el <code>&lt;head&gt;</code> bloqueando únicamente de manera visual la barra. Esto instala las cookies de Analytics de inmediato al primer milisegundo de entrada, resultando en una multa económica.</p>
+            <p>Muchas plantillas de WordPress inyectan GA4 de forma dura en el <code>&lt;head&gt;</code> bloqueando únicamente de manera visual la barra. Esto instala las cookies de Analytics de inmediato al primer milisegundo de entrada, pudiendo dar lugar a reclamaciones o sanciones administrativas.</p>
           </div>
 
           <div class="criterio-card">
