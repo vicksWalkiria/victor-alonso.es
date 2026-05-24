@@ -234,8 +234,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
             if ($rate_limit_res !== true) {
                 $error = $rate_limit_res;
             } else {
-            $redirect_chain = [];
-            $max_redirects = 5;
+            
+            if (isset($_POST['audit_id']) && preg_match('/^aud_[a-f0-9]{32}$/', $_POST['audit_id'])) {
+                // Modo Avanzado: Leer resultado de Puppeteer
+                $audit_id = $_POST['audit_id'];
+                $result_file = dirname(__DIR__) . '/data/reports/' . $audit_id . '/result.json';
+                if (file_exists($result_file)) {
+                    $result_v2 = json_decode(file_get_contents($result_file), true);
+                    if (!$result_v2 || $result_v2['status'] !== 'done') {
+                        $error = 'Hubo un problema procesando el informe avanzado. Por favor, inténtalo de nuevo.';
+                    }
+                } else {
+                    $error = 'El informe avanzado solicitado no existe o ha expirado.';
+                }
+            } else {
+                // Modo Rápido (Original cURL)
+                $redirect_chain = [];
+                $max_redirects = 5;
             $redirect_count = 0;
             $current_url = $url;
             $html_content = '';
@@ -856,11 +871,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                     'detected_iframes'     => $detected_iframes,
                     'external_requests'    => $formatted_requests
                 ];
-            }
-            }
-        }
-    }
-}
+            } // Fin de if (!$error) de modo rápido
+            } // Fin de if-else modo avanzado/rápido
+        } // Fin de is_unsafe_url
+    } // Fin de empty($url)
+} // Fin de REQUEST_METHOD == POST
 
 $page = page_config([
     'title'        => 'Auditor de Cookies RGPD Gratis: comprueba si tu web carga cookies antes de aceptar',
@@ -1043,20 +1058,191 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
       <!-- Formulario de Entrada -->
       <div class="card" style="margin-bottom: 3rem; background: #ffffff !important; border: 1px solid #111111 !important; border-top: 4px solid var(--orange) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important; border-radius: 8px !important; padding: 2rem;">
-        <form method="POST" action="" style="display:flex; flex-direction:column; gap:1.25rem;">
+        <form id="audit-form" method="POST" action="" style="display:flex; flex-direction:column; gap:1.25rem;">
           <div>
             <label for="url" style="display:block; margin-bottom:0.5rem; font-weight:600; color:#111111;">Dirección URL a auditar</label>
             <input type="text" id="url" name="url" placeholder="https://miweb.com" value="<?= h($url) ?>" required style="width:100%; padding:0.85rem 1rem; background:#ffffff; border:1px solid #111111; border-radius:6px; color:#111111; font-size:1rem; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#111111'">
           </div>
           
+          <div>
+            <label style="display:block; margin-bottom:0.75rem; font-weight:600; color:#111111;">Tipo de Análisis</label>
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              <label style="display:flex; gap:0.75rem; cursor:pointer; align-items:flex-start; padding:1rem; border:1px solid var(--orange); border-radius:8px; background:#fff7ed; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="if(!this.querySelector('input').checked) this.style.borderColor='#e2e8f0'">
+                <input type="radio" name="analysis_type" value="rapid" checked style="margin-top:0.2rem; width:1.1rem; height:1.1rem; accent-color:var(--orange);">
+                <div>
+                  <strong style="color:#111111; display:block; margin-bottom:0.25rem;">Análisis Rápido</strong>
+                  <span style="color:#64748b; font-size:0.85rem; line-height:1.4; display:block;">Revisión estática e inmediata del HTML inicial y cabeceras HTTP. (Instantáneo)</span>
+                </div>
+              </label>
+              
+              <label style="display:flex; gap:0.75rem; cursor:pointer; align-items:flex-start; padding:1rem; border:1px solid #e2e8f0; border-radius:8px; background:#f8fafc; transition:all 0.2s;" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="if(!this.querySelector('input').checked) this.style.borderColor='#e2e8f0'">
+                <input type="radio" name="analysis_type" value="advanced" style="margin-top:0.2rem; width:1.1rem; height:1.1rem; accent-color:var(--orange);">
+                <div>
+                  <strong style="color:#111111; display:block; margin-bottom:0.25rem;">Análisis Avanzado con Navegador Real</strong>
+                  <span style="color:#64748b; font-size:0.85rem; line-height:1.4; display:block;">Simula una visita interactiva: verifica el bloqueo inicial y la respuesta al pulsar "Rechazar todo" y "Aceptar todo". (Tarda entre 30 y 45 segundos)</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div id="form-error" style="display:none; background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); color:#e74c3c; padding:0.75rem 1rem; border-radius:6px; font-size:0.9rem;"></div>
+
           <?php if ($error): ?>
-            <div style="background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); color:#e74c3c; padding:0.75rem 1rem; border-radius:6px; font-size:0.9rem;">
+            <div id="php-error" style="background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); color:#e74c3c; padding:0.75rem 1rem; border-radius:6px; font-size:0.9rem;">
               ⚠️ <?= h($error) ?>
             </div>
           <?php endif; ?>
           
-          <button type="submit" class="btn btn--primary" style="align-self:flex-start; padding:0.85rem 2rem;">Iniciar Auditoría RGPD</button>
+          <button type="submit" id="submit-btn" class="btn btn--primary" style="align-self:flex-start; padding:0.85rem 2rem;">Iniciar Auditoría RGPD</button>
+
+          <!-- Barra de progreso para análisis avanzado -->
+          <div id="advanced-progress" style="display:none; margin-top:1rem; padding:1.5rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; align-items:center;">
+              <strong id="progress-step" style="color:#111111; font-size:0.95rem;">Iniciando análisis avanzado...</strong>
+              <span id="progress-pct" style="color:var(--orange); font-weight:700; font-size:0.9rem;">0%</span>
+            </div>
+            <div style="background:#e2e8f0; height:8px; border-radius:4px; overflow:hidden; position:relative;">
+              <div id="progress-bar" style="background:var(--orange); width:0%; height:100%; transition:width 0.5s ease-out;"></div>
+              <div class="progress-indeterminate" style="position:absolute; top:0; left:0; height:100%; width:30%; background:rgba(255,255,255,0.4); transform:translateX(-100%); animation:progress-slide 1.5s infinite;"></div>
+            </div>
+            <p style="font-size:0.8rem; color:#64748b; margin-top:0.75rem; text-align:center;">Por favor, no cierres esta ventana. El proceso puede tardar hasta 45 segundos.</p>
+          </div>
         </form>
+
+        <style>
+          @keyframes progress-slide {
+            100% { transform: translateX(350%); }
+          }
+        </style>
+
+        <script>
+          const radios = document.querySelectorAll('input[name="analysis_type"]');
+          radios.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+              radios.forEach(r => {
+                const label = r.closest('label');
+                label.style.borderColor = r.checked ? 'var(--orange)' : '#e2e8f0';
+                label.style.background = r.checked ? '#fff7ed' : '#f8fafc';
+              });
+            });
+          });
+
+          const form = document.getElementById('audit-form');
+          const submitBtn = document.getElementById('submit-btn');
+          const formError = document.getElementById('form-error');
+          const phpError = document.getElementById('php-error');
+          const advancedProgress = document.getElementById('advanced-progress');
+          const progressStep = document.getElementById('progress-step');
+          const progressPct = document.getElementById('progress-pct');
+          const progressBar = document.getElementById('progress-bar');
+          let pollInterval;
+
+          form.addEventListener('submit', async (e) => {
+            const isAdvanced = document.querySelector('input[name="analysis_type"]:checked').value === 'advanced';
+            if (!isAdvanced) {
+              return; // Si es rápido, permite el submit tradicional de PHP
+            }
+            
+            e.preventDefault();
+            formError.style.display = 'none';
+            if(phpError) phpError.style.display = 'none';
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = 'Iniciando... <span style="display:inline-block; width:12px; height:12px; border:2px solid #fff; border-right-color:transparent; border-radius:50%; animation:spin 1s linear infinite; margin-left:8px; vertical-align:middle;"></span>';
+            advancedProgress.style.display = 'block';
+            
+            const formData = new FormData(form);
+            
+            try {
+              const res = await fetch('/herramientas/auditor-cookies-api.php?action=start', {
+                method: 'POST',
+                body: formData
+              });
+              const data = await res.json();
+              
+              if (!data.success) {
+                throw new Error(data.error || 'Error al iniciar el análisis avanzado.');
+              }
+              
+              const auditId = data.id;
+              
+              // Polling loop
+              let pollCount = 0;
+              const maxPolls = 37; // ~75 segundos max con poll cada 2s
+              
+              pollInterval = setInterval(async () => {
+                pollCount++;
+                if (pollCount > maxPolls) {
+                  clearInterval(pollInterval);
+                  showError('La auditoría está tardando más de lo esperado. Puede que la web analizada bloquee navegadores automatizados o tarde demasiado en responder.');
+                  return;
+                }
+                
+                try {
+                  const pollRes = await fetch(`/herramientas/auditor-cookies-api.php?action=poll&id=${auditId}`);
+                  const pollData = await pollRes.json();
+                  
+                  if (pollData.error) {
+                    clearInterval(pollInterval);
+                    showError(pollData.error);
+                    return;
+                  }
+                  
+                  if (pollData.step) progressStep.textContent = pollData.step;
+                  if (pollData.progress !== undefined) {
+                    progressPct.textContent = pollData.progress + '%';
+                    progressBar.style.width = pollData.progress + '%';
+                  }
+                  
+                  if (pollData.status === 'done') {
+                    clearInterval(pollInterval);
+                    submitBtn.innerHTML = '¡Completado! Renderizando...';
+                    
+                    // Enviar formulario post falso para renderizar los resultados con PHP
+                    const hiddenForm = document.createElement('form');
+                    hiddenForm.method = 'POST';
+                    hiddenForm.action = '';
+                    
+                    const inputUrl = document.createElement('input');
+                    inputUrl.type = 'hidden';
+                    inputUrl.name = 'url';
+                    inputUrl.value = form.querySelector('input[name="url"]').value;
+                    
+                    const inputId = document.createElement('input');
+                    inputId.type = 'hidden';
+                    inputId.name = 'audit_id';
+                    inputId.value = auditId;
+                    
+                    hiddenForm.appendChild(inputUrl);
+                    hiddenForm.appendChild(inputId);
+                    document.body.appendChild(hiddenForm);
+                    hiddenForm.submit();
+                    
+                  } else if (pollData.status === 'failed') {
+                    clearInterval(pollInterval);
+                    showError('El análisis ha fallado en el servidor. Puede que la web no exista o haya bloqueado la conexión.');
+                  }
+                } catch(err) {
+                  console.error('Error durante polling', err);
+                }
+              }, 2000);
+              
+            } catch (error) {
+              showError(error.message);
+            }
+          });
+          
+          function showError(msg) {
+            formError.innerHTML = '⚠️ ' + msg;
+            formError.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Iniciar Auditoría RGPD';
+            advancedProgress.style.display = 'none';
+          }
+        </script>
+        <style>
+          @keyframes spin { 100% { transform: rotate(360deg); } }
+        </style>
       </div>
 
       <!-- Descargo de Responsabilidad (Disclaimer) -->
@@ -1066,7 +1252,135 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </div>
 
       <!-- Resultados del Análisis -->
-      <?php if ($result): ?>
+      <?php if (isset($result_v2) && $result_v2['status'] === 'done'): ?>
+        <?php
+          $r2 = $result_v2;
+          $p_init = $r2['phases']['initial'];
+          $p_rej = $r2['phases']['reject'];
+          $p_acc = $r2['phases']['accept'];
+          $score = $r2['summary']['score'];
+          
+          if ($score >= 90) { $grade_class = 'grade-a'; $grade_l = 'A'; $r_text = 'Bajo (Cumplimiento Alto)'; }
+          elseif ($score >= 70) { $grade_class = 'grade-b'; $grade_l = 'B'; $r_text = 'Medio (Revisar ajustes)'; }
+          elseif ($score >= 50) { $grade_class = 'grade-c'; $grade_l = 'C'; $r_text = 'Alto (Infracciones detectadas)'; }
+          else { $grade_class = 'grade-f'; $grade_l = 'F'; $r_text = 'Crítico (Incumplimiento RGPD)'; }
+        ?>
+        <div class="result-container" style="display:grid; grid-template-columns: 350px 1fr; gap:2.5rem; margin-bottom:4rem;">
+          
+          <div class="compliance-grade-box <?= $grade_class ?>" style="align-self: flex-start;">
+            <span class="section-label" style="margin-bottom: 1rem;">Nivel de Cumplimiento V2</span>
+            <div class="grade-circle"><?= $grade_l ?></div>
+            <h2 style="font-size:1.6rem; color:#fff; margin-bottom:0.5rem;">Puntuación: <?= $score ?>/100</h2>
+            <p style="font-size:0.9rem; color:#ffffff; margin-bottom: 2rem;">Riesgo estimado: <strong><?= $r_text ?></strong></p>
+
+            <div style="width:100%; text-align:left; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; display:flex; flex-direction:column; gap:0.75rem;">
+              <span style="font-size:0.75rem; color:var(--orange); text-transform:uppercase; font-weight:700;">Evidencias (Capturas)</span>
+              
+              <a href="/herramientas/auditor-cookies-api.php?action=image&id=<?= h($r2['id']) ?>&phase=1" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
+                <span>📸 Fase 1: Inicio</span> <span>Ver &rarr;</span>
+              </a>
+              <?php if ($p_rej['clicked']): ?>
+                <a href="/herramientas/auditor-cookies-api.php?action=image&id=<?= h($r2['id']) ?>&phase=2" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
+                  <span>📸 Fase 2: Rechazado</span> <span>Ver &rarr;</span>
+                </a>
+              <?php endif; ?>
+              <?php if ($p_acc['clicked']): ?>
+                <a href="/herramientas/auditor-cookies-api.php?action=image&id=<?= h($r2['id']) ?>&phase=3" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
+                  <span>📸 Fase 3: Aceptado</span> <span>Ver &rarr;</span>
+                </a>
+              <?php endif; ?>
+            </div>
+          </div>
+          
+          <div style="display:flex; flex-direction:column; gap:2rem;">
+            
+            <div class="card card--dark" style="padding:2rem;">
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Infracciones y Advertencias (Simulación Dinámica)</h3>
+              <?php if (empty($r2['summary']['findings'])): ?>
+                <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.92rem;">
+                  ✓ Buen resultado: no se han detectado problemas RGPD durante la simulación de navegación.
+                </div>
+              <?php else: ?>
+                <ul class="violation-list">
+                  <?php foreach ($r2['summary']['findings'] as $f): ?>
+                    <li class="violation-item" style="color:#ffffff;">
+                      <?php if($f['severity'] === 'alto'): ?> <span class="result-badge badge-danger" style="margin-right:0.5rem">Alto</span>
+                      <?php elseif($f['severity'] === 'medio'): ?> <span class="result-badge badge-warning" style="margin-right:0.5rem">Medio</span>
+                      <?php endif; ?>
+                      <?= h($f['message']) ?>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              <?php endif; ?>
+            </div>
+
+            <div class="card card--dark" style="padding:2rem;">
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Auditoría por Fases</h3>
+              
+              <div style="margin-bottom:2rem;">
+                <h4 style="color:var(--orange); margin-bottom:0.75rem; font-size:1.05rem;">Fase 1: Carga Inicial (Sin consentimiento)</h4>
+                <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; font-size:0.9rem; color:#fff;">
+                  <strong>Cookies detectadas:</strong> <?= count($p_init['cookies']) ?><br>
+                  <?php if (count($p_init['cookies']) > 0): ?>
+                    <div style="margin-top:0.5rem; font-family:monospace; font-size:0.8rem; background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:4px;">
+                      <?= h(implode(', ', array_map(function($c){return $c['name'];}, $p_init['cookies']))) ?>
+                    </div>
+                  <?php endif; ?>
+                  
+                  <?php if (!empty($p_init['consentMode'])): ?>
+                    <div style="margin-top:1rem;">
+                      <strong>Google Consent Mode:</strong> 
+                      Detectado (<?= h(json_encode($p_init['consentMode'])) ?>)
+                    </div>
+                  <?php endif; ?>
+                </div>
+              </div>
+
+              <div style="margin-bottom:2rem;">
+                <h4 style="color:var(--orange); margin-bottom:0.75rem; font-size:1.05rem;">Fase 2: Tras pulsar "Rechazar todo"</h4>
+                <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; font-size:0.9rem; color:#fff;">
+                  <?php if (!$p_rej['clicked']): ?>
+                    <span style="color:#e74c3c;">🔴 No se ha detectado un botón visible para rechazar cookies o denegar el consentimiento de forma directa.</span>
+                  <?php else: ?>
+                    <span style="color:#2ecc71;">🟢 Botón "<?= h($p_rej['buttonText']) ?>" localizado y pulsado correctamente.</span><br><br>
+                    <strong>Cookies post-rechazo:</strong> <?= count($p_rej['cookies']) ?>
+                    <?php if (count($p_rej['cookies']) > 0): ?>
+                      <div style="margin-top:0.5rem; font-family:monospace; font-size:0.8rem; background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:4px;">
+                        <?= h(implode(', ', array_map(function($c){return $c['name'];}, $p_rej['cookies']))) ?>
+                      </div>
+                    <?php endif; ?>
+                  <?php endif; ?>
+                </div>
+              </div>
+
+              <div>
+                <h4 style="color:var(--orange); margin-bottom:0.75rem; font-size:1.05rem;">Fase 3: Tras pulsar "Aceptar todo"</h4>
+                <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; font-size:0.9rem; color:#fff;">
+                  <?php if (!$p_acc['clicked']): ?>
+                    <span style="color:#f1c40f;">⚠️ No se ha detectado el botón para aceptar cookies.</span>
+                  <?php else: ?>
+                    <span style="color:#2ecc71;">🟢 Botón "<?= h($p_acc['buttonText']) ?>" localizado y pulsado correctamente.</span><br><br>
+                    <strong>Cookies comerciales cargadas:</strong> <?= count($p_acc['cookies']) ?>
+                    <?php if (count($p_acc['cookies']) > 0): ?>
+                      <div style="margin-top:0.5rem; font-family:monospace; font-size:0.8rem; background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:4px;">
+                        <?= h(implode(', ', array_map(function($c){return $c['name'];}, $p_acc['cookies']))) ?>
+                      </div>
+                    <?php endif; ?>
+                    
+                    <?php if (!empty($p_acc['consentMode'])): ?>
+                      <div style="margin-top:1rem;">
+                        <strong>Google Consent Mode:</strong> Actualizado (<?= h(json_encode($p_acc['consentMode'])) ?>)
+                      </div>
+                    <?php endif; ?>
+                  <?php endif; ?>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+      <?php elseif ($result): ?>
         <div class="result-container" style="display:grid; grid-template-columns: 350px 1fr; gap:2.5rem; margin-bottom:4rem;">
           
           <!-- Columna Lateral: Nota Global -->

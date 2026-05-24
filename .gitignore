@@ -6,3 +6,10 @@ data/wpo-psi-rate/
 data/auditor_logs.json
 data/ratings.json
 scratch/
+
+# Auditor de Cookies V2
+data/reports/*
+!data/reports/.htaccess
+!data/reports/locks/
+data/reports/locks/*
+!data/reports/locks/.gitkeep

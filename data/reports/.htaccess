@@ -1,0 +1,2 @@
+# Deny direct access to all reports and temporary data
+Deny from all
