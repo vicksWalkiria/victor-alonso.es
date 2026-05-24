@@ -506,6 +506,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </form>
       </div>
 
+      <!-- Descargo de Responsabilidad (Disclaimer) -->
+      <div style="background: rgba(255,255,255,0.01); border: 1px dashed rgba(255,255,255,0.08); padding: 1.25rem; border-radius: 8px; font-size: 0.82rem; color: #94a3b8; margin-bottom: 3rem; line-height: 1.6;">
+        <strong style="color: #cbd5e1; display: block; margin-bottom: 0.25rem;">⚖️ Descargo de responsabilidad (Disclaimer)</strong>
+        Esta herramienta se ofrece de forma gratuita y con fines meramente orientativos, didácticos y de auditoría técnica. El análisis automatizado se basa en la simulación de carga y en la detección de cookies comunes en cabeceras HTTP y scripts en el HTML inicial. Puesto que existen inyecciones dinámicas complejas y cookies de comportamiento que escapan al análisis estático, la herramienta podría ofrecer falsos positivos o negativos. <strong>Este informe no constituye, en ningún caso, asesoramiento legal ni formal</strong>. El propietario de esta web queda eximido de cualquier responsabilidad ante reclamaciones, inspecciones o sanciones impuestas por la AEPD (Agencia Española de Protección de Datos) u otras autoridades de control relativas al estado de cumplimiento del sitio analizado. Para una auditoría legal vinculante, consulta con un profesional del derecho digital o una asesoría jurídica especializada.
+      </div>
+
       <!-- Resultados del Análisis -->
       <?php if ($result): ?>
         <div class="result-container" style="display:grid; grid-template-columns: 350px 1fr; gap:2.5rem; margin-bottom:4rem;">
