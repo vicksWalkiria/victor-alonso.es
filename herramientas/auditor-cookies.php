@@ -28,6 +28,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
+/**
+ * Comprueba si una URL es potencialmente insegura o privada (prevención de SSRF)
+ */
+function is_unsafe_url($url) {
+    $parsed = parse_url($url);
+    if (!$parsed || empty($parsed['host'])) {
+        return true;
+    }
+
+    // Permitir exclusivamente esquemas http y https
+    $scheme = strtolower($parsed['scheme'] ?? '');
+    if ($scheme !== 'http' && $scheme !== 'https') {
+        return true;
+    }
+
+    $host = trim($parsed['host']);
+    
+    // Eliminar corchetes si es una dirección IPv6 directa
+    if (strpos($host, '[') === 0 && substr($host, -1) === ']') {
+        $host = substr($host, 1, -1);
+    }
+    
+    // Bloquear localhost y loopback explícitamente
+    if (in_array(strtolower($host), ['localhost', 'localhost.localdomain'])) {
+        return true;
+    }
+
+    $ips = [];
+    if (filter_var($host, FILTER_VALIDATE_IP)) {
+        $ips[] = $host;
+    } else {
+        // Resolver registros DNS A y AAAA
+        $records_a = @dns_get_record($host, DNS_A);
+        if (is_array($records_a)) {
+            foreach ($records_a as $record) {
+                if (isset($record['ip'])) {
+                    $ips[] = $record['ip'];
+                }
+            }
+        }
+        $records_aaaa = @dns_get_record($host, DNS_AAAA);
+        if (is_array($records_aaaa)) {
+            foreach ($records_aaaa as $record) {
+                if (isset($record['ipv6'])) {
+                    $ips[] = $record['ipv6'];
+                }
+            }
+        }
+        
+        // Fallback a gethostbyname para IPv4
+        if (empty($ips)) {
+            $ip_resolved = gethostbyname($host);
+            if ($ip_resolved && $ip_resolved !== $host) {
+                $ips[] = $ip_resolved;
+            }
+        }
+    }
+
+    if (empty($ips)) {
+        return true; // Si no se puede resolver ninguna IP, bloquear por precaución
+    }
+
+    foreach ($ips as $ip) {
+        // Verificar si la IP es pública (no privada ni reservada)
+        $is_valid_public = filter_var(
+            $ip,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+        );
+        if (!$is_valid_public) {
+            return true; // IP privada o de rango reservado detectada
+        }
+    }
+
+    return false;
+}
+
 $error = null;
 $result = null;
 $url = '';
@@ -45,6 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
 
         if (filter_var($url, FILTER_VALIDATE_URL) === false) {
             $error = 'El formato de la URL no es válido.';
+        } elseif (is_unsafe_url($url)) {
+            $error = 'La dirección URL introducida está restringida o no es segura.';
         } else {
             $redirect_chain = [];
             $max_redirects = 5;
@@ -149,6 +228,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                     if (strpos($redirect_url, '/') === 0) {
                         $parsed = parse_url($current_url);
                         $redirect_url = ($parsed['scheme'] ?? 'https') . '://' . ($parsed['host'] ?? '') . $redirect_url;
+                    }
+                    
+                    // Validación de seguridad SSRF en la redirección
+                    if (is_unsafe_url($redirect_url)) {
+                        $error = 'La redirección a la URL destino ha sido bloqueada por motivos de seguridad.';
+                        break;
                     }
                     
                     $redirect_chain[] = [
@@ -325,7 +410,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 } else {
                     $grade = 'F';
                     $grade_class = 'grade-f';
-                    $grade_desc = 'Incumplimiento Crítico. La web recopila y procesa datos personales inmediatamente al entrar, vulnerando el RGPD.';
+                    $grade_desc = 'Riesgo alto de incumplimiento. Se han detectado cookies o scripts de seguimiento activos antes de consentimiento, lo que podría vulnerar los criterios exigidos por la normativa de protección de datos.';
                 }
 
                 $result = [
@@ -347,8 +432,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
 }
 
 $page = page_config([
-    'title'        => 'Auditor de Cookies y Privacidad RGPD',
-    'description'  => 'Introduce una URL para auditar en tiempo real su nivel de cumplimiento legal con el RGPD. Analiza cookies y bloqueo de scripts de terceros.',
+    'title'        => 'Auditor de Cookies RGPD: comprueba si tu web carga cookies antes de aceptar',
+    'description'  => 'Analiza si tu web instala cookies, GA4, píxeles o scripts de seguimiento antes del consentimiento. Auditor gratuito de cookies RGPD basado en criterios AEPD.',
     'canonical'    => '/herramientas/auditor-cookies/',
     'body_class'   => 'page-herramientas-auditor-cookies',
     'active_nav'   => 'herramientas',
@@ -550,6 +635,62 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <?php endif; ?>
             </div>
 
+            <!-- Diagnóstico Técnico Interpretado -->
+            <div class="card card--dark" style="padding:2rem; border-left:4px solid var(--orange);">
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Diagnóstico Técnico Interpretado</h3>
+              
+              <div style="font-size:0.95rem; line-height:1.6; color:#e2e8f0; display:flex; flex-direction:column; gap:1.25rem;">
+                <?php if (empty($result['violations'])): ?>
+                  <p>🟢 <strong>Prioridad de arreglo: Baja.</strong> Tu sitio web cumple correctamente con las directrices de la AEPD en cuanto al bloqueo previo de cookies y scripts comerciales. No se requiere ninguna acción correctiva urgente.</p>
+                <?php else: ?>
+                  <div>
+                    <strong style="color:#fff;">Prioridad de arreglo:</strong> 
+                    <?php if ($result['score'] < 50): ?>
+                      <span class="result-badge badge-danger">Alta</span>
+                      <p style="margin-top:0.5rem; color:#94a3b8; font-size:0.9rem;">Se están depositando cookies de terceros o cargando herramientas de seguimiento (como Analytics o píxeles) inmediatamente al entrar al sitio. Esto expone a la web a riesgos de cumplimiento normativo.</p>
+                    <?php else: ?>
+                      <span class="result-badge badge-warning">Media</span>
+                      <p style="margin-top:0.5rem; color:#94a3b8; font-size:0.9rem;">El sitio web bloquea parte de los trackers, pero se han detectado deficiencias de configuración o la ausencia de páginas de políticas legales obligatorias.</p>
+                    <?php endif; ?>
+                  </div>
+
+                  <?php 
+                  $has_cookie_violation = false;
+                  $has_script_violation = false;
+                  $has_legal_violation = false;
+                  foreach ($result['violations'] as $violation) {
+                      if (stripos($violation, 'cookie') !== false) {
+                          $has_cookie_violation = true;
+                      }
+                      if (stripos($violation, 'script') !== false) {
+                          $has_script_violation = true;
+                      }
+                      if (stripos($violation, 'enlace') !== false || stripos($violation, 'página') !== false) {
+                          $has_legal_violation = true;
+                      }
+                  }
+                  ?>
+
+                  <?php if ($has_cookie_violation || $has_script_violation || $has_legal_violation): ?>
+                    <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
+                      <strong style="color:#fff; display:block; margin-bottom:0.5rem;">📝 Recomendación del Auditor:</strong>
+                      <ul style="margin:0; padding-left:1.25rem; font-size:0.9rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.5rem;">
+                        <?php if ($has_cookie_violation): ?>
+                          <li><strong>Fuga de cookies antes del consentimiento:</strong> Esto suele ocurrir cuando Google Analytics 4 u otros trackers están pegados directamente en el código de la cabecera (<code>&lt;head&gt;</code>) de la página sin ningún tipo de condicionalidad, o si se utiliza un plugin de cookies visual (que muestra el aviso pero no realiza el bloqueo técnico).</li>
+                        <?php endif; ?>
+                        <?php if ($has_script_violation): ?>
+                          <li><strong>Etiquetas de script no bloqueadas:</strong> Si utilizas WordPress, te recomendamos revisar si herramientas como Site Kit, Complianz, CookieYes o el propio tema están duplicando etiquetas o cargándolas directamente sin el filtrado obligatorio (como el tipo <code>type="text/plain"</code>).</li>
+                        <?php endif; ?>
+                        <?php if ($has_legal_violation): ?>
+                          <li><strong>Enlaces legales ausentes:</strong> Es recomendable por la normativa aplicable que los enlaces permanentes al Aviso Legal, Política de Privacidad y Política de Cookies estén visibles y accesibles desde todas las páginas de tu web (habitualmente en el pie de página).</li>
+                        <?php endif; ?>
+                      </ul>
+                    </div>
+                  <?php endif; ?>
+                <?php endif; ?>
+              </div>
+            </div>
+
             <!-- Menú Legal / Enlaces obligatorios -->
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Presencia de Páginas Legales Obligatorias</h3>
@@ -567,12 +708,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             <!-- Tabla de Cookies de 1er Impacto -->
             <div class="card card--dark" style="padding:2rem;">
-              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cookies Creadas en el Primer Impacto (Sin Consentir)</h3>
-              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Las cookies que se depositan inmediatamente en el navegador al abrir la URL antes de pulsar ningún botón de banner:</p>
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cookies detectadas en cabeceras HTTP durante la carga inicial</h3>
+              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Las cookies que se envían en las cabeceras HTTP de respuesta inmediatamente al abrir la URL antes de pulsar ningún botón de banner:</p>
               
               <?php if (empty($result['cookies_set'])): ?>
                 <div style="background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.1); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
-                  ✓ No se ha instalado ninguna cookie en el navegador durante la carga inicial.
+                  ✓ No se han detectado cookies en las cabeceras HTTP durante la carga inicial.
                 </div>
               <?php else: ?>
                 <div style="overflow-x:auto;">
@@ -703,9 +844,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <!-- CTA final -->
   <?php
   $cta = [
-    'title'     => '¿Tu diagnóstico muestra infracciones de privacidad?',
-    'subtitle'  => 'Cumplir con el RGPD no consiste solo en no recibir multas, sino en garantizar la seguridad y privacidad de tus propios clientes.',
-    'btn_label' => 'Quiero hacer mi web 100% legal',
+    'title'     => '¿Quieres bloquear correctamente tus cookies y evitar sustos con la AEPD?',
+    'subtitle'  => 'Corrige tu banner de cookies y tus scripts de tracking.',
+    'btn_label' => 'Solucionar mi banner de cookies',
     'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
