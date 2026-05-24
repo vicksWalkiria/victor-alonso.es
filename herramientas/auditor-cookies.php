@@ -279,7 +279,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 foreach ($cookies_set as $c_name => $c_data) {
                     if ($c_data['category'] !== 'necesaria') {
                         $unsafe_cookies_count++;
-                        $violations[] = "Se ha depositado la cookie de terceros `{$c_name}` ({$c_data['provider']}) antes de que el usuario acepte el banner.";
+                        $violations[] = "Se ha depositado la cookie de terceros <strong>{$c_name}</strong> ({$c_data['provider']}) antes de que el usuario acepte el banner.";
                     }
                 }
                 if ($unsafe_cookies_count > 0) {
@@ -291,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 foreach ($detected_scripts as $s_name => $s_data) {
                     if (!$s_data['blocked']) {
                         $unblocked_scripts_count++;
-                        $violations[] = "El script de `{$s_name}` está cargado de forma agresiva y directa en el HTML (no bloqueado en espera de consentimiento).";
+                        $violations[] = "El script de <strong>{$s_name}</strong> está cargado de forma agresiva y directa en el HTML (no bloqueado en espera de consentimiento).";
                     }
                 }
                 if ($unblocked_scripts_count > 0) {
@@ -676,26 +676,26 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="criterio-grid">
           <div class="criterio-card">
             <h3>El falso banner de "Aceptar" y "Aceptar"</h3>
-            <p>Muchos desarrolladores cometen el error de instalar un banner visual y creer que están en regla. Sin embargo, la normativa de cookies europea y española dicta que **el botón de rechazar debe estar al mismo nivel de visibilidad** que el de aceptar.</p>
+            <p>Muchos desarrolladores cometen el error de instalar un banner visual y creer que están en regla. Sin embargo, la normativa de cookies europea y española dicta que <strong>el botón de rechazar debe estar al mismo nivel de visibilidad</strong> que el de aceptar.</p>
             <p>Si tu banner obliga al usuario a navegar por 3 pantallas para denegar o carece de botón directo de rechazo en su pantalla inicial, tu web está infringiendo la ley de forma flagrante y puede recibir denuncias.</p>
           </div>
           
           <div class="criterio-card">
             <h3>La trampa de Google Analytics 4 (GA4)</h3>
-            <p>Para la ley europea, un identificador de usuario único (como el ID del parámetro `_ga` que usa Analytics) es considerado un **dato personal**. Por lo tanto, no se puede almacenar en el navegador ni transmitir a servidores de Google antes de que el usuario lo autorice de forma afirmativa.</p>
-            <p>Muchas plantillas de WordPress inyectan GA4 de forma dura en el `head` bloqueando únicamente de manera visual la barra. Esto instala las cookies de Analytics de inmediato al primer milisegundo de entrada, resultando en una multa económica.</p>
+            <p>Para la ley europea, un identificador de usuario único (como el ID del parámetro <code>_ga</code> que usa Analytics) es considerado un <strong>dato personal</strong>. Por lo tanto, no se puede almacenar en el navegador ni transmitir a servidores de Google antes de que el usuario lo autorice de forma afirmativa.</p>
+            <p>Muchas plantillas de WordPress inyectan GA4 de forma dura en el <code>&lt;head&gt;</code> bloqueando únicamente de manera visual la barra. Esto instala las cookies de Analytics de inmediato al primer milisegundo de entrada, resultando en una multa económica.</p>
           </div>
 
           <div class="criterio-card">
             <h3>Cómo solucionar el bloqueo sin perder WPO</h3>
-            <p>Para cumplir al 100%, debes modificar tus etiquetas `<script>` de marketing y analítica para que carguen con el tipo `type="text/plain"` y un identificador de categoría. De este modo, el navegador las ignorará por completo durante la carga inicial.</p>
-            <p>Cuando el usuario interactúa y acepta tus cookies, un script de consentimiento ligero de código abierto (como **`vanilla-cookieconsent`**) reactiva esos scripts en vivo en memoria sin ralentizar la carga inicial de tu servidor.</p>
+            <p>Para cumplir al 100%, debes modificar tus etiquetas <code>&lt;script&gt;</code> de marketing y analítica para que carguen con el tipo <code>type="text/plain"</code> y un identificador de categoría. De este modo, el navegador las ignorará por completo durante la carga inicial.</p>
+            <p>Cuando el usuario interactúa y acepta tus cookies, un script de consentimiento ligero de código abierto (como <strong><code>vanilla-cookieconsent</code></strong>) reactiva esos scripts en vivo en memoria sin ralentizar la carga inicial de tu servidor.</p>
           </div>
         </div>
       </div>
 
       <!-- Widget de Votación y Rich Snippet -->
-      <?php render_rating_widget('auditor-privacidad'); ?>
+      <?php render_rating_widget('auditor-cookies'); ?>
 
     </div>
   </section>

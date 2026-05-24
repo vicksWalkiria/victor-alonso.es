@@ -40,6 +40,11 @@ function get_ratings() {
             'count' => 2,
             'sum' => 10,
             'average' => 5.0
+        ],
+        'auditor-cookies' => [
+            'count' => 2,
+            'sum' => 10,
+            'average' => 5.0
         ]
     ];
 
