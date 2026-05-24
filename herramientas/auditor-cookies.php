@@ -727,7 +727,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 }
 
                 // Calcular la puntuación de cumplimiento
-                $score = 100;
                 $violations = [];
                 
                 // 1. Cookies no funcionales seteadas en el primer impacto
@@ -738,9 +737,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                         $violations[] = "Se ha depositado la cookie de terceros <strong>{$c_name}</strong> ({$c_data['provider']}) antes de que el usuario acepte el banner.";
                     }
                 }
-                if ($unsafe_cookies_count > 0) {
-                    $score -= 35;
-                }
 
                 // 2. Scripts de tracking no bloqueados
                 $unblocked_scripts_count = 0;
@@ -750,9 +746,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                         $violations[] = "El script de <strong>{$s_name}</strong> está cargado de forma agresiva y directa en el HTML (no bloqueado en espera de consentimiento).";
                     }
                 }
-                if ($unblocked_scripts_count > 0) {
-                    $score -= 35;
-                }
 
                 // 3. Iframes de terceros no bloqueados
                 $unblocked_iframes_count = 0;
@@ -760,19 +753,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                     $unblocked_iframes_count++;
                     $violations[] = "Se ha detectado un iframe de <strong>{$ifr_name}</strong> que se carga directamente sin bloqueo de consentimiento.";
                 }
-                if ($unblocked_iframes_count > 0) {
-                    $score -= 20;
-                }
 
                 // 4. Páginas legales faltantes
                 foreach ($legal_pages as $p_name => $p_data) {
                     if (!$p_data['found']) {
-                        $score -= 10;
                         $violations[] = "No se detecta enlace a la página de {$p_name} en el menú o pie de página del HTML analizado.";
                     }
                 }
 
-                // Asegurar rango de score
+                // SUBPUNTUACIONES
+                // 1. Bloqueo Técnico (base 100)
+                $score_tecnico = 100;
+                if ($unsafe_cookies_count > 0) {
+                    $score_tecnico -= 50;
+                }
+                if ($unblocked_scripts_count > 0) {
+                    $score_tecnico -= 50;
+                }
+                $score_tecnico = max(0, $score_tecnico);
+
+                // 2. Banner y Consentimiento (base 100)
+                $score_consentimiento = 0;
+                if ($banner_detected) {
+                    $score_consentimiento += 40;
+                }
+                if ($accept_button_detected) {
+                    $score_consentimiento += 20;
+                }
+                if ($reject_button_detected) {
+                    $score_consentimiento += 20;
+                }
+                if ($consent_mode_detected) {
+                    $score_consentimiento += 20;
+                }
+
+                // 3. Páginas legales (base 100)
+                $score_legal = 0;
+                if (isset($legal_pages['Política de Privacidad']) && $legal_pages['Política de Privacidad']['found']) {
+                    $score_legal += 34;
+                }
+                if (isset($legal_pages['Política de Cookies']) && $legal_pages['Política de Cookies']['found']) {
+                    $score_legal += 33;
+                }
+                if (isset($legal_pages['Aviso Legal']) && $legal_pages['Aviso Legal']['found']) {
+                    $score_legal += 33;
+                }
+
+                // 4. Terceros Embebidos (base 100)
+                $score_embeds = 100 - ($unblocked_iframes_count * 20);
+                $score_embeds = max(0, $score_embeds);
+
+                // Score Global (promedio de los 4 pilares)
+                $score = (int)round(($score_tecnico + $score_consentimiento + $score_legal + $score_embeds) / 4);
                 $score = max(0, $score);
 
                 // Clasificar por nota
@@ -795,24 +827,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
                 }
 
                 $result = [
-                    'final_url'        => $current_url,
-                    'ssl_invalid'      => $ssl_invalid_detected,
-                    'score'            => $score,
-                    'grade'            => $grade,
-                    'grade_class'      => $grade_class,
-                    'grade_desc'       => $grade_desc,
-                    'cookies_set'      => $cookies_set,
-                    'detected_scripts' => $detected_scripts,
-                    'legal_pages'      => $legal_pages,
-                    'violations'       => $violations,
-                    'redirects'        => $redirect_chain,
-                    'detected_cmp'     => $detected_cmp,
-                    'banner_detected'  => $banner_detected,
-                    'consent_mode'     => $consent_mode_detected,
-                    'accept_btn'       => $accept_button_detected,
-                    'reject_btn'       => $reject_button_detected,
-                    'detected_iframes' => $detected_iframes,
-                    'external_requests'=> $formatted_requests
+                    'final_url'            => $current_url,
+                    'ssl_invalid'          => $ssl_invalid_detected,
+                    'score'                => $score,
+                    'score_tecnico'        => $score_tecnico,
+                    'score_consentimiento' => $score_consentimiento,
+                    'score_legal'          => $score_legal,
+                    'score_embeds'         => $score_embeds,
+                    'grade'                => $grade,
+                    'grade_class'          => $grade_class,
+                    'grade_desc'           => $grade_desc,
+                    'cookies_set'          => $cookies_set,
+                    'detected_scripts'     => $detected_scripts,
+                    'legal_pages'          => $legal_pages,
+                    'violations'           => $violations,
+                    'redirects'            => $redirect_chain,
+                    'detected_cmp'         => $detected_cmp,
+                    'banner_detected'      => $banner_detected,
+                    'consent_mode'         => $consent_mode_detected,
+                    'accept_btn'           => $accept_button_detected,
+                    'reject_btn'           => $reject_button_detected,
+                    'detected_iframes'     => $detected_iframes,
+                    'external_requests'    => $formatted_requests
                 ];
             }
             }
@@ -821,7 +857,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
 }
 
 $page = page_config([
-    'title'        => 'Auditor de Cookies RGPD Gratis | Comprobar cookies de una web',
+    'title'        => 'Auditor de Cookies RGPD Gratis: comprueba si tu web carga cookies antes de aceptar',
     'description'  => 'Audita online si tu web cumple con el RGPD y la AEPD. Detecta cookies de analítica, marketing e iframes cargados antes del consentimiento.',
     'canonical'    => '/herramientas/auditor-cookies/',
     'body_class'   => 'page-herramientas-auditor-cookies',
@@ -972,6 +1008,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       text-align: center;
     }
     
+    @media (max-width: 992px) {
+      .result-container {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+      }
+    }
     @media (max-width: 768px) {
       .legal-grid {
         grid-template-columns: 1fr;
@@ -1022,12 +1064,57 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="result-container" style="display:grid; grid-template-columns: 350px 1fr; gap:2.5rem; margin-bottom:4rem;">
           
           <!-- Columna Lateral: Nota Global -->
-          <div class="compliance-grade-box <?= $result['grade_class'] ?>">
+          <div class="compliance-grade-box <?= $result['grade_class'] ?>" style="align-self: flex-start;">
             <span class="section-label" style="margin-bottom: 1rem;">Nivel de Cumplimiento</span>
             <div class="grade-circle"><?= $result['grade'] ?></div>
             <h2 style="font-size:1.6rem; color:#fff; margin-bottom:0.5rem;">Puntuación: <?= $result['score'] ?>/100</h2>
             <p style="font-size:0.9rem; color:#94a3b8; line-height:1.5;"><?= h($result['grade_desc']) ?></p>
             
+            <!-- Subpuntuaciones / Desglose -->
+            <div style="width:100%; margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08); text-align:left; display:flex; flex-direction:column; gap:1rem;">
+              <span style="font-size:0.75rem; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; display:block; margin-bottom:0.25rem;">Desglose de Puntuación</span>
+              
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
+                  <span style="color:#cbd5e1;">🔒 Bloqueo Técnico</span>
+                  <strong style="color:#fff;"><?= $result['score_tecnico'] ?>/100</strong>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
+                  <div style="background:<?= $result['score_tecnico'] >= 90 ? '#2ecc71' : ($result['score_tecnico'] >= 50 ? '#f1c40f' : '#e74c3c') ?>; width:<?= $result['score_tecnico'] ?>%; height:100%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
+                  <span style="color:#cbd5e1;">💬 Consentimiento y Banner</span>
+                  <strong style="color:#fff;"><?= $result['score_consentimiento'] ?>/100</strong>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
+                  <div style="background:<?= $result['score_consentimiento'] >= 90 ? '#2ecc71' : ($result['score_consentimiento'] >= 50 ? '#f1c40f' : '#e74c3c') ?>; width:<?= $result['score_consentimiento'] ?>%; height:100%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
+                  <span style="color:#cbd5e1;">📄 Páginas Legales</span>
+                  <strong style="color:#fff;"><?= $result['score_legal'] ?>/100</strong>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
+                  <div style="background:<?= $result['score_legal'] >= 90 ? '#2ecc71' : ($result['score_legal'] >= 50 ? '#f1c40f' : '#e74c3c') ?>; width:<?= $result['score_legal'] ?>%; height:100%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
+                  <span style="color:#cbd5e1;">🔌 Terceros Embebidos</span>
+                  <strong style="color:#fff;"><?= $result['score_embeds'] ?>/100</strong>
+                </div>
+                <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
+                  <div style="background:<?= $result['score_embeds'] >= 90 ? '#2ecc71' : ($result['score_embeds'] >= 50 ? '#f1c40f' : '#e74c3c') ?>; width:<?= $result['score_embeds'] ?>%; height:100%;"></div>
+                </div>
+              </div>
+            </div>
+
             <?php if ($result['ssl_invalid']): ?>
               <div style="background:rgba(241,196,15,0.1); border:1px solid rgba(241,196,15,0.3); color:#f1c40f; padding:0.75rem; border-radius:6px; font-size:0.8rem; margin-top:1.5rem; text-align:left;">
                 ⚠️ <strong>Aviso:</strong> El certificado SSL de esta web no es válido o ha expirado. Hemos procedido con el análisis desactivando la comprobación estricta de SSL.
@@ -1146,6 +1233,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <strong>¿Opción de rechazo al mismo nivel?:</strong> 
                   <?= $result['reject_btn'] ? '🟢 Detectada (Botón de rechazo aproximado encontrado)' : '🔴 No se detecta un botón con texto claro para rechazar. La AEPD exige ofrecer el botón de rechazar al mismo nivel de visibilidad que el de aceptar.' ?>
                 </div>
+                <div style="font-size:0.8rem; color:#64748b; margin-top:0.5rem; font-style:italic;">
+                  ℹ️ Esta detección se realiza sobre el HTML inicial. Si el banner se genera dinámicamente con JavaScript, puede requerir revisión manual.
+                </div>
               </div>
             </div>
 
@@ -1202,7 +1292,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <!-- Peticiones de Red a Dominios Externos -->
               <div class="card card--dark" style="padding:2rem;">
                 <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Conexiones a Dominios de Terceros</h3>
-                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Dominios externos a los que el navegador realiza peticiones durante la carga del HTML inicial (scripts, CSS, fuentes, imágenes, preconexiones, etc.):</p>
+                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Dominios externos referenciados en el HTML inicial mediante scripts, CSS, imágenes, iframes o preconexiones:</p>
                 <div style="overflow-x:auto;">
                   <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
                     <thead>
