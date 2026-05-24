@@ -1152,7 +1152,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             const formData = new FormData(form);
             
             try {
-              const res = await fetch('/herramientas/auditor-cookies-api.php?action=start', {
+              const res = await fetch('/herramientas/auditor-cookies-api/?action=start', {
                 method: 'POST',
                 body: formData
               });
@@ -1177,7 +1177,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 }
                 
                 try {
-                  const pollRes = await fetch(`/herramientas/auditor-cookies-api.php?action=poll&id=${auditId}`);
+                  const pollRes = await fetch(`/herramientas/auditor-cookies-api/?action=poll&id=${auditId}`);
                   const pollData = await pollRes.json();
                   
                   if (pollData.error) {
@@ -1274,16 +1274,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div style="width:100%; text-align:left; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; display:flex; flex-direction:column; gap:0.75rem;">
               <span style="font-size:0.75rem; color:var(--orange); text-transform:uppercase; font-weight:700;">Evidencias (Capturas)</span>
               
-              <a href="/herramientas/auditor-cookies-api.php?action=image&id=<?= h($r2['id']) ?>&phase=1" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
+              <a href="/herramientas/auditor-cookies-api/?action=image&id=<?= h($r2['id']) ?>&phase=1" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
                 <span>📸 Fase 1: Inicio</span> <span>Ver &rarr;</span>
               </a>
               <?php if ($p_rej['clicked']): ?>
-                <a href="/herramientas/auditor-cookies-api.php?action=image&id=<?= h($r2['id']) ?>&phase=2" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
+                <a href="/herramientas/auditor-cookies-api/?action=image&id=<?= h($r2['id']) ?>&phase=2" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
                   <span>📸 Fase 2: Rechazado</span> <span>Ver &rarr;</span>
                 </a>
               <?php endif; ?>
               <?php if ($p_acc['clicked']): ?>
-                <a href="/herramientas/auditor-cookies-api.php?action=image&id=<?= h($r2['id']) ?>&phase=3" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
+                <a href="/herramientas/auditor-cookies-api/?action=image&id=<?= h($r2['id']) ?>&phase=3" target="_blank" style="display:flex; justify-content:space-between; color:#fff; text-decoration:none; font-size:0.85rem; padding:0.5rem; background:rgba(255,255,255,0.05); border-radius:4px;">
                   <span>📸 Fase 3: Aceptado</span> <span>Ver &rarr;</span>
                 </a>
               <?php endif; ?>
