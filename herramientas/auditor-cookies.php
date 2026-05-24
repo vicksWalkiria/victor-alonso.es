@@ -1816,27 +1816,23 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           // Crear contenedor temporal para el clon
           const tempContainer = document.createElement('div');
-          tempContainer.style.padding = '40px';
-          tempContainer.style.background = '#0a0a0a';
+          tempContainer.style.padding = '30px';
+          tempContainer.style.background = '#0a0a0a'; // Fondo oscuro para mantener coherencia
           tempContainer.style.color = '#ffffff';
-          tempContainer.style.width = '800px'; // Forzar ancho fijo para el A4
-          tempContainer.style.position = 'absolute';
-          tempContainer.style.left = '-9999px';
-          tempContainer.style.top = '0';
 
           // Inyectar cabecera corporativa
           const header = document.createElement('div');
-          header.style.marginBottom = '30px';
+          header.style.marginBottom = '25px';
           header.style.borderBottom = '1px solid #333';
-          header.style.paddingBottom = '20px';
+          header.style.paddingBottom = '15px';
           header.innerHTML = `
-            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
-              <div style="background:#E8681A; color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:20px;">VA</div>
-              <h1 style="margin:0; font-size:24px; color:#E8681A;">Víctor Alonso SEO</h1>
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+              <div style="background:#E8681A; color:#fff; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:18px;">VA</div>
+              <h1 style="margin:0; font-size:22px; color:#E8681A; font-family: sans-serif;">Víctor Alonso SEO</h1>
             </div>
-            <h2 style="margin:0 0 10px 0; font-size:20px; color:#fff;">Informe de Auditoría de Cookies RGPD</h2>
-            <p style="margin:0; font-size:14px; color:#aaa; line-height:1.5;">
-              Documento generado automáticamente por la herramienta de auditoría avanzada de victor-alonso.es.<br>
+            <h2 style="margin:0 0 8px 0; font-size:18px; color:#fff; font-family: sans-serif;">Informe de Auditoría de Cookies RGPD</h2>
+            <p style="margin:0; font-size:13px; color:#ccc; line-height:1.5; font-family: sans-serif;">
+              Documento generado por la herramienta de auditoría avanzada de victor-alonso.es.<br>
               A continuación se detallan las evidencias capturadas durante la simulación de navegación.
             </p>
           `;
@@ -1845,29 +1841,26 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           // Clonar el contenido de fases
           const clone = content.cloneNode(true);
-          // Eliminar posibles márgenes excesivos o sombras que se vean mal en PDF
+          // Forzar estilos inline en el clon para asegurar que html2pdf los pilla bien
           clone.style.margin = '0';
+          clone.style.fontFamily = 'sans-serif';
           tempContainer.appendChild(clone);
-          document.body.appendChild(tempContainer);
 
           // Opciones de html2pdf
           const opt = {
-            margin:       0,
+            margin:       [10, 10, 10, 10], // top, left, bottom, right
             filename:     'auditoria-cookies-victor-alonso.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: false },
-            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            html2canvas:  { scale: 2, useCORS: true, logging: true, backgroundColor: '#0a0a0a' },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          // Generar PDF
+          // Generar PDF (usando el nodo desconectado)
           html2pdf().set(opt).from(tempContainer).save().then(() => {
-            // Restaurar estado
-            document.body.removeChild(tempContainer);
             btnPdf.innerHTML = originalText;
             btnPdf.disabled = false;
           }).catch(err => {
             console.error('Error generando PDF:', err);
-            document.body.removeChild(tempContainer);
             btnPdf.innerHTML = '❌ Error al generar';
             setTimeout(() => {
               btnPdf.innerHTML = originalText;
@@ -1891,6 +1884,22 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   ];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
+
+  <?php if ((isset($result_v2) && $result_v2['status'] === 'done') || isset($result)): ?>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Small delay to ensure rendering is complete
+      setTimeout(() => {
+        const results = document.getElementById('pdf-export-content') || document.querySelector('.result-container');
+        if (results) {
+          // Scroll with an offset to avoid sticking right to the top
+          const y = results.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 300);
+    });
+  </script>
+  <?php endif; ?>
 
 </main>
 

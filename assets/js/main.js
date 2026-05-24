@@ -126,16 +126,30 @@
   const waClose  = document.getElementById('floating-whatsapp-close');
 
   if (waWidget && waClose) {
-    // Comprobar si ya fue descartado en el pasado
     if (localStorage.getItem('whatsapp_dismissed') === 'true') {
       waWidget.classList.add('dismissed');
     }
-
     waClose.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
       waWidget.classList.add('dismissed');
       localStorage.setItem('whatsapp_dismissed', 'true');
+    });
+  }
+
+  // ── Widget Flotante de Contacto ─────────────────────────────────────────
+  const contactWidget = document.getElementById('floating-contact');
+  const contactClose  = document.getElementById('floating-contact-close');
+
+  if (contactWidget && contactClose) {
+    if (localStorage.getItem('contact_dismissed') === 'true') {
+      contactWidget.classList.add('dismissed');
+    }
+    contactClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      contactWidget.classList.add('dismissed');
+      localStorage.setItem('contact_dismissed', 'true');
     });
   }
 
