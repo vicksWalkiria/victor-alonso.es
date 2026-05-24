@@ -15,6 +15,7 @@ $page = page_config([
         ['name' => 'Extractor y Auditor de Sitemaps XML', 'url' => '/herramientas/extractor-sitemap/'],
         ['name' => 'Extractor Semántico de Entidades', 'url' => '/herramientas/extractor-entidades/'],
         ['name' => 'Analizador de Logs Apache y Nginx', 'url' => '/herramientas/analizador-logs/'],
+        ['name' => 'Auditor de Cookies y Privacidad RGPD', 'url' => '/herramientas/auditor-cookies/'],
     ],
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
@@ -72,6 +73,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <a href="#extractor-sitemap" class="tool-pill">🗺️ Auditor Sitemap</a>
         <a href="#extractor-entidades" class="tool-pill">🧠 Extractor Semántico</a>
         <a href="#analizador-logs" class="tool-pill">📊 Analizador de Logs</a>
+        <a href="#auditor-cookies" class="tool-pill">🍪 Auditor de Cookies</a>
       </div>
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
@@ -213,6 +215,27 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </ul>
           </div>
           <a href="/herramientas/analizador-logs/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Analizador de Logs</a>
+        </article>
+
+        <!-- CARD 7: AUDITOR DE PRIVACIDAD Y COOKIES -->
+        <article id="auditor-cookies" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <circle cx="12" cy="13" r="3"></circle>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Auditor de Cookies y Privacidad</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Comprueba si tu web cumple estrictamente con el RGPD y la LOPDGDD. Rastrea en vivo las cabeceras HTTP y el código HTML para detectar cookies cargadas antes del consentimiento y scripts de terceros sin bloquear.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Detección de cookies de marketing y analítica en el primer impacto.</li>
+              <li class="checklist-item">Análisis de scripts bloqueados (vanilla-cookieconsent, etc.).</li>
+              <li class="checklist-item">Validación de enlaces obligatorios (Aviso Legal, Cookies, Privacidad).</li>
+              <li class="checklist-item">Calificación visual rápida (Apto / No Apto) y plan de acción.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/auditor-cookies/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Auditor de Cookies</a>
         </article>
 
       </div>
