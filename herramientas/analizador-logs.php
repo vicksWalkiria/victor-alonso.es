@@ -214,6 +214,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 $last_date = $date_raw; // El último será el final
                 
+                // Obtener fecha YYYY-MM-DD
+                $date_ymd = '';
+                $space_pos = strpos($date_raw, ' ');
+                $date_part_only = ($space_pos !== false) ? substr($date_raw, 0, $space_pos) : $date_raw;
+                $colon_pos_first = strpos($date_part_only, ':');
+                $d_part = ($colon_pos_first !== false) ? substr($date_part_only, 0, $colon_pos_first) : $date_part_only;
+                $d_parts = explode('/', $d_part);
+                if (count($d_parts) === 3) {
+                    $months_map = [
+                        'Jan' => '01', 'Feb' => '02', 'Mar' => '03', 'Apr' => '04',
+                        'May' => '05', 'Jun' => '06', 'Jul' => '07', 'Aug' => '08',
+                        'Sep' => '09', 'Oct' => '10', 'Nov' => '11', 'Dec' => '12'
+                    ];
+                    $year = $d_parts[2];
+                    $month = $months_map[$d_parts[1]] ?? '01';
+                    $day = str_pad($d_parts[0], 2, '0', STR_PAD_LEFT);
+                    $date_ymd = "$year-$month-$day";
+                }
+                
                 // Distribución por hora
                 // Formato de fecha típico: 10/Oct/2000:13:55:36 -0700
                 $colon_pos = strpos($date_raw, ':');
@@ -292,7 +311,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $status,
                     $detected_bot ? $detected_bot : '',
                     $is_static ? 1 : 0,
-                    $bytes
+                    $bytes,
+                    $date_ymd
                 ];
             } else {
                 // Si leemos 15 líneas y ninguna coincide, rechazamos por formato
@@ -507,6 +527,15 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .bar-color-4xx { background: #e67e22; }
 .bar-color-5xx { background: #e74c3c; }
 .bar-color-bot { background: #e8681a; } /* Naranja corporativo */
+
+.http-status-tab-btn:hover {
+    background: #e8681a !important;
+    color: #ffffff !important;
+    border-color: #e8681a !important;
+}
+.http-status-tab-btn.active {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+}
 
 .timeline-graph {
     display: flex;
@@ -757,35 +786,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
           </div>
 
-          <!-- Opciones Avanzadas Colapsables (Intervalo de Horas) -->
-          <details style="margin-top: 1.5rem; margin-bottom: 2rem; border: 1px solid #111111; border-radius: 6px; background: #fcfcfc;">
-            <summary style="font-weight: 700; cursor: pointer; color: #111111; user-select: none; padding: 0.75rem 1rem; outline: none; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#fff9f5'" onmouseout="this.style.background='transparent'">
-              ⚙️ Opciones de Filtrado Avanzado (Intervalo de Horas)
-            </summary>
-            <div style="padding: 1.25rem; border-top: 1px solid #111111; display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; background: #ffffff; border-radius: 0 0 6px 6px;">
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <label style="font-size: 0.85rem; font-weight: 700; color: #111111;">Hora de Inicio:</label>
-                <select name="filter_hour_start" class="form-input" style="width: auto; padding: 0.35rem 0.75rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 600;">
-                  <option value="">-- Sin limitar --</option>
-                  <?php for($i=0; $i<24; $i++): $h = str_pad($i, 2, '0', STR_PAD_LEFT); ?>
-                    <option value="<?= $h ?>" <?= isset($_POST['filter_hour_start']) && $_POST['filter_hour_start'] === $h ? 'selected' : '' ?>><?= $h ?>:00</option>
-                  <?php endfor; ?>
-                </select>
-              </div>
-              <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <label style="font-size: 0.85rem; font-weight: 700; color: #111111;">Hora de Fin:</label>
-                <select name="filter_hour_end" class="form-input" style="width: auto; padding: 0.35rem 0.75rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 600;">
-                  <option value="">-- Sin limitar --</option>
-                  <?php for($i=23; $i>=0; $i--): $h = str_pad($i, 2, '0', STR_PAD_LEFT); ?>
-                    <option value="<?= $h ?>" <?= isset($_POST['filter_hour_end']) && $_POST['filter_hour_end'] === $h ? 'selected' : '' ?>><?= $h ?>:59</option>
-                  <?php endfor; ?>
-                </select>
-              </div>
-              <p style="font-size: 0.8rem; color: var(--muted); margin: 0; flex-grow: 1; line-height: 1.4;">
-                Si seleccionas una franja, el analizador ignorará los accesos fuera de ese rango (útil para diagnosticar caídas o picos de tráfico en horas concretas).
-              </p>
-            </div>
-          </details>
+
 
           <div style="text-align: right;">
             <button type="submit" class="btn btn--primary" style="margin-top: 0;">Procesar y Analizar Logs</button>
@@ -819,12 +820,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <div style="background: #ffffff; border: 1px solid #111111; border-top: 4px solid #e8681a; border-radius: 8px; padding: 1.5rem; margin-bottom: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.02);" class="btn-pdf-export">
             <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;" onclick="toggleClientFilter()">
               <h4 style="margin: 0; color: #111111; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span>⏱️</span> Filtrar Informe por Horas en Tiempo Real
+                <span>⏱️</span> Filtrar Informe (Fechas y Horas) en Tiempo Real
               </h4>
               <span id="clientFilterIndicator" style="font-weight: 700; color: #e8681a; font-size: 0.9rem;">[ Mostrar Filtro ]</span>
             </div>
             <div id="clientFilterDrawer" style="display: none; margin-top: 1.25rem; border-top: 1px dashed #eeeeee; padding-top: 1.25rem;">
-              <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+              
+              <!-- Rango de Fechas -->
+              <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <div style="flex: 1; min-width: 200px;">
+                  <label style="font-size: 0.85rem; font-weight: 700; color: #111111; display: block; margin-bottom: 0.5rem;">
+                    📅 Fecha de Inicio:
+                  </label>
+                  <select id="dateStartSelect" onchange="updateHourlyFilter()" style="width: 100%; padding: 0.45rem 0.75rem; border: 1px solid #111111; border-radius: 4px; font-size: 0.85rem; background: #ffffff; color: #111111; font-weight: 600; cursor: pointer;"></select>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                  <label style="font-size: 0.85rem; font-weight: 700; color: #111111; display: block; margin-bottom: 0.5rem;">
+                    📅 Fecha de Fin:
+                  </label>
+                  <select id="dateEndSelect" onchange="updateHourlyFilter()" style="width: 100%; padding: 0.45rem 0.75rem; border: 1px solid #111111; border-radius: 4px; font-size: 0.85rem; background: #ffffff; color: #111111; font-weight: 600; cursor: pointer;"></select>
+                </div>
+              </div>
+
+              <!-- Rango de Horas -->
+              <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; border-top: 1px dashed #eeeeee; padding-top: 1.25rem;">
                 <div style="flex-grow: 1; min-width: 280px;">
                   <label style="font-size: 0.85rem; font-weight: 700; color: #111111; display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                     <span>Rango de Horas Seleccionado:</span>
@@ -838,10 +857,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     <span style="font-size: 0.75rem; font-weight: 700; color: var(--muted);">23:59</span>
                   </div>
                 </div>
-                <button type="button" class="btn btn--secondary" onclick="resetHourlyFilter()" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem; border: 1px solid #111111; background: #fff; color: #111;">Mostrar Todo</button>
+                <button type="button" class="btn btn--secondary" onclick="resetHourlyFilter()" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem; border: 1px solid #111111; background: #fff; color: #111; border-radius: 6px;">Mostrar Todo</button>
               </div>
               <p style="font-size: 0.8rem; color: var(--muted); margin: 0.75rem 0 0 0; line-height: 1.4;">
-                Mueve los deslizadores de inicio y fin para ver cómo el dashboard, el gráfico de sectores, los códigos HTTP y todas las tablas detalladas se actualizan en menos de 5ms.
+                Modifica el rango de fechas y horas para ver cómo el informe al completo se vuelve a calcular reactivamente al instante.
               </p>
             </div>
           </div>
@@ -868,90 +887,141 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;">
+          <!-- Códigos de Estado HTTP -->
+          <div class="card card--dark" style="margin-bottom: 2.5rem;">
+            <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🔌</span> Códigos de Respuesta HTTP
+            </h4>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;">Distribución de estados devueltos por el servidor.</p>
             
-            <!-- Códigos de Estado HTTP -->
-            <div class="card card--dark" style="margin: 0;">
-              <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span>🔌</span> Códigos de Respuesta HTTP
-              </h4>
-              <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Distribución de estados devueltos por el servidor.</p>
+            <div class="chart-bar-container" id="status-codes-bar-container" style="margin-bottom: 1.5rem;">
+              <?php
+              $status_groups = [
+                  '2xx (Éxito)' => ['codes' => [200, 201, 204, 206], 'color' => 'bar-color-2xx', 'count' => 0],
+                  '3xx (Redirección)' => ['codes' => [301, 302, 304, 307, 308], 'color' => 'bar-color-3xx', 'count' => 0],
+                  '4xx (Error Cliente)' => ['codes' => [400, 401, 403, 404, 410], 'color' => 'bar-color-4xx', 'count' => 0],
+                  '5xx (Error Servidor)' => ['codes' => [500, 502, 503, 504], 'color' => 'bar-color-5xx', 'count' => 0]
+              ];
               
-              <div class="chart-bar-container" id="status-codes-bar-container">
-                <?php
-                $status_groups = [
-                    '2xx (Éxito)' => ['codes' => [200, 201, 204, 206], 'color' => 'bar-color-2xx', 'count' => 0],
-                    '3xx (Redirección)' => ['codes' => [301, 302, 304, 307, 308], 'color' => 'bar-color-3xx', 'count' => 0],
-                    '4xx (Error Cliente)' => ['codes' => [400, 401, 403, 404, 410], 'color' => 'bar-color-4xx', 'count' => 0],
-                    '5xx (Error Servidor)' => ['codes' => [500, 502, 503, 504], 'color' => 'bar-color-5xx', 'count' => 0]
-                ];
-                
-                foreach ($result['status_codes'] as $code => $count) {
-                    $grouped = false;
-                    foreach ($status_groups as $group_label => &$group) {
-                        if (in_array((int)$code, $group['codes'])) {
-                            $group['count'] += $count;
-                            $grouped = true;
-                            break;
-                        }
-                    }
-                    if (!$grouped) {
-                        // Si es un código raro, agrupar por el primer número
-                        $first_num = substr($code, 0, 1);
-                        if ($first_num == '2') $status_groups['2xx (Éxito)']['count'] += $count;
-                        elseif ($first_num == '3') $status_groups['3xx (Redirección)']['count'] += $count;
-                        elseif ($first_num == '4') $status_groups['4xx (Error Cliente)']['count'] += $count;
-                        elseif ($first_num == '5') $status_groups['5xx (Error Servidor)']['count'] += $count;
-                    }
-                }
-                
-                $max_group_count = 0;
-                foreach ($status_groups as $g) {
-                    if ($g['count'] > $max_group_count) $max_group_count = $g['count'];
-                }
-                
-                foreach ($status_groups as $label => $g):
-                    $pct = $result['parsed_lines'] > 0 ? round(($g['count'] / $result['parsed_lines']) * 100, 1) : 0;
-                    $bar_pct = $max_group_count > 0 ? round(($g['count'] / $max_group_count) * 100, 1) : 0;
-                ?>
-                  <div class="chart-bar-item">
-                    <span class="chart-bar-label"><?= $label ?></span>
-                    <div class="chart-bar-track">
-                      <div class="chart-bar-fill <?= $g['color'] ?>" style="width: <?= $bar_pct ?>%;"></div>
-                    </div>
-                    <span class="chart-bar-value"><?= number_format($g['count'], 0, ',', '.') ?> <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(<?= $pct ?>%)</span></span>
+              foreach ($result['status_codes'] as $code => $count) {
+                  $grouped = false;
+                  foreach ($status_groups as $group_label => &$group) {
+                      if (in_array((int)$code, $group['codes'])) {
+                          $group['count'] += $count;
+                          $grouped = true;
+                          break;
+                      }
+                  }
+                  if (!$grouped) {
+                      $first_num = substr($code, 0, 1);
+                      if ($first_num == '2') $status_groups['2xx (Éxito)']['count'] += $count;
+                      elseif ($first_num == '3') $status_groups['3xx (Redirección)']['count'] += $count;
+                      elseif ($first_num == '4') $status_groups['4xx (Error Cliente)']['count'] += $count;
+                      elseif ($first_num == '5') $status_groups['5xx (Error Servidor)']['count'] += $count;
+                  }
+              }
+              
+              $max_group_count = 0;
+              foreach ($status_groups as $g) {
+                  if ($g['count'] > $max_group_count) $max_group_count = $g['count'];
+              }
+              
+              foreach ($status_groups as $label => $g):
+                  $pct = $result['parsed_lines'] > 0 ? round(($g['count'] / $result['parsed_lines']) * 100, 1) : 0;
+                  $bar_pct = $max_group_count > 0 ? round(($g['count'] / $max_group_count) * 100, 1) : 0;
+              ?>
+                <div class="chart-bar-item">
+                  <span class="chart-bar-label"><?= $label ?></span>
+                  <div class="chart-bar-track">
+                    <div class="chart-bar-fill <?= $g['color'] ?>" style="width: <?= $bar_pct ?>%;"></div>
                   </div>
-                <?php endforeach; ?>
-              </div>
+                  <span class="chart-bar-value"><?= number_format($g['count'], 0, ',', '.') ?> <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(<?= $pct ?>%)</span></span>
+                </div>
+              <?php endforeach; ?>
             </div>
 
-            <!-- Actividad de Bots de Búsqueda y Crawlers -->
-            <div class="card card--dark" style="margin: 0;">
-              <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                <span>🤖</span> Top Crawlers y Motores de Búsqueda
-              </h4>
-              <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Visitas detectadas según firmas en el User-Agent.</p>
-              
-              <div class="chart-bar-container" id="bots-bar-container">
-                <?php if (empty($result['top_bots'])): ?>
-                  <p style="font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 1.5rem;">No se han detectado firmas conocidas de bots en este registro.</p>
-                <?php else: 
-                  $max_bot_hits = reset($result['top_bots']);
-                  foreach ($result['top_bots'] as $bot_name => $bot_hits):
-                      $bot_pct = $max_bot_hits > 0 ? round(($bot_hits / $max_bot_hits) * 100, 1) : 0;
-                      $pct_total = $result['parsed_lines'] > 0 ? round(($bot_hits / $result['parsed_lines']) * 100, 1) : 0;
-                ?>
-                  <div class="chart-bar-item">
-                    <span class="chart-bar-label" style="width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= h($bot_name) ?>"><?= h($bot_name) ?></span>
-                    <div class="chart-bar-track">
-                      <div class="chart-bar-fill bar-color-bot" style="width: <?= $bot_pct ?>%;"></div>
-                    </div>
-                    <span class="chart-bar-value"><?= number_format($bot_hits, 0, ',', '.') ?> <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(<?= $pct_total ?>%)</span></span>
-                  </div>
-                <?php endforeach; endif; ?>
+            <!-- Desglose de Códigos y URLs Afectadas (Pestañas y Acordeones) -->
+            <div style="margin-top: 2rem; border-top: 1px dashed #dddddd; padding-top: 1.5rem;" class="btn-pdf-export">
+              <h5 style="margin: 0 0 1rem 0; color: #111111; font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                <span>🔍</span> Desglose de Códigos y URLs Afectadas
+              </h5>
+              <div class="http-tabs-container" style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+                <button type="button" class="http-status-tab-btn" data-group="2xx" onclick="switchHttpStatusTab('2xx')" style="padding: 0.5rem 1rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;">
+                  2xx (<span id="http-tab-badge-2xx">0</span>)
+                </button>
+                <button type="button" class="http-status-tab-btn" data-group="3xx" onclick="switchHttpStatusTab('3xx')" style="padding: 0.5rem 1rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;">
+                  3xx (<span id="http-tab-badge-3xx">0</span>)
+                </button>
+                <button type="button" class="http-status-tab-btn active" data-group="4xx" onclick="switchHttpStatusTab('4xx')" style="padding: 0.5rem 1rem; border: 1px solid #111111; border-radius: 4px; background: #111111; color: #ffffff; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;">
+                  4xx (<span id="http-tab-badge-4xx">0</span>)
+                </button>
+                <button type="button" class="http-status-tab-btn" data-group="5xx" onclick="switchHttpStatusTab('5xx')" style="padding: 0.5rem 1rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 700; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;">
+                  5xx (<span id="http-tab-badge-5xx">0</span>)
+                </button>
+              </div>
+              <div id="http-status-tab-content">
+                <!-- Se poblará dinámicamente mediante Javascript al filtrar -->
               </div>
             </div>
+          </div>
 
+          <!-- Actividad de Bots de Búsqueda y Crawlers -->
+          <div class="card card--dark" style="margin-bottom: 2.5rem;">
+            <h4 style="color: #111111; font-size: 1.15rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🤖</span> Top Crawlers y Motores de Búsqueda
+            </h4>
+            <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;">Visitas detectadas según firmas en el User-Agent.</p>
+            
+            <div class="chart-bar-container" id="bots-bar-container" style="margin-bottom: 1.5rem;">
+              <?php if (empty($result['top_bots'])): ?>
+                <p style="font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 1.5rem;">No se han detectado firmas conocidas de bots en este registro.</p>
+              <?php else: 
+                $max_bot_hits = reset($result['top_bots']);
+                foreach ($result['top_bots'] as $bot_name => $bot_hits):
+                    $bot_pct = $max_bot_hits > 0 ? round(($bot_hits / $max_bot_hits) * 100, 1) : 0;
+                    $pct_total = $result['parsed_lines'] > 0 ? round(($bot_hits / $result['parsed_lines']) * 100, 1) : 0;
+              ?>
+                <div class="chart-bar-item">
+                  <span class="chart-bar-label" style="width: 140px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?= h($bot_name) ?>"><?= h($bot_name) ?></span>
+                  <div class="chart-bar-track">
+                    <div class="chart-bar-fill bar-color-bot" style="width: <?= $bot_pct ?>%;"></div>
+                  </div>
+                  <span class="chart-bar-value"><?= number_format($bot_hits, 0, ',', '.') ?> <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(<?= $pct_total ?>%)</span></span>
+                </div>
+              <?php endforeach; endif; ?>
+            </div>
+
+            <!-- Glosario explicativo interactivo de Crawlers -->
+            <details style="margin-top: 1.5rem; border: 1px solid #111111; border-radius: 6px; background: #fcfcfc;" class="btn-pdf-export">
+              <summary style="font-weight: 700; cursor: pointer; color: #111111; padding: 0.75rem 1rem; outline: none; font-size: 0.85rem; user-select: none;" onmouseover="this.style.background='#fff9f5'" onmouseout="this.style.background='transparent'">
+                💡 ¿Qué significa cada crawler o bot? (Haz clic para ver explicaciones SEO)
+              </summary>
+              <div style="padding: 1.25rem; border-top: 1px solid #111111; background: #ffffff; border-radius: 0 0 6px 6px;">
+                <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.85rem; line-height: 1.6; color: #4b5563;">
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #111111;">Googlebot / Google Ads Bot:</strong> El rastreador oficial de Google. Escanea tu sitio web para indexarlo en los resultados de búsqueda globales y verificar las landings de anuncios en Google Ads.
+                  </li>
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #111111;">Bingbot:</strong> El bot de búsqueda oficial de Microsoft Bing. Su comportamiento es similar al de Googlebot, posicionando tu contenido en Bing y Yahoo.
+                  </li>
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #e8681a;">Scripts de Desarrollador (curl/python...):</strong> Peticiones automáticas realizadas mediante herramientas de terminal o librerías de software (como `curl`, `wget`, scripts de `Python`, `Node.js`, etc.). Esto suele deberse a desarrolladores realizando integraciones, rastreos manuales de scraping o peticiones técnicas automatizadas (no proceden de buscadores comerciales).
+                  </li>
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #111111;">AhrefsBot / SemrushBot / MJ12Bot:</strong> Bots comerciales de plataformas de marketing y SEO. Auditan la estructura, enlazado interno y velocidad de tu sitio para generar los datos mostrados en herramientas profesionales de SEO.
+                  </li>
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #111111;">Applebot:</strong> Robot oficial de Apple usado para nutrir las búsquedas de Siri y las sugerencias integradas en dispositivos macOS, iOS y iPadOS.
+                  </li>
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #111111;">Facebook Crawler / TwitterBot:</strong> Bots de redes sociales que acceden a tus páginas cuando alguien comparte un enlace en su plataforma. Escanean las etiquetas Open Graph (`og:image`, `og:title`) para componer la previsualización del enlace.
+                  </li>
+                  <li style="margin-bottom: 0.75rem;">
+                    <strong style="color: #111111;">Screaming Frog (Auditoría):</strong> Escáner técnico de SEO especializado que emula a los robots de búsqueda para encontrar enlaces rotos, redirecciones, bucles u optimizaciones de metaetiquetas.
+                  </li>
+                </ul>
+              </div>
+            </details>
           </div>
 
           <!-- Timeline por horas -->
@@ -1287,9 +1357,198 @@ function parseLogDateJs(dateStr) {
     };
 }
 
+function populateDateSelectors() {
+    const startSelect = document.getElementById('dateStartSelect');
+    const endSelect = document.getElementById('dateEndSelect');
+    if (!startSelect || !endSelect) return;
+    
+    // Obtener días únicos ordenados
+    const days = [...new Set(logEntries.map(e => e[7]))].filter(Boolean).sort();
+    
+    startSelect.innerHTML = '';
+    endSelect.innerHTML = '';
+    
+    const monthsNames = {
+        '01': 'Enero', '02': 'Febrero', '03': 'Marzo', '04': 'Abril',
+        '05': 'Mayo', '06': 'Junio', '07': 'Julio', '08': 'Agosto',
+        '09': 'Septiembre', '10': 'Octubre', '11': 'Noviembre', '12': 'Diciembre'
+    };
+    
+    days.forEach(d => {
+        const parts = d.split('-'); // [YYYY, MM, DD]
+        const display = `${parseInt(parts[2])} de ${monthsNames[parts[1]] || parts[1]}, ${parts[0]}`;
+        
+        const optStart = document.createElement('option');
+        optStart.value = d;
+        optStart.textContent = display;
+        startSelect.appendChild(optStart);
+        
+        const optEnd = document.createElement('option');
+        optEnd.value = d;
+        optEnd.textContent = display;
+        endSelect.appendChild(optEnd);
+    });
+    
+    if (days.length > 0) {
+        startSelect.value = days[0];
+        endSelect.value = days[days.length - 1];
+    }
+}
+
+function renderHttpStatusDesglose(filteredEntries) {
+    const contentDiv = document.getElementById('http-status-tab-content');
+    if (!contentDiv) return;
+    
+    // Agrupar peticiones por código y URLs
+    const groups = {
+        '2xx': {},
+        '3xx': {},
+        '4xx': {},
+        '5xx': {}
+    };
+    
+    filteredEntries.forEach(entry => {
+        const url = entry[2];
+        const status = entry[3].toString();
+        const firstNum = status.charAt(0);
+        let groupKey = '';
+        if (firstNum === '2') groupKey = '2xx';
+        else if (firstNum === '3') groupKey = '3xx';
+        else if (firstNum === '4') groupKey = '4xx';
+        else if (firstNum === '5') groupKey = '5xx';
+        
+        if (groupKey) {
+            if (!groups[groupKey][status]) {
+                groups[groupKey][status] = { total: 0, urls: {} };
+            }
+            groups[groupKey][status].total++;
+            groups[groupKey][status].urls[url] = (groups[groupKey][status].urls[url] || 0) + 1;
+        }
+    });
+    
+    // Obtener la pestaña activa actualmente
+    const activeTab = document.querySelector('.http-status-tab-btn.active')?.dataset.group || '4xx';
+    
+    // Actualizar los contadores numéricos en las pestañas en vivo
+    const groupsTotal = { '2xx': 0, '3xx': 0, '4xx': 0, '5xx': 0 };
+    Object.keys(groups).forEach(gk => {
+        Object.keys(groups[gk]).forEach(st => {
+            groupsTotal[gk] += groups[gk][st].total;
+        });
+        const badge = document.getElementById(`http-tab-badge-${gk}`);
+        if (badge) badge.innerText = new Intl.NumberFormat('es-ES').format(groupsTotal[gk]);
+    });
+    
+    // Obtener datos del grupo activo
+    const activeGroupData = groups[activeTab];
+    if (Object.keys(activeGroupData).length === 0) {
+        contentDiv.innerHTML = `<p style="text-align: center; color: var(--muted); padding: 2rem 0; font-size: 0.9rem; margin: 0;">No se registraron peticiones con códigos ${activeTab} en el rango seleccionado.</p>`;
+        return;
+    }
+    
+    // Ordenar códigos de estado por volumen descendente
+    const sortedStatusCodes = Object.entries(activeGroupData).sort((a, b) => b[1].total - a[1].total);
+    
+    let html = '';
+    sortedStatusCodes.forEach(([statusCode, data]) => {
+        // Ordenar las top 10 URLs por peticiones
+        const sortedUrls = Object.entries(data.urls).sort((a, b) => b[1] - a[1]).slice(0, 10);
+        
+        html += `
+        <details class="http-code-details-box" style="margin-bottom: 0.75rem; border: 1px solid #111111; border-radius: 6px; background: #ffffff;">
+            <summary style="font-weight: 700; cursor: pointer; color: #111111; padding: 0.75rem 1rem; user-select: none; display: flex; justify-content: space-between; align-items: center; outline: none; transition: background 0.15s; font-size: 0.9rem;" onmouseover="this.style.background='#fff9f5'" onmouseout="this.style.background='transparent'">
+                <span style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-family: monospace; font-size: 1.05rem; font-weight: 800; color: ${statusCode.startsWith('4') || statusCode.startsWith('5') ? '#ff4d4d' : '#2ecc71'};">
+                        [Código ${statusCode}]
+                    </span>
+                </span>
+                <span style="font-size: 0.85rem; color: #4b5563; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem;">
+                    ${new Intl.NumberFormat('es-ES').format(data.total)} peticiones
+                    <span style="color: #e8681a; font-weight: 700; font-size: 0.75rem;">▶ Desplegar URLs</span>
+                </span>
+            </summary>
+            <div style="padding: 1rem; border-top: 1px solid #111111; background: #fafafa;">
+                <p style="font-size: 0.85rem; font-weight: 700; color: #111111; margin: 0 0 0.75rem 0;">
+                    Top URLs que causaron el código ${statusCode}:
+                </p>
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #ffffff; border: 1px solid #dddddd;">
+                        <thead>
+                            <tr style="background: #111111; color: #ffffff;">
+                                <th style="padding: 0.5rem; text-align: left; font-size: 0.8rem; border: 1px solid #111111;">URL Afectada</th>
+                                <th style="padding: 0.5rem; text-align: right; width: 110px; font-size: 0.8rem; border: 1px solid #111111;">Peticiones</th>
+                                <th style="padding: 0.5rem; text-align: right; width: 90px; font-size: 0.8rem; border: 1px solid #111111;">% Código</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedUrls.map(([url, count]) => {
+                                const urlPct = ((count / data.total) * 100).toFixed(1);
+                                return `
+                                <tr>
+                                    <td style="padding: 0.5rem; border: 1px solid #eeeeee; font-family: monospace; font-size: 0.8rem; color: #e8681a; word-break: break-all;">${escapeHtml(url)}</td>
+                                    <td style="padding: 0.5rem; border: 1px solid #eeeeee; text-align: right; font-weight: 700; color: #111111;">${new Intl.NumberFormat('es-ES').format(count)}</td>
+                                    <td style="padding: 0.5rem; border: 1px solid #eeeeee; text-align: right; color: var(--muted);">${urlPct}%</td>
+                                </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
+        `;
+    });
+    contentDiv.innerHTML = html;
+}
+
+function switchHttpStatusTab(group) {
+    document.querySelectorAll('.http-status-tab-btn').forEach(btn => {
+        if (btn.dataset.group === group) {
+            btn.classList.add('active');
+            btn.style.background = '#111111';
+            btn.style.color = '#ffffff';
+        } else {
+            btn.classList.remove('active');
+            btn.style.background = '#ffffff';
+            btn.style.color = '#111111';
+        }
+    });
+    
+    // Disparar redibujado de la pestaña sin alterar filtros generales
+    const startHour = parseInt(document.getElementById('hourStartSlider').value);
+    const endHour = parseInt(document.getElementById('hourEndSlider').value);
+    const startDate = document.getElementById('dateStartSelect')?.value || '';
+    const endDate = document.getElementById('dateEndSelect')?.value || '';
+    
+    const filtered = logEntries.filter(entry => {
+        const hour = entry[1];
+        const dateString = entry[7];
+        if (startDate && dateString < startDate) return false;
+        if (endDate && dateString > endDate) return false;
+        return hour >= startHour && hour <= endHour;
+    });
+    
+    renderHttpStatusDesglose(filtered);
+}
+
 function humanizeFilteredDatesJs(startHour, endHour) {
-    const startParsed = parseLogDateJs(initialStartDate);
-    const endParsed = parseLogDateJs(initialEndDate);
+    const startDateSelect = document.getElementById('dateStartSelect');
+    const endDateSelect = document.getElementById('dateEndSelect');
+    
+    const activeStartDate = startDateSelect && startDateSelect.value ? startDateSelect.value : '';
+    const activeEndDate = endDateSelect && endDateSelect.value ? endDateSelect.value : '';
+    
+    function formatYmdToRaw(ymd) {
+        if (!ymd) return '';
+        const parts = ymd.split('-');
+        const monthsNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthIdx = parseInt(parts[1]) - 1;
+        const monthShort = monthsNames[monthIdx] || 'May';
+        return `${parseInt(parts[2])}/${monthShort}/${parts[0]}:00:00:00 +0000`;
+    }
+    
+    const startParsed = parseLogDateJs(activeStartDate ? formatYmdToRaw(activeStartDate) : initialStartDate);
+    const endParsed = parseLogDateJs(activeEndDate ? formatYmdToRaw(activeEndDate) : initialEndDate);
     if (!startParsed || !endParsed) return '-';
     
     const hStart = startHour.toString().padStart(2, '0') + ':00';
@@ -1303,9 +1562,13 @@ function humanizeFilteredDatesJs(startHour, endHour) {
         durationStr = hoursDiff === 0 ? "1 hora" : `${hoursDiff + 1} horas`;
         return `<strong>${startParsed.day} de ${startParsed.month}, ${startParsed.year}</strong><br><span style='font-size:0.75rem; color:#4b5563; font-weight:normal;'>De ${hStart} a ${hEnd}<br>(Duración: ${durationStr})</span>`;
     } else {
-        const daysDiff = endParsed.day - startParsed.day;
+        const dStart = new Date(activeStartDate || initialStartDate.split(':')[0]);
+        const dEnd = new Date(activeEndDate || initialEndDate.split(':')[0]);
+        const diffTime = Math.abs(dEnd - dStart);
+        const daysDiff = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
         if (daysDiff > 0) {
-            durationStr = `${daysDiff} ${daysDiff === 1 ? 'día' : 'días'} y ${hoursDiff + 1} horas`;
+            durationStr = `${daysDiff + 1} días y ${hoursDiff + 1} horas`;
         } else {
             durationStr = `${hoursDiff + 1} horas`;
         }
@@ -1394,12 +1657,25 @@ function updateHourlyFilter() {
     
     const actualEndHour = parseInt(document.getElementById('hourEndSlider').value);
     
+    const startDateSelect = document.getElementById('dateStartSelect');
+    const endDateSelect = document.getElementById('dateEndSelect');
+    let startDate = startDateSelect ? startDateSelect.value : '';
+    let endDate = endDateSelect ? endDateSelect.value : '';
+    
+    if (startDate && endDate && startDate > endDate) {
+        endDateSelect.value = startDate;
+        endDate = startDate;
+    }
+    
     const labelStart = startHour.toString().padStart(2, '0') + ':00';
     const labelEnd = actualEndHour.toString().padStart(2, '0') + ':59';
     document.getElementById('rangeLabel').innerText = `${labelStart} a ${labelEnd}`;
     
     const filtered = logEntries.filter(entry => {
         const hour = entry[1];
+        const dateString = entry[7];
+        if (startDate && dateString < startDate) return false;
+        if (endDate && dateString > endDate) return false;
         return hour >= startHour && hour <= actualEndHour;
     });
     
@@ -1469,6 +1745,9 @@ function updateHourlyFilter() {
         `;
     });
     document.getElementById('status-codes-bar-container').innerHTML = statusHtml;
+    
+    // Renderizar desglose detallado interactivo de códigos HTTP
+    renderHttpStatusDesglose(filtered);
     
     const botCounts = {};
     filtered.forEach(entry => {
@@ -1543,6 +1822,15 @@ function updateHourlyFilter() {
 function resetHourlyFilter() {
     document.getElementById('hourStartSlider').value = 0;
     document.getElementById('hourEndSlider').value = 23;
+    
+    const startSelect = document.getElementById('dateStartSelect');
+    const endSelect = document.getElementById('dateEndSelect');
+    if (startSelect && startSelect.options.length > 0) {
+        startSelect.selectedIndex = 0;
+    }
+    if (endSelect && endSelect.options.length > 0) {
+        endSelect.selectedIndex = endSelect.options.length - 1;
+    }
     updateHourlyFilter();
 }
 
@@ -1699,6 +1987,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const dashboard = document.getElementById('dashboard');
     if (dashboard) {
         dashboard.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Inicializar selectores de fecha y filtros si hay datos
+    if (typeof logEntries !== 'undefined' && logEntries.length > 0) {
+        populateDateSelectors();
+        updateHourlyFilter();
     }
     
     // Dibujar gráfico circular Donut
