@@ -1817,21 +1817,21 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           // Crear contenedor temporal para el clon
           const tempContainer = document.createElement('div');
           tempContainer.style.padding = '30px';
-          tempContainer.style.background = '#0a0a0a'; // Fondo oscuro para mantener coherencia
-          tempContainer.style.color = '#ffffff';
+          tempContainer.style.background = '#ffffff';
+          tempContainer.style.color = '#111111';
 
           // Inyectar cabecera corporativa
           const header = document.createElement('div');
           header.style.marginBottom = '25px';
-          header.style.borderBottom = '1px solid #333';
+          header.style.borderBottom = '1px solid #dddddd';
           header.style.paddingBottom = '15px';
           header.innerHTML = `
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
               <div style="background:#E8681A; color:#fff; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:18px;">VA</div>
               <h1 style="margin:0; font-size:22px; color:#E8681A; font-family: sans-serif;">Víctor Alonso SEO</h1>
             </div>
-            <h2 style="margin:0 0 8px 0; font-size:18px; color:#fff; font-family: sans-serif;">Informe de Auditoría de Cookies RGPD</h2>
-            <p style="margin:0; font-size:13px; color:#ccc; line-height:1.5; font-family: sans-serif;">
+            <h2 style="margin:0 0 8px 0; font-size:18px; color:#111111; font-family: sans-serif;">Informe de Auditoría de Cookies RGPD</h2>
+            <p style="margin:0; font-size:13px; color:#555555; line-height:1.5; font-family: sans-serif;">
               Documento generado por la herramienta de auditoría avanzada de victor-alonso.es.<br>
               A continuación se detallan las evidencias capturadas durante la simulación de navegación.
             </p>
@@ -1844,6 +1844,36 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           // Forzar estilos inline en el clon para asegurar que html2pdf los pilla bien
           clone.style.margin = '0';
           clone.style.fontFamily = 'sans-serif';
+          
+          // Parche de conversión a versión blanca / imprimible
+          clone.style.background = '#ffffff';
+          clone.style.color = '#111111';
+
+          clone.querySelectorAll('*').forEach(el => {
+            el.style.backgroundColor = '#ffffff';
+            el.style.color = '#111111';
+            el.style.boxShadow = 'none';
+            el.style.textShadow = 'none';
+            el.style.borderColor = '#dddddd';
+          });
+
+          clone.querySelectorAll('.card, .card--dark').forEach(el => {
+            el.style.background = '#ffffff';
+            el.style.color = '#111111';
+            el.style.border = '1px solid #dddddd';
+            el.style.borderRadius = '8px';
+          });
+
+          clone.querySelectorAll('h1, h2, h3, h4, strong').forEach(el => {
+            el.style.color = '#111111';
+          });
+
+          clone.querySelectorAll('.result-badge').forEach(el => {
+            el.style.color = '#111111';
+            el.style.background = '#f3f4f6';
+            el.style.border = '1px solid #dddddd';
+          });
+          
           tempContainer.appendChild(clone);
 
           // Opciones de html2pdf
@@ -1851,7 +1881,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             margin:       [10, 10, 10, 10], // top, left, bottom, right
             filename:     'auditoria-cookies-victor-alonso.pdf',
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true, logging: true, backgroundColor: '#0a0a0a' },
+            html2canvas:  { scale: 2, useCORS: true, logging: false, backgroundColor: '#ffffff' },
             jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
