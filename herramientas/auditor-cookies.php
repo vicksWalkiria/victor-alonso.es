@@ -902,7 +902,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="tool-h1">
     <div class="container">
       <h1 id="tool-h1">Auditor de Cookies RGPD: <span>comprueba si tu web carga cookies antes de aceptar</span></h1>
-      <p class="page-hero-desc">Audita tu web en vivo. Nuestro bot analiza si tu página respeta los estándares del RGPD/LOPDGDD bloqueando correctamente los scripts de seguimiento y las cookies de terceros antes de que el usuario haga clic en aceptar.</p>
+      <p class="page-hero-desc">Audita tu web en vivo. Mi bot analiza si tu página respeta los estándares del RGPD/LOPDGDD bloqueando correctamente los scripts de seguimiento y las cookies de terceros antes de que el usuario haga clic en aceptar.</p>
     </div>
   </section>
 
@@ -1127,7 +1127,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             <?php if ($result['ssl_invalid']): ?>
               <div style="background:rgba(241,196,15,0.1); border:1px solid rgba(241,196,15,0.3); color:#f1c40f; padding:0.75rem; border-radius:6px; font-size:0.8rem; margin-top:1.5rem; text-align:left;">
-                ⚠️ <strong>Aviso:</strong> El certificado SSL de esta web no es válido o ha expirado. Hemos procedido con el análisis desactivando la comprobación estricta de SSL.
+                ⚠️ <strong>Aviso:</strong> El certificado SSL de esta web no es válido o ha expirado. He procedido con el análisis desactivando la comprobación estricta de SSL.
               </div>
             <?php endif; ?>
           </div>
