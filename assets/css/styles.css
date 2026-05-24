@@ -1691,3 +1691,152 @@ strong {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Botones y Widget Flotante de WhatsApp ── */
+
+/* 1. Menú de Navegación */
+.nav-item--whatsapp {
+  display: none; /* Ocultar por defecto en escritorio */
+}
+
+@media (max-width: 900px) {
+  .nav-item--whatsapp {
+    display: block !important;
+  }
+  .nav-link--whatsapp-menu {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    color: #25D366 !important;
+    font-weight: 600;
+  }
+  .nav-link--whatsapp-menu:hover,
+  .nav-link--whatsapp-menu:focus {
+    color: #1ebd5b !important;
+    background: var(--bg);
+  }
+  .icon-whatsapp-menu {
+    flex-shrink: 0;
+  }
+}
+
+/* 2. Widget Flotante */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Animación de entrada y pulso sutil */
+.floating-whatsapp__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.floating-whatsapp__link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+  opacity: 0.3;
+  z-index: -1;
+  animation: waPulse 2s infinite;
+}
+
+.floating-whatsapp__link:hover {
+  transform: scale(1.08);
+  background: #1ebd5b;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+}
+
+.floating-whatsapp__link svg {
+  display: block;
+}
+
+/* Botón de Cierre (X) */
+.floating-whatsapp__close {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+  line-height: 1;
+  padding: 0 0 2px 0;
+}
+
+.floating-whatsapp__close:hover {
+  background: #e74c3c;
+  transform: scale(1.1);
+}
+
+/* Estado Oculto (desvanecimiento al cerrar) */
+.floating-whatsapp.dismissed {
+  opacity: 0;
+  transform: scale(0.8) translateY(10px);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes waPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Desplazar un poco el botón flotante en pantallas muy pequeñas para evitar tapar contenidos críticos */
+@media (max-width: 480px) {
+  .floating-whatsapp {
+    bottom: 20px;
+    right: 20px;
+  }
+  .floating-whatsapp__link {
+    width: 52px;
+    height: 52px;
+  }
+  .floating-whatsapp__link svg {
+    width: 26px;
+    height: 26px;
+  }
+}

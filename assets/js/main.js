@@ -121,4 +121,22 @@
     });
   }
 
+  // ── Widget Flotante de WhatsApp ──────────────────────────────────────────
+  const waWidget = document.getElementById('floating-whatsapp');
+  const waClose  = document.getElementById('floating-whatsapp-close');
+
+  if (waWidget && waClose) {
+    // Comprobar si ya fue descartado en el pasado
+    if (localStorage.getItem('whatsapp_dismissed') === 'true') {
+      waWidget.classList.add('dismissed');
+    }
+
+    waClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      waWidget.classList.add('dismissed');
+      localStorage.setItem('whatsapp_dismissed', 'true');
+    });
+  }
+
 })();
