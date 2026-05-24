@@ -233,9 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
             $rate_limit_res = check_rate_limit_and_log($url);
             if ($rate_limit_res !== true) {
                 $error = $rate_limit_res;
-            } else {
-            
-            if (isset($_POST['audit_id']) && preg_match('/^aud_[a-f0-9]{32}$/', $_POST['audit_id'])) {
+            } elseif (isset($_POST['audit_id']) && preg_match('/^aud_[a-f0-9]{32}$/', $_POST['audit_id'])) {
                 // Modo Avanzado: Leer resultado de Puppeteer
                 $audit_id = $_POST['audit_id'];
                 $result_file = dirname(__DIR__) . '/data/reports/' . $audit_id . '/result.json';
