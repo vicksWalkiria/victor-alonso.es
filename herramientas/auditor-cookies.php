@@ -121,6 +121,9 @@ function check_rate_limit_and_log($url_audited) {
         @mkdir($dir, 0755, true);
     }
 
+    $parsed_log_url = parse_url($url_audited);
+    $safe_logged_url = ($parsed_log_url['scheme'] ?? 'https') . '://' . ($parsed_log_url['host'] ?? '') . ($parsed_log_url['path'] ?? '/');
+
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     // Ofuscar IP con hash md5 y salt para cumplir con GDPR
     $ip_hash = md5($ip . 'cookie_audit_salt_55');
@@ -135,7 +138,7 @@ function check_rate_limit_and_log($url_audited) {
     $ip_count = 0;
     $domain_last_request_time = 0;
 
-    $parsed_current = parse_url($url_audited);
+    $parsed_current = parse_url($safe_logged_url);
     $current_domain = strtolower($parsed_current['host'] ?? '');
 
     foreach ($logs as $entry) {
@@ -173,7 +176,7 @@ function check_rate_limit_and_log($url_audited) {
     $cleaned_logs[] = [
         'ip_hash'   => $ip_hash,
         'timestamp' => $now,
-        'url'       => $url_audited,
+        'url'       => $safe_logged_url,
         'error'     => ''
     ];
 
@@ -188,13 +191,16 @@ function log_audit_error($url_audited, $error_msg) {
     $log_file = dirname(__DIR__) . '/data/auditor_logs.json';
     if (!file_exists($log_file)) return;
 
+    $parsed_log_url = parse_url($url_audited);
+    $safe_logged_url = ($parsed_log_url['scheme'] ?? 'https') . '://' . ($parsed_log_url['host'] ?? '') . ($parsed_log_url['path'] ?? '/');
+
     $logs = json_decode(@file_get_contents($log_file), true) ?: [];
     $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
     $ip_hash = md5($ip . 'cookie_audit_salt_55');
 
     // Buscar la última petición de esta IP y actualizar el mensaje de error
     for ($i = count($logs) - 1; $i >= 0; $i--) {
-        if ($logs[$i]['ip_hash'] === $ip_hash && $logs[$i]['url'] === $url_audited) {
+        if ($logs[$i]['ip_hash'] === $ip_hash && $logs[$i]['url'] === $safe_logged_url) {
             $logs[$i]['error'] = $error_msg;
             break;
         }
@@ -895,7 +901,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="tool-h1">
     <div class="container">
-      <h1 id="tool-h1">Auditor de Cookies <span>RGPD Gratis</span></h1>
+      <h1 id="tool-h1">Auditor de Cookies RGPD: <span>comprueba si tu web carga cookies antes de aceptar</span></h1>
       <p class="page-hero-desc">Audita tu web en vivo. Nuestro bot analiza si tu página respeta los estándares del RGPD/LOPDGDD bloqueando correctamente los scripts de seguimiento y las cookies de terceros antes de que el usuario haga clic en aceptar.</p>
     </div>
   </section>
@@ -1086,7 +1092,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
               <div>
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
-                  <span style="color:#cbd5e1;">💬 Consentimiento y Banner</span>
+                  <span style="color:#cbd5e1;">💬 Consentimiento y Banner *</span>
                   <strong style="color:#fff;"><?= $result['score_consentimiento'] ?>/100</strong>
                 </div>
                 <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
@@ -1113,6 +1119,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <div style="background:<?= $result['score_embeds'] >= 90 ? '#2ecc71' : ($result['score_embeds'] >= 50 ? '#f1c40f' : '#e74c3c') ?>; width:<?= $result['score_embeds'] ?>%; height:100%;"></div>
                 </div>
               </div>
+
+              <div style="font-size:0.72rem; color:#64748b; margin-top:0.25rem; font-style:italic; line-height:1.3;">
+                * Detección aproximada sobre HTML inicial.
+              </div>
             </div>
 
             <?php if ($result['ssl_invalid']): ?>
@@ -1130,7 +1140,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Infracciones y Advertencias</h3>
               <?php if (empty($result['violations'])): ?>
                 <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.92rem;">
-                  ✓ ¡Impecable! No se han detectado infracciones de cookies ni scripts cargados directamente. Tu web está bien configurada.
+                  ✓ Buen resultado: no se han detectado cookies, scripts o iframes problemáticos en el HTML inicial analizado.
                 </div>
               <?php else: ?>
                 <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:0.5rem;">Se han detectado los siguientes riesgos legales que podrían ser objeto de sanción por la AEPD (Agencia Española de Protección de Datos):</p>
