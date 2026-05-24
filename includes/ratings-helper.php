@@ -12,34 +12,34 @@ define('RATINGS_FILE', dirname(__DIR__) . '/data/ratings.json');
 function get_ratings() {
     $default_data = [
         'analizador-seo' => [
-            'count' => 48,
-            'sum' => 235,
-            'average' => 4.9
+            'count' => 3,
+            'sum' => 15,
+            'average' => 5.0
         ],
         'generador-schema-local' => [
-            'count' => 36,
-            'sum' => 176,
-            'average' => 4.9
+            'count' => 2,
+            'sum' => 10,
+            'average' => 5.0
         ],
         'calculadora-wpo' => [
-            'count' => 52,
-            'sum' => 255,
-            'average' => 4.9
+            'count' => 3,
+            'sum' => 15,
+            'average' => 5.0
         ],
         'extractor-entidades' => [
-            'count' => 42,
-            'sum' => 206,
-            'average' => 4.9
+            'count' => 2,
+            'sum' => 10,
+            'average' => 5.0
         ],
         'extractor-sitemap' => [
-            'count' => 29,
-            'sum' => 142,
-            'average' => 4.9
+            'count' => 2,
+            'sum' => 10,
+            'average' => 5.0
         ],
         'analizador-logs' => [
-            'count' => 32,
-            'sum' => 157,
-            'average' => 4.9
+            'count' => 2,
+            'sum' => 10,
+            'average' => 5.0
         ]
     ];
 
