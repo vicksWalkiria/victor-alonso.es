@@ -184,7 +184,7 @@ function render_rating_widget($tool_id, $title = '¿Te ha sido útil esta herram
                             s.style.cursor = 'default';
                         });
 
-                        statusDiv.innerHTML = `<span style="color: #2ecc71; font-weight: 600;">✓ ¡Gracias por tu valoración!</span> Nota media: <strong>\${res.average}</strong>/5 de <strong>\${res.count}</strong> valoraciones de trinchera.`;
+                        statusDiv.innerHTML = `<span style="color: #2ecc71; font-weight: 600;">✓ ¡Gracias por tu valoración!</span> Nota media: <strong>${res.average}</strong>/5 de <strong>${res.count}</strong> valoraciones de trinchera.`;
                     }
                 })
                 .catch(err => {
