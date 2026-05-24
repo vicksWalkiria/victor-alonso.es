@@ -279,9 +279,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                         <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         Exportar CSV
                     </button>
-                    <button class="tab-btn" id="btn-export-png" style="border-color: rgba(52,152,219,0.3); color: #3498db; background: rgba(52,152,219,0.04); display: flex; align-items: center;">
-                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                        Exportar PNG
+                    <button class="tab-btn" id="btn-export-pdf" style="border-color: rgba(231,76,60,0.3); color: #e74c3c; background: rgba(231,76,60,0.04); display: flex; align-items: center;">
+                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Exportar Informe PDF
                     </button>
                 </div>
             </div>
@@ -637,39 +637,94 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Configurar exportaciones
     document.getElementById('btn-export-csv').addEventListener('click', exportEntitiesToCSV);
-    document.getElementById('btn-export-png').addEventListener('click', exportGraphToPNG);
+    document.getElementById('btn-export-pdf').addEventListener('click', exportGraphToPDF);
     
     // Configurar interacciones del canvas
     setupCanvasInteraction();
 });
 
-// Exportar Grafo de Conocimiento Semántico como imagen PNG
-function exportGraphToPNG() {
+// Exportar Grafo de Conocimiento Semántico como PDF usando Puppeteer
+async function exportGraphToPDF() {
     if (nodes.length === 0) {
-        alert("Primero debes extraer entidades para generar el grafo.");
+        alert("Primero debes extraer entidades para generar el informe.");
         return;
     }
     
-    // Crear un canvas temporal para asegurar el fondo oscuro premium
+    const btn = document.getElementById('btn-export-pdf');
+    const originalContent = btn.innerHTML;
+    btn.innerHTML = '<span class="loader-spinner" style="display:inline-block; margin-right:5px; border-color:#e74c3c transparent transparent transparent; width:12px; height:12px; border-width:2px;"></span> Generando PDF...';
+    btn.disabled = true;
+
+    // Crear un canvas temporal para asegurar el fondo oscuro premium en la imagen
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = canvas.width;
     tempCanvas.height = canvas.height;
     const tempCtx = tempCanvas.getContext('2d');
-    
-    // Dibujar fondo oscuro
     tempCtx.fillStyle = '#060911';
     tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-    
-    // Pintar la imagen del canvas original
     tempCtx.drawImage(canvas, 0, 0);
+    const graphImage = tempCanvas.toDataURL("image/png");
+
+    let score = '0';
+    let gapCommon = '0';
+    let gapMissing = '0';
     
-    const dataURL = tempCanvas.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.download = "grafo-conocimiento-semantico.png";
-    link.href = dataURL;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (document.getElementById('score-text')) {
+        score = document.getElementById('score-text').innerText.replace('%', '');
+    }
+    if (document.getElementById('gap-common')) {
+        gapCommon = document.getElementById('gap-common').innerText;
+    }
+    if (document.getElementById('gap-missing')) {
+        gapMissing = document.getElementById('gap-missing').innerText;
+    }
+
+    const payload = {
+        url1: document.getElementById('sm-url1').value,
+        url2: document.getElementById('sm-url2').value,
+        entities: analysisData.entities1,
+        triples: analysisData.triples1,
+        graphImage: graphImage,
+        gapStats: {
+            score: score,
+            common: gapCommon,
+            missing: gapMissing
+        }
+    };
+
+    try {
+        const response = await fetch('/herramientas/extractor-entidades-pdf.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            if (blob.type === 'application/json') {
+                const text = await blob.text();
+                const res = JSON.parse(text);
+                alert('Error al generar PDF: ' + (res.message || 'Error desconocido'));
+            } else {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `informe-semantico-${Date.now()}.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            }
+        } else {
+            alert('Error al generar PDF: el servidor devolvió un error ' + response.status);
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Error de red o conexión al generar PDF.');
+    } finally {
+        btn.innerHTML = originalContent;
+        btn.disabled = false;
+    }
 }
 
 // Exportar listado de entidades a un archivo CSV estructurado

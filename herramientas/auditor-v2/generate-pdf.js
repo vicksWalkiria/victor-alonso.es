@@ -51,6 +51,10 @@ if (tool === 'logs') {
   const reportDir = path.join(reportsDir, 'logs');
   jsonPath = path.join(reportDir, `${auditId}.json`);
   pdfPath = path.join(reportDir, `${auditId}.pdf`);
+} else if (tool === 'entidades') {
+  const reportDir = path.join(reportsDir, 'entidades');
+  jsonPath = path.join(reportDir, `${auditId}.json`);
+  pdfPath = path.join(reportDir, `${auditId}.pdf`);
 } else {
   const reportDir = path.join(reportsDir, auditId);
   jsonPath = path.join(reportDir, 'result.json');
@@ -291,10 +295,118 @@ function buildLogsHtml(reportData) {
 </html>
 `;
 }
+}
+
+function buildEntidadesHtml(reportData) {
+  const formatList = (list, isTriple = false) => {
+    if (!list || list.length === 0) return '<li>No se detectaron datos.</li>';
+    if (isTriple) {
+      return list.map(item => `<li><span class="badge badge-info">${item.subject}</span> <em>${item.predicate}</em> <span class="badge badge-warning" style="color:#111">${item.object}</span></li>`).join('');
+    }
+    return list.map(item => `<li><span class="badge" style="background:#444;">${item.type}</span> <strong>${item.text}</strong></li>`).join('');
+  };
+
+  return `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Análisis Semántico</title>
+  <style>
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 40px; color: #111; background: #fff; }
+    .header { display: flex; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+    .logo { background: #9b59b6; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; margin-right: 15px; }
+    .title h1 { margin: 0; font-size: 24px; color: #9b59b6; }
+    .title h2 { margin: 5px 0 0 0; font-size: 16px; color: #666; font-weight: 400; }
+    .summary-card { border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 30px; background: #f9fafb; }
+    .url { font-size: 16px; font-weight: bold; margin-bottom: 5px; word-break: break-all; }
+    .section { margin-bottom: 30px; }
+    h3 { font-size: 18px; border-bottom: 1px solid #ddd; padding-bottom: 5px; color: #333; margin-bottom: 15px; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #fff; margin-right: 8px; margin-bottom: 4px; }
+    .badge-info { background: #3498db; }
+    .badge-warning { background: #f1c40f; color: #111; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .list-card { border: 1px solid #eee; padding: 15px; border-radius: 4px; background: #fff; }
+    .findings { list-style-type: none; padding: 0; margin: 0; font-size: 13px;}
+    .findings li { padding: 8px; border-bottom: 1px solid #eee; line-height: 1.4; }
+    .findings li:last-child { border-bottom: none; }
+    .graph-img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 8px; margin-top: 15px; background:#060911; }
+    .gap-box { text-align:center; padding: 15px; border-radius: 8px; background: #f9fafb; border: 1px solid #ddd; }
+    .gap-value { font-size: 28px; font-weight: bold; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">VA</div>
+    <div class="title">
+      <h1>Víctor Alonso SEO</h1>
+      <h2>Informe de Extracción Semántica y Knowledge Graph</h2>
+    </div>
+  </div>
+  
+  <div class="summary-card">
+    <div class="url">URL Analizada: <span style="font-weight:normal;">${reportData.url1}</span></div>
+    ${reportData.url2 ? `<div class="url" style="margin-top:10px; color:#e74c3c;">URL Competidor: <span style="font-weight:normal;">${reportData.url2}</span></div>` : ''}
+    <div style="font-size:12px; color:#888; margin-top:10px;">Fecha del análisis: ${reportData.date}</div>
+  </div>
+
+  <div class="section">
+    <h3>Grafo de Conocimiento Extraído</h3>
+    <p style="font-size: 14px; color: #555;">Representación visual de las entidades y relaciones lógicas (triples) detectadas en el contenido de la URL principal.</p>
+    ${reportData.graphImage ? `<img src="${reportData.graphImage}" class="graph-img" alt="Grafo Semántico">` : '<p>No se proporcionó imagen del grafo.</p>'}
+  </div>
+
+  ${reportData.url2 ? `
+  <div class="section">
+    <h3>Análisis de Brecha Semántica (Semantic Gap)</h3>
+    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+      <div class="gap-box" style="flex:1;">
+        <div style="font-size: 12px; color: #666; text-transform: uppercase; font-weight:bold;">Cobertura Estimada</div>
+        <div class="gap-value" style="color: #e8681a;">${reportData.gapStats.score}%</div>
+      </div>
+      <div class="gap-box" style="flex:1;">
+        <div style="font-size: 12px; color: #666; text-transform: uppercase; font-weight:bold;">Entidades Comunes</div>
+        <div class="gap-value" style="color: #333;">${reportData.gapStats.common}</div>
+      </div>
+      <div class="gap-box" style="flex:1;">
+        <div style="font-size: 12px; color: #666; text-transform: uppercase; font-weight:bold;">Brecha (Faltan)</div>
+        <div class="gap-value" style="color: #e74c3c;">${reportData.gapStats.missing}</div>
+      </div>
+    </div>
+  </div>
+  ` : ''}
+
+  <div class="section grid">
+    <div class="list-card" style="border-top: 4px solid #9b59b6;">
+      <h4 style="margin:0 0 15px 0; color:#9b59b6;">Entidades Clave Detectadas (${reportData.entities ? reportData.entities.length : 0})</h4>
+      <ul class="findings">
+        ${formatList(reportData.entities?.slice(0, 40))}
+        ${reportData.entities?.length > 40 ? `<li><em>...y ${reportData.entities.length - 40} entidades más</em></li>` : ''}
+      </ul>
+    </div>
+    
+    <div class="list-card" style="border-top: 4px solid #3498db;">
+      <h4 style="margin:0 0 15px 0; color:#3498db;">Triples Lógicos Principales (${reportData.triples ? reportData.triples.length : 0})</h4>
+      <ul class="findings">
+        ${formatList(reportData.triples?.slice(0, 30), true)}
+        ${reportData.triples?.length > 30 ? `<li><em>...y ${reportData.triples.length - 30} relaciones más</em></li>` : ''}
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; font-size: 12px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
+    Generado por la herramienta de Extracción Semántica NLP de victor-alonso.es.
+  </div>
+</body>
+</html>
+  `;
+}
 
 let htmlContent = '';
 if (tool === 'logs') {
   htmlContent = buildLogsHtml(reportData);
+} else if (tool === 'entidades') {
+  htmlContent = buildEntidadesHtml(reportData);
 } else {
   htmlContent = buildCookiesHtml(reportData);
 }
