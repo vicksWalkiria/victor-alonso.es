@@ -63,6 +63,55 @@ function format_log_date($date_str) {
     return $date_str;
 }
 
+/**
+ * Humaniza el intervalo de fechas del log con cálculo de duración preciso en español
+ */
+function humanize_log_dates($start_str, $end_str) {
+    if (empty($start_str) || empty($end_str)) return '-';
+    
+    $parts_start = explode(' ', $start_str);
+    $parts_end = explode(' ', $end_str);
+    
+    $dt_start = DateTime::createFromFormat('d/M/Y:H:i:s', $parts_start[0]);
+    $dt_end = DateTime::createFromFormat('d/M/Y:H:i:s', $parts_end[0]);
+    
+    if ($dt_start && $dt_end) {
+        $months = [
+            'Jan' => 'Enero', 'Feb' => 'Febrero', 'Mar' => 'Marzo', 'Apr' => 'Abril',
+            'May' => 'Mayo', 'Jun' => 'Junio', 'Jul' => 'Julio', 'Aug' => 'Agosto',
+            'Sep' => 'Septiembre', 'Oct' => 'Octubre', 'Nov' => 'Noviembre', 'Dec' => 'Diciembre'
+        ];
+        
+        $day_s = $dt_start->format('d');
+        $month_s = $months[$dt_start->format('M')] ?? $dt_start->format('M');
+        $year_s = $dt_start->format('Y');
+        $time_s = $dt_start->format('H:i');
+        
+        $day_e = $dt_end->format('d');
+        $month_e = $months[$dt_end->format('M')] ?? $dt_end->format('M');
+        $year_e = $dt_end->format('Y');
+        $time_e = $dt_end->format('H:i');
+        
+        $diff = $dt_start->diff($dt_end);
+        $duration_parts = [];
+        if ($diff->d > 0) $duration_parts[] = $diff->d . ($diff->d == 1 ? ' día' : ' días');
+        if ($diff->h > 0) $duration_parts[] = $diff->h . ($diff->h == 1 ? ' hora' : ' horas');
+        if ($diff->i > 0) $duration_parts[] = $diff->i . ($diff->i == 1 ? ' minuto' : ' minutos');
+        
+        $duration_str = implode(', ', $duration_parts);
+        if (empty($duration_str)) {
+            $duration_str = $diff->s . ($diff->s == 1 ? ' segundo' : ' segundos');
+        }
+        
+        if ($day_s === $day_e && $month_s === $month_e && $year_s === $year_e) {
+            return "<strong>$day_s de $month_s, $year_s</strong><br><span style='font-size:0.75rem; color:#4b5563; font-weight:normal;'>De $time_s a $time_e<br>(Duración: $duration_str)</span>";
+        } else {
+            return "<strong>Del $day_s de $month_s al $day_e de $month_e, $year_e</strong><br><span style='font-size:0.75rem; color:#4b5563; font-weight:normal;'>De $time_s a $time_e<br>(Duración: $duration_str)</span>";
+        }
+    }
+    return "$start_str a $end_str";
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stream = null;
     $source_name = '';
@@ -95,6 +144,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 1: IP, 2: Timestamp, 3: Método, 4: Path, 5: Status, 6: Bytes, 7: Referer (opcional), 8: User-Agent (opcional)
         $pattern = '/^(\S+) \S+ \S+ \[([^\]]+)\] "([A-Z]+) ([^" ]*) ?[^" ]*" (\d{3}) (\d+|-)(?: "([^"]*)" "([^"]*)")?$/';
         
+        $filter_hour_start = isset($_POST['filter_hour_start']) && $_POST['filter_hour_start'] !== '' ? (int)$_POST['filter_hour_start'] : null;
+        $filter_hour_end = isset($_POST['filter_hour_end']) && $_POST['filter_hour_end'] !== '' ? (int)$_POST['filter_hour_end'] : null;
+        
         $total_lines_checked = 0;
         $parsed_lines = 0;
         $total_bytes = 0;
@@ -126,11 +178,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             if (preg_match($pattern, $line, $matches)) {
+                $ip = $matches[1];
+                $date_raw = $matches[2];
+                
+                // Extraer hora y filtrar por rango si aplica
+                $hour = 0;
+                $colon_pos = strpos($date_raw, ':');
+                if ($colon_pos !== false && strlen($date_raw) >= $colon_pos + 3) {
+                    $hour = (int)substr($date_raw, $colon_pos + 1, 2);
+                }
+                
+                if ($filter_hour_start !== null && $filter_hour_end !== null) {
+                    if ($hour < $filter_hour_start || $hour > $filter_hour_end) {
+                        $has_valid_format = true; // El formato es correcto, aunque se filtre
+                        continue;
+                    }
+                }
+                
                 $has_valid_format = true;
                 $parsed_lines++;
                 
-                $ip = $matches[1];
-                $date_raw = $matches[2];
                 $method = $matches[3];
                 $path = $matches[4];
                 $status = (int)$matches[5];
@@ -672,6 +739,36 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
           </div>
 
+          <!-- Opciones Avanzadas Colapsables (Intervalo de Horas) -->
+          <details style="margin-top: 1.5rem; margin-bottom: 2rem; border: 1px solid #111111; border-radius: 6px; background: #fcfcfc;">
+            <summary style="font-weight: 700; cursor: pointer; color: #111111; user-select: none; padding: 0.75rem 1rem; outline: none; border-radius: 6px; transition: background 0.2s;" onmouseover="this.style.background='#fff9f5'" onmouseout="this.style.background='transparent'">
+              ⚙️ Opciones de Filtrado Avanzado (Intervalo de Horas)
+            </summary>
+            <div style="padding: 1.25rem; border-top: 1px solid #111111; display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center; background: #ffffff; border-radius: 0 0 6px 6px;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label style="font-size: 0.85rem; font-weight: 700; color: #111111;">Hora de Inicio:</label>
+                <select name="filter_hour_start" class="form-input" style="width: auto; padding: 0.35rem 0.75rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 600;">
+                  <option value="">-- Sin limitar --</option>
+                  <?php for($i=0; $i<24; $i++): $h = str_pad($i, 2, '0', STR_PAD_LEFT); ?>
+                    <option value="<?= $h ?>" <?= isset($_POST['filter_hour_start']) && $_POST['filter_hour_start'] === $h ? 'selected' : '' ?>><?= $h ?>:00</option>
+                  <?php endfor; ?>
+                </select>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label style="font-size: 0.85rem; font-weight: 700; color: #111111;">Hora de Fin:</label>
+                <select name="filter_hour_end" class="form-input" style="width: auto; padding: 0.35rem 0.75rem; border: 1px solid #111111; border-radius: 4px; background: #ffffff; color: #111111; font-weight: 600;">
+                  <option value="">-- Sin limitar --</option>
+                  <?php for($i=23; $i>=0; $i--): $h = str_pad($i, 2, '0', STR_PAD_LEFT); ?>
+                    <option value="<?= $h ?>" <?= isset($_POST['filter_hour_end']) && $_POST['filter_hour_end'] === $h ? 'selected' : '' ?>><?= $h ?>:59</option>
+                  <?php endfor; ?>
+                </select>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--muted); margin: 0; flex-grow: 1; line-height: 1.4;">
+                Si seleccionas una franja, el analizador ignorará los accesos fuera de ese rango (útil para diagnosticar caídas o picos de tráfico en horas concretas).
+              </p>
+            </div>
+          </details>
+
           <div style="text-align: right;">
             <button type="submit" class="btn btn--primary" style="margin-top: 0;">Procesar y Analizar Logs</button>
           </div>
@@ -715,10 +812,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <span class="metric-box-value"><?= $result['bandwidth_mb'] ?> MB</span>
             </div>
             <div class="metric-box">
-              <span class="metric-box-label">Fechas del Log</span>
-              <span class="metric-box-value" style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #111111; margin-top: 0.25rem;">
-                Inicio: <?= h(format_log_date($result['date_start'])) ?><br>
-                Fin: <?= h(format_log_date($result['date_end'])) ?>
+              <span class="metric-box-label">Intervalo y Duración</span>
+              <span class="metric-box-value" style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #111111; margin-top: 0.25rem; display: block;">
+                <?= humanize_log_dates($result['date_start'], $result['date_end']) ?>
               </span>
             </div>
           </div>
