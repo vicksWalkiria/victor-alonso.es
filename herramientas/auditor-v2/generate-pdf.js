@@ -248,7 +248,7 @@ const htmlContent = `
         '<li><span class="badge badge-success">✓</span> No se han detectado problemas críticos.</li>' : 
         reportData.summary.findings.map(f => {
           let bClass = f.severity === 'alto' ? 'badge-danger' : (f.severity === 'medio' ? 'badge-warning' : 'badge-success');
-          return \`<li><span class="badge \${bClass}">\${f.severity.toUpperCase()}</span> \${f.message}</li>\`;
+          return `<li><span class="badge ${bClass}">${f.severity.toUpperCase()}</span> ${f.message}</li>`;
         }).join('')
       }
     </ul>
@@ -260,29 +260,29 @@ const htmlContent = `
     <div class="phase-card">
       <div class="phase-title">Fase 1: Carga Inicial (Sin consentimiento)</div>
       <div><span class="label">Cookies detectadas:</span> <strong>${p_init.cookies.length}</strong></div>
-      ${p_init.cookies.length > 0 ? \`<div style="margin-top:5px;"><span class="value">\${formatCookies(p_init.cookies)}</span></div>\` : ''}
-      ${p_init.consentMode ? \`<div style="margin-top:10px;"><span class="label">Google Consent Mode:</span> <span class="value">Detectado</span></div>\` : ''}
+      ${p_init.cookies.length > 0 ? `<div style="margin-top:5px;"><span class="value">${formatCookies(p_init.cookies)}</span></div>` : ''}
+      ${p_init.consentMode ? `<div style="margin-top:10px;"><span class="label">Google Consent Mode:</span> <span class="value">Detectado</span></div>` : ''}
     </div>
 
     <div class="phase-card">
       <div class="phase-title">Fase 2: Tras pulsar "Rechazar todo"</div>
       ${!p_rej.clicked ? 
-        \`<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para rechazar cookies.</div>\` : 
-        \`<div><span class="badge badge-success">✓</span> Botón "\${p_rej.buttonText}" pulsado.</div>
-         <div style="margin-top:10px;"><span class="label">Cookies post-rechazo:</span> <strong>\${p_rej.cookies.length}</strong></div>
-         \${p_rej.cookies.length > 0 ? \`<div style="margin-top:5px;"><span class="value">\${formatCookies(p_rej.cookies)}</span></div>\` : ''}
-        \`
+        `<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para rechazar cookies.</div>` : 
+        `<div><span class="badge badge-success">✓</span> Botón "${p_rej.buttonText}" pulsado.</div>
+         <div style="margin-top:10px;"><span class="label">Cookies post-rechazo:</span> <strong>${p_rej.cookies.length}</strong></div>
+         ${p_rej.cookies.length > 0 ? `<div style="margin-top:5px;"><span class="value">${formatCookies(p_rej.cookies)}</span></div>` : ''}
+        `
       }
     </div>
 
     <div class="phase-card">
       <div class="phase-title">Fase 3: Tras pulsar "Aceptar todo"</div>
       ${!p_acc.clicked ? 
-        \`<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para aceptar cookies.</div>\` : 
-        \`<div><span class="badge badge-success">✓</span> Botón "\${p_acc.buttonText}" pulsado.</div>
-         <div style="margin-top:10px;"><span class="label">Cookies cargadas:</span> <strong>\${p_acc.cookies.length}</strong></div>
-         \${p_acc.cookies.length > 0 ? \`<div style="margin-top:5px;"><span class="value">\${formatCookies(p_acc.cookies)}</span></div>\` : ''}
-        \`
+        `<div><span class="badge badge-warning">⚠️</span> No se ha detectado el botón para aceptar cookies.</div>` : 
+        `<div><span class="badge badge-success">✓</span> Botón "${p_acc.buttonText}" pulsado.</div>
+         <div style="margin-top:10px;"><span class="label">Cookies cargadas:</span> <strong>${p_acc.cookies.length}</strong></div>
+         ${p_acc.cookies.length > 0 ? `<div style="margin-top:5px;"><span class="value">${formatCookies(p_acc.cookies)}</span></div>` : ''}
+        `
       }
     </div>
   </div>
