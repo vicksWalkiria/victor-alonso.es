@@ -754,6 +754,21 @@ strong {
   color: var(--white);
 }
 
+.cta-block--orange .btn--primary {
+  border: 2px solid var(--black);
+  background: var(--white);
+  color: var(--black);
+  font-weight: 800;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.cta-block--orange .btn--primary:hover {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+
 .cta-block--light {
   background: var(--bg);
 }
