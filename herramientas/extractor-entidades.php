@@ -275,12 +275,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     <button class="tab-btn" id="btn-tab-gap" onclick="switchVisualTab('tab-gap')" style="display: none;">Análisis de Brecha Semántica</button>
                 </div>
                 <div style="display: flex; gap: .75rem; flex-wrap: wrap;">
-                    <button class="tab-btn" id="btn-export-csv" style="border-color: rgba(46,204,113,0.3); color: #2ecc71; background: rgba(46,204,113,0.04); display: flex; align-items: center;">
-                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <button class="btn btn--secondary" id="btn-export-csv" style="display: flex; align-items: center;">
+                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                         Exportar CSV
                     </button>
-                    <button class="tab-btn" id="btn-export-pdf" style="border-color: rgba(231,76,60,0.3); color: #e74c3c; background: rgba(231,76,60,0.04); display: flex; align-items: center;">
-                        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <button class="btn btn--secondary" id="btn-export-pdf" style="display: flex; align-items: center;">
+                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: .4rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                         Exportar Informe PDF
                     </button>
                 </div>
