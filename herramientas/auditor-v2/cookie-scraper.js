@@ -267,6 +267,7 @@ async function run() {
         '--single-process'
       ],
       defaultViewport: { width: 1280, height: 800 },
+      pipe: true,
       timeout: 60000
     });
 
@@ -310,20 +311,25 @@ async function run() {
     // ==========================================
     // FASE 1: Carga Inicial (Sin Consentimiento)
     // ==========================================
+    console.log('[DEBUG] Starting Phase 1');
     updateStatus('running', 'Cargando web en estado limpio (sin consentimiento)...', 25);
     capturedRequests = [];
     
     try {
+      console.log('[DEBUG] Going to URL...');
       const response = await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      console.log('[DEBUG] URL loaded');
       result.final_url = page.url();
     } catch (gotoErr) {
       console.warn('Timeout during initial goto, proceeding anyway...');
       result.final_url = page.url();
     }
     
+    console.log('[DEBUG] Waiting 6s for JS...');
     // Wait a brief period for deferred JS to run
     await new Promise(r => setTimeout(r, 6000));
     
+    console.log('[DEBUG] Capturing cookies...');
     // Capture Phase 1 Data
     const initialCookies = await page.cookies();
     result.phases.initial.cookies = initialCookies.map(c => ({
@@ -335,6 +341,7 @@ async function run() {
       classification: classifyCookie(c.name)
     }));
 
+    console.log('[DEBUG] Capturing localStorage...');
     result.phases.initial.localStorage = await page.evaluate(() => {
       const items = [];
       for (let i = 0; i < localStorage.length; i++) {
@@ -344,6 +351,7 @@ async function run() {
       return items;
     });
 
+    console.log('[DEBUG] Capturing sessionStorage...');
     result.phases.initial.sessionStorage = await page.evaluate(() => {
       const items = [];
       for (let i = 0; i < sessionStorage.length; i++) {
@@ -355,6 +363,7 @@ async function run() {
 
     result.phases.initial.requests = [...capturedRequests];
 
+    console.log('[DEBUG] Checking consent mode...');
     // Check Consent Mode parameters in GA requests
     for (const req of capturedRequests) {
       const cm = extractConsentMode(req.url);
@@ -364,22 +373,28 @@ async function run() {
       }
     }
 
+    console.log('[DEBUG] Taking Phase 1 screenshot...');
     // Capture screenshot
     await page.screenshot({ path: path.join(reportsDir, 'fase1_inicio.png') });
 
     // ==========================================
     // FASE 2: Simulación de Clic en "Rechazar"
     // ==========================================
+    console.log('[DEBUG] Starting Phase 2');
     updateStatus('running', 'Buscando y simulando clic en "Rechazar cookies"...', 50);
     capturedRequests = [];
 
+    console.log('[DEBUG] Finding reject button...');
     const rejectBtn = await findButton(page, 'reject');
     if (rejectBtn) {
+      console.log('[DEBUG] Reject button found:', rejectBtn.text);
       result.phases.reject.clicked = true;
       result.phases.reject.buttonText = rejectBtn.text;
 
       // Click and wait
+      console.log('[DEBUG] Clicking reject button...');
       await rejectBtn.element.click();
+      console.log('[DEBUG] Waiting 4s after click...');
       await new Promise(r => setTimeout(r, 4000));
 
       const rejectCookies = await page.cookies();
