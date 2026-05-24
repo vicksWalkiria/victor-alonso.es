@@ -29,9 +29,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <style>
   .tool-pill {
-    background: rgba(232, 104, 26, 0.08) !important;
-    border: 1px solid rgba(232, 104, 26, 0.4) !important;
-    color: #ffffff !important;
+    background: rgba(232, 104, 26, 0.04) !important;
+    border: 1px solid rgba(232, 104, 26, 0.3) !important;
+    color: #e8681a !important;
     padding: 0.5rem 1.25rem;
     border-radius: 30px;
     font-size: 0.85rem;
@@ -41,24 +41,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+    box-shadow: 0 2px 5px rgba(232, 104, 26, 0.03);
   }
   .tool-pill:hover {
     background: var(--acento) !important;
-    color: #000000 !important;
+    color: #ffffff !important;
     border-color: var(--acento) !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.35);
-  }
-  .tool-pill--active {
-    background: var(--acento) !important;
-    border-color: var(--acento) !important;
-    color: #000000 !important;
-    font-weight: 700;
-  }
-  .tool-pill--active:hover {
-    background: #ffffff !important;
-    border-color: #ffffff !important;
-    color: #000000 !important;
+    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.2);
   }
   </style>
 
@@ -67,13 +57,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <!-- Pastillas de Acceso Rápido (Autoscroll) -->
       <div class="tools-pills-container" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem;justify-content:center;">
-        <span style="align-self:center;font-size:0.9rem;color:#fff;font-weight:600;margin-right:0.5rem">Accesos rápidos:</span>
+        <span style="align-self:center;font-size:0.9rem;color:#334155;font-weight:600;margin-right:0.5rem">Accesos rápidos:</span>
         <a href="#analizador-seo" class="tool-pill">🔍 Analizador SEO</a>
         <a href="#generador-schema" class="tool-pill">📦 Schema Local</a>
         <a href="#calculadora-wpo" class="tool-pill">🧮 Calculadora WPO</a>
         <a href="#extractor-sitemap" class="tool-pill">🗺️ Auditor Sitemap</a>
         <a href="#extractor-entidades" class="tool-pill">🧠 Extractor Semántico</a>
-        <a href="#analizador-logs" class="tool-pill tool-pill--active">📊 Analizador de Logs</a>
+        <a href="#analizador-logs" class="tool-pill">📊 Analizador de Logs</a>
       </div>
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
