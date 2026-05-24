@@ -1042,11 +1042,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </div>
 
       <!-- Formulario de Entrada -->
-      <div class="card card--dark" style="margin-bottom:3rem;">
+      <div class="card" style="margin-bottom: 3rem; background: #ffffff !important; border: 1px solid #111111 !important; border-top: 4px solid var(--orange) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important; border-radius: 8px !important; padding: 2rem;">
         <form method="POST" action="" style="display:flex; flex-direction:column; gap:1.25rem;">
           <div>
-            <label for="url" style="display:block; margin-bottom:0.5rem; font-weight:600; color:#fff;">Dirección URL a auditar</label>
-            <input type="text" id="url" name="url" placeholder="https://miweb.com" value="<?= h($url) ?>" required style="width:100%; padding:0.85rem 1rem; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:6px; color:#fff; font-size:1rem; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='var(--border)'">
+            <label for="url" style="display:block; margin-bottom:0.5rem; font-weight:600; color:#111111;">Dirección URL a auditar</label>
+            <input type="text" id="url" name="url" placeholder="https://miweb.com" value="<?= h($url) ?>" required style="width:100%; padding:0.85rem 1rem; background:#ffffff; border:1px solid #111111; border-radius:6px; color:#111111; font-size:1rem; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#111111'">
           </div>
           
           <?php if ($error): ?>
@@ -1060,8 +1060,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </div>
 
       <!-- Descargo de Responsabilidad (Disclaimer) -->
-      <div style="background: rgba(255,255,255,0.01); border: 1px dashed rgba(255,255,255,0.08); padding: 1.25rem; border-radius: 8px; font-size: 0.82rem; color: #94a3b8; margin-bottom: 3rem; line-height: 1.6;">
-        <strong style="color: #cbd5e1; display: block; margin-bottom: 0.25rem;">⚖️ Descargo de responsabilidad (Disclaimer)</strong>
+      <div style="background: #ffffff !important; border: 1px dashed #111111 !important; padding: 1.25rem; border-radius: 8px; font-size: 0.82rem; color: #111111 !important; margin-bottom: 3rem; line-height: 1.6; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important;">
+        <strong style="color: #111111 !important; display: block; margin-bottom: 0.25rem;">⚖️ Descargo de responsabilidad (Disclaimer)</strong>
         Esta herramienta se ofrece de forma gratuita y con fines meramente orientativos, didácticos y de auditoría técnica. El análisis automatizado se basa en la simulación de carga y en la detección de cookies comunes en cabeceras HTTP y scripts en el HTML inicial. Puesto que existen inyecciones dinámicas complejas y cookies de comportamiento que escapan al análisis estático, la herramienta podría ofrecer falsos positivos o negativos. <strong>Este informe no constituye, en ningún caso, asesoramiento legal ni formal</strong>. El propietario de esta web queda eximido de cualquier responsabilidad ante reclamaciones, inspecciones o sanciones impuestas por la AEPD (Agencia Española de Protección de Datos) u otras autoridades de control relativas al estado de cumplimiento del sitio analizado. Para una auditoría legal vinculante, consulta con un profesional del derecho digital o una asesoría jurídica especializada.
       </div>
 
