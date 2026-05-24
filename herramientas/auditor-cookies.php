@@ -1291,6 +1291,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
           
           <div style="display:flex; flex-direction:column; gap:2rem;">
+            <!-- Botón de descarga PDF -->
+            <button id="btn-download-pdf" class="btn btn--primary" style="align-self:flex-start; display:flex; align-items:center; gap:0.5rem; background:#E8681A; border:none; padding:0.75rem 1.25rem; font-weight:600; font-size:0.95rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Descargar Informe PDF
+            </button>
+
+            <div id="pdf-export-content" style="display:flex; flex-direction:column; gap:2rem;">
             
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Infracciones y Advertencias (Simulación Dinámica)</h3>
@@ -1373,8 +1380,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <?php endif; ?>
                 </div>
               </div>
-              
             </div>
+            </div> <!-- Cierre de pdf-export-content -->
           </div>
         </div>
 
@@ -1792,6 +1799,85 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
     </div>
   </section>
+
+  <!-- Script para Exportación a PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnPdf = document.getElementById('btn-download-pdf');
+      const content = document.getElementById('pdf-export-content');
+      
+      if (btnPdf && content) {
+        btnPdf.addEventListener('click', () => {
+          // Cambiar el botón temporalmente
+          const originalText = btnPdf.innerHTML;
+          btnPdf.innerHTML = '⏳ Generando PDF...';
+          btnPdf.disabled = true;
+
+          // Crear contenedor temporal para el clon
+          const tempContainer = document.createElement('div');
+          tempContainer.style.padding = '40px';
+          tempContainer.style.background = '#0a0a0a';
+          tempContainer.style.color = '#ffffff';
+          tempContainer.style.width = '800px'; // Forzar ancho fijo para el A4
+          tempContainer.style.position = 'absolute';
+          tempContainer.style.left = '-9999px';
+          tempContainer.style.top = '0';
+
+          // Inyectar cabecera corporativa
+          const header = document.createElement('div');
+          header.style.marginBottom = '30px';
+          header.style.borderBottom = '1px solid #333';
+          header.style.paddingBottom = '20px';
+          header.innerHTML = `
+            <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+              <div style="background:#E8681A; color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:20px;">VA</div>
+              <h1 style="margin:0; font-size:24px; color:#E8681A;">Víctor Alonso SEO</h1>
+            </div>
+            <h2 style="margin:0 0 10px 0; font-size:20px; color:#fff;">Informe de Auditoría de Cookies RGPD</h2>
+            <p style="margin:0; font-size:14px; color:#aaa; line-height:1.5;">
+              Documento generado automáticamente por la herramienta de auditoría avanzada de victor-alonso.es.<br>
+              A continuación se detallan las evidencias capturadas durante la simulación de navegación.
+            </p>
+          `;
+          
+          tempContainer.appendChild(header);
+
+          // Clonar el contenido de fases
+          const clone = content.cloneNode(true);
+          // Eliminar posibles márgenes excesivos o sombras que se vean mal en PDF
+          clone.style.margin = '0';
+          tempContainer.appendChild(clone);
+          document.body.appendChild(tempContainer);
+
+          // Opciones de html2pdf
+          const opt = {
+            margin:       0,
+            filename:     'auditoria-cookies-victor-alonso.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true, logging: false },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+          };
+
+          // Generar PDF
+          html2pdf().set(opt).from(tempContainer).save().then(() => {
+            // Restaurar estado
+            document.body.removeChild(tempContainer);
+            btnPdf.innerHTML = originalText;
+            btnPdf.disabled = false;
+          }).catch(err => {
+            console.error('Error generando PDF:', err);
+            document.body.removeChild(tempContainer);
+            btnPdf.innerHTML = '❌ Error al generar';
+            setTimeout(() => {
+              btnPdf.innerHTML = originalText;
+              btnPdf.disabled = false;
+            }, 3000);
+          });
+        });
+      }
+    });
+  </script>
 
   <!-- CTA final -->
   <?php
