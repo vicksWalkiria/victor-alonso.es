@@ -1074,15 +1074,15 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <span class="section-label" style="margin-bottom: 1rem;">Nivel de Cumplimiento</span>
             <div class="grade-circle"><?= $result['grade'] ?></div>
             <h2 style="font-size:1.6rem; color:#fff; margin-bottom:0.5rem;">Puntuación: <?= $result['score'] ?>/100</h2>
-            <p style="font-size:0.9rem; color:#94a3b8; line-height:1.5;"><?= h($result['grade_desc']) ?></p>
+            <p style="font-size:0.9rem; color:#ffffff; line-height:1.5;"><?= h($result['grade_desc']) ?></p>
             
             <!-- Subpuntuaciones / Desglose -->
             <div style="width:100%; margin-top:2rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08); text-align:left; display:flex; flex-direction:column; gap:1rem;">
-              <span style="font-size:0.75rem; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; display:block; margin-bottom:0.25rem;">Desglose de Puntuación</span>
+              <span style="font-size:0.75rem; color:#ff9f43; text-transform:uppercase; letter-spacing:0.05em; font-weight:700; display:block; margin-bottom:0.25rem;">Desglose de Puntuación</span>
               
               <div>
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
-                  <span style="color:#cbd5e1;">🔒 Bloqueo Técnico</span>
+                  <span style="color:#ffffff;">🔒 Bloqueo Técnico</span>
                   <strong style="color:#fff;"><?= $result['score_tecnico'] ?>/100</strong>
                 </div>
                 <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
@@ -1092,7 +1092,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
               <div>
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
-                  <span style="color:#cbd5e1;">💬 Consentimiento y Banner *</span>
+                  <span style="color:#ffffff;">💬 Consentimiento y Banner *</span>
                   <strong style="color:#fff;"><?= $result['score_consentimiento'] ?>/100</strong>
                 </div>
                 <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
@@ -1102,7 +1102,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
               <div>
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
-                  <span style="color:#cbd5e1;">📄 Páginas Legales</span>
+                  <span style="color:#ffffff;">📄 Páginas Legales</span>
                   <strong style="color:#fff;"><?= $result['score_legal'] ?>/100</strong>
                 </div>
                 <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
@@ -1112,7 +1112,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
               <div>
                 <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:0.25rem;">
-                  <span style="color:#cbd5e1;">🔌 Terceros Embebidos</span>
+                  <span style="color:#ffffff;">🔌 Terceros Embebidos</span>
                   <strong style="color:#fff;"><?= $result['score_embeds'] ?>/100</strong>
                 </div>
                 <div style="background:rgba(255,255,255,0.05); height:6px; border-radius:3px; overflow:hidden;">
@@ -1120,8 +1120,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 </div>
               </div>
 
-              <div style="font-size:0.72rem; color:#64748b; margin-top:0.25rem; font-style:italic; line-height:1.3;">
-                * Detección aproximada sobre HTML inicial.
+              <div style="font-size:0.72rem; color:#ffffff; margin-top:0.25rem; font-style:italic; line-height:1.3;">
+                <span style="color:var(--orange);">*</span> Detección aproximada sobre HTML inicial.
               </div>
             </div>
 
@@ -1143,7 +1143,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   ✓ Buen resultado: no se han detectado cookies, scripts o iframes problemáticos en el HTML inicial analizado.
                 </div>
               <?php else: ?>
-                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:0.5rem;">Se han detectado los siguientes riesgos legales que podrían ser objeto de sanción por la AEPD (Agencia Española de Protección de Datos):</p>
+                <p style="font-size:0.92rem; color:#ffffff; margin-bottom:0.5rem;">Se han detectado los siguientes riesgos legales que podrían ser objeto de sanción por la AEPD (Agencia Española de Protección de Datos):</p>
                 <ul class="violation-list">
                   <?php foreach ($result['violations'] as $violation): ?>
                     <li class="violation-item"><?= strip_tags($violation, '<strong><code>') ?></li>
@@ -1164,10 +1164,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     <strong style="color:#fff;">Prioridad de arreglo:</strong> 
                     <?php if ($result['score'] < 50): ?>
                       <span class="result-badge badge-danger">Alta</span>
-                      <p style="margin-top:0.5rem; color:#94a3b8; font-size:0.9rem;">Se están depositando cookies de terceros o cargando herramientas de seguimiento (como Analytics o píxeles) inmediatamente al entrar al sitio. Esto expone a la web a riesgos de cumplimiento normativo.</p>
+                      <p style="margin-top:0.5rem; color:#ffffff; font-size:0.9rem;">Se están depositando cookies de terceros o cargando herramientas de seguimiento (como Analytics o píxeles) inmediatamente al entrar al sitio. Esto expone a la web a riesgos de cumplimiento normativo.</p>
                     <?php else: ?>
                       <span class="result-badge badge-warning">Media</span>
-                      <p style="margin-top:0.5rem; color:#94a3b8; font-size:0.9rem;">El sitio web bloquea parte de los trackers, pero se han detectado deficiencias de configuración o la ausencia de páginas de políticas legales obligatorias.</p>
+                      <p style="margin-top:0.5rem; color:#ffffff; font-size:0.9rem;">El sitio web bloquea parte de los trackers, pero se han detectado deficiencias de configuración o la ausencia de páginas de políticas legales obligatorias.</p>
                     <?php endif; ?>
                   </div>
 
@@ -1211,30 +1211,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <!-- Estado del Banner y CMP Detectado -->
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Estado de Gestión de Consentimiento (Banner / CMP)</h3>
-              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1.5rem;">Análisis automatizado de la presencia de herramientas para la obtención del consentimiento y su configuración:</p>
+              <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1.5rem;">Análisis automatizado de la presencia de herramientas para la obtención del consentimiento y su configuración:</p>
               
               <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.5rem;">
                 <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
-                  <span style="font-size:0.8rem; color:#64748b; display:block; margin-bottom:0.25rem;">Gestor detectado (CMP)</span>
+                  <span style="font-size:0.8rem; color:#ff9f43; display:block; margin-bottom:0.25rem;">Gestor detectado (CMP)</span>
                   <strong style="color:#fff; font-size:1.05rem;"><?= h($result['detected_cmp']) ?></strong>
                 </div>
 
                 <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
-                  <span style="font-size:0.8rem; color:#64748b; display:block; margin-bottom:0.25rem;">Presencia de Banner</span>
+                  <span style="font-size:0.8rem; color:#ff9f43; display:block; margin-bottom:0.25rem;">Presencia de Banner</span>
                   <strong style="color:#fff; font-size:1.05rem;">
                     <?= $result['banner_detected'] ? '🟢 Detectado' : '🔴 No detectado en el HTML' ?>
                   </strong>
                 </div>
 
                 <div style="background:rgba(255,255,255,0.02); padding:1rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">
-                  <span style="font-size:0.8rem; color:#64748b; display:block; margin-bottom:0.25rem;">Google Consent Mode</span>
+                  <span style="font-size:0.8rem; color:#ff9f43; display:block; margin-bottom:0.25rem;">Google Consent Mode</span>
                   <strong style="color:#fff; font-size:1.05rem;">
                     <?= $result['consent_mode'] ? '🟢 Configurado' : '⚪ Sin indicios en el HTML' ?>
                   </strong>
                 </div>
               </div>
 
-              <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05); font-size:0.88rem; color:#94a3b8; display:flex; flex-direction:column; gap:0.5rem;">
+              <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.05); font-size:0.88rem; color:#ffffff; display:flex; flex-direction:column; gap:0.5rem;">
                 <div>
                   <strong>¿Opción de aceptación explícita?:</strong> 
                   <?= $result['accept_btn'] ? '🟢 Detectada (Botón de aceptación aproximado encontrado)' : '⚠️ No se ha detectado claramente un botón con texto de aceptar. Revisa visualmente.' ?>
@@ -1243,8 +1243,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <strong>¿Opción de rechazo al mismo nivel?:</strong> 
                   <?= $result['reject_btn'] ? '🟢 Detectada (Botón de rechazo aproximado encontrado)' : '🔴 No se detecta un botón con texto claro para rechazar. La AEPD exige ofrecer el botón de rechazar al mismo nivel de visibilidad que el de aceptar.' ?>
                 </div>
-                <div style="font-size:0.8rem; color:#64748b; margin-top:0.5rem; font-style:italic;">
-                  ℹ️ Esta detección se realiza sobre el HTML inicial. Si el banner se genera dinámicamente con JavaScript, puede requerir revisión manual.
+                <div style="font-size:0.8rem; color:#ffffff; margin-top:0.5rem; font-style:italic;">
+                  <span style="color:var(--orange);">ℹ️</span> Esta detección se realiza sobre el HTML inicial. Si el banner se genera dinámicamente con JavaScript, puede requerir revisión manual.
                 </div>
               </div>
             </div>
@@ -1252,13 +1252,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <!-- Menú Legal / Enlaces obligatorios -->
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Presencia de Páginas Legales Obligatorias</h3>
-              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Toda web corporativa o que recopile analíticas debe enlazar de manera visible estas políticas:</p>
+              <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Toda web corporativa o que recopile analíticas debe enlazar de manera visible estas políticas:</p>
               <div class="legal-grid">
                 <?php foreach ($result['legal_pages'] as $name => $data): ?>
                   <div class="legal-card">
                     <div style="font-size:1.25rem; margin-bottom:0.35rem;"><?= $data['found'] ? '🟢' : '🔴' ?></div>
                     <strong style="color:#fff; font-size:0.9rem; display:block;"><?= h($name) ?></strong>
-                    <span style="font-size:0.8rem; color:#64748b;"><?= $data['found'] ? 'Enlace detectado' : 'No encontrado' ?></span>
+                    <span style="font-size:0.8rem; color:<?= $data['found'] ? '#2ecc71' : '#e74c3c' ?>;"><?= $data['found'] ? 'Enlace detectado' : 'No encontrado' ?></span>
                   </div>
                 <?php endforeach; ?>
               </div>
@@ -1268,7 +1268,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <!-- Iframes de Terceros Detectados -->
               <div class="card card--dark" style="padding:2rem;">
                 <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Incrustados (Iframes) de Terceros</h3>
-                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Elementos embebidos en el HTML inicial que conectan con servicios externos. Deben estar bloqueados hasta obtener el consentimiento:</p>
+                <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Elementos embebidos en el HTML inicial que conectan con servicios externos. Deben estar bloqueados hasta obtener el consentimiento:</p>
                 <div style="overflow-x:auto;">
                   <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
                     <thead>
@@ -1281,7 +1281,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     </thead>
                     <tbody>
                       <?php foreach ($result['detected_iframes'] as $ifr): ?>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05); color:#cbd5e1;">
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05); color:#ffffff;">
                           <td style="padding:0.75rem 0.5rem;"><strong><?= h($ifr['name']) ?></strong></td>
                           <td style="padding:0.75rem 0.5rem; font-family:monospace; font-size:0.8rem; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= h($ifr['src']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
@@ -1289,7 +1289,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                               <?= h($ifr['severity']) ?>
                             </span>
                           </td>
-                          <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#94a3b8;"><?= h($ifr['desc']) ?></td>
+                          <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#ffffff;"><?= h($ifr['desc']) ?></td>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>
@@ -1302,7 +1302,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <!-- Peticiones de Red a Dominios Externos -->
               <div class="card card--dark" style="padding:2rem;">
                 <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Conexiones a Dominios de Terceros</h3>
-                <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Dominios externos referenciados en el HTML inicial mediante scripts, CSS, imágenes, iframes o preconexiones:</p>
+                <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Dominios externos referenciados en el HTML inicial mediante scripts, CSS, imágenes, iframes o preconexiones:</p>
                 <div style="overflow-x:auto;">
                   <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
                     <thead>
@@ -1314,9 +1314,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     </thead>
                     <tbody>
                       <?php foreach ($result['external_requests'] as $req): ?>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05); color:#cbd5e1;">
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05); color:#ffffff;">
                           <td style="padding:0.75rem 0.5rem; font-family:monospace;"><strong><?= h($req['domain']) ?></strong></td>
-                          <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#94a3b8;"><?= h($req['types']) ?></td>
+                          <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#ffffff;"><?= h($req['types']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
                             <span class="result-badge <?= $req['risk'] === 'Alto' ? 'badge-danger' : 'badge-warning' ?>">
                               <?= h($req['risk']) ?>
@@ -1333,7 +1333,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <!-- Tabla de Cookies de 1er Impacto -->
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cookies detectadas en cabeceras HTTP durante la carga inicial</h3>
-              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Las cookies que se envían en las cabeceras HTTP de respuesta inmediatamente al abrir la URL antes de pulsar ningún botón de banner:</p>
+              <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Las cookies que se envían en las cabeceras HTTP de respuesta inmediatamente al abrir la URL antes de pulsar ningún botón de banner:</p>
               
               <?php if (empty($result['cookies_set'])): ?>
                 <div style="background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.1); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
@@ -1352,10 +1352,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     </thead>
                     <tbody>
                       <?php foreach ($result['cookies_set'] as $name => $data): ?>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.03); color:#ffffff;">
                           <td style="padding:0.75rem 0.5rem; font-weight:700; color:#fff;"><?= h($name) ?></td>
-                          <td style="padding:0.75rem 0.5rem;"><?= h($data['provider']) ?></td>
-                          <td style="padding:0.75rem 0.5rem; color:#94a3b8;"><?= h($data['description']) ?></td>
+                          <td style="padding:0.75rem 0.5rem; color:#ffffff;"><?= h($data['provider']) ?></td>
+                          <td style="padding:0.75rem 0.5rem; color:#ffffff;"><?= h($data['description']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
                             <?php if ($data['category'] === 'necesaria'): ?>
                               <span class="result-badge badge-success">Necesaria / Técnica</span>
@@ -1374,7 +1374,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <!-- Tabla de Scripts Analizados -->
             <div class="card card--dark" style="padding:2rem;">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Scripts de Seguimiento en HTML</h3>
-              <p style="font-size:0.92rem; color:#94a3b8; margin-bottom:1rem;">Scripts de terceros detectados en el código de la web y su estado de bloqueo:</p>
+              <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Scripts de terceros detectados en el código de la web y su estado de bloqueo:</p>
               
               <?php if (empty($result['detected_scripts'])): ?>
                 <div style="background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.1); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
@@ -1393,11 +1393,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     </thead>
                     <tbody>
                       <?php foreach ($result['detected_scripts'] as $name => $data): ?>
-                        <tr style="border-bottom:1px solid rgba(255,255,255,0.03);">
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.03); color:#ffffff;">
                           <td style="padding:0.75rem 0.5rem; font-weight:700; color:#fff;"><?= h($name) ?></td>
-                          <td style="padding:0.75rem 0.5rem; font-family:monospace; font-size:0.8rem; color:#94a3b8;"><?= h($data['src']) ?></td>
+                          <td style="padding:0.75rem 0.5rem; font-family:monospace; font-size:0.8rem; color:#ffffff;"><?= h($data['src']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
-                            <?= $data['blocked'] ? 'Bloqueado (tipo text/plain)' : 'Ejecución directa' ?>
+                            <?= $data['blocked'] ? '<span style="color:#2ecc71;">Bloqueado (tipo text/plain)</span>' : '<span style="color:#e74c3c; font-weight:bold;">Ejecución directa</span>' ?>
                           </td>
                           <td style="padding:0.75rem 0.5rem;">
                             <?php if ($data['blocked']): ?>
@@ -1422,7 +1422,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <?php foreach ($result['redirects'] as $index => $r): ?>
                     <li>
                       <strong>Redirección [<?= $r['code'] ?>]</strong>: 
-                      <span style="font-family:monospace; font-size:0.8rem; color:#94a3b8; display:block; margin-top:0.15rem; word-break:break-all;"><?= h($r['from']) ?> → <?= h($r['to']) ?></span>
+                      <span style="font-family:monospace; font-size:0.8rem; color:#ffffff; display:block; margin-top:0.15rem; word-break:break-all;"><?= h($r['from']) ?> → <?= h($r['to']) ?></span>
                     </li>
                   <?php endforeach; ?>
                 </ol>
@@ -1470,8 +1470,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li><strong>CookieYes:</strong> Muy visual, ligero y configurable desde un panel en la nube. Gestiona los consentimientos de forma rápida y bloquea la inyección inicial con eficacia.</li>
           <li><strong>Real Cookie Banner / Borlabs Cookie:</strong> Dos opciones premium excelentes si buscas un control absoluto de scripts complejos, hojas de estilo o integraciones locales.</li>
         </ul>
-        <p style="margin-top:0.75rem; margin-bottom:0; font-size:0.85rem; color:#64748b; font-style:italic;">
-          * Ojo: Si usas plugins de optimización WPO (como WP Rocket o LiteSpeed Cache), asegúrate de excluir el script del banner de cookies de la minificación y combinación de JS para que no tarde en cargarse o rompa su funcionalidad.
+        <p style="margin-top:0.75rem; margin-bottom:0; font-size:0.85rem; color:#ffffff; font-style:italic;">
+          <span style="color:var(--orange);">*</span> Ojo: Si usas plugins de optimización WPO (como WP Rocket o LiteSpeed Cache), asegúrate de excluir el script del banner de cookies de la minificación y combinación de JS para que no tarde en cargarse o rompa su funcionalidad.
         </p>
       </div>
 
