@@ -493,23 +493,42 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo.</p>
       </div>
 
-      <form action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:2rem">
+      <form id="seo-analyzer-form" action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:2rem">
         <div class="form-group-row">
           <input 
             type="url" 
             name="url" 
+            id="seo-url-input"
             class="form-input" 
             value="<?= h($url ? $url : 'https://') ?>" 
             placeholder="https://tuweb.com/pagina-a-analizar" 
             required
             aria-label="URL de la página a analizar"
           >
-          <button type="submit" class="btn btn--primary">Analizar URL ahora</button>
+          <button type="submit" id="seo-submit-btn" class="btn btn--primary">Analizar URL ahora</button>
         </div>
         <?php if ($error): ?>
           <div class="alert alert--danger" style="margin-top:1rem"><?= h($error) ?></div>
         <?php endif; ?>
       </form>
+
+      <!-- Spinner de carga -->
+      <div id="seo-loading" style="display:none; margin:2rem 0; padding:2rem 1.5rem; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:12px; text-align:center;">
+        <div style="display:inline-block; width:44px; height:44px; border:4px solid rgba(232,104,26,0.2); border-top-color:var(--orange); border-radius:50%; animation:seo-spin 0.8s linear infinite; margin-bottom:1rem;"></div>
+        <p style="color:#fff; font-weight:600; font-size:1rem; margin:0 0 0.35rem;">Analizando tu URL en tiempo real…</p>
+        <p style="color:#94a3b8; font-size:0.85rem; margin:0;">Enviando petición HTTP directa al servidor remoto. Puede tardar entre 5 y 10 segundos.</p>
+      </div>
+      <style>
+        @keyframes seo-spin { to { transform: rotate(360deg); } }
+      </style>
+      <script>
+        document.getElementById('seo-analyzer-form').addEventListener('submit', function() {
+          document.getElementById('seo-loading').style.display = 'block';
+          var btn = document.getElementById('seo-submit-btn');
+          btn.disabled = true;
+          btn.textContent = 'Analizando…';
+        });
+      </script>
 
       <?php if ($result): ?>
         <div class="audit-results" style="margin-top:2.5rem">
