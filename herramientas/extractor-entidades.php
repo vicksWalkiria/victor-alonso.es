@@ -462,7 +462,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Quieres diseñar una estrategia de contenido semántico?',
     'subtitle'  => 'Mapeo el universo conceptual de tu nicho, detecto brechas de indexación de tus competidores y diseño arquitecturas web semánticas orientadas a dominar el Grafo de Conocimiento.',
     'btn_label' => 'Auditar mi semántica técnica',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

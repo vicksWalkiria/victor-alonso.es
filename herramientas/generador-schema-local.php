@@ -210,7 +210,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Quieres optimizar tu visibilidad local?',
     'subtitle'  => 'El SEO local va mucho más allá de una ficha en Maps. Consolidamos tu estructura web para que domines los resultados locales.',
     'btn_label' => 'Quiero una consultoría SEO local',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

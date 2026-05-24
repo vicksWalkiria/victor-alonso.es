@@ -339,7 +339,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Tu simulador arroja cifras rojas y lentitud?',
     'subtitle'  => 'No dejes dinero sobre la mesa por un hosting barato o código sin optimizar. Puedo meter tu web al quirófano WPO y arañar cada milisegundo.',
     'btn_label' => 'Optimizar mi velocidad web',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

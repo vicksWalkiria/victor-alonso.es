@@ -395,7 +395,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Tienes problemas de rastreo o indexación?',
     'subtitle'  => 'Audito tu archivo robots.txt, la lógica del sitemap, códigos de estado HTTP y arquitecturas web complejas para potenciar tu posicionamiento orgánico real.',
     'btn_label' => 'Auditar mi rastreo técnico',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

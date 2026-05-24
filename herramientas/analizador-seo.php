@@ -782,7 +782,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Tu diagnóstico muestra alertas rojas o lentitud?',
     'subtitle'  => 'El SEO técnico de tu web es el cimiento de todo tu negocio. Si no carga rápido y limpio, tu competencia te sacará ventaja.',
     'btn_label' => 'Solicitar diagnóstico manual gratuito',
-    'btn_href'  => '/contacto',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];
