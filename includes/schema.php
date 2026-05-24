@@ -44,6 +44,10 @@ function render_schemas(array $page): void {
             _schema_web_application($page['title'], $page['description'], $page['canonical'], $rating_data);
         }
     }
+
+    if (in_array('ItemList', $types) && !empty($page['item_list'])) {
+        _schema_item_list($page['title'], $page['canonical'], $page['item_list']);
+    }
 }
 
 // ─── Schemas privados ────────────────────────────────────────────────────────
@@ -222,13 +226,46 @@ function _schema_web_application(string $name, string $description, string $cano
         'applicationCategory' => 'BusinessApplication',
         'operatingSystem'   => 'All',
         'browserRequirements' => 'Requires HTML5, CSS3, JavaScript',
+        'isAccessibleForFree' => true,
+        'offers'            => [
+            '@type'         => 'Offer',
+            'price'         => '0',
+            'priceCurrency' => 'EUR',
+        ],
         'provider'          => ['@id' => SITE_URL . '/#person'],
         'aggregateRating'   => [
             '@type'       => 'AggregateRating',
             'ratingValue' => (string)$rating_data['average'],
             'ratingCount' => (string)$rating_data['count'],
             'bestRating'  => '5',
-            'worstRating' => '1'
-        ]
+            'worstRating' => '1',
+        ],
+    ]);
+}
+
+function _schema_item_list(string $name, string $canonical, array $items): void {
+    $list_items = [];
+    $pos = 1;
+    foreach ($items as $item) {
+        if (empty($item['name']) || empty($item['url'])) {
+            continue;
+        }
+        $list_items[] = [
+            '@type'    => 'ListItem',
+            'position' => $pos,
+            'name'     => $item['name'],
+            'url'      => SITE_URL . $item['url'],
+        ];
+        $pos++;
+    }
+    if (empty($list_items)) {
+        return;
+    }
+    _print_schema([
+        '@context'        => 'https://schema.org',
+        '@type'           => 'ItemList',
+        'name'            => $name,
+        'url'             => SITE_URL . $canonical,
+        'itemListElement' => $list_items,
     ]);
 }

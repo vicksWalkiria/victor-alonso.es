@@ -7,7 +7,15 @@ $page = page_config([
     'description'  => 'Échale un ojo a mis herramientas SEO gratuitas creadas a medida para auditoría web en vivo y generación de datos estructurados Schema JSON-LD.',
     'canonical'    => '/herramientas/',
     'body_class'   => 'page-herramientas-hub',
-    'schema_types' => [],
+    'schema_types' => ['ItemList'],
+    'item_list'    => [
+        ['name' => 'Analizador Técnico de URLs', 'url' => '/herramientas/analizador-seo/'],
+        ['name' => 'Generador Schema LocalBusiness JSON-LD', 'url' => '/herramientas/generador-schema-local/'],
+        ['name' => 'Calculadora de Pérdidas WPO', 'url' => '/herramientas/calculadora-wpo/'],
+        ['name' => 'Extractor y Auditor de Sitemaps XML', 'url' => '/herramientas/extractor-sitemap/'],
+        ['name' => 'Extractor Semántico de Entidades', 'url' => '/herramientas/extractor-entidades/'],
+        ['name' => 'Analizador de Logs Apache y Nginx', 'url' => '/herramientas/analizador-logs/'],
+    ],
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => ''],
