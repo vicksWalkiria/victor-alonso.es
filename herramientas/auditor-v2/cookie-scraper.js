@@ -265,7 +265,8 @@ async function run() {
         '--disable-gpu',
         '--no-zygote'
       ],
-      defaultViewport: { width: 1280, height: 800 }
+      defaultViewport: { width: 1280, height: 800 },
+      timeout: 60000
     });
 
     const page = await browser.newPage();
