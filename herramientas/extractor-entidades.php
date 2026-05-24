@@ -229,7 +229,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="extractor-grid">
         
         <!-- Bloque de Entrada / Configuración -->
-        <div class="card card--dark border-orange" style="padding: 2.5rem; border-radius: 1.5rem; margin-bottom: 2rem;">
+        <div class="card border-orange" style="padding: 2.5rem; border-radius: 1.5rem; margin-bottom: 2rem;">
             <h3 style="color: var(--orange); margin-bottom: 1.25rem; font-size: 1.3rem; font-weight: 800; text-transform: uppercase;">1. Configurar Análisis Semántico</h3>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
@@ -292,7 +292,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
                         <div style="text-align: left;">
                             <h3 style="color: #fff; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">Visualizador del Grafo Semántico</h3>
-                            <p style="font-size: .8rem; color: var(--muted); margin: 0;">Interactúa con el grafo: arrastra los nodos, haz zoom o filtra categorías abajo.</p>
+                            <p style="font-size: .8rem; color: #cbd5e1; margin: 0;">Interactúa con el grafo: arrastra los nodos, haz zoom o filtra categorías abajo.</p>
                         </div>
                         <div class="legend" style="display: flex; gap: .75rem; flex-wrap: wrap; font-size: .7rem;">
                             <span class="legend-badge org">Organizaciones / Marcas</span>
@@ -305,7 +305,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     
                     <!-- Filtros interactivos de tipo de entidad -->
                     <div style="display: flex; gap: 1.2rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;">
-                        <span style="font-size: .75rem; color: var(--muted); font-weight: 800; text-transform: uppercase;">Mostrar en Grafo:</span>
+                        <span style="font-size: .75rem; color: #fff; font-weight: 800; text-transform: uppercase;">Mostrar en Grafo:</span>
                         <label style="display: flex; align-items: center; gap: .4rem; font-size: .75rem; color: #cbd5e1; cursor: pointer; user-select: none;">
                             <input type="checkbox" id="filter-org" checked onchange="triggerFilterUpdate()" style="accent-color: #e8681a; cursor: pointer;"> <span style="color: #e8681a; font-weight: bold;">Organizaciones</span>
                         </label>
@@ -496,23 +496,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
 <style>
 /* Estilos premium de neón y badges */
-.tab-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.08);
-    color: var(--muted);
-    padding: .6rem 1.25rem;
-    border-radius: .75rem;
-    font-weight: 800;
-    font-size: .8rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-.tab-btn.active, .tab-btn:hover {
-    border-color: var(--orange);
-    color: #fff;
-    background: var(--orange);
-}
+
 .legend-badge {
     padding: .35rem .75rem;
     border-radius: .5rem;

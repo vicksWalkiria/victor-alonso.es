@@ -248,6 +248,49 @@ strong {
 
 .btn-group {
   display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Estilo de pastilla (Pill) para pestañas */
+.tab-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 0.75rem;
+}
+
+.card--dark .tab-container {
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn {
+  background: rgba(232, 104, 26, 0.04);
+  border: 1px solid rgba(232, 104, 26, 0.3);
+  color: var(--orange);
+  padding: 0.5rem 1.25rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 2px 5px rgba(232, 104, 26, 0.03);
+  cursor: pointer;
+}
+
+.tab-btn:hover, .tab-btn.active {
+  background: var(--orange);
+  color: #ffffff;
+  border-color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 104, 26, 0.25);
+}
+
   flex-wrap: wrap;
   gap: .75rem;
   align-items: center;

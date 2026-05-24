@@ -426,23 +426,6 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
 <style>
 /* Estilos premium específicos para el Extractor */
-.tab-btn {
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.08);
-    color: var(--muted);
-    padding: .6rem 1.25rem;
-    border-radius: .75rem;
-    font-weight: 800;
-    font-size: .8rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-.tab-btn.active, .tab-btn:hover {
-    border-color: var(--orange);
-    color: #fff;
-    background: rgba(232,104,26,.08);
-}
 .seo-table th {
     border-bottom: 2px solid rgba(255,255,255,0.08);
     color: #fff;

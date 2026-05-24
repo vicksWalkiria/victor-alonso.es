@@ -470,35 +470,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   }
 
   /* Estilos premium para el dashboard con colores corporativos (Blanco, Naranja, Negro) */
-  .tab-container {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    padding-bottom: 0.75rem;
-  }
-
-  .tab-button {
-    background: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    color: var(--muted);
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 600;
-    transition: all 0.3s;
-  }
-
-  .tab-button:hover {
-    color: #111;
-    background: rgba(0, 0, 0, 0.04);
-  }
-
-  .tab-button.active {
-    background: #e8681a !important;
-    color: #fff !important;
-    border-color: #e8681a !important;
+  .table-filter-container {
+    margin-bottom: 1rem;
   }
 
   .tab-content {
@@ -930,9 +903,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         style="margin-bottom: 3rem; background: #ffffff !important; border: 1px solid #111111 !important; border-top: 4px solid #e8681a !important; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important; border-radius: 8px !important; padding: 2rem;">
 
         <div class="tab-container">
-          <button type="button" class="tab-button active" onclick="switchTab('subir-archivo')">Subir Archivo (.log,
+          <button type="button" class="tab-btn active" onclick="switchTab('subir-archivo')">Subir Archivo (.log,
             .txt)</button>
-          <button type="button" class="tab-button" onclick="switchTab('pegar-texto')">Pegar Líneas de Log</button>
+          <button type="button" class="tab-btn" onclick="switchTab('pegar-texto')">Pegar Líneas de Log</button>
         </div>
 
         <form action="/herramientas/analizador-logs/" method="POST" enctype="multipart/form-data" id="logsForm">
@@ -1288,13 +1261,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <!-- Pestañas de Tablas Detalladas -->
           <div class="card card--dark">
             <div class="tab-container" style="border-bottom-color: rgba(0,0,0,0.05); flex-wrap: wrap; gap: 0.5rem;">
-              <button type="button" class="tab-button active" onclick="switchTableTab('table-urls-no-static')">URLs
+              <button type="button" class="tab-btn active" onclick="switchTableTab('table-urls-no-static')">URLs
                 Indexables (HTML)</button>
-              <button type="button" class="tab-button" onclick="switchTableTab('table-urls')">Todas las URLs</button>
-              <button type="button" class="tab-button" onclick="switchTableTab('table-404s')"
+              <button type="button" class="tab-btn" onclick="switchTableTab('table-urls')">Todas las URLs</button>
+              <button type="button" class="tab-btn" onclick="switchTableTab('table-404s')"
                 style="color: #ff6b6b;">Errores 404 (SEO Redir)</button>
-              <button type="button" class="tab-button" onclick="switchTableTab('table-ips')">IPs más Activas</button>
-              <button type="button" class="tab-button" onclick="switchTableTab('table-bots')">Bots / User-Agents</button>
+              <button type="button" class="tab-btn" onclick="switchTableTab('table-ips')">IPs más Activas</button>
+              <button type="button" class="tab-btn" onclick="switchTableTab('table-bots')">Bots / User-Agents</button>
             </div>
 
             <!-- Tabla 1: URLs Indexables / No Estáticas -->
@@ -2365,7 +2338,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     document.querySelectorAll('#logsForm .tab-content').forEach(el => {
       el.classList.remove('active');
     });
-    document.querySelectorAll('#logsForm .tab-button').forEach(el => {
+    document.querySelectorAll('#logsForm .tab-btn').forEach(el => {
       el.classList.remove('active');
     });
 
@@ -2378,7 +2351,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     document.querySelectorAll('.table-tab-content').forEach(el => {
       el.style.display = 'none';
     });
-    event.currentTarget.closest('.tab-container').querySelectorAll('.tab-button').forEach(el => {
+    event.currentTarget.closest('.tab-container').querySelectorAll('.tab-btn').forEach(el => {
       el.classList.remove('active');
     });
 
