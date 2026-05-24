@@ -102,7 +102,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
             <li><a href="/servicios/seo-tecnico/" style="color:var(--orange)">→ SEO Técnico</a></li>
             <li><a href="/servicios/seo-albacete/" style="color:var(--orange)">→ SEO en Albacete</a></li>
-            <li><a href="/casos-reales" style="color:var(--orange)">→ Casos reales</a></li>
+            <li><a href="/casos-reales/" style="color:var(--orange)">→ Casos reales</a></li>
           </ul>
         </div>
       </aside>

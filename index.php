@@ -31,7 +31,7 @@ require __DIR__ . '/includes/header.php';
           Sin intermediarios, sin humo.
         </p>
         <div class="hero-actions">
-          <a href="/contacto" class="btn btn--primary btn--lg">Solicitar diagnóstico SEO</a>
+          <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico SEO</a>
           <a href="#servicios" class="btn btn--ghost btn--lg">Ver servicios</a>
         </div>
       </div>

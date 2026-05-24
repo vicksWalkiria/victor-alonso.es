@@ -67,7 +67,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
             <li><a href="/servicios/desarrollo-wordpress/" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
             <li><a href="/servicios/plugins-wordpress/" style="color:var(--orange)">→ Plugins a medida</a></li>
-            <li><a href="/casos-reales" style="color:var(--orange)">→ Casos reales</a></li>
+            <li><a href="/casos-reales/" style="color:var(--orange)">→ Casos reales</a></li>
           </ul>
         </div>
       </aside>
