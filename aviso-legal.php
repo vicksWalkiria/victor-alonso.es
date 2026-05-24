@@ -1,6 +1,6 @@
 <?php
-require_once dirname(__DIR__) . '/includes/config.php';
-require_once dirname(__DIR__) . '/includes/schema.php';
+require_once __DIR__ . '/includes/config.php';
+require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
   'title'       => 'Aviso Legal',
@@ -13,8 +13,8 @@ $page = page_config([
     ['label' => 'Aviso Legal', 'url' => ''],
   ],
 ]);
-require dirname(__DIR__) . '/includes/header.php';
-require dirname(__DIR__) . '/includes/breadcrumbs.php';
+require __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/breadcrumbs.php';
 ?>
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
@@ -61,4 +61,4 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     </div>
   </section>
 </main>
-<?php require dirname(__DIR__) . '/includes/footer.php'; ?>
+<?php require __DIR__ . '/includes/footer.php'; ?>
