@@ -312,7 +312,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $detected_bot ? $detected_bot : '',
                     $is_static ? 1 : 0,
                     $bytes,
-                    $date_ymd
+                    $date_ymd,
+                    $user_agent
                 ];
             } else {
                 // Si leemos 15 líneas y ninguna coincide, rechazamos por formato
@@ -1399,7 +1400,7 @@ function renderHttpStatusDesglose(filteredEntries) {
     const contentDiv = document.getElementById('http-status-tab-content');
     if (!contentDiv) return;
     
-    // Agrupar peticiones por código y URLs
+    // Agrupar peticiones por código y URLs con detalles
     const groups = {
         '2xx': {},
         '3xx': {},
@@ -1422,7 +1423,16 @@ function renderHttpStatusDesglose(filteredEntries) {
                 groups[groupKey][status] = { total: 0, urls: {} };
             }
             groups[groupKey][status].total++;
-            groups[groupKey][status].urls[url] = (groups[groupKey][status].urls[url] || 0) + 1;
+            if (!groups[groupKey][status].urls[url]) {
+                groups[groupKey][status].urls[url] = { total: 0, details: [] };
+            }
+            groups[groupKey][status].urls[url].total++;
+            groups[groupKey][status].urls[url].details.push({
+                ip: entry[0],
+                time: entry[1].toString().padStart(2, '0') + ':00',
+                date: entry[7],
+                ua: entry[8] || 'Desconocido'
+            });
         }
     });
     
@@ -1451,8 +1461,8 @@ function renderHttpStatusDesglose(filteredEntries) {
     
     let html = '';
     sortedStatusCodes.forEach(([statusCode, data]) => {
-        // Ordenar las top 10 URLs por peticiones
-        const sortedUrls = Object.entries(data.urls).sort((a, b) => b[1] - a[1]).slice(0, 10);
+        // Ordenar las top 15 URLs por peticiones
+        const sortedUrls = Object.entries(data.urls).sort((a, b) => b[1].total - a[1].total).slice(0, 15);
         
         html += `
         <details class="http-code-details-box" style="margin-bottom: 0.75rem; border: 1px solid #111111; border-radius: 6px; background: #ffffff;">
@@ -1469,7 +1479,7 @@ function renderHttpStatusDesglose(filteredEntries) {
             </summary>
             <div style="padding: 1rem; border-top: 1px solid #111111; background: #fafafa;">
                 <p style="font-size: 0.85rem; font-weight: 700; color: #111111; margin: 0 0 0.75rem 0;">
-                    Top URLs que causaron el código ${statusCode}:
+                    Top URLs que causaron el código ${statusCode} (haz clic en cualquier URL para desglosar sus peticiones detalladas):
                 </p>
                 <div style="overflow-x: auto;">
                     <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #ffffff; border: 1px solid #dddddd;">
@@ -1481,13 +1491,47 @@ function renderHttpStatusDesglose(filteredEntries) {
                             </tr>
                         </thead>
                         <tbody>
-                            ${sortedUrls.map(([url, count]) => {
-                                const urlPct = ((count / data.total) * 100).toFixed(1);
+                            ${sortedUrls.map(([url, countObj]) => {
+                                const urlPct = ((countObj.total / data.total) * 100).toFixed(1);
                                 return `
-                                <tr>
+                                <tr style="border-bottom: 1px solid #eeeeee;">
                                     <td style="padding: 0.5rem; border: 1px solid #eeeeee; font-family: monospace; font-size: 0.8rem; color: #e8681a; word-break: break-all;">${escapeHtml(url)}</td>
-                                    <td style="padding: 0.5rem; border: 1px solid #eeeeee; text-align: right; font-weight: 700; color: #111111;">${new Intl.NumberFormat('es-ES').format(count)}</td>
+                                    <td style="padding: 0.5rem; border: 1px solid #eeeeee; text-align: right; font-weight: 700; color: #111111;">${new Intl.NumberFormat('es-ES').format(countObj.total)}</td>
                                     <td style="padding: 0.5rem; border: 1px solid #eeeeee; text-align: right; color: var(--muted);">${urlPct}%</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" style="padding: 0; border: none; background: #fafafa;">
+                                        <details style="margin: 0.25rem 0.5rem 0.5rem 0.5rem; border: 1px solid #dddddd; border-radius: 4px; background: #ffffff;">
+                                            <summary style="font-size: 0.75rem; color: #e8681a; cursor: pointer; font-weight: 700; padding: 0.35rem 0.5rem; outline: none; user-select: none;" onmouseover="this.style.background='#fff9f5'" onmouseout="this.style.background='transparent'">
+                                                🔎 Ver IPs y User Agents de esta URL (${countObj.total} hits)
+                                            </summary>
+                                            <div style="padding: 0.75rem; max-height: 200px; overflow-y: auto; border-top: 1px solid #eeeeee;">
+                                                <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem;">
+                                                    <thead>
+                                                        <tr style="background: #111111; color: #ffffff; font-weight: 700;">
+                                                            <th style="padding: 0.35rem; text-align: left;">IP</th>
+                                                            <th style="padding: 0.35rem; text-align: left;">Fecha / Hora</th>
+                                                            <th style="padding: 0.35rem; text-align: left;">User Agent</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        ${countObj.details.slice(0, 30).map(d => `
+                                                            <tr style="border-bottom: 1px solid #f3f4f6;">
+                                                                <td style="padding: 0.35rem; font-family: monospace; font-weight: 600; color: #111111;">${escapeHtml(d.ip)}</td>
+                                                                <td style="padding: 0.35rem; color: #4b5563; white-space: nowrap;">${escapeHtml(d.date)} ${escapeHtml(d.time)}</td>
+                                                                <td style="padding: 0.35rem; color: #6b7280; font-family: monospace; font-size: 0.7rem; word-break: break-all;" title="${escapeHtml(d.ua)}">${escapeHtml(d.ua.length > 85 ? d.ua.substring(0, 82) + '...' : d.ua)}</td>
+                                                            </tr>
+                                                        `).join('')}
+                                                        ${countObj.details.length > 30 ? `
+                                                            <tr>
+                                                                <td colspan="3" style="text-align: center; color: var(--muted); padding: 0.5rem; font-style: italic;">... y ${countObj.details.length - 30} peticiones más ...</td>
+                                                            </tr>
+                                                        ` : ''}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </details>
+                                    </td>
                                 </tr>
                                 `;
                             }).join('')}
@@ -1753,12 +1797,19 @@ function updateHourlyFilter() {
     filtered.forEach(entry => {
         const bot = entry[4];
         if (bot) {
-            botCounts[bot] = (botCounts[bot] || 0) + 1;
+            if (!botCounts[bot]) {
+                botCounts[bot] = { total: 0, uas: {}, urls: {} };
+            }
+            botCounts[bot].total++;
+            const ua = entry[8] || 'Desconocido';
+            const url = entry[2];
+            botCounts[bot].uas[ua] = (botCounts[bot].uas[ua] || 0) + 1;
+            botCounts[bot].urls[url] = (botCounts[bot].urls[url] || 0) + 1;
         }
     });
     
-    const sortedBots = Object.entries(botCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
-    const maxBotHits = sortedBots.length > 0 ? sortedBots[0][1] : 0;
+    const sortedBots = Object.entries(botCounts).sort((a, b) => b[1].total - a[1].total).slice(0, 10);
+    const maxBotHits = sortedBots.length > 0 ? sortedBots[0][1].total : 0;
     
     const botsContainer = document.getElementById('bots-bar-container');
     if (botsContainer) {
@@ -1766,18 +1817,71 @@ function updateHourlyFilter() {
             botsContainer.innerHTML = '<p style="font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 1.5rem;">No se han detectado firmas conocidas de bots en este rango.</p>';
         } else {
             let botsHtml = '';
-            sortedBots.forEach(([botName, botHits]) => {
-                const botPct = maxBotHits > 0 ? ((botHits / maxBotHits) * 100).toFixed(1) : '0';
-                const pctTotal = parsedCount > 0 ? ((botHits / parsedCount) * 100).toFixed(1) : '0';
-                const formattedBotHits = new Intl.NumberFormat('es-ES').format(botHits);
+            sortedBots.forEach(([botName, data]) => {
+                const botPct = maxBotHits > 0 ? ((data.total / maxBotHits) * 100).toFixed(1) : '0';
+                const pctTotal = parsedCount > 0 ? ((data.total / parsedCount) * 100).toFixed(1) : '0';
+                const formattedBotHits = new Intl.NumberFormat('es-ES').format(data.total);
+                
+                const sortedUas = Object.entries(data.uas).sort((a, b) => b[1] - a[1]).slice(0, 5);
+                const sortedUrls = Object.entries(data.urls).sort((a, b) => b[1] - a[1]).slice(0, 10);
+                
                 botsHtml += `
-                    <div class="chart-bar-item">
-                        <span class="chart-bar-label">${escapeHtml(botName)}</span>
-                        <div class="chart-bar-track">
-                            <div class="chart-bar-fill bar-color-googlebot" style="width: ${botPct}%;"></div>
+                    <details style="margin-bottom: 0.75rem; border: 1px solid #111111; border-radius: 6px; background: #ffffff;">
+                        <summary style="font-weight: 700; cursor: pointer; color: #111111; padding: 0.75rem 1rem; user-select: none; display: flex; align-items: center; outline: none; transition: background 0.15s; font-size: 0.9rem;" onmouseover="this.style.background='#fff9f5'" onmouseout="this.style.background='transparent'">
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-grow: 1; min-width: 0;">
+                                <span style="width: 140px; font-weight: 700; color: #111111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0;" title="${escapeHtml(botName)}">${escapeHtml(botName)}</span>
+                                <div class="chart-bar-track" style="margin: 0; flex-grow: 1;">
+                                    <div class="chart-bar-fill bar-color-bot" style="width: ${botPct}%;"></div>
+                                </div>
+                                <span class="chart-bar-value" style="width: 110px; font-weight: 700; color: #e8681a; text-align: right; flex-shrink: 0; margin-left: 1rem;">
+                                    ${formattedBotHits} <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(${pctTotal}%)</span>
+                                </span>
+                            </div>
+                            <span style="color: #e8681a; font-size: 0.75rem; margin-left: 1.5rem; font-weight: 800; flex-shrink: 0;">▼ Ver detalles</span>
+                        </summary>
+                        <div style="padding: 1.25rem; border-top: 1px solid #111111; background: #fafafa; border-radius: 0 0 6px 6px;">
+                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                                <!-- Columna de URLs visitadas -->
+                                <div style="flex: 1; min-width: 280px;">
+                                    <h5 style="margin: 0 0 0.75rem 0; font-size: 0.8rem; font-weight: 700; color: #111111; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span>🔗</span> Top 10 URLs visitadas por este Crawler:
+                                    </h5>
+                                    <div style="overflow-x: auto;">
+                                        <table style="width: 100%; border-collapse: collapse; font-size: 0.75rem; background: #ffffff; border: 1px solid #eeeeee;">
+                                            <thead>
+                                                <tr style="background: #111111; color: #ffffff;">
+                                                    <th style="padding: 0.4rem 0.5rem; text-align: left;">URL</th>
+                                                    <th style="padding: 0.4rem 0.5rem; text-align: right; width: 80px;">Hits</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${sortedUrls.map(([u, h]) => `
+                                                    <tr style="border-bottom: 1px solid #eeeeee;">
+                                                        <td style="padding: 0.4rem 0.5rem; font-family: monospace; color: #e8681a; word-break: break-all;">${escapeHtml(u)}</td>
+                                                        <td style="padding: 0.4rem 0.5rem; text-align: right; font-weight: 700; color: #111111;">${new Intl.NumberFormat('es-ES').format(h)}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Columna de User Agents -->
+                                <div style="flex: 1; min-width: 280px;">
+                                    <h5 style="margin: 0 0 0.75rem 0; font-size: 0.8rem; font-weight: 700; color: #111111; display: flex; align-items: center; gap: 0.25rem;">
+                                        <span>🖥️</span> User Agents detectados bajo esta firma:
+                                    </h5>
+                                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                        ${sortedUas.map(([ua, h]) => `
+                                            <div style="padding: 0.6rem; background: #ffffff; border: 1px solid #eeeeee; border-radius: 4px; font-size: 0.75rem;">
+                                                <div style="font-family: monospace; word-break: break-all; color: #4b5563; line-height: 1.4;">${escapeHtml(ua)}</div>
+                                                <div style="margin-top: 0.35rem; font-weight: 700; color: #e8681a; text-align: right;">${new Intl.NumberFormat('es-ES').format(h)} peticiones</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <span class="chart-bar-value">${formattedBotHits} <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(${pctTotal}%)</span></span>
-                    </div>
+                    </details>
                 `;
             });
             botsContainer.innerHTML = botsHtml;
@@ -1814,7 +1918,9 @@ function updateHourlyFilter() {
     renderTable('url-tbody', topUrls, parsedCount, 'url');
     renderTable('404-tbody', top404s, parsedCount, '404');
     renderTable('ip-tbody', topIps, parsedCount, 'ip');
-    renderTable('bot-tbody', sortedBots, parsedCount, 'bot');
+    
+    const sortedBotsCompatible = sortedBots.map(([name, data]) => [name, data.total]);
+    renderTable('bot-tbody', sortedBotsCompatible, parsedCount, 'bot');
     
     redrawDonutChart(topUrlsNoStatic.slice(0, 5));
 }
