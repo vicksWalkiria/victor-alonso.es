@@ -178,12 +178,19 @@ async function findButton(page, type) {
   // 2. Scan all candidate elements
   const candidates = await page.$$('button, a, [role="button"], div[class*="button" i], span[class*="button" i]');
   const acceptTerms = ['aceptar todo', 'aceptar', 'permitir', 'consiento', 'consentir', 'entendido', 'accept all', 'accept', 'allow', 'agree', 'ok'];
-  const rejectTerms = ['rechazar todo', 'denegar', 'rechazar', 'solo necesarias', 'no aceptar', 'declinar', 'reject all', 'reject', 'deny', 'decline'];
+  const rejectTerms = ['rechazar todo', 'denegar', 'rechazar', 'solo necesarias', 'no aceptar', 'no consiento', 'declinar', 'reject all', 'reject', 'deny', 'decline', 'do not accept', 'not accept'];
   const terms = type === 'accept' ? acceptTerms : rejectTerms;
 
   for (const el of candidates) {
     try {
       const text = await page.evaluate(node => node.textContent.trim().toLowerCase(), el);
+      
+      // Prevent "accept" from matching "do not accept" or "no aceptar"
+      if (type === 'accept') {
+        const isReject = rejectTerms.some(term => term.length <= 3 ? text === term : (text === term || text.includes(term)));
+        if (isReject) continue;
+      }
+
       const isMatch = terms.some(term => term.length <= 3 ? text === term : (text === term || text.includes(term)));
       if (!isMatch) continue;
 
@@ -217,6 +224,13 @@ async function findButton(page, type) {
   for (const el of candidates) {
     try {
       const text = await page.evaluate(node => node.textContent.trim().toLowerCase(), el);
+      
+      // Prevent "accept" from matching "do not accept" or "no aceptar"
+      if (type === 'accept') {
+        const isReject = rejectTerms.some(term => term.length <= 3 ? text === term : (text === term || text.includes(term)));
+        if (isReject) continue;
+      }
+
       const isMatch = terms.some(term => term.length <= 3 ? text === term : (text === term || (text.length < 30 && text.includes(term))));
       if (!isMatch) continue;
 
