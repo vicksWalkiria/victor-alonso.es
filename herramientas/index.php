@@ -28,12 +28,37 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   </section>
 
   <style>
+  .tool-pill {
+    background: rgba(232, 104, 26, 0.08) !important;
+    border: 1px solid rgba(232, 104, 26, 0.4) !important;
+    color: #ffffff !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
   .tool-pill:hover {
     background: var(--acento) !important;
-    color: #fff !important;
+    color: #000000 !important;
     border-color: var(--acento) !important;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.25);
+    box-shadow: 0 4px 12px rgba(232, 104, 26, 0.35);
+  }
+  .tool-pill--active {
+    background: var(--acento) !important;
+    border-color: var(--acento) !important;
+    color: #000000 !important;
+    font-weight: 700;
+  }
+  .tool-pill--active:hover {
+    background: #ffffff !important;
+    border-color: #ffffff !important;
+    color: #000000 !important;
   }
   </style>
 
@@ -42,13 +67,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <!-- Pastillas de Acceso Rápido (Autoscroll) -->
       <div class="tools-pills-container" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem;justify-content:center;">
-        <span style="align-self:center;font-size:0.9rem;color:var(--muted);font-weight:600;margin-right:0.5rem">Accesos rápidos:</span>
-        <a href="#analizador-seo" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🔍 Analizador SEO</a>
-        <a href="#generador-schema" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">📦 Schema Local</a>
-        <a href="#calculadora-wpo" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🧮 Calculadora WPO</a>
-        <a href="#extractor-sitemap" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🗺️ Auditor Sitemap</a>
-        <a href="#extractor-entidades" class="tool-pill" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#cbd5e1;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:600;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">🧠 Extractor Semántico</a>
-        <a href="#analizador-logs" class="tool-pill" style="background:rgba(232,104,26,0.08);border:1px solid var(--acento);color:#fff;padding:0.5rem 1rem;border-radius:30px;font-size:0.85rem;text-decoration:none;font-weight:700;transition:all 0.3s;display:inline-flex;align-items:center;gap:0.35rem">📊 Analizador de Logs</a>
+        <span style="align-self:center;font-size:0.9rem;color:#fff;font-weight:600;margin-right:0.5rem">Accesos rápidos:</span>
+        <a href="#analizador-seo" class="tool-pill">🔍 Analizador SEO</a>
+        <a href="#generador-schema" class="tool-pill">📦 Schema Local</a>
+        <a href="#calculadora-wpo" class="tool-pill">🧮 Calculadora WPO</a>
+        <a href="#extractor-sitemap" class="tool-pill">🗺️ Auditor Sitemap</a>
+        <a href="#extractor-entidades" class="tool-pill">🧠 Extractor Semántico</a>
+        <a href="#analizador-logs" class="tool-pill tool-pill--active">📊 Analizador de Logs</a>
       </div>
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
