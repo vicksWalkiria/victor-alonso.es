@@ -258,7 +258,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 ?>
 
 <style>
-/* Estilos premium para el dashboard */
+/* Estilos premium para el dashboard con colores corporativos (Blanco, Naranja, Negro) */
 .tab-container {
     display: flex;
     gap: 1rem;
@@ -282,9 +282,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     background: rgba(255,255,255,0.08);
 }
 .tab-button.active {
-    background: var(--acento);
-    color: #fff;
-    border-color: var(--acento);
+    background: #e8681a !important;
+    color: #fff !important;
+    border-color: #e8681a !important;
 }
 .tab-content {
     display: none;
@@ -304,12 +304,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     margin-bottom: 1.5rem;
 }
 .drag-area:hover, .drag-area.dragover {
-    border-color: var(--acento);
+    border-color: #e8681a !important;
     background: rgba(232, 104, 26, 0.06);
 }
 .drag-icon {
     font-size: 2.5rem;
-    color: var(--acento);
+    color: #e8681a !important;
     margin-bottom: 0.75rem;
 }
 .drag-text {
@@ -329,8 +329,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     margin-bottom: 2.5rem;
 }
 .metric-box {
-    background: #0b101c;
-    border: 1px solid rgba(255,255,255,0.05);
+    background: #111111 !important;
+    border: 1px solid rgba(232, 104, 26, 0.25) !important;
+    border-left: 4px solid #e8681a !important; /* Detalle de marca naranja */
     border-radius: 8px;
     padding: 1.5rem;
     display: flex;
@@ -341,13 +342,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--muted);
+    color: #cbd5e1 !important; /* Alto contraste */
+    font-weight: 600 !important;
     margin-bottom: 0.5rem;
 }
 .metric-box-value {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #fff;
+    color: #e8681a !important; /* Naranja en las métricas principales */
 }
 
 .chart-bar-container {
@@ -393,7 +395,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .bar-color-3xx { background: #f1c40f; }
 .bar-color-4xx { background: #e67e22; }
 .bar-color-5xx { background: #e74c3c; }
-.bar-color-bot { background: #3498db; }
+.bar-color-bot { background: #e8681a; } /* Naranja corporativo */
 
 .timeline-graph {
     display: flex;
@@ -414,7 +416,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     justify-content: flex-end;
 }
 .timeline-bar {
-    background: linear-gradient(180deg, var(--acento) 0%, rgba(232, 104, 26, 0.2) 100%);
+    background: linear-gradient(180deg, #e8681a 0%, rgba(232, 104, 26, 0.15) 100%) !important;
     width: 100%;
     min-height: 2px;
     border-radius: 3px 3px 0 0;
@@ -459,7 +461,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     transition: all 0.3s;
 }
 .table-filter-input:focus {
-    border-color: var(--acento);
+    border-color: #e8681a !important;
     background: rgba(255,255,255,0.06);
     outline: none;
 }
@@ -486,6 +488,44 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     .timeline-label {
         font-size: 0.6rem;
     }
+}
+
+/* Sobrescribir tema para el Dashboard y Tablas (Blanco, Naranja y Negro de alto contraste) */
+#dashboard {
+    color: #ffffff !important;
+}
+#dashboard .card--dark {
+    background: #111111 !important; /* Fondo negro sólido */
+    border: 1px solid rgba(232, 104, 26, 0.25) !important; /* Borde naranja sutil */
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6) !important;
+}
+#dashboard p {
+    color: #cbd5e1 !important; /* Texto gris plateado súper claro */
+}
+#dashboard .tech-table {
+    border: 1px solid rgba(232, 104, 26, 0.25) !important;
+    background: #111111 !important;
+}
+#dashboard .tech-table th {
+    background: #1c1c1c !important; /* Encabezado gris oscuro/negro */
+    color: #ffffff !important; /* Texto blanco puro */
+    font-weight: 700 !important;
+    border-bottom: 2px solid #e8681a !important; /* Línea de división naranja */
+    border-right: 1px solid rgba(232, 104, 26, 0.15) !important;
+}
+#dashboard .tech-table td {
+    color: #f1f5f9 !important; /* Texto de celdas blanco roto brillante */
+    background: #111111 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+#dashboard .tech-table tr:hover td {
+    background: rgba(232, 104, 26, 0.04) !important; /* Hover naranja translúcido */
+}
+#dashboard .tech-table td.monospace-url {
+    color: #ff9f68 !important; /* URLs en un precioso tono naranja cálido de alta legibilidad */
+    font-weight: 600 !important;
+    font-family: monospace !important;
+    font-size: 0.85rem !important;
 }
 </style>
 
@@ -733,7 +773,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                       $pct = round(($hits / $result['parsed_lines']) * 100, 1);
                   ?>
                     <tr>
-                      <td style="word-break: break-all; font-family: monospace; font-size: 0.85rem; color: var(--acento);"><?= h($url) ?></td>
+                      <td class="monospace-url"><?= h($url) ?></td>
                       <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
@@ -766,7 +806,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                       $pct = round(($hits / $result['parsed_lines']) * 100, 1);
                   ?>
                     <tr>
-                      <td style="word-break: break-all; font-family: monospace; font-size: 0.85rem;"><?= h($url) ?></td>
+                      <td class="monospace-url"><?= h($url) ?></td>
                       <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
@@ -799,7 +839,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                       $pct = round(($hits / $result['parsed_lines']) * 100, 1);
                   ?>
                     <tr>
-                      <td style="word-break: break-all; font-family: monospace; font-size: 0.85rem; color: #ff6b6b;"><?= h($url) ?></td>
+                      <td class="monospace-url" style="color: #ff6b6b !important;"><?= h($url) ?></td>
                       <td style="text-align: right; font-weight: 700; color: #fff;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
@@ -849,7 +889,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             
             <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem;">
               <div>
-                <h3 style="color:#fff; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">El Presupuesto de Rastreo (Crawl Budget)</h3>
+                <h3 style="color:#111; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">El Presupuesto de Rastreo (Crawl Budget)</h3>
                 <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
                   <li>
                     <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">¿Qué es el Crawl Budget?</strong>
@@ -867,7 +907,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </div>
               
               <div>
-                <h3 style="color:#fff; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Códigos de Respuesta y Errores</h3>
+                <h3 style="color:#111; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Códigos de Respuesta y Errores</h3>
                 <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
                   <li>
                     <strong style="color:var(--orange); font-size:0.95rem; display:block; margin-bottom:0.15rem;">Errores 404 y su penalización técnica</strong>
