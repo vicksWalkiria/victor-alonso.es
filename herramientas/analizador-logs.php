@@ -150,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $total_lines_checked = 0;
         $parsed_lines = 0;
         $total_bytes = 0;
+        $js_entries = [];
         
         $ips = [];
         $status_codes = [];
@@ -282,6 +283,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($detected_bot) {
                     $bots[$detected_bot] = ($bots[$detected_bot] ?? 0) + 1;
                 }
+                
+                // Guardar entrada comprimida para JavaScript
+                $js_entries[] = [
+                    $ip,
+                    $hour,
+                    $path,
+                    $status,
+                    $detected_bot ? $detected_bot : '',
+                    $is_static ? 1 : 0,
+                    $bytes
+                ];
             } else {
                 // Si leemos 15 líneas y ninguna coincide, rechazamos por formato
                 if ($total_lines_checked >= 15 && !$has_valid_format) {
@@ -327,7 +339,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'top_urls_no_static' => $top_urls_no_static,
                 'top_bots' => $top_bots,
                 'top_404s' => $top_404s,
-                'hourly_distribution' => $hourly_distribution
+                'hourly_distribution' => $hourly_distribution,
+                'js_entries' => $js_entries
             ];
         }
     }
@@ -659,6 +672,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         margin-bottom: 2rem !important;
         page-break-inside: avoid !important;
     }
+    .table-tab-content {
+        display: block !important;
+        margin-bottom: 3.5rem !important;
+        page-break-inside: avoid !important;
+    }
     .metric-card-grid {
         display: grid !important;
         grid-template-columns: repeat(4, 1fr) !important;
@@ -797,23 +815,54 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </button>
           </div>
 
+          <!-- Filtro temporal reactivo en cliente (JS) -->
+          <div style="background: #ffffff; border: 1px solid #111111; border-top: 4px solid #e8681a; border-radius: 8px; padding: 1.5rem; margin-bottom: 2.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.02);" class="btn-pdf-export">
+            <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none;" onclick="toggleClientFilter()">
+              <h4 style="margin: 0; color: #111111; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span>⏱️</span> Filtrar Informe por Horas en Tiempo Real
+              </h4>
+              <span id="clientFilterIndicator" style="font-weight: 700; color: #e8681a; font-size: 0.9rem;">[ Mostrar Filtro ]</span>
+            </div>
+            <div id="clientFilterDrawer" style="display: none; margin-top: 1.25rem; border-top: 1px dashed #eeeeee; padding-top: 1.25rem;">
+              <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;">
+                <div style="flex-grow: 1; min-width: 280px;">
+                  <label style="font-size: 0.85rem; font-weight: 700; color: #111111; display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span>Rango de Horas Seleccionado:</span>
+                    <span id="rangeLabel" style="color: #e8681a; font-family: monospace;">00:00 a 23:59</span>
+                  </label>
+                  <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--muted);">00:00</span>
+                    <input type="range" id="hourStartSlider" min="0" max="23" value="0" oninput="updateHourlyFilter()" style="flex-grow:1; accent-color:#e8681a;">
+                    <span style="font-weight: 600; font-size: 0.85rem; color:#4b5563;">a</span>
+                    <input type="range" id="hourEndSlider" min="0" max="23" value="23" oninput="updateHourlyFilter()" style="flex-grow:1; accent-color:#e8681a;">
+                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--muted);">23:59</span>
+                  </div>
+                </div>
+                <button type="button" class="btn btn--secondary" onclick="resetHourlyFilter()" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.85rem; border: 1px solid #111111; background: #fff; color: #111;">Mostrar Todo</button>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--muted); margin: 0.75rem 0 0 0; line-height: 1.4;">
+                Mueve los deslizadores de inicio y fin para ver cómo el dashboard, el gráfico de sectores, los códigos HTTP y todas las tablas detalladas se actualizan en menos de 5ms.
+              </p>
+            </div>
+          </div>
+
           <!-- Bloque de Métricas Principales -->
           <div class="metric-card-grid">
             <div class="metric-box">
               <span class="metric-box-label">Peticiones Procesadas</span>
-              <span class="metric-box-value"><?= number_format($result['parsed_lines'], 0, ',', '.') ?></span>
+              <span class="metric-box-value" id="metric-parsed-lines"><?= number_format($result['parsed_lines'], 0, ',', '.') ?></span>
             </div>
             <div class="metric-box">
               <span class="metric-box-label">IPs Únicas</span>
-              <span class="metric-box-value"><?= number_format($result['unique_ips_count'], 0, ',', '.') ?></span>
+              <span class="metric-box-value" id="metric-unique-ips"><?= number_format($result['unique_ips_count'], 0, ',', '.') ?></span>
             </div>
             <div class="metric-box">
               <span class="metric-box-label">Ancho de Banda</span>
-              <span class="metric-box-value"><?= $result['bandwidth_mb'] ?> MB</span>
+              <span class="metric-box-value" id="metric-bandwidth"><?= $result['bandwidth_mb'] ?> MB</span>
             </div>
             <div class="metric-box">
               <span class="metric-box-label">Intervalo y Duración</span>
-              <span class="metric-box-value" style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #111111; margin-top: 0.25rem; display: block;">
+              <span class="metric-box-value" id="metric-dates-humanized" style="font-size: 0.85rem; font-weight: 600; line-height: 1.4; color: #111111; margin-top: 0.25rem; display: block;">
                 <?= humanize_log_dates($result['date_start'], $result['date_end']) ?>
               </span>
             </div>
@@ -828,7 +877,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </h4>
               <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Distribución de estados devueltos por el servidor.</p>
               
-              <div class="chart-bar-container">
+              <div class="chart-bar-container" id="status-codes-bar-container">
                 <?php
                 $status_groups = [
                     '2xx (Éxito)' => ['codes' => [200, 201, 204, 206], 'color' => 'bar-color-2xx', 'count' => 0],
@@ -883,7 +932,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </h4>
               <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Visitas detectadas según firmas en el User-Agent.</p>
               
-              <div class="chart-bar-container">
+              <div class="chart-bar-container" id="bots-bar-container">
                 <?php if (empty($result['top_bots'])): ?>
                   <p style="font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 1.5rem;">No se han detectado firmas conocidas de bots en este registro.</p>
                 <?php else: 
@@ -1216,6 +1265,349 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 </main>
 
 <script>
+// Cargar datos procesados para filtrado dinámico en cliente (tiempo real)
+const logEntries = <?php echo isset($result['js_entries']) ? json_encode($result['js_entries']) : '[]'; ?>;
+const initialStartDate = <?php echo isset($result['date_start']) ? json_encode($result['date_start']) : '""'; ?>;
+const initialEndDate = <?php echo isset($result['date_end']) ? json_encode($result['date_end']) : '""'; ?>;
+
+function parseLogDateJs(dateStr) {
+    if (!dateStr) return null;
+    const parts = dateStr.split(' ')[0].split(':');
+    const dateParts = parts[0].split('/'); // [24, May, 2026]
+    const months = {
+        'Jan': 'Enero', 'Feb': 'Febrero', 'Mar': 'Marzo', 'Apr': 'Abril',
+        'May': 'Mayo', 'Jun': 'Junio', 'Jul': 'Julio', 'Aug': 'Agosto',
+        'Sep': 'Septiembre', 'Oct': 'Octubre', 'Nov': 'Noviembre', 'Dec': 'Diciembre'
+    };
+    return {
+        day: parseInt(dateParts[0]),
+        month: months[dateParts[1]] || dateParts[1],
+        year: parseInt(dateParts[2]),
+        time: parts.slice(1).join(':') // "00:07:51"
+    };
+}
+
+function humanizeFilteredDatesJs(startHour, endHour) {
+    const startParsed = parseLogDateJs(initialStartDate);
+    const endParsed = parseLogDateJs(initialEndDate);
+    if (!startParsed || !endParsed) return '-';
+    
+    const hStart = startHour.toString().padStart(2, '0') + ':00';
+    const hEnd = endHour.toString().padStart(2, '0') + ':59';
+    
+    let hoursDiff = endHour - startHour;
+    if (hoursDiff < 0) hoursDiff = 0;
+    
+    let durationStr = '';
+    if (startParsed.day === endParsed.day && startParsed.month === endParsed.month && startParsed.year === endParsed.year) {
+        durationStr = hoursDiff === 0 ? "1 hora" : `${hoursDiff + 1} horas`;
+        return `<strong>${startParsed.day} de ${startParsed.month}, ${startParsed.year}</strong><br><span style='font-size:0.75rem; color:#4b5563; font-weight:normal;'>De ${hStart} a ${hEnd}<br>(Duración: ${durationStr})</span>`;
+    } else {
+        const daysDiff = endParsed.day - startParsed.day;
+        if (daysDiff > 0) {
+            durationStr = `${daysDiff} ${daysDiff === 1 ? 'día' : 'días'} y ${hoursDiff + 1} horas`;
+        } else {
+            durationStr = `${hoursDiff + 1} horas`;
+        }
+        return `<strong>Del ${startParsed.day} de ${startParsed.month} al ${endParsed.day} de ${endParsed.month}, ${endParsed.year}</strong><br><span style='font-size:0.75rem; color:#4b5563; font-weight:normal;'>De ${hStart} a ${hEnd}<br>(Duración: ${durationStr})</span>`;
+    }
+}
+
+function toggleClientFilter() {
+    const drawer = document.getElementById('clientFilterDrawer');
+    const indicator = document.getElementById('clientFilterIndicator');
+    if (drawer.style.display === 'none') {
+        drawer.style.display = 'block';
+        indicator.innerText = '[ Ocultar Filtro ]';
+    } else {
+        drawer.style.display = 'none';
+        indicator.innerText = '[ Mostrar Filtro ]';
+    }
+}
+
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"']/g, function (s) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[s];
+    });
+}
+
+function renderTable(tbodyId, topEntries, parsedLines, type) {
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    
+    if (topEntries.length === 0) {
+        if (type === '404') {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: #2ecc71; font-weight: 600; padding: 1.5rem;">✓ ¡Enhorabuena! No se han registrado errores 404 en este rango.</td></tr>';
+        } else {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--muted);">Sin registros.</td></tr>';
+        }
+        return;
+    }
+    
+    let html = '';
+    topEntries.forEach(([key, hits]) => {
+        const pct = parsedLines > 0 ? ((hits / parsedLines) * 100).toFixed(1) : '0';
+        const formattedHits = new Intl.NumberFormat('es-ES').format(hits);
+        
+        if (type === 'url-no-static' || type === 'url') {
+            html += `<tr>
+                <td class="monospace-url">${escapeHtml(key)}</td>
+                <td style="text-align: right; font-weight: 700; color: #111111;">${formattedHits}</td>
+                <td style="text-align: right; color: var(--muted); font-size: 0.85rem;">${pct}%</td>
+            </tr>`;
+        } else if (type === '404') {
+            html += `<tr>
+                <td class="monospace-url" style="color: #ff6b6b !important;">${escapeHtml(key)}</td>
+                <td style="text-align: right; font-weight: 700; color: #111111;">${formattedHits}</td>
+                <td style="text-align: right; color: var(--muted); font-size: 0.85rem;">${pct}%</td>
+            </tr>`;
+        } else if (type === 'ip') {
+            html += `<tr>
+                <td style="font-family: monospace; font-size: 0.85rem; color: #111111;">${escapeHtml(key)}</td>
+                <td style="text-align: right; font-weight: 700; color: #111111;">${formattedHits}</td>
+                <td style="text-align: right; color: var(--muted); font-size: 0.85rem;">${pct}%</td>
+            </tr>`;
+        } else if (type === 'bot') {
+            html += `<tr>
+                <td style="font-weight: 600; color: #111111;">${escapeHtml(key)}</td>
+                <td style="text-align: right; font-weight: 700; color: #e8681a;">${formattedHits}</td>
+                <td style="text-align: right; color: var(--muted); font-size: 0.85rem;">${pct}%</td>
+            </tr>`;
+        }
+    });
+    tbody.innerHTML = html;
+}
+
+function updateHourlyFilter() {
+    const startHour = parseInt(document.getElementById('hourStartSlider').value);
+    const endHour = parseInt(document.getElementById('hourEndSlider').value);
+    
+    if (startHour > endHour) {
+        document.getElementById('hourEndSlider').value = startHour;
+    }
+    
+    const actualEndHour = parseInt(document.getElementById('hourEndSlider').value);
+    
+    const labelStart = startHour.toString().padStart(2, '0') + ':00';
+    const labelEnd = actualEndHour.toString().padStart(2, '0') + ':59';
+    document.getElementById('rangeLabel').innerText = `${labelStart} a ${labelEnd}`;
+    
+    const filtered = logEntries.filter(entry => {
+        const hour = entry[1];
+        return hour >= startHour && hour <= actualEndHour;
+    });
+    
+    const parsedCount = filtered.length;
+    document.getElementById('metric-parsed-lines').innerText = new Intl.NumberFormat('es-ES').format(parsedCount);
+    
+    const uniqueIpsSet = new Set();
+    let totalBytes = 0;
+    filtered.forEach(entry => {
+        uniqueIpsSet.add(entry[0]);
+        totalBytes += entry[6];
+    });
+    
+    document.getElementById('metric-unique-ips').innerText = new Intl.NumberFormat('es-ES').format(uniqueIpsSet.size);
+    document.getElementById('metric-bandwidth').innerText = (totalBytes / (1024 * 1024)).toFixed(2) + " MB";
+    document.getElementById('metric-dates-humanized').innerHTML = humanizeFilteredDatesJs(startHour, actualEndHour);
+    
+    const statusCounts = {};
+    filtered.forEach(entry => {
+        const status = entry[3];
+        statusCounts[status] = (statusCounts[status] || 0) + 1;
+    });
+    
+    const statusGroups = {
+        '2xx (Éxito)': { codes: [200, 201, 204, 206], color: 'bar-color-2xx', count: 0 },
+        '3xx (Redirección)': { codes: [301, 302, 304, 307, 308], color: 'bar-color-3xx', count: 0 },
+        '4xx (Error Cliente)': { codes: [400, 401, 403, 404, 410], color: 'bar-color-4xx', count: 0 },
+        '5xx (Error Servidor)': { codes: [500, 502, 503, 504], color: 'bar-color-5xx', count: 0 }
+    };
+    
+    Object.entries(statusCounts).forEach(([code, count]) => {
+        const c = parseInt(code);
+        let grouped = false;
+        Object.entries(statusGroups).forEach(([label, g]) => {
+            if (g.codes.includes(c)) {
+                g.count += count;
+                grouped = true;
+            }
+        });
+        if (!grouped) {
+            const firstNum = code.charAt(0);
+            if (firstNum === '2') statusGroups['2xx (Éxito)'].count += count;
+            else if (firstNum === '3') statusGroups['3xx (Redirección)'].count += count;
+            else if (firstNum === '4') statusGroups['4xx (Error Cliente)'].count += count;
+            else if (firstNum === '5') statusGroups['5xx (Error Servidor)'].count += count;
+        }
+    });
+    
+    let maxGroupCount = 0;
+    Object.values(statusGroups).forEach(g => {
+        if (g.count > maxGroupCount) maxGroupCount = g.count;
+    });
+    
+    let statusHtml = '';
+    Object.entries(statusGroups).forEach(([label, g]) => {
+        const pct = parsedCount > 0 ? ((g.count / parsedCount) * 100).toFixed(1) : '0';
+        const barPct = maxGroupCount > 0 ? ((g.count / maxGroupCount) * 100).toFixed(1) : '0';
+        const formattedCount = new Intl.NumberFormat('es-ES').format(g.count);
+        statusHtml += `
+            <div class="chart-bar-item">
+                <span class="chart-bar-label">${label}</span>
+                <div class="chart-bar-track">
+                    <div class="chart-bar-fill ${g.color}" style="width: ${barPct}%;"></div>
+                </div>
+                <span class="chart-bar-value">${formattedCount} <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(${pct}%)</span></span>
+            </div>
+        `;
+    });
+    document.getElementById('status-codes-bar-container').innerHTML = statusHtml;
+    
+    const botCounts = {};
+    filtered.forEach(entry => {
+        const bot = entry[4];
+        if (bot) {
+            botCounts[bot] = (botCounts[bot] || 0) + 1;
+        }
+    });
+    
+    const sortedBots = Object.entries(botCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const maxBotHits = sortedBots.length > 0 ? sortedBots[0][1] : 0;
+    
+    const botsContainer = document.getElementById('bots-bar-container');
+    if (botsContainer) {
+        if (sortedBots.length === 0) {
+            botsContainer.innerHTML = '<p style="font-size: 0.9rem; color: var(--muted); text-align: center; margin-top: 1.5rem;">No se han detectado firmas conocidas de bots en este rango.</p>';
+        } else {
+            let botsHtml = '';
+            sortedBots.forEach(([botName, botHits]) => {
+                const botPct = maxBotHits > 0 ? ((botHits / maxBotHits) * 100).toFixed(1) : '0';
+                const pctTotal = parsedCount > 0 ? ((botHits / parsedCount) * 100).toFixed(1) : '0';
+                const formattedBotHits = new Intl.NumberFormat('es-ES').format(botHits);
+                botsHtml += `
+                    <div class="chart-bar-item">
+                        <span class="chart-bar-label">${escapeHtml(botName)}</span>
+                        <div class="chart-bar-track">
+                            <div class="chart-bar-fill bar-color-googlebot" style="width: ${botPct}%;"></div>
+                        </div>
+                        <span class="chart-bar-value">${formattedBotHits} <span style="font-size:0.75rem; color:var(--muted); font-weight:400;">(${pctTotal}%)</span></span>
+                    </div>
+                `;
+            });
+            botsContainer.innerHTML = botsHtml;
+        }
+    }
+    
+    const ipCounts = {};
+    const urlCounts = {};
+    const urlNoStaticCounts = {};
+    const error404Counts = {};
+    
+    filtered.forEach(entry => {
+        const ip = entry[0];
+        const url = entry[2];
+        const status = entry[3];
+        const isStatic = entry[5] === 1;
+        
+        ipCounts[ip] = (ipCounts[ip] || 0) + 1;
+        urlCounts[url] = (urlCounts[url] || 0) + 1;
+        if (!isStatic) {
+            urlNoStaticCounts[url] = (urlNoStaticCounts[url] || 0) + 1;
+        }
+        if (status === 404) {
+            error404Counts[url] = (error404Counts[url] || 0) + 1;
+        }
+    });
+    
+    const topUrlsNoStatic = Object.entries(urlNoStaticCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const topUrls = Object.entries(urlCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const top404s = Object.entries(error404Counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const topIps = Object.entries(ipCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    
+    renderTable('url-no-static-tbody', topUrlsNoStatic, parsedCount, 'url-no-static');
+    renderTable('url-tbody', topUrls, parsedCount, 'url');
+    renderTable('404-tbody', top404s, parsedCount, '404');
+    renderTable('ip-tbody', topIps, parsedCount, 'ip');
+    renderTable('bot-tbody', sortedBots, parsedCount, 'bot');
+    
+    redrawDonutChart(topUrlsNoStatic.slice(0, 5));
+}
+
+function resetHourlyFilter() {
+    document.getElementById('hourStartSlider').value = 0;
+    document.getElementById('hourEndSlider').value = 23;
+    updateHourlyFilter();
+}
+
+function redrawDonutChart(top5Entries) {
+    const canvas = document.getElementById("urlDonutChart");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const legendContainer = document.getElementById("donutLegend");
+    if (legendContainer) legendContainer.innerHTML = "";
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    if (top5Entries.length === 0) {
+        const parentCard = canvas.closest('div[style*="flex: 0 0 300px"]');
+        if (parentCard) parentCard.style.display = 'none';
+        return;
+    }
+    
+    const parentCard = canvas.closest('div[style*="flex: 0 0 300px"]');
+    if (parentCard) parentCard.style.display = 'block';
+    
+    const totalHits = top5Entries.reduce((acc, [_, val]) => acc + val, 0);
+    const colors = ["#e8681a", "#111111", "#4b5563", "#94a3b8", "#cbd5e1"];
+    
+    const size = 160;
+    const center = size / 2;
+    const radius = size / 2 - 5;
+    
+    let startAngle = -0.5 * Math.PI;
+    
+    top5Entries.forEach(([url, hits], index) => {
+        const pct = totalHits > 0 ? ((hits / totalHits) * 100).toFixed(1) : '0';
+        const sliceAngle = totalHits > 0 ? (hits / totalHits) * 2 * Math.PI : 0;
+        const color = colors[index % colors.length];
+        
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, radius, startAngle, startAngle + sliceAngle);
+        ctx.closePath();
+        ctx.fill();
+        
+        startAngle += sliceAngle;
+        
+        if (legendContainer) {
+            const shortenedUrl = url.length > 22 ? url.substring(0, 20) + '...' : url;
+            const item = document.createElement("div");
+            item.style.display = "flex";
+            item.style.alignItems = "center";
+            item.style.gap = "0.5rem";
+            item.innerHTML = `
+                <span style="display:inline-block; width:8px; height:8px; background:${color}; border-radius:50%; flex-shrink:0;"></span>
+                <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex-grow:1; font-weight:600;" title="${url}">${shortenedUrl}</span>
+                <span style="font-weight:700; color:#111111; margin-left:auto;">${pct}%</span>
+            `;
+            legendContainer.appendChild(item);
+        }
+    });
+    
+    ctx.beginPath();
+    ctx.fillStyle = "#ffffff";
+    ctx.arc(center, center, radius * 0.55, 0, 2 * Math.PI);
+    ctx.fill();
+}
+
 function switchTab(tabId) {
     // Alternar pestañas activas de formulario
     document.querySelectorAll('#logsForm .tab-content').forEach(el => {
@@ -1312,70 +1704,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Dibujar gráfico circular Donut
     const canvas = document.getElementById("urlDonutChart");
     if (canvas) {
-        const ctx = canvas.getContext("2d");
         const rawData = <?php echo isset($result['top_urls_no_static']) ? json_encode(array_slice($result['top_urls_no_static'], 0, 5, true)) : '{}'; ?>;
-        
-        const entries = Object.entries(rawData);
-        if (entries.length > 0) {
-            const totalHits = entries.reduce((acc, [_, val]) => acc + val, 0);
-            const colors = ["#e8681a", "#111111", "#4b5563", "#94a3b8", "#cbd5e1"];
-            
-            let startAngle = -0.5 * Math.PI; // Iniciar arriba
-            const legendContainer = document.getElementById("donutLegend");
-            if (legendContainer) legendContainer.innerHTML = "";
-            
-            // Asegurar resolución nítida en pantallas retina
-            const size = 160;
-            const devicePixelRatio = window.devicePixelRatio || 1;
-            canvas.width = size * devicePixelRatio;
-            canvas.height = size * devicePixelRatio;
-            canvas.style.width = size + "px";
-            canvas.style.height = size + "px";
-            ctx.scale(devicePixelRatio, devicePixelRatio);
-            
-            const center = size / 2;
-            const radius = size / 2 - 5;
-            
-            entries.forEach(([url, hits], index) => {
-                const pct = ((hits / totalHits) * 100).toFixed(1);
-                const sliceAngle = (hits / totalHits) * 2 * Math.PI;
-                const color = colors[index % colors.length];
-                
-                // Dibujar rebanada
-                ctx.beginPath();
-                ctx.fillStyle = color;
-                ctx.moveTo(center, center);
-                ctx.arc(center, center, radius, startAngle, startAngle + sliceAngle);
-                ctx.closePath();
-                ctx.fill();
-                
-                startAngle += sliceAngle;
-                
-                // Añadir fila de leyenda
-                if (legendContainer) {
-                    const shortenedUrl = url.length > 22 ? url.substring(0, 20) + '...' : url;
-                    const item = document.createElement("div");
-                    item.style.display = "flex";
-                    item.style.alignItems = "center";
-                    item.style.gap = "0.5rem";
-                    item.innerHTML = `
-                        <span style="display:inline-block; width:8px; height:8px; background:${color}; border-radius:50%; flex-shrink:0;"></span>
-                        <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex-grow:1; font-weight:600;" title="${url}">${shortenedUrl}</span>
-                        <span style="font-weight:700; color:#111111; margin-left:auto;">${pct}%</span>
-                    `;
-                    legendContainer.appendChild(item);
-                }
-            });
-            
-            // Dibujar círculo central para convertirlo en Donut
-            ctx.beginPath();
-            ctx.fillStyle = "#ffffff";
-            ctx.arc(center, center, radius * 0.55, 0, 2 * Math.PI);
-            ctx.fill();
-        } else {
-            const parentCard = canvas.closest('div[style*="flex: 0 0 300px"]');
-            if (parentCard) parentCard.style.display = 'none';
-        }
+        redrawDonutChart(Object.entries(rawData));
     }
 });
 </script>
