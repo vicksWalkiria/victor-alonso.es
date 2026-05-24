@@ -254,18 +254,39 @@ async function run() {
     errors: []
   };
 
+  const basePrivateDir = '/home/aprendiz/web/victor-alonso.es/private';
+  const chromeTmpBase = path.join(basePrivateDir, 'chrome-tmp');
+  const safeAuditId = auditId.replace(/[^a-zA-Z0-9_-]/g, '');
+  const userDataDir = path.join(chromeTmpBase, safeAuditId, 'profile');
+  const cacheDir = path.join(chromeTmpBase, safeAuditId, 'cache');
+
+  try {
+    fs.mkdirSync(userDataDir, { recursive: true });
+    fs.mkdirSync(cacheDir, { recursive: true });
+  } catch (e) {
+    console.error('Error creando dirs temporales de Chrome:', e);
+  }
+
   try {
     browser = await puppeteer.launch({
-      executablePath: '/usr/lib/chromium-browser/chromium-browser',
+      executablePath: '/usr/bin/chromium-browser',
       headless: true,
+      dumpio: true,
+      timeout: 60000,
+      protocolTimeout: 60000,
+      userDataDir,
       args: [
         '--no-sandbox',
+        '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-gpu',
-        `--user-data-dir=${path.join(reportsDir, 'tmp_chrome_profile')}`
-      ],
-      defaultViewport: { width: 1280, height: 800 },
-      timeout: 60000
+        '--disable-software-rasterizer',
+        '--disable-extensions',
+        '--no-first-run',
+        '--no-default-browser-check',
+        `--disk-cache-dir=${cacheDir}`,
+        `--user-data-dir=${userDataDir}`
+      ]
     });
 
     const page = await browser.newPage();
@@ -551,6 +572,20 @@ async function run() {
       } catch (closeErr) {
         console.error('Error closing browser:', closeErr.message);
       }
+    }
+
+    // Cleanup Chrome temp directories
+    try {
+      const basePrivateDir = '/home/aprendiz/web/victor-alonso.es/private';
+      const chromeTmpBase = path.join(basePrivateDir, 'chrome-tmp');
+      const safeAuditId = auditId.replace(/[^a-zA-Z0-9_-]/g, '');
+      const chromeTmpDir = path.join(chromeTmpBase, safeAuditId);
+      
+      if (fs.existsSync(chromeTmpDir)) {
+        fs.rmSync(chromeTmpDir, { recursive: true, force: true });
+      }
+    } catch (rmErr) {
+      console.error('Error cleaning up Chrome temp dirs:', rmErr.message);
     }
     
     // Save output report
