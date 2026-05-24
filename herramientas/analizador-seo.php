@@ -493,24 +493,26 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo.</p>
       </div>
 
-      <form id="seo-analyzer-form" action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:2rem">
-        <div class="form-group-row">
-          <input 
-            type="url" 
-            name="url" 
-            id="seo-url-input"
-            class="form-input" 
-            value="<?= h($url ? $url : 'https://') ?>" 
-            placeholder="https://tuweb.com/pagina-a-analizar" 
-            required
-            aria-label="URL de la página a analizar"
-          >
-          <button type="submit" id="seo-submit-btn" class="btn btn--primary">Analizar URL ahora</button>
-        </div>
-        <?php if ($error): ?>
-          <div class="alert alert--danger" style="margin-top:1rem"><?= h($error) ?></div>
-        <?php endif; ?>
-      </form>
+      <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+        <form id="seo-analyzer-form" action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:0;">
+          <div class="form-group-row">
+            <input 
+              type="url" 
+              name="url" 
+              id="seo-url-input"
+              class="form-input" 
+              value="<?= h($url ? $url : 'https://') ?>" 
+              placeholder="https://tuweb.com/pagina-a-analizar" 
+              required
+              aria-label="URL de la página a analizar"
+            >
+            <button type="submit" id="seo-submit-btn" class="btn btn--primary">Analizar URL ahora</button>
+          </div>
+          <?php if ($error): ?>
+            <div class="alert alert--danger" style="margin-top:1rem"><?= h($error) ?></div>
+          <?php endif; ?>
+        </form>
+      </div>
 
       <!-- Spinner de carga -->
       <div id="seo-loading" style="display:none; margin:2rem 0; padding:2rem 1.5rem; background:rgba(255,255,255,0.04); border:1px solid var(--border); border-radius:12px; text-align:center;">
