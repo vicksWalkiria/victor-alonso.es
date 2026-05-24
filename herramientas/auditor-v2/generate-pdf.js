@@ -301,7 +301,7 @@ function buildEntidadesHtml(reportData) {
     if (isTriple) {
       return list.map(item => `<li><span class="badge badge-info">${item.subject}</span> <em>${item.predicate}</em> <span class="badge badge-warning" style="color:#111">${item.object}</span></li>`).join('');
     }
-    return list.map(item => `<li><span class="badge" style="background:#444;">${item.type}</span> <strong>${item.text}</strong></li>`).join('');
+    return list.map(item => `<li><span class="badge" style="background:#444;">${item.type}</span> <strong>${item.name}</strong></li>`).join('');
   };
 
   return `
@@ -393,7 +393,7 @@ function buildEntidadesHtml(reportData) {
   </div>
 
   <div style="margin-top: 40px; font-size: 12px; color: #888; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
-    Generado por la herramienta de Extracción Semántica NLP de victor-alonso.es.
+    Generado por la <a href="https://www.victor-alonso.es/herramientas/extractor-entidades/" style="color: #9b59b6; text-decoration: none; font-weight: bold;">Herramienta de Extracción Semántica NLP</a> de victor-alonso.es.
   </div>
 </body>
 </html>
