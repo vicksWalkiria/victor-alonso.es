@@ -838,11 +838,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           <!-- Pestañas de Tablas Detalladas -->
           <div class="card card--dark">
-            <div class="tab-container" style="border-bottom-color: rgba(0,0,0,0.05);">
+            <div class="tab-container" style="border-bottom-color: rgba(0,0,0,0.05); flex-wrap: wrap; gap: 0.5rem;">
               <button type="button" class="tab-button active" onclick="switchTableTab('table-urls-no-static')">URLs Indexables (HTML)</button>
               <button type="button" class="tab-button" onclick="switchTableTab('table-urls')">Todas las URLs</button>
               <button type="button" class="tab-button" onclick="switchTableTab('table-404s')" style="color: #ff6b6b;">Errores 404 (SEO Redir)</button>
               <button type="button" class="tab-button" onclick="switchTableTab('table-ips')">IPs más Activas</button>
+              <button type="button" class="tab-button" onclick="switchTableTab('table-bots')">Bots / User-Agents</button>
             </div>
 
             <!-- Tabla 1: URLs Indexables / No Estáticas -->
@@ -986,6 +987,39 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     <tr>
                       <td style="font-family: monospace; font-size: 0.85rem; color: #111111;"><?= h($ip) ?></td>
                       <td style="text-align: right; font-weight: 700; color: #111111;"><?= number_format($hits, 0, ',', '.') ?></td>
+                      <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
+                    </tr>
+                  <?php endforeach; endif; ?>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Tabla 5: Bots y User-Agents -->
+            <div id="table-bots" class="table-tab-content" style="display: none;">
+              <div class="card-header-flex">
+                <div>
+                  <h4 style="margin: 0; color: #111111;">Bots y Motores de Búsqueda</h4>
+                  <p style="font-size: 0.85rem; color: var(--muted); margin: 0.25rem 0 0 0;">Frecuencia de rastreo detallada de rastreadores web (crawlers) identificados.</p>
+                </div>
+                <input type="text" class="table-filter-input" placeholder="Filtrar por Bot..." onkeyup="filterTable(this, 'bot-tbody')">
+              </div>
+              <table class="tech-table">
+                <thead>
+                  <tr>
+                    <th>Nombre del Bot / User-Agent</th>
+                    <th style="text-align: right; width: 140px;">Peticiones (Hits)</th>
+                    <th style="text-align: right; width: 100px;">Porcentaje</th>
+                  </tr>
+                </thead>
+                <tbody id="bot-tbody">
+                  <?php if (empty($result['top_bots'])): ?>
+                    <tr><td colspan="3" style="text-align:center; color: var(--muted);">No se detectó actividad de bots de búsqueda en este registro.</td></tr>
+                  <?php else: foreach ($result['top_bots'] as $bot => $hits): 
+                      $pct = round(($hits / $result['parsed_lines']) * 100, 1);
+                  ?>
+                    <tr>
+                      <td style="font-weight: 600; color: #111111;"><?= h($bot) ?></td>
+                      <td style="text-align: right; font-weight: 700; color: #e8681a;"><?= number_format($hits, 0, ',', '.') ?></td>
                       <td style="text-align: right; color: var(--muted); font-size: 0.85rem;"><?= $pct ?>%</td>
                     </tr>
                   <?php endforeach; endif; ?>
