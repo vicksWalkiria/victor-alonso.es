@@ -260,13 +260,11 @@ async function run() {
       headless: true,
       args: [
         '--no-sandbox',
-        '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-gpu',
-        '--no-zygote'
+        `--user-data-dir=${path.join(reportsDir, 'tmp_chrome_profile')}`
       ],
       defaultViewport: { width: 1280, height: 800 },
-      pipe: true,
       timeout: 60000
     });
 
