@@ -1633,6 +1633,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     </div>
   </section>
 
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
+
   <!-- CTA final -->
   <?php
   $cta = [
@@ -1645,6 +1647,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   ];
   require dirname(__DIR__) . '/includes/cta.php';
   ?>
+
 
 </main>
 
@@ -2465,5 +2468,4 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   });
 </script>
 
-<?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 <?php require dirname(__DIR__) . '/includes/footer.php'; ?>

@@ -6,7 +6,7 @@
 if (!empty($page['faq_items'])): ?>
 <section class="section" style="padding-top:2rem; padding-bottom:3rem;">
     <div class="container">
-        <h2 style="margin-bottom:1.5rem;">Preguntas Frecuentes (FAQ)</h2>
+        <h2 style="color:var(--orange); margin-bottom:1.5rem;">Preguntas Frecuentes (FAQ)</h2>
         <div class="faq-list">
             <?php foreach ($page['faq_items'] as $item): ?>
             <div class="faq-item">

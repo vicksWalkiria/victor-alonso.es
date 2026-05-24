@@ -202,6 +202,7 @@ strong {
 .btn--primary {
   background: var(--orange);
   color: var(--white);
+  box-shadow: 0 0 18px rgba(232, 104, 26, 0.45);
 }
 
 .btn--primary:hover {
@@ -233,6 +234,7 @@ strong {
 .btn--whatsapp {
   background: #25D366;
   color: var(--white);
+  box-shadow: 0 0 18px rgba(37, 211, 102, 0.45);
 }
 
 .btn--whatsapp:hover {
@@ -759,7 +761,7 @@ strong {
   background: var(--white);
   color: var(--black);
   font-weight: 800;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
   transition: all 0.3s ease;
 }
 
@@ -786,7 +788,7 @@ strong {
 .cta-subtitle {
   font-size: 1.05rem;
   margin-bottom: 2rem;
-  opacity: .8;
+  opacity: 1;
 }
 
 .cta-actions {
@@ -833,7 +835,8 @@ strong {
   display: none;
   padding: 0 0 1.1rem;
   font-size: .92rem;
-  color: var(--muted);
+  color: var(--text);
+  opacity: 0.95;
 }
 
 .faq-item.open .faq-answer {

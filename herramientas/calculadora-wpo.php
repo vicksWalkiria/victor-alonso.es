@@ -354,6 +354,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
+  <!-- CTA final -->
   <?php
   $cta = [
     'title'     => '¿Tu simulador arroja cifras rojas y lentitud?',
