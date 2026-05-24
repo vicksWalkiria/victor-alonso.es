@@ -256,7 +256,6 @@ async function run() {
 
   try {
     browser = await puppeteer.launch({
-      executablePath: getExecutablePath(),
       headless: 'new',
       args: [
         '--no-sandbox',
