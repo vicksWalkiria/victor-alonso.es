@@ -97,13 +97,31 @@ $page = page_config([
     'description'  => 'Simulador interactivo en vivo. Analiza tu web con Lighthouse de Google y calcula el dinero que pierdes por tiempos de carga lentos (LCP).',
     'canonical'    => '/herramientas/calculadora-wpo/',
     'body_class'   => 'page-calculadora-wpo',
-    'schema_types' => ['WebApplication'],
+    'schema_types' => ['WebApplication', 'FAQPage'],
     'rating_id'    => 'calculadora-wpo',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Calculadora WPO', 'url' => ''],
     ],
+    'faq_items' => [
+        [
+            'q' => '¿Qué precisión tienen los resultados de esta calculadora WPO?',
+            'a' => 'La calculadora extrae métricas sintéticas (Lab Data) directamente desde la API oficial de Google Lighthouse en su entorno de emulación móvil (Moto G4). Las pérdidas económicas son simulaciones conservadoras basadas en estudios de conversión del sector retail, donde se documenta que cada segundo adicional de retardo en LCP merma la conversión en torno a un 7%. Úsala como mapa de referencia, no como un dato analítico absoluto.'
+        ],
+        [
+            'q' => '¿Qué métrica de rendimiento (Web Vitals) es la más crítica para la conversión?',
+            'a' => 'El LCP (Largest Contentful Paint) es la métrica de negocio más dura. Mide el tiempo que tarda en pintarse el bloque de contenido más grande de la zona visible. Si tu hero o la ficha de producto tardan más de 2.5 segundos en cargar, el cerebro del usuario desconecta por frustración y las probabilidades de rebote se disparan radicalmente.'
+        ],
+        [
+            'q' => '¿Con instalar un plugin de caché en WordPress resuelvo mi WPO?',
+            'a' => 'No. Un plugin de caché es una tirita, no una operación a corazón abierto. Optimizar la velocidad de verdad requiere auditar el código fuente, aligerar el árbol DOM, diferir peticiones de JavaScript de terceros, servir imágenes en formato Next-Gen y asegurarse de que el TTFB (latencia de respuesta pura del servidor) sea excelente.'
+        ],
+        [
+            'q' => '¿Por qué Lighthouse penaliza siempre el tráfico móvil?',
+            'a' => 'Porque Lighthouse simula una conexión de red móvil promedio (Throttle 4G lento) y CPU limitada. Google sabe que más del 70% del tráfico comercial proviene de terminales móviles en movimiento, no desde fibra óptica en un ordenador de sobremesa. Si tu web no es rápida en ese escenario de estrés real, estás perdiendo dinero.'
+        ]
+    ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -333,6 +351,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <?php
   $cta = [

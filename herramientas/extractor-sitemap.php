@@ -177,13 +177,31 @@ $page = page_config([
     'description'  => 'Extrae gratis todas las URLs de cualquier Sitemap XML o Índice de Sitemaps de forma recursiva. Filtra, audita longitudes y exporta a CSV/TXT.',
     'canonical'    => '/herramientas/extractor-sitemap/',
     'body_class'   => 'page-extractor-sitemap',
-    'schema_types' => ['WebApplication'],
+    'schema_types' => ['WebApplication', 'FAQPage'],
     'rating_id'    => 'extractor-sitemap',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Extractor Sitemap XML', 'url' => ''],
     ],
+    'faq_items' => [
+        [
+            'q' => '¿Por qué mi sitemap dice tener 500 URLs pero Google solo indexa 100?',
+            'a' => 'Existen multitud de factores: desde que el sitemap contenga URLs bloqueadas por robots.txt, canonicalizadas hacia otra variante, marcadas como noindex, o simplemente que tu web no tenga la autoridad suficiente (Crawl Demand) para que Google procese todas tus páginas profundas.'
+        ],
+        [
+            'q' => '¿Cuántas URLs o Megabytes puede tener un sitemap como máximo?',
+            'a' => 'El protocolo oficial establece un límite estricto de 50.000 URLs (etiquetas <loc>) y un peso máximo de 50 MB por archivo. Si superas estos umbrales, debes dividir tu mapa web mediante un Sitemap Index.'
+        ],
+        [
+            'q' => '¿Es necesario enviar el Sitemap todos los días a Search Console?',
+            'a' => 'No. Solo debes enviarlo la primera vez. A partir de ahí, Googlebot leerá automáticamente la etiqueta <lastmod> para descubrir nuevo contenido. Puedes acelerar el proceso declarando la ruta de tu sitemap dentro de tu archivo robots.txt.'
+        ],
+        [
+            'q' => '¿Debería incluir en el Sitemap páginas de políticas, avisos legales y paginaciones?',
+            'a' => 'Generalmente no. El Sitemap XML es tu escaparate "VIP" para Google. Solo debe contener URLs canónicas, con código de estado 200 y que aporten valor comercial o de captación. Evita malgastar Crawl Budget en páginas huérfanas de utilidad orgánica.'
+        ]
+    ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -388,6 +406,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <!-- CTA final -->
   <?php

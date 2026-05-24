@@ -34,13 +34,31 @@ $page = page_config([
     'description'  => 'Genera gratis el marcado estructurado de datos de Schema.org en formato JSON-LD recomendado por Google para posicionamiento SEO local.',
     'canonical'    => '/herramientas/generador-schema-local/',
     'body_class'   => 'page-generador-schema',
-    'schema_types' => ['WebApplication'],
+    'schema_types' => ['WebApplication', 'FAQPage'],
     'rating_id'    => 'generador-schema-local',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Generador Schema Local', 'url' => ''],
     ],
+    'faq_items' => [
+        [
+            'q' => '¿Dónde se debe colocar el código JSON-LD en la web?',
+            'a' => 'Lo ideal es inyectarlo dentro de la etiqueta <head> de la página que represente a tu negocio (normalmente la Home o la página de Contacto). Si usas WordPress, puedes insertarlo a través de un hook en functions.php o con plugins de inserción de headers/footers.'
+        ],
+        [
+            'q' => '¿Por qué Google prefiere JSON-LD frente a Microdatos?',
+            'a' => 'JSON-LD permite separar completamente el marcado semántico de la maquetación HTML visual. A diferencia de los microdatos o RDFa, que te obligan a entrelazar el código con las etiquetas div o span, JSON-LD se carga como un script limpio e invisible para el usuario, pero muy fácil de parsear para Googlebot.'
+        ],
+        [
+            'q' => '¿Puedo poner varios schemas LocalBusiness en mi web?',
+            'a' => 'Solo si tienes múltiples ubicaciones físicas (franquicias, sedes). En ese caso, cada página de ubicación (Location Page) debe llevar su propio Schema LocalBusiness específico con las coordenadas, teléfono y dirección exactos de esa sucursal.'
+        ],
+        [
+            'q' => 'El validador de Google marca advertencias, ¿es grave?',
+            'a' => 'Existen errores (rojos) y advertencias (naranjas). Los errores impiden que Google lea el schema y deben corregirse obligatoriamente. Las advertencias (como "falta campo priceRange") son sugerencias de campos recomendados pero no obligatorios. Tu marcado funcionará perfectamente aunque tenga advertencias.'
+        ]
+    ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -203,6 +221,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <!-- CTA final -->
   <?php

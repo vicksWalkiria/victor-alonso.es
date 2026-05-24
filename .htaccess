@@ -31,12 +31,12 @@ Options -Indexes
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !\.(ico|png|jpg|jpeg|webp|svg|css|js|xml|json|txt|pdf|woff2?)$ [NC]
   RewriteCond %{REQUEST_URI} !(.*)/$
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [R=301,L]
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1/ [R=308,L]
 
   # 4. Redirigir .php → URL limpia (301 permanente)
   #    Evita tocar archivos reales como favicon.png, social.webp, etc.
   RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
-  RewriteRule ^ /%1 [R=301,L]
+  RewriteRule ^ /%1 [R=308,L]
 
   # 5. Reescritura interna: URL limpia → archivo .php
   RewriteCond %{REQUEST_FILENAME} !-d

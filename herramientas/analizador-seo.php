@@ -434,13 +434,31 @@ $page = page_config([
     'description'  => 'Introduce cualquier dirección y analiza al instante la respuesta HTTP, velocidad TTFB, canonicals, robots y cabeceras de seguridad web.',
     'canonical'    => '/herramientas/analizador-seo/',
     'body_class'   => 'page-analizador-seo',
-    'schema_types' => ['WebApplication'],
+    'schema_types' => ['WebApplication', 'FAQPage'],
     'rating_id'    => 'analizador-seo',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Analizador de URL', 'url' => ''],
     ],
+    'faq_items' => [
+        [
+            'q' => '¿Por qué mi web obtiene una puntuación baja en la salud técnica?',
+            'a' => 'La salud técnica SEO evalúa factores críticos como el código de estado HTTP, la ausencia de etiquetas fundamentales (Title o Canonical) y la velocidad de respuesta (TTFB). Una puntuación baja indica bloqueos severos que impiden a Google rastrear o interpretar correctamente tu contenido, limitando tu posicionamiento independientemente de lo buena que sea tu redacción.'
+        ],
+        [
+            'q' => '¿Qué significa que falta la cabecera H1 o está duplicada?',
+            'a' => 'La etiqueta H1 es el titular principal de tu página web. Solo debe haber uno por página para dar una señal clara y contundente a Google sobre la temática del contenido. Duplicarlo confunde semánticamente a los bots, y no tenerlo es perder una de las oportunidades de relevancia On-Page más fuertes que existen.'
+        ],
+        [
+            'q' => '¿Por qué el TTFB (Time To First Byte) es tan importante para el SEO?',
+            'a' => 'El TTFB mide el tiempo que tarda tu servidor en procesar la petición y enviar el primer byte de datos. Si tu TTFB supera los 600ms, tu servidor es lento. Google prioriza sitios rápidos; un TTFB alto agota el Crawl Budget, reduce la frecuencia de rastreo y lastra de raíz cualquier optimización web de rendimiento (Core Web Vitals).'
+        ],
+        [
+            'q' => '¿Afectan las cabeceras de seguridad al posicionamiento orgánico?',
+            'a' => 'Directamente no, pero de forma indirecta lo son todo. Cabeceras ausentes como CSP o X-Frame-Options dejan la puerta abierta a inyecciones de código malicioso o malware. Si Google detecta vulnerabilidades activas en tu sitio web, desplomará tu visibilidad y mostrará alertas rojas de "Sitio no seguro" a tus usuarios.'
+        ]
+    ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -472,10 +490,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <div class="tool-intro">
         <h2>Cómo responde tu servidor a Googlebot</h2>
-        <p>Introduce tu URL. Nuestro bot de auditoría simulará el comportamiento de un rastreador para diagnosticar problemas de indexabilidad, redirecciones o lentitud en tiempo real.</p>
+        <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo.</p>
       </div>
 
-      <form action="/herramientas/analizador-seo" method="POST" class="tool-form" style="margin-bottom:2rem">
+      <form action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:2rem">
         <div class="form-group-row">
           <input 
             type="url" 
@@ -733,11 +751,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem; margin-top:2rem;">
               <div>
                 <h3 style="color:var(--orange); font-size:1.1rem; margin-bottom:.5rem;">1. Medición de TTFB real en Servidor</h3>
-                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">No es una simulación visual. Cuando envías el formulario, nuestro servidor ejecuta una petición física en tiempo real a través de <strong>cURL</strong>. La herramienta monitoriza el parámetro <code>CURLINFO_STARTTRANSFER_TIME</code> para obtener el registro exacto del instante en que se recibe la respuesta inicial del servidor remoto. Con esta métrica obtenemos una estimación bastante precisa del tiempo hasta primer byte desde el servidor donde se ejecuta la herramienta.</p>
+                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">No es una simulación visual. Cuando envías el formulario, el servidor ejecuta una petición física en tiempo real a través de <strong>cURL</strong>. La herramienta monitoriza el parámetro <code>CURLINFO_STARTTRANSFER_TIME</code> para obtener el registro exacto del instante en que se recibe la respuesta inicial del servidor remoto. Con esta métrica obtenemos una estimación bastante precisa del tiempo hasta primer byte desde el servidor donde se ejecuta la herramienta.</p>
               </div>
               <div>
                 <h3 style="color:var(--orange); font-size:1.1rem; margin-bottom:.5rem;">2. ¿Por qué se procesa de forma casi instantánea?</h3>
-                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">Esta herramienta está alojada en la infraestructura Cloud de alto rendimiento de <strong>Oracle Cloud</strong> con conexiones troncales de fibra óptica empresariales. A diferencia de un navegador web común o Lighthouse (que tiene que descargar imágenes, CSS, ejecutar scripts pesados de terceros y renderizar el árbol DOM), nuestro bot <strong>solo descarga el código HTML plano</strong> de la página, resolviendo la conexión de servidor a servidor en milisegundos.</p>
+                <p style="font-size:.92rem; color:var(--text); line-height:1.6;">Esta herramienta está alojada en la infraestructura Cloud de alto rendimiento de <strong>Oracle Cloud</strong> con conexiones troncales de fibra óptica empresariales. A diferencia de un navegador web común o Lighthouse (que tiene que descargar imágenes, CSS, ejecutar scripts pesados de terceros y renderizar el árbol DOM), el bot de auditoría <strong>solo descarga el código HTML plano</strong> de la página, resolviendo la conexión de servidor a servidor en milisegundos.</p>
                 <p style="font-size:.92rem; color:var(--muted); line-height:1.6; margin-top:0.75rem;"><em>Nota: Si analizas esta misma web (victor-alonso.es), el servidor se conectará a sí mismo mediante la interfaz local (loopback), eliminando la latencia externa de red y arrojando registros de respuesta de entre 10ms y 20ms.</em></p>
               </div>
             </div>
@@ -775,6 +793,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <!-- CTA final -->
   <?php

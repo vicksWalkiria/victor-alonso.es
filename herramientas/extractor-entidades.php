@@ -177,13 +177,31 @@ $page = page_config([
     'description'  => 'Audita la cobertura de entidades semánticas de tu web. Extrae triples, agrupa temáticas y compara brechas de entidades frente a tus competidores.',
     'canonical'    => '/herramientas/extractor-entidades/',
     'body_class'   => 'page-extractor-entidades',
-    'schema_types' => ['WebApplication'],
+    'schema_types' => ['WebApplication', 'FAQPage'],
     'rating_id'    => 'extractor-entidades',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Extractor Semántico de Entidades', 'url' => ''],
     ],
+    'faq_items' => [
+        [
+            'q' => '¿Por qué la extracción semántica es vital para el SEO actual?',
+            'a' => 'Google ha evolucionado de un buscador léxico (que cuenta cuántas veces repites una palabra) a un buscador semántico basado en entidades (Knowledge Graph). Si tu contenido no menciona las entidades, conceptos y marcas que el algoritmo asocia matemáticamente a una temática, te costará horrores posicionar por mucho enlace que consigas.'
+        ],
+        [
+            'q' => '¿Qué es exactamente la "Brecha Semántica" (Semantic Gap)?',
+            'a' => 'Es la diferencia de cobertura de conceptos entre tu contenido y el de la competencia que ya posiciona en el top 3. Esta herramienta compara ambas URLs, extrae sus grafos de conocimiento y te muestra exactamente de qué conceptos clave están hablando tus competidores que tú has omitido en tu redacción.'
+        ],
+        [
+            'q' => '¿Cómo funciona técnicamente este motor NLP?',
+            'a' => 'Utilizamos un pipeline de Procesamiento de Lenguaje Natural (NLP) que limpia tu HTML de ruido (menús, footers), tokeniza el texto y aplica reglas de extracción de entidades nombradas (NER) cruzadas con una ontología técnica SEO/Web para modelar un grafo aproximado de cómo un robot entiende tu página.'
+        ],
+        [
+            'q' => '¿Debo forzar la inclusión de las entidades que me faltan?',
+            'a' => 'Nunca. El Keyword Stuffing penaliza, y el "Entity Stuffing" también. Debes utilizar las entidades sugeridas como una guía estructural para ampliar secciones de tu contenido, respondiendo a nuevas preguntas o profundizando en la temática de forma natural para el usuario.'
+        ]
+    ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -455,6 +473,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <!-- CTA final -->
   <?php

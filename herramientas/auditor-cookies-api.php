@@ -230,14 +230,21 @@ switch ($action) {
 
     case 'pdf':
         $audit_id = $_GET['id'] ?? '';
-        
-        if (!preg_match('/^aud_[a-f0-9]{32}$/', $audit_id)) {
+        $tool = $_GET['tool'] ?? 'cookies';
+        if (!preg_match('/^aud_[a-f0-9]{32}$/', $audit_id) && !preg_match('/^log_[a-f0-9]{32}$/', $audit_id)) {
             http_response_code(403);
             exit('Acceso denegado: ID no válido.');
         }
 
-        $report_dir = $base_dir . '/' . $audit_id;
-        $pdf_file = $report_dir . '/informe.pdf';
+        if ($tool === 'logs') {
+            $report_dir = $base_dir . '/logs';
+            $pdf_file = $report_dir . '/' . $audit_id . '.pdf';
+            $filename = "auditoria-logs-victor-alonso.pdf";
+        } else {
+            $report_dir = $base_dir . '/' . $audit_id;
+            $pdf_file = $report_dir . '/informe.pdf';
+            $filename = "auditoria-cookies-victor-alonso.pdf";
+        }
 
         // Si el PDF no existe, lo generamos en el momento
         if (!file_exists($pdf_file)) {
@@ -246,10 +253,11 @@ switch ($action) {
             
             // Ejecutar el script síncronamente y esperar (tarda ~1-2s)
             $cmd = sprintf(
-                '%s %s --id=%s 2>&1',
+                '%s %s --id=%s --tool=%s 2>&1',
                 escapeshellarg($node_bin),
                 escapeshellarg($script_path),
-                escapeshellarg($audit_id)
+                escapeshellarg($audit_id),
+                escapeshellarg($tool)
             );
             $output = shell_exec($cmd);
             
@@ -261,7 +269,7 @@ switch ($action) {
 
         // Servir el PDF para descarga
         header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="auditoria-cookies-victor-alonso.pdf"');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Cache-Control: private, max-age=3600');
         readfile($pdf_file);
         exit;

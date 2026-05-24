@@ -108,3 +108,5 @@ $_cc_init_version = file_exists($_cc_init_path) ? filemtime($_cc_init_path) : ti
 ?>
 <script defer src="/assets/js/cookie-consent-init.js?v=<?= $_cc_init_version ?>"></script>
 <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

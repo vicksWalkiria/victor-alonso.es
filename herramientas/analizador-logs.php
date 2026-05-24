@@ -397,6 +397,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'hourly_distribution' => $hourly_distribution,
         'js_entries' => $js_entries
       ];
+
+      // Save result for PDF generation
+      $result['audit_id'] = 'log_' . bin2hex(random_bytes(16));
+      $reports_dir = dirname(dirname(__DIR__)) . '/data/reports/logs';
+      if (!is_dir($reports_dir)) {
+          mkdir($reports_dir, 0777, true);
+      }
+      // Limpiar logs antiguos (más de 1 hora)
+      $old_logs = glob($reports_dir . '/*.json');
+      if ($old_logs) {
+          foreach ($old_logs as $file) {
+              if (filemtime($file) < time() - 3600) @unlink($file);
+          }
+      }
+      file_put_contents($reports_dir . '/' . $result['audit_id'] . '.json', json_encode($result));
     }
   }
 }
@@ -406,13 +421,31 @@ $page = page_config([
   'description' => 'Sube o pega tu log de accesos (Apache/Nginx) y audita de forma instantánea el rastreo de bots de búsqueda, errores 404, IPs activas y consumo de crawl budget.',
   'canonical' => '/herramientas/analizador-logs/',
   'body_class' => 'page-analizador-logs',
-  'schema_types' => ['WebApplication'],
+  'schema_types' => ['WebApplication', 'FAQPage'],
   'rating_id' => 'analizador-logs',
   'active_nav' => 'herramientas',
   'breadcrumbs' => [
     ['label' => 'Herramientas', 'url' => '/herramientas/'],
     ['label' => 'Analizador de Logs', 'url' => ''],
   ],
+  'faq_items' => [
+    [
+      'q' => '¿Por qué es importante analizar los logs del servidor para el SEO?',
+      'a' => 'El análisis de logs es la única forma 100% fiable de saber exactamente cómo rastrea Googlebot (y otros buscadores) tu página web. Permite descubrir fugas de crawl budget, páginas huérfanas que Google sigue visitando, errores 404 ocultos y cuellos de botella de rendimiento que no aparecen en Google Search Console.'
+    ],
+    [
+      'q' => '¿Qué es el Crawl Budget y cómo afecta a mi web?',
+      'a' => 'El Crawl Budget (o presupuesto de rastreo) es el tiempo y recursos que Google destina a explorar tu web. Si Google gasta su presupuesto rastreando URLs con parámetros inútiles, redirecciones infinitas o recursos estáticos bloqueados, no tendrá tiempo de indexar tu contenido de valor, perjudicando tu posicionamiento.'
+    ],
+    [
+      'q' => '¿Están seguros mis datos al subir un log a esta herramienta?',
+      'a' => 'Totalmente seguros. Esta herramienta procesa el log de accesos temporalmente en memoria para generar las gráficas y el informe PDF. Una vez abandonas la página o el informe expira, los datos se eliminan automáticamente del servidor.'
+    ],
+    [
+      'q' => '¿Qué formatos de archivo de log admite el analizador?',
+      'a' => 'El analizador está optimizado para procesar los formatos estándar Common Log Format y Combined Log Format, que son los utilizados por defecto en servidores Apache y Nginx.'
+    ]
+  ]
 ]);
 
 require dirname(__DIR__) . '/includes/header.php';
@@ -953,10 +986,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <span>📊</span> Dashboard de Análisis: <span
                 style="color: #111111; font-weight: 400;"><?= h($result['source_name']) ?></span>
             </h3>
-            <button type="button" class="btn btn--secondary btn-pdf-export" onclick="window.print()"
-              style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 1px solid #111111; background: #ffffff; color: #111111; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-weight: 600;">
-              <span>🖨️</span> Guardar en PDF / Imprimir
-            </button>
+            <a href="/herramientas/auditor-cookies-api.php?action=pdf&tool=logs&id=<?= h($result['audit_id'] ?? '') ?>" class="btn btn--secondary btn-pdf-export"
+              style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 1px solid #111111; background: #ffffff; color: #111111; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-weight: 600; text-decoration: none;">
+              <span>🖨️</span> Descargar Informe PDF
+            </a>
           </div>
 
           <!-- Filtro temporal reactivo en cliente (JS) -->
@@ -2432,4 +2465,5 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   });
 </script>
 
+<?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 <?php require dirname(__DIR__) . '/includes/footer.php'; ?>
