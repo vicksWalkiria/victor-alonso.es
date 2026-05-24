@@ -68,8 +68,13 @@
     </div>
 
     <div class="footer-bottom">
-        <div class="container">
+        <div class="container footer-bottom-inner">
             <p>&copy; <?= date('Y') ?> Víctor Alonso SEO. Albacete, España.</p>
+            <nav class="footer-legal" aria-label="Páginas legales">
+                <a href="/aviso-legal/">Aviso legal</a>
+                <a href="/politica-privacidad/">Privacidad</a>
+                <a href="/politica-cookies/">Cookies</a>
+            </nav>
         </div>
     </div>
 </footer>
