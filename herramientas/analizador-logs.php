@@ -1314,7 +1314,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="criterio-grid">
           <div class="criterio-card">
             <h3>1. Privacidad y Seguridad absoluta (GDPR)</h3>
-            <p>Tus logs contienen la dirección IP y el comportamiento exacto de todos tus usuarios. Subir estos logs a servidores de terceros desconocidos puede suponer un incumplimiento grave del RGPD. Nuestra herramienta procesa todo a través de PHP de forma efímera en la memoria RAM del servidor de victor-alonso.es, sin almacenar una sola línea en base de datos ni archivos locales. Tu privacidad es inquebrantable.</p>
+            <p>Tus logs contienen la dirección IP y el comportamiento exacto de todos tus usuarios. Subir estos logs a servidores de terceros desconocidos puede suponer un incumplimiento grave del RGPD. Mi herramienta procesa todo a través de PHP de forma efímera en la memoria RAM del servidor de victor-alonso.es, sin almacenar una sola línea en base de datos ni archivos locales. Tu privacidad es inquebrantable.</p>
           </div>
           
           <div class="criterio-card">
