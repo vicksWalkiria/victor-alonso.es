@@ -57,11 +57,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p>Escribe o pega el contenido de tu archivo <code>.htaccess</code> a la izquierda, introduce una URL de prueba a la derecha y analiza instantáneamente cómo se comporta el servidor.</p>
       </div>
 
-      <!-- WORKSPACE DEL TESTER (Side by side) -->
-      <div class="htaccess-tester-grid">
+      <!-- WORKSPACE DEL TESTER (Unified side-by-side workspace) -->
+      <div class="htaccess-panel htaccess-tester-grid" style="margin-bottom: 2rem;">
         
         <!-- PANEL IZQUIERDO: EDITOR Y RECETAS -->
-        <div class="htaccess-panel htaccess-editor-panel">
+        <div class="htaccess-editor-panel">
           <div class="panel-header">
             <h3><i class="fa-solid fa-code" style="color: var(--orange);"></i> Archivo .htaccess</h3>
             
@@ -100,12 +100,12 @@ Redirect 301 /contacto-viejo /contacto/
         </div>
 
         <!-- PANEL DERECHO: PRUEBA Y RESULTADOS -->
-        <div class="htaccess-panel htaccess-results-panel">
+        <div class="htaccess-results-panel">
           <div class="panel-header">
             <h3><i class="fa-solid fa-vial" style="color: var(--orange);"></i> Escenario de Prueba</h3>
           </div>
 
-          <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 1.5rem; background: rgba(232, 104, 26, 0.02); border: 1.5px solid rgba(232, 104, 26, 0.2); box-shadow: none;">
+          <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 0; background: rgba(232, 104, 26, 0.02); border: 1.5px solid rgba(232, 104, 26, 0.2); box-shadow: none;">
             <div class="form-group">
               <label class="form-label" for="test-url" style="color: var(--black);">URL a probar <span>*</span></label>
               <input type="url" class="form-input" id="test-url" required value="http://victor-alonso.es/contacto-viejo" placeholder="http://tusitio.com/pagina-a-testear">
@@ -131,7 +131,7 @@ Redirect 301 /contacto-viejo /contacto/
               </div>
             </div>
 
-            <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+            <div style="display: flex; gap: 1rem; margin-top: 1.25rem;">
               <button type="submit" class="btn btn--primary" style="flex: 1; justify-content: center; font-weight: 700;">
                 <i class="fa-solid fa-play" style="margin-right: 0.25rem;"></i> Simular Redirecciones
               </button>
@@ -141,45 +141,44 @@ Redirect 301 /contacto-viejo /contacto/
               </button>
             </div>
           </form>
-
-          <!-- RESULTADO GLOBAL -->
-          <div id="test-summary-box" class="card card--dark" style="display: none; border: 1px solid #222;">
-            <div style="text-align: center; margin-bottom: 1.5rem;">
-              <span id="badge-status-code" class="htaccess-badge">301 Redirect</span>
-              <h3 style="color: #fff; font-size: 1.3rem; margin-top: 0.75rem; margin-bottom: 0.25rem;">Resultado de la evaluación:</h3>
-              <p id="txt-redirect-desc" style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">La URL original fue redirigida externamente.</p>
-            </div>
-
-            <!-- DIAGRAMA DE NODOS DE DIRECCIONAMIENTO -->
-            <div class="redirection-flow">
-              <div class="flow-node">
-                <span class="node-label">URL Inicial</span>
-                <span id="node-url-start" class="node-val">http://...</span>
-              </div>
-              <div id="flow-arrow-1" class="flow-arrow">
-                <span id="flow-arrow-label" class="arrow-label">301</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </div>
-              <div id="flow-node-end" class="flow-node">
-                <span class="node-label" id="node-end-label">URL de Salida</span>
-                <span id="node-url-end" class="node-val">https://...</span>
-              </div>
-            </div>
-
-            <!-- DETALLE DEL DESGLOSE PASO A PASO -->
-            <div style="margin-top: 2rem;">
-              <h4 style="color: #fff; font-size: 1rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-list-check" style="color: var(--orange);"></i> Traza de Ejecución Explicativa (Paso a Paso):
-              </h4>
-              <div id="trace-logs-container" class="trace-logs">
-                <!-- Se rellena dinámicamente -->
-              </div>
-            </div>
-          </div>
-
         </div>
 
       </div>
+
+      <!-- RESULTADO GLOBAL A ANCHO COMPLETO -->
+      <div id="test-summary-box" class="htaccess-panel" style="display: none; margin-top: 2rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <span id="badge-status-code" class="htaccess-badge">301 Redirect</span>
+          <h3 style="color: var(--black); font-size: 1.4rem; margin-top: 0.75rem; margin-bottom: 0.25rem; font-weight: 800;">Resultado de la evaluación:</h3>
+          <p id="txt-redirect-desc" style="color: var(--muted); font-size: 0.95rem; margin-bottom: 1rem;">La URL original fue redirigida externamente.</p>
+        </div>
+
+        <!-- DIAGRAMA DE NODOS DE DIRECCIONAMIENTO -->
+        <div class="redirection-flow">
+          <div class="flow-node">
+            <span class="node-label">URL Inicial</span>
+            <span id="node-url-start" class="node-val">http://...</span>
+          </div>
+          <div id="flow-arrow-1" class="flow-arrow">
+            <span id="flow-arrow-label" class="arrow-label">301</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+          <div id="flow-node-end" class="flow-node">
+            <span class="node-label" id="node-end-label">URL de Salida</span>
+            <span id="node-url-end" class="node-val">https://...</span>
+          </div>
+        </div>
+
+        <!-- DETALLE DEL DESGLOSE PASO A PASO -->
+        <div style="margin-top: 2.5rem;">
+          <h4 style="color: var(--black); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+            <i class="fa-solid fa-list-check" style="color: var(--orange);"></i> Traza de Ejecución Explicativa (Paso a Paso):
+          </h4>
+          <div id="trace-logs-container" class="trace-logs">
+            <!-- Se rellena dinámicamente -->
+        </div>
+      </div>
+    </div>
 
       <!-- TEXTOS DE CRITERIO - NO COMMODITY -->
       <div class="criterio-section" style="margin-top: 4.5rem; border-top: 1px solid var(--border); padding-top: 4rem;">
