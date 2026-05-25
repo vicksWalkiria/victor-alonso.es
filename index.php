@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Consultor SEO en Albacete e Ingeniero Informático',
+    'title'        => 'Consultor SEO en Albacete e Ingeniero Web',
     'description'  => 'Víctor Alonso: consultor SEO técnico, ingeniero informático y desarrollador WordPress en Albacete. Diagnóstico real, estrategia ejecutable, implementación propia.',
     'canonical'    => '/',
     'body_class'   => 'page-home',

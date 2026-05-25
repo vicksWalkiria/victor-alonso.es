@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // ─── 3. CARGA DE LA PÁGINA (GET) ─────────────────────────────────────────────
 $page = page_config([
-    'title'        => 'Calculadora WPO: cuánto dinero pierde tu web por cargar lenta',
+    'title'        => 'Calculadora WPO: Pérdida de Dinero por Carga Lenta',
     'description'  => 'Simulador interactivo en vivo. Analiza tu web con Lighthouse de Google y calcula el dinero que pierdes por tiempos de carga lentos (LCP).',
     'canonical'    => '/herramientas/calculadora-wpo/',
     'body_class'   => 'page-calculadora-wpo',

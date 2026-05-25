@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Configuración de Página
 $page = page_config([
-    'title'        => 'Extractor de Sitemaps XML y Auditor de URLs Profesional',
+    'title'        => 'Extractor de Sitemaps XML y Auditor de URLs',
     'description'  => 'Extrae gratis todas las URLs de cualquier Sitemap XML o Índice de Sitemaps de forma recursiva. Filtra, audita longitudes y exporta a CSV/TXT.',
     'canonical'    => '/herramientas/extractor-sitemap/',
     'body_class'   => 'page-extractor-sitemap',

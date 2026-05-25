@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['url'])) {
 } // Fin de REQUEST_METHOD == POST
 
 $page = page_config([
-    'title'        => 'Auditor de Cookies RGPD Gratis: comprueba si tu web carga cookies antes de aceptar',
+    'title'        => 'Auditor de Cookies RGPD y Privacidad Online',
     'description'  => 'Audita online si tu web cumple con el RGPD y la AEPD. Detecta cookies de analítica, marketing e iframes cargados antes del consentimiento.',
     'canonical'    => '/herramientas/auditor-cookies/',
     'body_class'   => 'page-herramientas-auditor-cookies',

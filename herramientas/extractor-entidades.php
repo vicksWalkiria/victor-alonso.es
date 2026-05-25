@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Configuración de Página
 $page = page_config([
-    'title'        => 'Extractor de Entidades Semánticas y Grafos de Conocimiento',
+    'title'        => 'Extractor de Entidades y Grafos Semánticos',
     'description'  => 'Audita la cobertura de entidades semánticas de tu web. Extrae triples, agrupa temáticas y compara brechas de entidades frente a tus competidores.',
     'canonical'    => '/herramientas/extractor-entidades/',
     'body_class'   => 'page-extractor-entidades',
