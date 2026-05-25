@@ -16,6 +16,7 @@ $page = page_config([
         ['name' => 'Extractor Semántico de Entidades', 'url' => '/herramientas/extractor-entidades/'],
         ['name' => 'Analizador de Logs Apache y Nginx', 'url' => '/herramientas/analizador-logs/'],
         ['name' => 'Auditor de Cookies y Privacidad RGPD', 'url' => '/herramientas/auditor-cookies/'],
+        ['name' => 'Tester de .htaccess y Validador mod_rewrite', 'url' => '/herramientas/tester-htaccess/'],
     ],
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
@@ -74,6 +75,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <a href="#extractor-entidades" class="tool-pill">🧠 Extractor Semántico</a>
         <a href="#analizador-logs" class="tool-pill">📊 Analizador de Logs</a>
         <a href="#auditor-cookies" class="tool-pill">🍪 Auditor de Cookies</a>
+        <a href="#tester-htaccess" class="tool-pill">⚡ Tester .htaccess</a>
       </div>
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
@@ -236,6 +238,27 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </ul>
           </div>
           <a href="/herramientas/auditor-cookies/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Auditor de Cookies</a>
+        </article>
+
+        <!-- CARD 8: TESTER DE HTACCESS -->
+        <article id="tester-htaccess" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 17 10 11 4 5"></polyline>
+                <line x1="12" y1="19" x2="20" y2="19"></line>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Tester de .htaccess & Validador</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Mi simulador mod_rewrite interactivo. Prueba y depura tus reglas de redirección 301, condiciones complejas, expresiones regulares y configuraciones de Apache de forma 100% segura y visual.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Simulación instantánea sin llamadas externas ni latencia.</li>
+              <li class="checklist-item">Traza detallada paso a paso explicada en español.</li>
+              <li class="checklist-item">Presets listos de HTTPS, WWW, trailing slash y WordPress.</li>
+              <li class="checklist-item">Detección interactiva de bucles de redirección infinitos.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/tester-htaccess/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Tester .htaccess</a>
         </article>
 
       </div>

@@ -223,10 +223,15 @@ function _schema_web_application(string $name, string $description, string $cano
         'name'              => $name,
         'description'       => $description,
         'url'               => SITE_URL . $canonical,
-        'applicationCategory' => 'BusinessApplication',
-        'operatingSystem'   => 'All',
-        'browserRequirements' => 'Requires HTML5, CSS3, JavaScript',
+        'applicationCategory' => 'DeveloperApplication',
+        'operatingSystem'   => 'Web',
+        'browserRequirements' => 'Requiere JavaScript',
         'isAccessibleForFree' => true,
+        'creator'           => [
+            '@type' => 'Person',
+            'name'  => 'Víctor Alonso',
+            'url'   => SITE_URL . '/',
+        ],
         'offers'            => [
             '@type'         => 'Offer',
             'price'         => '0',
