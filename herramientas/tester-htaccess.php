@@ -105,15 +105,15 @@ Redirect 301 /contacto-viejo /contacto/
             <h3><i class="fa-solid fa-vial" style="color: var(--orange);"></i> Escenario de Prueba</h3>
           </div>
 
-          <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 1.5rem; background: #111; border-color: #222;">
+          <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 1.5rem; background: rgba(232, 104, 26, 0.02); border: 1.5px solid rgba(232, 104, 26, 0.2); box-shadow: none;">
             <div class="form-group">
-              <label class="form-label" for="test-url">URL a probar <span>*</span></label>
+              <label class="form-label" for="test-url" style="color: var(--black);">URL a probar <span>*</span></label>
               <input type="url" class="form-input" id="test-url" required value="http://victor-alonso.es/contacto-viejo" placeholder="http://tusitio.com/pagina-a-testear">
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="test-ua">User-Agent del cliente</label>
+                <label class="form-label" for="test-ua" style="color: var(--black);">User-Agent del cliente</label>
                 <select class="form-input" id="test-ua">
                   <option value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (Chrome/120.0.0.0)">Navegador Estándar (Chrome / Desktop)</option>
                   <option value="Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36">Navegador Móvil (Chrome Mobile)</option>
@@ -124,7 +124,7 @@ Redirect 301 /contacto-viejo /contacto/
               </div>
 
               <div class="form-group" style="display: flex; align-items: center; padding-top: 1.5rem;">
-                <label class="form-checkbox-label" style="display: inline-flex; align-items: center; gap: 0.5rem; color: #cbd5e1; font-size: 0.88rem; cursor: pointer;">
+                <label class="form-checkbox-label" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--black); font-size: 0.88rem; cursor: pointer;">
                   <input type="checkbox" id="test-files-exists" checked style="accent-color: var(--orange); width: 18px; height: 18px;">
                   Simular que existen los archivos estáticos y carpetas reales
                 </label>
@@ -136,7 +136,7 @@ Redirect 301 /contacto-viejo /contacto/
                 <i class="fa-solid fa-play" style="margin-right: 0.25rem;"></i> Simular Redirecciones
               </button>
               
-              <button type="button" id="btn-share-test" class="wpo-btn-share" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; font-weight: 700; background: #222; color: #fff; padding: 0.65rem 1.2rem; border-radius: 6px; cursor: pointer; border: 1px solid #333; transition: all 0.2s;">
+              <button type="button" id="btn-share-test" class="btn btn--secondary" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
                 <i class="fa-solid fa-share-nodes"></i> Compartir Test
               </button>
             </div>
@@ -1422,18 +1422,18 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .htaccess-panel {
-    background: #0b0b0b;
-    border: 1px solid #1a1a1a;
+    background: #ffffff;
+    border: 1.5px solid rgba(232, 104, 26, 0.2);
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 20px rgba(232, 104, 26, 0.04);
 }
 
 .panel-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid var(--border);
     padding-bottom: 1rem;
     margin-bottom: 1.25rem;
 }
@@ -1441,27 +1441,33 @@ document.addEventListener('DOMContentLoaded', function() {
 .panel-header h3 {
     margin: 0;
     font-size: 1.15rem;
-    color: #fff;
+    color: var(--black);
     font-weight: 700;
 }
 
 /* Editor de Código Estilizado */
 .editor-wrapper {
     display: flex;
-    background: #050505;
-    border: 1px solid #222;
+    background: #f8fafc;
+    border: 1.5px solid rgba(232, 104, 26, 0.25);
     border-radius: 8px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.9rem;
     position: relative;
     overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.editor-wrapper:focus-within {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(232, 104, 26, 0.12);
 }
 
 .line-numbers {
     padding: 1rem 0.5rem 1rem 0.75rem;
-    background: #080808;
-    color: #444;
-    border-right: 1px solid #1a1a1a;
+    background: rgba(232, 104, 26, 0.03);
+    color: rgba(232, 104, 26, 0.45);
+    border-right: 1px solid rgba(232, 104, 26, 0.15);
     text-align: right;
     user-select: none;
     line-height: 1.5;
@@ -1473,7 +1479,7 @@ document.addEventListener('DOMContentLoaded', function() {
     flex: 1;
     background: transparent;
     border: none;
-    color: #cbd5e1;
+    color: var(--black);
     padding: 1rem;
     line-height: 1.5;
     resize: vertical;
@@ -1484,10 +1490,11 @@ document.addEventListener('DOMContentLoaded', function() {
     overflow-y: auto;
     white-space: pre;
     tab-size: 4;
+    caret-color: var(--orange);
 }
 
 .code-editor::placeholder {
-    color: #555;
+    color: #94a3b8;
 }
 
 /* Formulario */
@@ -1532,8 +1539,8 @@ document.addEventListener('DOMContentLoaded', function() {
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
-    background: #080808;
-    border: 1px solid #151515;
+    background: rgba(232, 104, 26, 0.02);
+    border: 1px dashed rgba(232, 104, 26, 0.25);
     border-radius: 8px;
     padding: 1.5rem;
     margin: 1.5rem 0;
@@ -1541,12 +1548,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .flow-node {
     flex: 1;
-    background: #121212;
-    border: 1px solid #222;
-    border-radius: 6px;
+    background: #ffffff;
+    border: 1.5px solid rgba(232, 104, 26, 0.2);
+    border-radius: 8px;
     padding: 0.75rem 1rem;
     max-width: 260px;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
 }
 
 .node-label {
@@ -1561,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', function() {
 .node-val {
     display: block;
     font-size: 0.82rem;
-    color: #fff;
+    color: var(--black);
     word-break: break-all;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1590,18 +1598,19 @@ document.addEventListener('DOMContentLoaded', function() {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    background: #050505;
-    border: 1px solid #151515;
+    background: #ffffff;
+    border: 1.5px solid rgba(232, 104, 26, 0.25);
     border-radius: 8px;
     padding: 1.25rem;
     max-height: 480px;
     overflow-y: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
 }
 
 .trace-item {
     display: flex;
     gap: 1rem;
-    border-bottom: 1px solid #111;
+    border-bottom: 1px solid rgba(232, 104, 26, 0.08);
     padding-bottom: 0.75rem;
 }
 
@@ -1624,8 +1633,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .trace-line-num {
     font-size: 0.68rem;
-    color: var(--muted);
-    background: #111;
+    color: var(--orange);
+    background: rgba(232, 104, 26, 0.08);
     padding: 0.1rem 0.35rem;
     border-radius: 4px;
     font-weight: 600;
@@ -1637,14 +1646,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .trace-msg {
     font-size: 0.88rem;
-    color: #cbd5e1;
+    color: var(--black);
     margin: 0 0 0.35rem;
     line-height: 1.45;
 }
 
 .trace-raw {
-    background: #0d0d0d;
-    border: 1px solid #1a1a1a;
+    background: rgba(232, 104, 26, 0.03);
+    border: 1px solid rgba(232, 104, 26, 0.15);
     border-radius: 4px;
     padding: 0.35rem 0.6rem;
     margin: 0.4rem 0;
@@ -1654,7 +1663,8 @@ document.addEventListener('DOMContentLoaded', function() {
 .trace-raw code {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.8rem;
-    color: #e8681a;
+    color: var(--black);
+    font-weight: 600;
 }
 
 .trace-details {
