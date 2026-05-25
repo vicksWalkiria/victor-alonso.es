@@ -1149,6 +1149,18 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('htaccess-test-form');
     const summaryBox = document.getElementById('test-summary-box');
 
+    // Helper para tracking de Google Analytics (GA4) y GTM
+    function trackEvent(eventName, params) {
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', eventName, params);
+        } else if (typeof window.dataLayer !== 'undefined' && Array.isArray(window.dataLayer)) {
+            window.dataLayer.push({
+                event: eventName,
+                ...params
+            });
+        }
+    }
+
     // 1. Sincronizar números de línea en el editor
     function updateLineNumbers() {
         const linesCount = codeArea.value.split('\n').length;
@@ -1167,12 +1179,27 @@ document.addEventListener('DOMContentLoaded', function() {
     updateLineNumbers();
 
     // 1b. Función global para cargar ejemplos interactivos desde la sección SEO
-    window.cargarEjemplo = function(codigo, url) {
+    window.cargarEjemplo = function(codigo, url, nombreEjemplo) {
         codeArea.value = codigo;
         updateLineNumbers();
         if (url) {
             document.getElementById('test-url').value = url;
         }
+
+        let inferredName = nombreEjemplo;
+        if (!inferredName) {
+            if (codigo.includes('HTTPS')) inferredName = 'Forzar HTTPS';
+            else if (codigo.includes('HTTP_HOST')) inferredName = 'Sin WWW';
+            else if (codigo.includes('RedirectMatch')) inferredName = 'RedirectMatch';
+            else if (codigo.includes('ChatGPT')) inferredName = 'Bloquear Bots IA';
+            else inferredName = 'Ejemplo Genérico';
+        }
+
+        // Evento Analytics
+        trackEvent('htaccess_load_example', {
+            example_title: inferredName
+        });
+
         // Desplazamiento suave hasta el editor
         codeArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
         // Ejecución automática inmediata tras breve delay para la transición visual
@@ -1187,6 +1214,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (val && presets[val]) {
             codeArea.value = presets[val];
             updateLineNumbers();
+            
+            // Evento Analytics
+            trackEvent('htaccess_load_preset', {
+                preset_name: val
+            });
+
             // Ejecutar simulación automática al cambiar receta
             triggerSimulation();
         }
@@ -1198,6 +1231,10 @@ document.addEventListener('DOMContentLoaded', function() {
         codeArea.value = '';
         updateLineNumbers();
         summaryBox.style.display = 'none';
+        
+        // Evento Analytics
+        trackEvent('htaccess_clear_editor', {});
+
         codeArea.focus();
     });
 
@@ -1209,6 +1246,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const fe = document.getElementById('test-files-exists').checked ? '1' : '0';
 
         const shareUrl = `${window.location.origin}${window.location.pathname}?c=${code}&u=${url}&ua=${ua}&fe=${fe}`;
+
+        // Evento Analytics
+        trackEvent('htaccess_share_test', {
+            rules_count: codeArea.value.split('\n').length
+        });
 
         navigator.clipboard.writeText(shareUrl).then(() => {
             alert('¡Enlace de prueba copiado al portapapeles! Envíalo a un compañero para compartir exactamente este test.');
@@ -1272,6 +1314,14 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Por favor introduce una URL válida para realizar la simulación.');
             return;
         }
+
+        // Evento Analytics
+        trackEvent('htaccess_simulate', {
+            test_url: normalizedUrl,
+            ua_type: userAgentVal.substring(0, 50),
+            files_exist: filesExistsVal ? 1 : 0,
+            rules_count: htaccessText.split('\n').length
+        });
 
         const simulator = new HtaccessSimulator();
         const res = simulator.simulate(htaccessText, normalizedUrl, {
