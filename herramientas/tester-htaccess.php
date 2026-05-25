@@ -234,7 +234,7 @@ Redirect 301 /contacto-viejo /contacto/
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
           
           <!-- EJEMPLO 1: HTTPS -->
-          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
                 <i class="fa-solid fa-lock" style="color: #10b981;"></i> Forzar tráfico HTTPS (SSL)
@@ -242,7 +242,7 @@ Redirect 301 /contacto-viejo /contacto/
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Indispensable para asegurar que toda tu web se sirve bajo una conexión cifrada SSL. Redirige de forma permanente (301) cualquier petición insegura HTTP a la versión segura HTTPS.
               </p>
-              <pre style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">RewriteEngine On
+              <pre style="background: rgba(232, 104, 26, 0.03); border: 1px solid rgba(232, 104, 26, 0.3); border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: var(--black); line-height: 1.5; font-weight: 600;">RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]</code></pre>
             </div>
@@ -252,7 +252,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]</code></pre>
           </div>
 
           <!-- EJEMPLO 2: WWW to Non-WWW -->
-          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
                 <i class="fa-solid fa-globe" style="color: var(--orange);"></i> Forzar dominio sin WWW
@@ -260,7 +260,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]</code></pre>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Evita problemas de contenido duplicado consolidando tu fuerza de marca bajo una sola variante. Este ejemplo redirige de forma permanente las visitas que incluyan www. a la versión limpia sin www.
               </p>
-              <pre style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">RewriteEngine On
+              <pre style="background: rgba(232, 104, 26, 0.03); border: 1px solid rgba(232, 104, 26, 0.3); border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: var(--black); line-height: 1.5; font-weight: 600;">RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
             </div>
@@ -270,7 +270,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
           </div>
 
           <!-- EJEMPLO 3: Redirección de directorio -->
-          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
                 <i class="fa-solid fa-folder-open" style="color: #3b82f6;"></i> Redirección 301 de Categoría completa
@@ -278,7 +278,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Ideal para reestructuraciones de blog o e-commerce. Esta directiva captura cualquier subcarpeta o archivo dentro de un directorio antiguo y lo mueve de forma inteligente a su nueva ruta, conservando la query string de analítica.
               </p>
-              <pre style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">RedirectMatch 301 ^/blog/categoria/(.*)$ /articulos/$1</code></pre>
+              <pre style="background: rgba(232, 104, 26, 0.03); border: 1px solid rgba(232, 104, 26, 0.3); border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: var(--black); line-height: 1.5; font-weight: 600;">RedirectMatch 301 ^/blog/categoria/(.*)$ /articulos/$1</code></pre>
             </div>
             <button type="button" class="btn btn--primary" onclick="cargarEjemplo('RedirectMatch 301 ^/blog/categoria/(.*)$ /articulos/$1', 'http://victor-alonso.es/blog/categoria/seo-tecnico?page=2')" style="font-size: 0.8rem; padding: 0.5rem 1rem; align-self: flex-start;">
               Cargar y Probar Ejemplo
@@ -286,7 +286,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
           </div>
 
           <!-- EJEMPLO 4: Bloqueo de bots IA -->
-          <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
                 <i class="fa-solid fa-robot" style="color: #ef4444;"></i> Bloquear rastreo de Bots de IA
@@ -294,7 +294,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Protege tus derechos de autor y ahorra recursos de tu servidor denegando explícitamente el acceso a bots agresivos de raspado de IA (como ChatGPT de OpenAI) devolviendo un código 403 Forbidden.
               </p>
-              <pre style="background: #111; border: 1px solid #222; border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">RewriteEngine On
+              <pre style="background: rgba(232, 104, 26, 0.03); border: 1px solid rgba(232, 104, 26, 0.3); border-radius: 6px; padding: 1rem; overflow-x: auto; margin-bottom: 1.5rem;"><code style="font-family: monospace; font-size: 0.85rem; color: var(--black); line-height: 1.5; font-weight: 600;">RewriteEngine On
 RewriteCond %{HTTP_USER_AGENT} (ChatGPT-User) [NC]
 RewriteRule ^(.*)$ - [F,L]</code></pre>
             </div>
