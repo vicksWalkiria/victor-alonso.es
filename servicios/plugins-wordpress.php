@@ -8,7 +8,11 @@ $page = page_config([
   'canonical'    => '/servicios/plugins-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
-  'service_name' => 'Plugins WordPress a medida',
+  'service_data' => [
+      '@id'         => '/servicios/plugins-wordpress/#service',
+      'name'        => 'Plugins WordPress a medida',
+      'serviceType' => 'Desarrollo Web'
+  ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],

@@ -8,7 +8,11 @@ $page = page_config([
   'canonical'    => '/servicios/seo-espana/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
-  'service_name' => 'SEO para empresas en España',
+  'service_data' => [
+      '@id'         => '/servicios/seo-espana/#service',
+      'name'        => 'SEO para empresas en España',
+      'serviceType' => 'Consultoría SEO Nacional'
+  ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],

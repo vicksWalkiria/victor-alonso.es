@@ -8,7 +8,14 @@ $page = page_config([
   'canonical'    => '/servicios/auditoria-seo/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
-  'service_name' => 'Auditoría SEO',
+  'service_data' => [
+      '@id'         => '/servicios/auditoria-seo/#service',
+      'name'        => 'Auditoría SEO técnica',
+      'serviceType' => 'Auditoría SEO',
+      'offers'      => [
+          'minPrice' => 250
+      ]
+  ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],

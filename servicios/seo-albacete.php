@@ -16,7 +16,24 @@ $page = page_config([
   'canonical'    => '/servicios/seo-albacete/',
   'body_class'   => 'page-servicio page-seo-albacete',
   'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
-  'service_name' => 'SEO en Albacete',
+  'service_data' => [
+      '@id'           => '/servicios/seo-albacete/#service',
+      'name'          => 'Consultor SEO en Albacete',
+      'alternateName' => [
+          'SEO en Albacete',
+          'SEO local en Albacete',
+          'Posicionamiento web en Albacete'
+      ],
+      'serviceType'   => 'Consultoría SEO local',
+      'areaServed'    => [
+          ['@type' => 'City', 'name' => 'Albacete'],
+          ['@type' => 'AdministrativeArea', 'name' => 'Provincia de Albacete'],
+          ['@type' => 'Country', 'name' => 'España']
+      ],
+      'offers'        => [
+          'minPrice' => 150
+      ]
+  ],
   'active_nav'   => 'servicios',
   'map'          => true,
   'faq_items'    => $faq,

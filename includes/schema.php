@@ -1,75 +1,94 @@
 <?php
 /**
- * schema.php — Sistema de schemas JSON-LD
+ * schema.php — Sistema de schemas JSON-LD con @graph
  * Requiere config.php cargado previamente.
+ *
+ * Arquitectura:
+ *   - render_schemas() recopila todos los nodos y emite UN solo bloque @graph.
+ *   - Entidades raíz reutilizables:
+ *       WebSite        → SITE_URL/#website
+ *       Person         → SITE_URL/#person
+ *       LocalBusiness  → SITE_URL/#localbusiness   (solo en páginas que lo necesitan)
+ *   - Los servicios apuntan a LocalBusiness mediante provider.@id
  */
+
+// ─── Punto de entrada ────────────────────────────────────────────────────────
 
 /**
- * Renderiza todos los bloques JSON-LD para la página.
+ * Recopila todos los nodos JSON-LD y los emite como un único bloque @graph.
  */
 function render_schemas(array $page): void {
-    // ── Schemas globales (todas las páginas) ──────────────────────────────
-    _schema_website();
-    _schema_person();
-    _schema_breadcrumbs($page);
+    $nodes = [];
 
-    // ── Schemas condicionales ──────────────────────────────────────────────
+    // ── Nodos globales (todas las páginas) ───────────────────────────────────
+    $nodes[] = _node_website();
+    $nodes[] = _node_person();
+    $nodes[] = _node_breadcrumbs($page);
+
+    // ── Nodos condicionales ──────────────────────────────────────────────────
     $types = $page['schema_types'] ?? [];
 
     if (in_array('LocalBusiness', $types)) {
-        _schema_local_business();
+        $nodes[] = _node_local_business();
     }
 
-    if (in_array('Service', $types) && !empty($page['service_name'])) {
-        _schema_service($page['service_name'], $page['description'], $page['canonical']);
+    if (in_array('Service', $types) && !empty($page['service_data'])) {
+        $nodes[] = _node_service($page['service_data'], $page['description']);
     }
 
     if (in_array('FAQPage', $types) && !empty($page['faq_items'])) {
-        _schema_faq($page['faq_items']);
+        $nodes[] = _node_faq($page['faq_items']);
     }
 
     if (in_array('AboutPage', $types)) {
-        _schema_about_page($page['canonical']);
+        $nodes[] = _node_about_page($page['canonical']);
     }
 
     if (in_array('ContactPage', $types)) {
-        _schema_contact_page($page['canonical']);
+        $nodes[] = _node_contact_page($page['canonical']);
     }
 
     if (in_array('WebApplication', $types) && !empty($page['rating_id'])) {
         require_once __DIR__ . '/ratings-helper.php';
-        $ratings = get_ratings();
+        $ratings    = get_ratings();
         $rating_data = $ratings[$page['rating_id']] ?? null;
         if ($rating_data) {
-            _schema_web_application($page['title'], $page['description'], $page['canonical'], $rating_data);
+            $nodes[] = _node_web_application($page['title'], $page['description'], $page['canonical'], $rating_data);
         }
     }
 
     if (in_array('ItemList', $types) && !empty($page['item_list'])) {
-        _schema_item_list($page['title'], $page['canonical'], $page['item_list']);
+        $nodes[] = _node_item_list($page['title'], $page['canonical'], $page['item_list']);
     }
+
+    // ── Emitir único bloque @graph ───────────────────────────────────────────
+    _emit_graph($nodes);
 }
 
-// ─── Schemas privados ────────────────────────────────────────────────────────
+// ─── Emisor ──────────────────────────────────────────────────────────────────
 
-function _print_schema(array $data): void {
+function _emit_graph(array $nodes): void {
     echo '<script type="application/ld+json">' . "\n";
-    echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    echo json_encode([
+        '@context' => 'https://schema.org',
+        '@graph'   => array_values(array_filter($nodes)),
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     echo "\n" . '</script>' . "\n";
 }
 
-function _schema_website(): void {
-    _print_schema([
-        '@context' => 'https://schema.org',
-        '@type'    => 'WebSite',
-        'name'     => SITE_NAME,
-        'url'      => SITE_URL,
-    ]);
+// ─── Nodos ───────────────────────────────────────────────────────────────────
+
+function _node_website(): array {
+    return [
+        '@type' => 'WebSite',
+        '@id'   => SITE_URL . '/#website',
+        'name'  => SITE_NAME,
+        'url'   => SITE_URL,
+    ];
 }
 
-function _schema_person(): void {
-    _print_schema([
-        '@context'    => 'https://schema.org',
+function _node_person(): array {
+    return [
         '@type'       => 'Person',
         '@id'         => SITE_URL . '/#person',
         'name'        => 'Víctor Alonso',
@@ -90,21 +109,20 @@ function _schema_person(): void {
             SITE_GITHUB,
             SITE_WALKIRIA,
         ],
-    ]);
+    ];
 }
 
-function _schema_local_business(): void {
-    _print_schema([
-        '@context'    => 'https://schema.org',
-        '@type'       => ['LocalBusiness', 'ProfessionalService'],
-        '@id'         => SITE_URL . '/#business',
-        'name'        => SITE_NAME,
-        'url'         => SITE_URL,
-        'telephone'   => SITE_PHONE_RAW,
-        'email'       => SITE_EMAIL,
-        'image'       => SITE_IMAGE,
-        'founder'     => ['@id' => SITE_URL . '/#person'],
-        'address'     => [
+function _node_local_business(): array {
+    return [
+        '@type'     => ['LocalBusiness', 'ProfessionalService'],
+        '@id'       => SITE_URL . '/#localbusiness',
+        'name'      => SITE_NAME,
+        'url'       => SITE_URL,
+        'telephone' => SITE_PHONE_RAW,
+        'email'     => SITE_EMAIL,
+        'image'     => SITE_IMAGE,
+        'founder'   => ['@id' => SITE_URL . '/#person'],
+        'address'   => [
             '@type'           => 'PostalAddress',
             'streetAddress'   => 'Calle Iris 25',
             'addressLocality' => SITE_LOCALITY,
@@ -118,8 +136,8 @@ function _schema_local_business(): void {
             'longitude' => '-1.8567414',
         ],
         'areaServed' => [
-            ['@type' => 'City', 'name' => 'Albacete'],
-            ['@type' => 'State', 'name' => 'Castilla-La Mancha'],
+            ['@type' => 'City',    'name' => 'Albacete'],
+            ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
             ['@type' => 'Country', 'name' => 'España'],
         ],
         'sameAs' => [
@@ -127,25 +145,57 @@ function _schema_local_business(): void {
             SITE_TWITTER_URL,
             SITE_GITHUB,
         ],
-    ]);
+    ];
 }
 
-function _schema_service(string $name, string $description, string $canonical): void {
-    _print_schema([
-        '@context'    => 'https://schema.org',
+/**
+ * Nodo Service enriquecido.
+ *
+ * $data keys soportados:
+ *   @id          string   — URI con fragmento, p.ej. '/servicios/seo-albacete/#service'
+ *   name         string   — nombre principal del servicio
+ *   alternateName array   — nombres alternativos (opcional)
+ *   serviceType  string   — categoría del servicio
+ *   areaServed   array    — lista de entidades geográficas (opcional)
+ *   offers       array    — ['minPrice' => int] (opcional)
+ */
+function _node_service(array $data, string $description): array {
+    $node = [
         '@type'       => 'Service',
-        'name'        => $name,
+        '@id'         => SITE_URL . ($data['@id'] ?? '/#service'),
+        'name'        => $data['name'] ?? '',
         'description' => $description,
-        'url'         => SITE_URL . $canonical,
-        'provider'    => ['@id' => SITE_URL . '/#person'],
-        'areaServed'  => [
-            ['@type' => 'Country', 'name' => 'España'],
-        ],
-        'serviceType' => $name,
-    ]);
+        'provider'    => ['@id' => SITE_URL . '/#localbusiness'],
+    ];
+
+    if (!empty($data['alternateName'])) {
+        $node['alternateName'] = $data['alternateName'];
+    }
+
+    if (!empty($data['serviceType'])) {
+        $node['serviceType'] = $data['serviceType'];
+    }
+
+    if (!empty($data['areaServed'])) {
+        $node['areaServed'] = $data['areaServed'];
+    }
+
+    if (!empty($data['offers']['minPrice'])) {
+        $node['offers'] = [
+            '@type'              => 'Offer',
+            'priceCurrency'      => 'EUR',
+            'priceSpecification' => [
+                '@type'        => 'PriceSpecification',
+                'minPrice'     => $data['offers']['minPrice'],
+                'priceCurrency' => 'EUR',
+            ],
+        ];
+    }
+
+    return $node;
 }
 
-function _schema_faq(array $items): void {
+function _node_faq(array $items): array {
     $entities = [];
     foreach ($items as $item) {
         $entities[] = [
@@ -157,14 +207,13 @@ function _schema_faq(array $items): void {
             ],
         ];
     }
-    _print_schema([
-        '@context'   => 'https://schema.org',
+    return [
         '@type'      => 'FAQPage',
         'mainEntity' => $entities,
-    ]);
+    ];
 }
 
-function _schema_breadcrumbs(array $page): void {
+function _node_breadcrumbs(array $page): array {
     $items = [
         [
             '@type'    => 'ListItem',
@@ -188,67 +237,59 @@ function _schema_breadcrumbs(array $page): void {
         $pos++;
     }
 
-    _print_schema([
-        '@context'        => 'https://schema.org',
+    return [
         '@type'           => 'BreadcrumbList',
         'itemListElement' => $items,
-    ]);
+    ];
 }
 
-function _schema_about_page(string $canonical): void {
-    _print_schema([
-        '@context'  => 'https://schema.org',
+function _node_about_page(string $canonical): array {
+    return [
         '@type'     => 'AboutPage',
         'url'       => SITE_URL . $canonical,
         'name'      => 'Sobre Víctor Alonso — Consultor SEO e Ingeniero Informático',
         'about'     => ['@id' => SITE_URL . '/#person'],
         'publisher' => ['@id' => SITE_URL . '/#person'],
-    ]);
+    ];
 }
 
-function _schema_contact_page(string $canonical): void {
-    _print_schema([
-        '@context'     => 'https://schema.org',
-        '@type'        => 'ContactPage',
-        'url'          => SITE_URL . $canonical,
-        'name'         => 'Contacto — Víctor Alonso SEO',
-        'mainEntity'   => ['@id' => SITE_URL . '/#person'],
-    ]);
+function _node_contact_page(string $canonical): array {
+    return [
+        '@type'      => 'ContactPage',
+        'url'        => SITE_URL . $canonical,
+        'name'       => 'Contacto — Víctor Alonso SEO',
+        'mainEntity' => ['@id' => SITE_URL . '/#person'],
+    ];
 }
 
-function _schema_web_application(string $name, string $description, string $canonical, array $rating_data): void {
-    _print_schema([
-        '@context'          => 'https://schema.org',
-        '@type'             => 'WebApplication',
-        'name'              => $name,
-        'description'       => $description,
-        'url'               => SITE_URL . $canonical,
-        'applicationCategory' => 'DeveloperApplication',
-        'operatingSystem'   => 'Web',
-        'browserRequirements' => 'Requiere JavaScript',
-        'isAccessibleForFree' => true,
-        'creator'           => [
-            '@type' => 'Person',
-            'name'  => 'Víctor Alonso',
-            'url'   => SITE_URL . '/',
-        ],
-        'offers'            => [
+function _node_web_application(string $name, string $description, string $canonical, array $rating_data): array {
+    return [
+        '@type'                => 'WebApplication',
+        'name'                 => $name,
+        'description'          => $description,
+        'url'                  => SITE_URL . $canonical,
+        'applicationCategory'  => 'DeveloperApplication',
+        'operatingSystem'      => 'Web',
+        'browserRequirements'  => 'Requiere JavaScript',
+        'isAccessibleForFree'  => true,
+        'creator'              => ['@id' => SITE_URL . '/#person'],
+        'offers'               => [
             '@type'         => 'Offer',
             'price'         => '0',
             'priceCurrency' => 'EUR',
         ],
-        'provider'          => ['@id' => SITE_URL . '/#person'],
-        'aggregateRating'   => [
+        'provider'             => ['@id' => SITE_URL . '/#localbusiness'],
+        'aggregateRating'      => [
             '@type'       => 'AggregateRating',
             'ratingValue' => (string)$rating_data['average'],
             'ratingCount' => (string)$rating_data['count'],
             'bestRating'  => '5',
             'worstRating' => '1',
         ],
-    ]);
+    ];
 }
 
-function _schema_item_list(string $name, string $canonical, array $items): void {
+function _node_item_list(string $name, string $canonical, array $items): array {
     $list_items = [];
     $pos = 1;
     foreach ($items as $item) {
@@ -264,13 +305,18 @@ function _schema_item_list(string $name, string $canonical, array $items): void 
         $pos++;
     }
     if (empty($list_items)) {
-        return;
+        return [];
     }
-    _print_schema([
-        '@context'        => 'https://schema.org',
+    return [
         '@type'           => 'ItemList',
         'name'            => $name,
         'url'             => SITE_URL . $canonical,
         'itemListElement' => $list_items,
-    ]);
+    ];
 }
+
+// ─── BC shims: mantienen compatibilidad con código antiguo ───────────────────
+// Eliminables una vez que todas las páginas usen service_data.
+
+/** @deprecated Usar service_data en page_config() */
+function _schema_service(string $name, string $description, string $canonical): void {}

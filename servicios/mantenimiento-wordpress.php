@@ -8,7 +8,11 @@ $page = page_config([
   'canonical'    => '/servicios/mantenimiento-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
-  'service_name' => 'Mantenimiento WordPress',
+  'service_data' => [
+      '@id'         => '/servicios/mantenimiento-wordpress/#service',
+      'name'        => 'Mantenimiento WordPress',
+      'serviceType' => 'Mantenimiento Web'
+  ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],

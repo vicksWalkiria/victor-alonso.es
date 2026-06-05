@@ -8,7 +8,11 @@ $page = page_config([
   'canonical'    => '/servicios/desarrollo-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
-  'service_name' => 'Desarrollo WordPress',
+  'service_data' => [
+      '@id'         => '/servicios/desarrollo-wordpress/#service',
+      'name'        => 'Desarrollo WordPress',
+      'serviceType' => 'Desarrollo Web'
+  ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
