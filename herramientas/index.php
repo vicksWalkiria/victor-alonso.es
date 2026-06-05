@@ -33,7 +33,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="hub-h1">
     <div class="container">
       <h1 id="hub-h1">Herramientas SEO con <span>criterio de trinchera</span></h1>
-      <p class="page-hero-desc">Soluciones técnicas interactivas, libres de registros y de alto rendimiento. Herramientas creadas por un ingeniero para ayudarte a auditar, estructurar y optimizar el rendimiento técnico real de tu web.</p>
+      <p class="page-hero-desc">Soluciones técnicas interactivas, libres de registros y de alto rendimiento. Herramientas creadas por un <a href="/" style="color:var(--orange)">consultor SEO en Albacete</a> para ayudarte a auditar, estructurar y optimizar el rendimiento técnico real de tu web.</p>
     </div>
   </section>
 

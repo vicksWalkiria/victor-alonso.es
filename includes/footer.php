@@ -11,7 +11,7 @@
             <a href="/" class="site-logo footer-logo" aria-label="Víctor Alonso SEO — Inicio">
                 <span class="logo-name">Víctor Alonso</span><span class="logo-tag">SEO</span>
             </a>
-            <p class="footer-tagline">Consultor SEO e ingeniero informático en Albacete.<br>Diagnóstico técnico, estrategia real, implementación.</p>
+            <p class="footer-tagline"><a href="/" style="color:inherit;text-decoration:none;">Consultor SEO en Albacete</a> e ingeniero informático.<br>Diagnóstico técnico, estrategia real, implementación.</p>
             <div class="footer-social" aria-label="Redes sociales">
                 <a href="<?= h(SITE_LINKEDIN) ?>" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Víctor Alonso">
                     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
@@ -29,7 +29,7 @@
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Servicios SEO</h3>
                 <ul role="list">
-                    <li><a href="/servicios/seo-albacete/">SEO en Albacete</a></li>
+                    <li><a href="/">SEO en Albacete</a></li>
                     <li><a href="/servicios/seo-espana/">SEO para España</a></li>
                     <li><a href="/servicios/auditoria-seo/">Auditoría SEO</a></li>
                     <li><a href="/servicios/seo-tecnico/">SEO Técnico</a></li>

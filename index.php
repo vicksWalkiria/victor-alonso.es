@@ -142,8 +142,8 @@ require __DIR__ . '/includes/header.php';
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
           <h3>SEO en Albacete</h3>
-          <p>SEO local técnico para negocios en Albacete. Google Business Profile, arquitectura, contenido local y medición.</p>
-          <a href="/servicios/seo-albacete/" class="card-link">Ver servicio →</a>
+          <p>SEO local técnico para negocios de Albacete: Google Business Profile, arquitectura web, contenido local, medición y mejoras reales sobre la web.</p>
+          <a href="/contacto/" class="card-link">Solicitar diagnóstico SEO →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -277,7 +277,7 @@ require __DIR__ . '/includes/header.php';
   <section class="section" aria-labelledby="casos-heading">
     <div class="container">
       <span class="section-label">Sin inventar cifras</span>
-      <h2 class="section-title" id="casos-heading">Casos reales de posicionamiento SEO en Albacete y España</h2>
+      <h2 class="section-title" id="casos-heading">Casos reales de posicionamiento web y SEO técnico</h2>
       <p class="section-intro" style="margin-bottom:2rem">Proyectos anonimizados con el contexto, el problema, el diagnóstico y lo que se puede aprender de cada uno.</p>
       <div class="cards-grid">
         <article class="card">
@@ -294,7 +294,7 @@ require __DIR__ . '/includes/header.php';
         </article>
       </div>
       <div style="margin-top:2rem">
-        <a href="/casos-reales/" class="btn btn--secondary">Ver casos reales de SEO en Albacete</a>
+        <a href="/casos-reales/" class="btn btn--secondary">Ver casos reales</a>
       </div>
     </div>
   </section>
@@ -328,7 +328,7 @@ require __DIR__ . '/includes/header.php';
   <?php
   $cta = [
     'title'     => '¿Necesitas un consultor SEO en Albacete?',
-    'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración gratuita y sin compromiso.',
+    'subtitle'  => 'Cuéntame qué ocurre con tu web. Revisaré el caso y te daré una primera valoración SEO gratuita y sin compromiso.',
     'btn_label' => 'Solicitar diagnóstico SEO gratuito',
     'btn_href'  => '/contacto/',
     'whatsapp'  => true,

@@ -21,7 +21,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="casos-h1">
     <div class="container">
       <h1 id="casos-h1">Casos reales: problemas que he resuelto y <span>qué se puede aprender</span> de cada uno</h1>
-      <p class="page-hero-desc">Proyectos anonimizados con el contexto, el problema, el diagnóstico y las acciones tomadas. Sin porcentajes inventados ni resultados inflados.</p>
+      <p class="page-hero-desc">Proyectos anonimizados con el contexto, el problema, el diagnóstico y las acciones tomadas. Casos reales de <a href="/" style="color:var(--orange)">posicionamiento web en Albacete</a> y toda España. Sin porcentajes inventados ni resultados inflados.</p>
     </div>
   </section>
 
