@@ -7,6 +7,10 @@ data/auditor_logs.json
 data/ratings.json
 scratch/
 
+# Exports y datos externos (no deben ir al repo)
+*.zip
+*-Performance-on-Search-*.zip
+
 # Auditor de Cookies V2
 data/reports/*
 !data/reports/.htaccess

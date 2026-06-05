@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Consultor SEO en Albacete e Ingeniero Web',
-    'description'  => 'Víctor Alonso: consultor SEO técnico, ingeniero informático y desarrollador WordPress en Albacete. Diagnóstico real, estrategia ejecutable, implementación propia.',
+    'title'        => 'SEO Albacete · Consultor SEO Técnico | Víctor Alonso',
+    'description'  => 'Consultor SEO en Albacete e ingeniero informático. Auditoría técnica, contenidos, WordPress y estrategia SEO para mejorar tráfico, visibilidad y contactos.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness'],
@@ -21,17 +21,17 @@ require __DIR__ . '/includes/header.php';
   <section class="hero" aria-labelledby="hero-heading">
     <div class="container hero-inner">
       <div class="hero-content">
-        <span class="hero-eyebrow">SEO · Desarrollo Web · WordPress</span>
+        <span class="hero-eyebrow">Consultor SEO en Albacete · Ingeniero Informático · WordPress</span>
         <h1 id="hero-heading">
-          No todo problema SEO<br>se arregla publicando<br><span>más contenido.</span>
+          Consultor SEO en Albacete
         </h1>
         <p class="hero-desc">
           Soy Víctor Alonso: ingeniero informático y consultor SEO técnico en Albacete.
-          Reviso lo que no funciona, priorizo lo que importa y lo implemento directamente.
-          Sin intermediarios, sin humo.
+          Mejoro el posicionamiento web de tu empresa con diagnóstico técnico real,
+          estrategia ejecutable e implementación directa. Sin intermediarios, sin humo.
         </p>
         <div class="hero-actions">
-          <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico SEO</a>
+          <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico SEO gratuito</a>
           <a href="#servicios" class="btn btn--ghost btn--lg">Ver servicios</a>
         </div>
       </div>
@@ -134,8 +134,8 @@ require __DIR__ . '/includes/header.php';
   <section class="section section--alt" id="servicios" aria-labelledby="servicios-heading">
     <div class="container">
       <span class="section-label">Lo que hago</span>
-      <h2 class="section-title" id="servicios-heading">Servicios</h2>
-      <p class="section-intro" style="margin-bottom:2rem">SEO, desarrollo web y mantenimiento técnico para negocios que necesitan algo más que textos bonitos.</p>
+      <h2 class="section-title" id="servicios-heading">Servicios SEO en Albacete y toda España</h2>
+      <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento web en Albacete, desarrollo WordPress y mantenimiento para negocios que necesitan algo más que textos bonitos.</p>
       <div class="cards-grid">
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -197,22 +197,29 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- Autoridad -->
-  <section class="section" aria-labelledby="sobre-heading">
+  <!-- Por qué yo: diferencial -->
+  <section class="section" aria-labelledby="diferencial-heading">
     <div class="container auth-grid">
       <div class="auth-img-wrap">
         <img
           src="/assets/img/victor-alonso-v3.webp"
-          alt="Víctor Alonso, consultor SEO e ingeniero informático en Albacete"
+          alt="Víctor Alonso, consultor SEO en Albacete e ingeniero informático"
           width="360" height="360"
           loading="lazy"
         >
       </div>
       <div class="auth-text">
-        <span class="section-label">Quién soy</span>
-        <h2 id="sobre-heading">Ingeniero informático que hace SEO.<br>Y desarrollador que entiende por qué posiciona.</h2>
-        <p>Me llamo Víctor Alonso. Soy ingeniero informático con años de experiencia en SEO técnico, desarrollo WordPress, PHP y analítica web. Trabajo desde Albacete para empresas en España y fuera.</p>
-        <p>La combinación de perfil técnico y conocimiento SEO me permite ir más allá del informe: detecto problemas en el código, en la arquitectura y en el contenido, y los resuelvo directamente.</p>
+        <span class="section-label">Por qué trabajar conmigo</span>
+        <h2 id="diferencial-heading">Por qué trabajar conmigo como consultor SEO en Albacete</h2>
+        <p>Me llamo Víctor Alonso. Soy ingeniero informático con años de experiencia en SEO técnico, WordPress, PHP y analítica web. Trabajo desde Albacete para empresas en España y fuera.</p>
+        <p>La diferencia frente a una agencia SEO: detecto problemas directamente en el código, en la arquitectura y en el contenido, y los resuelvo yo mismo sin pasar por cadenas de subcontratación.</p>
+        <ul style="margin:1rem 0 1.5rem; padding-left:1.25rem; display:flex; flex-direction:column; gap:.5rem;">
+          <li>Ingeniero informático: entiendo el código, no solo los informes</li>
+          <li>Desarrollo plugins, herramientas SEO propias y automatizaciones</li>
+          <li>No solo estrategia: implemento los cambios técnicos directamente</li>
+          <li>Experiencia en WordPress, Laravel, PHP, WPO y Search Console</li>
+          <li>Trato directo, sin comerciales ni reuniones innecesarias</li>
+        </ul>
         <div class="auth-tags" aria-label="Especialidades">
           <span class="auth-tag">SEO Técnico</span>
           <span class="auth-tag">PHP / WordPress</span>
@@ -228,28 +235,66 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- Casos reales preview -->
-  <section class="section section--alt" aria-labelledby="casos-heading">
+  <!-- Herramientas SEO propias -->
+  <section class="section section--alt" aria-labelledby="herramientas-heading">
     <div class="container">
-      <span class="section-label">Sin inventar cifras</span>
-      <h2 class="section-title" id="casos-heading">Casos y situaciones reales</h2>
-      <p class="section-intro" style="margin-bottom:2rem">Proyectos anonimizados con el contexto, el problema, el diagnóstico y lo que se puede aprender de cada uno.</p>
+      <span class="section-label">Herramientas creadas por mí</span>
+      <h2 class="section-title" id="herramientas-heading">Herramientas SEO gratuitas</h2>
+      <p class="section-intro" style="margin-bottom:2rem">Como consultor SEO en Albacete con perfil técnico, desarrollo mis propias herramientas de análisis. Úsalas gratis.</p>
       <div class="cards-grid">
         <article class="card">
-          <h3>WordPress infectado</h3>
-          <p>Un cliente llega con la web penalizada en Chrome. Revisión del servidor, limpieza de malware, hardening y restauración de la reputación en Google Safe Browsing.</p>
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Analizador de logs</h3>
+          <p>Analiza los logs de acceso de tu servidor para detectar qué URLs rastrea Googlebot, con qué frecuencia y dónde pierde el tiempo.</p>
+          <a href="/herramientas/analizador-logs/" class="card-link">Usar herramienta →</a>
         </article>
         <article class="card">
-          <h3>Caída de tráfico tras migración</h3>
-          <p>Cambio de dominio sin redirecciones bien planificadas. Pérdida de autoridad y posiciones. Diagnóstico en Search Console, análisis de cobertura y plan de recuperación.</p>
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3>Analizador SEO</h3>
+          <p>Revisión técnica básica de cualquier URL: title, meta description, H1, canonicals, robots y velocidad de carga.</p>
+          <a href="/herramientas/analizador-seo/" class="card-link">Usar herramienta →</a>
         </article>
         <article class="card">
-          <h3>Web lenta sin saber por qué</h3>
-          <p>LCP de 6 segundos en móvil. Análisis de cascada de carga, imágenes sin optimizar, CSS render-blocking y plugins con scripts externos innecesarios.</p>
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Generador Schema Local</h3>
+          <p>Genera el marcado Schema LocalBusiness correcto para tu negocio en Albacete o cualquier ciudad. Listo para copiar y pegar.</p>
+          <a href="/herramientas/generador-schema-local/" class="card-link">Usar herramienta →</a>
         </article>
       </div>
       <div style="margin-top:2rem">
-        <a href="/casos-reales/" class="btn btn--secondary">Ver todos los casos</a>
+        <a href="/herramientas/" class="btn btn--secondary">Ver todas las herramientas SEO</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Casos reales preview -->
+  <section class="section" aria-labelledby="casos-heading">
+    <div class="container">
+      <span class="section-label">Sin inventar cifras</span>
+      <h2 class="section-title" id="casos-heading">Casos reales de posicionamiento SEO en Albacete y España</h2>
+      <p class="section-intro" style="margin-bottom:2rem">Proyectos anonimizados con el contexto, el problema, el diagnóstico y lo que se puede aprender de cada uno.</p>
+      <div class="cards-grid">
+        <article class="card">
+          <h3>WordPress infectado con malware</h3>
+          <p>Un cliente llega con la web penalizada en Chrome. Revisión del servidor, limpieza de malware, hardening y restauración de la reputación en Google Safe Browsing.</p>
+        </article>
+        <article class="card">
+          <h3>Caída de tráfico tras migración de dominio</h3>
+          <p>Cambio de dominio sin redirecciones bien planificadas. Pérdida de autoridad y posiciones. Diagnóstico en Search Console, análisis de cobertura y plan de recuperación.</p>
+        </article>
+        <article class="card">
+          <h3>Web lenta: LCP de 6 segundos en móvil</h3>
+          <p>Análisis de cascada de carga, imágenes sin optimizar, CSS render-blocking y plugins con scripts externos innecesarios. Resultado: Core Web Vitals en verde.</p>
+        </article>
+      </div>
+      <div style="margin-top:2rem">
+        <a href="/casos-reales/" class="btn btn--secondary">Ver casos reales de SEO en Albacete</a>
       </div>
     </div>
   </section>
@@ -282,9 +327,9 @@ require __DIR__ . '/includes/header.php';
   <!-- CTA final -->
   <?php
   $cta = [
-    'title'     => '¿Tienes dudas sobre tu posicionamiento web?',
-    'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración sin compromiso.',
-    'btn_label' => 'Solicitar diagnóstico SEO',
+    'title'     => '¿Necesitas un consultor SEO en Albacete?',
+    'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración gratuita y sin compromiso.',
+    'btn_label' => 'Solicitar diagnóstico SEO gratuito',
     'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
