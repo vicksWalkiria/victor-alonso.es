@@ -137,7 +137,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </svg>
             </div>
             <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Calculadora de Pérdidas WPO</h2>
-            <p style="margin-bottom:1.5rem;font-size:.95rem">Conecta el rendimiento técnico de tu web con tus ingresos. Analiza la URL en vivo con Google PageSpeed y calcula de forma científica cuánto dinero dejas de facturar debido a tiempos de carga móviles lentos.</p>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Conecta el rendimiento técnico de tu web con tus ingresos. Analiza la URL en vivo con Google PageSpeed y estima cuánto podrías estar perdiendo por tiempos de carga móviles lentos.</p>
             <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
               <li class="checklist-item">Llamada en vivo a la API oficial de Google PageSpeed.</li>
               <li class="checklist-item">Cálculo de pérdidas según estudios oficiales de conversión.</li>
@@ -229,7 +229,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               </svg>
             </div>
             <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Auditor de Cookies y Privacidad</h2>
-            <p style="margin-bottom:1.5rem;font-size:.95rem">Comprueba si tu web cumple estrictamente con el RGPD y la LOPDGDD. Rastrea en vivo las cabeceras HTTP y el código HTML para detectar cookies cargadas antes del consentimiento y scripts de terceros sin bloquear.</p>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Detecta posibles problemas básicos de cumplimiento con el RGPD y la LOPDGDD. Rastrea en vivo las cabeceras HTTP y el código HTML para identificar cookies cargadas antes del consentimiento y scripts de terceros sin bloquear.</p>
             <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
               <li class="checklist-item">Detección de cookies de marketing y analítica en el primer impacto.</li>
               <li class="checklist-item">Análisis de scripts bloqueados (vanilla-cookieconsent, etc.).</li>
