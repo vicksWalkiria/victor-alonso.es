@@ -28,7 +28,7 @@ function render_schemas(array $page): void {
     // ── Nodos condicionales ──────────────────────────────────────────────────
     $types = $page['schema_types'] ?? [];
 
-    if (in_array('LocalBusiness', $types)) {
+    if (in_array('LocalBusiness', $types) || in_array('Service', $types)) {
         $nodes[] = _node_local_business();
     }
 

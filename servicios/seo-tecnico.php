@@ -9,9 +9,17 @@ $page = page_config([
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_data' => [
-      '@id'         => '/servicios/seo-tecnico/#service',
-      'name'        => 'SEO Técnico',
-      'serviceType' => 'Consultoría SEO Técnico'
+      '@id'           => '/servicios/seo-tecnico/#service',
+      'name'          => 'SEO Técnico',
+      'alternateName' => [
+          'Consultoría SEO técnico',
+          'Auditoría WPO',
+          'Optimización rastreo e indexación'
+      ],
+      'serviceType'   => 'Consultoría SEO Técnico',
+      'areaServed'    => [
+          ['@type' => 'Country', 'name' => 'España']
+      ]
   ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [

@@ -9,9 +9,17 @@ $page = page_config([
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_data' => [
-      '@id'         => '/servicios/seo-espana/#service',
-      'name'        => 'SEO para empresas en España',
-      'serviceType' => 'Consultoría SEO Nacional'
+      '@id'           => '/servicios/seo-espana/#service',
+      'name'          => 'SEO para empresas en España',
+      'alternateName' => [
+          'SEO nacional',
+          'Posicionamiento web en España',
+          'Consultor SEO España'
+      ],
+      'serviceType'   => 'Consultoría SEO Nacional',
+      'areaServed'    => [
+          ['@type' => 'Country', 'name' => 'España']
+      ]
   ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [

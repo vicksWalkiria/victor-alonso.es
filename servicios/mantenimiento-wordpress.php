@@ -9,9 +9,17 @@ $page = page_config([
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_data' => [
-      '@id'         => '/servicios/mantenimiento-wordpress/#service',
-      'name'        => 'Mantenimiento WordPress',
-      'serviceType' => 'Mantenimiento Web'
+      '@id'           => '/servicios/mantenimiento-wordpress/#service',
+      'name'          => 'Mantenimiento WordPress',
+      'alternateName' => [
+          'Soporte técnico WordPress',
+          'Mantenimiento web WordPress',
+          'Mantenimiento de páginas web'
+      ],
+      'serviceType'   => 'Mantenimiento Web',
+      'areaServed'    => [
+          ['@type' => 'Country', 'name' => 'España']
+      ]
   ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [

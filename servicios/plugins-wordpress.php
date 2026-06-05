@@ -9,9 +9,17 @@ $page = page_config([
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_data' => [
-      '@id'         => '/servicios/plugins-wordpress/#service',
-      'name'        => 'Plugins WordPress a medida',
-      'serviceType' => 'Desarrollo Web'
+      '@id'           => '/servicios/plugins-wordpress/#service',
+      'name'          => 'Plugins WordPress a medida',
+      'alternateName' => [
+          'Desarrollo de plugins WordPress',
+          'Programador de plugins',
+          'Plugins a medida'
+      ],
+      'serviceType'   => 'Desarrollo Web',
+      'areaServed'    => [
+          ['@type' => 'Country', 'name' => 'España']
+      ]
   ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [

@@ -9,9 +9,17 @@ $page = page_config([
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_data' => [
-      '@id'         => '/servicios/desarrollo-wordpress/#service',
-      'name'        => 'Desarrollo WordPress',
-      'serviceType' => 'Desarrollo Web'
+      '@id'           => '/servicios/desarrollo-wordpress/#service',
+      'name'          => 'Desarrollo WordPress',
+      'alternateName' => [
+          'Desarrollo WordPress a medida',
+          'Programador WordPress',
+          'Desarrollo web WordPress'
+      ],
+      'serviceType'   => 'Desarrollo Web',
+      'areaServed'    => [
+          ['@type' => 'Country', 'name' => 'España']
+      ]
   ],
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [

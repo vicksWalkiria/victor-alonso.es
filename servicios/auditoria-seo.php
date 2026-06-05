@@ -9,10 +9,18 @@ $page = page_config([
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],
   'service_data' => [
-      '@id'         => '/servicios/auditoria-seo/#service',
-      'name'        => 'Auditoría SEO técnica',
-      'serviceType' => 'Auditoría SEO',
-      'offers'      => [
+      '@id'           => '/servicios/auditoria-seo/#service',
+      'name'          => 'Auditoría SEO técnica',
+      'alternateName' => [
+          'Auditoría SEO',
+          'Auditoría web SEO',
+          'Consultoría técnica SEO'
+      ],
+      'serviceType'   => 'Auditoría SEO',
+      'areaServed'    => [
+          ['@type' => 'Country', 'name' => 'España']
+      ],
+      'offers'        => [
           'minPrice' => 250
       ]
   ],
