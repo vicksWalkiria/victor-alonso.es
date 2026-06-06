@@ -16,6 +16,7 @@ $page = page_config([
         ['name' => 'Extractor Semántico de Entidades', 'url' => '/herramientas/extractor-entidades/'],
         ['name' => 'Analizador de Logs Apache y Nginx', 'url' => '/herramientas/analizador-logs/'],
         ['name' => 'Auditor de Cookies y Privacidad RGPD', 'url' => '/herramientas/auditor-cookies/'],
+        ['name' => 'Auditor de Coherencia SEO Local GMB', 'url' => '/herramientas/auditor-seo-local-gmb/'],
         ['name' => 'Tester de .htaccess y Validador mod_rewrite', 'url' => '/herramientas/tester-htaccess/'],
     ],
     'active_nav'   => 'herramientas',
@@ -75,6 +76,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <a href="#extractor-entidades" class="tool-pill">🧠 Extractor Semántico</a>
         <a href="#analizador-logs" class="tool-pill">📊 Analizador de Logs</a>
         <a href="#auditor-cookies" class="tool-pill">🍪 Auditor de Cookies</a>
+        <a href="#auditor-gmb" class="tool-pill">📍 Auditor GMB</a>
         <a href="#tester-htaccess" class="tool-pill">⚡ Tester .htaccess</a>
       </div>
 
@@ -260,6 +262,27 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
           <a href="/herramientas/tester-htaccess/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Tester .htaccess</a>
         </article>
+
+        <!-- CARD 9: EXTENSIÓN GMB -->
+        <article id="auditor-gmb" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Auditor de Coherencia SEO Local GMB</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Extensión de Chrome para auditar en un clic la coherencia técnica entre tu ficha de Google Business Profile y tu página web. Verifica NAP, Schema LocalBusiness y concordancia de servicios.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Rastreo inteligente de enlaces internos (Home, Contacto, Servicios).</li>
+              <li class="checklist-item">Validación cruzada de NAP (Nombre, Dirección, Teléfono).</li>
+              <li class="checklist-item">Comprobación profunda de Schema.org en JSON-LD y Microdatos.</li>
+              <li class="checklist-item">Exportación de informes a Markdown listos para clientes.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/auditor-seo-local-gmb/" class="btn btn--primary" style="width:100%;justify-content:center">Descargar Extensión GMB</a>
+        </article>
+
 
       </div>
 
