@@ -7,7 +7,15 @@ $page = page_config([
     'description'  => 'Consultor SEO en Albacete e ingeniero informático. Auditoría técnica, contenidos, WordPress y estrategia SEO para mejorar tráfico, visibilidad y contactos.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
-    'schema_types' => ['LocalBusiness'],
+    'schema_types' => ['LocalBusiness', 'Service'],
+    'service_data' => [
+        '@id' => '/#seo-service',
+        'name' => 'Consultoría SEO en Albacete',
+        'serviceType' => 'SEO técnico y marketing por Internet',
+        'areaServed' => [
+            ['@type' => 'Place', 'name' => 'Albacete']
+        ]
+    ],
     'active_nav'   => 'inicio',
     'breadcrumbs'  => [],
 ]);
@@ -29,6 +37,9 @@ require __DIR__ . '/includes/header.php';
           Soy Víctor Alonso: ingeniero informático y consultor SEO técnico en Albacete.
           Mejoro el posicionamiento web de tu empresa con diagnóstico técnico real,
           estrategia ejecutable e implementación directa. Sin intermediarios, sin humo.
+        </p>
+        <p class="hero-desc" style="margin-top:1rem;">
+          Víctor Alonso SEO es un servicio de marketing por Internet especializado en posicionamiento SEO técnico, auditorías web, SEO local y desarrollo WordPress optimizado para empresas de Albacete.
         </p>
         <div class="hero-actions">
           <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico SEO gratuito</a>
@@ -134,7 +145,7 @@ require __DIR__ . '/includes/header.php';
   <section class="section section--alt" id="servicios" aria-labelledby="servicios-heading">
     <div class="container">
       <span class="section-label">Lo que hago</span>
-      <h2 class="section-title" id="servicios-heading">Servicios SEO en Albacete y toda España</h2>
+      <h2 class="section-title" id="servicios-heading">Servicio de marketing por Internet especializado en SEO técnico</h2>
       <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento web en Albacete, desarrollo WordPress y mantenimiento para negocios que necesitan algo más que textos bonitos.</p>
       <div class="cards-grid">
         <article class="card">

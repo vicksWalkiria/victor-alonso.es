@@ -1,0 +1,7 @@
+ssh -i ~/.ssh/oracle.key ubuntu@158.179.212.14 "\
+sudo -u aprendiz bash -lc '\
+set -e
+cd /home/aprendiz/web/victor-alonso.es/public_html
+git fetch origin main
+git reset --hard origin/main
+'"

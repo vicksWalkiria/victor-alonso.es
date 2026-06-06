@@ -140,6 +140,21 @@ function _node_local_business(): array {
             ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
             ['@type' => 'Country', 'name' => 'España'],
         ],
+        'priceRange' => '€€',
+        'openingHoursSpecification' => [
+            [
+                '@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                'opens' => '09:30',
+                'closes' => '19:30',
+            ],
+            [
+                '@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => ['Saturday'],
+                'opens' => '10:00',
+                'closes' => '14:00',
+            ],
+        ],
         'sameAs' => [
             SITE_LINKEDIN,
             SITE_TWITTER_URL,
