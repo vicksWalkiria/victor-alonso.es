@@ -46,7 +46,10 @@ function parse_sitemap_xml($xml_content, &$all_urls, &$processed_sitemaps, $dept
     if ($depth > 3) return; // Protección frente a recursividad infinita
     
     // Protección XXE (XML External Entity)
-    $disableEntities = libxml_disable_entity_loader(true);
+    $disableEntities = false;
+    if (PHP_VERSION_ID < 80000) {
+        $disableEntities = libxml_disable_entity_loader(true);
+    }
     $internalErrors = libxml_use_internal_errors(true);
     
     // Cargar con namespaces de forma flexible
@@ -55,7 +58,9 @@ function parse_sitemap_xml($xml_content, &$all_urls, &$processed_sitemaps, $dept
     if (!$xml) {
         libxml_clear_errors();
         libxml_use_internal_errors($internalErrors);
-        libxml_disable_entity_loader($disableEntities);
+        if (PHP_VERSION_ID < 80000) {
+            libxml_disable_entity_loader($disableEntities);
+        }
         return;
     }
     
@@ -106,7 +111,9 @@ function parse_sitemap_xml($xml_content, &$all_urls, &$processed_sitemaps, $dept
     
     libxml_clear_errors();
     libxml_use_internal_errors($internalErrors);
-    libxml_disable_entity_loader($disableEntities);
+    if (PHP_VERSION_ID < 80000) {
+        libxml_disable_entity_loader($disableEntities);
+    }
 }
 
 // Interceptar API de Extracción Ajax

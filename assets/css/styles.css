@@ -303,10 +303,6 @@ strong {
   box-shadow: 0 4px 12px rgba(232, 104, 26, 0.25);
 }
 
-  flex-wrap: wrap;
-  gap: .75rem;
-  align-items: center;
-}
 
 /* ── Header / Nav ───────────────────────── */
 .site-header {
