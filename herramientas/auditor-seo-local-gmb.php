@@ -88,15 +88,15 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="section">
     <div class="container">
       
-      <div class="tool-intro" style="margin-bottom: 3rem;">
+      <div class="tool-intro tool-intro-box">
         <h2>Verifica el NAP y Schema en segundos</h2>
         <p>GMB-Web Checker es una extensión open-source para navegadores basados en Chromium (Google Chrome, Edge, Brave). Su objetivo es auditar en un solo clic si los datos técnicos de una ficha local en Google (Business Profile) coinciden con la información declarada en la web del negocio.</p>
       </div>
 
-      <div class="cards-grid" style="grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start;">
+      <div class="tool-layout-grid">
         
         <!-- Descarga y Uso -->
-        <div class="card" style="padding: 2.5rem;">
+        <div class="tool-card">
           <h3 style="margin-bottom:1.5rem;color:var(--orange)">📥 Descarga e Instalación</h3>
           
           <p style="margin-bottom:1.5rem;">La extensión es de código abierto y totalmente gratuita. Al no estar (todavía) publicada en la Chrome Web Store oficial, debes instalarla en <strong>Modo Desarrollador</strong>.</p>
@@ -120,7 +120,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </li>
           </ol>
           
-          <div style="display:flex;gap:1rem;flex-wrap:wrap">
+          <div class="btn-group">
             <a href="https://github.com/vicksWalkiria/GMB-web-checker/archive/refs/heads/master.zip" class="btn btn--primary" target="_blank" rel="noopener">
               <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:0.5rem"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Descargar ZIP Directo
@@ -132,7 +132,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- Captura de pantalla -->
-        <div class="card" style="padding:0; overflow:hidden; border:none; background:transparent">
+        <div class="tool-card" style="padding:0; overflow:hidden; border:none; background:transparent; transform:none; box-shadow:none;">
             <img src="/assets/img/gmb-web-checker.webp" alt="Captura de pantalla de la extensión GMB-Web Checker analizando una ficha SEO local en Google" style="width:100%; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display:block;">
         </div>
 

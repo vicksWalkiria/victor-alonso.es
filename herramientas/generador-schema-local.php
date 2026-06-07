@@ -78,113 +78,115 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="section">
     <div class="container">
       
-      <div class="tool-intro">
+      <div class="tool-intro tool-intro-box">
         <h2>Estructura la información de tu negocio</h2>
         <p>Rellena los datos de tu empresa a continuación. Generaremos en tiempo real el bloque estructurado en formato JSON-LD. Copia el código e instálalo en el <code>&lt;head&gt;</code> de tu página web.</p>
       </div>
 
-      <div class="schema-tool-grid">
+      <div class="tool-layout-grid">
         
         <!-- Formulario interactivo -->
-        <div class="schema-inputs card">
+        <div class="tool-card tool-card--accent">
           <h3 style="margin-bottom:1.25rem;color:var(--orange)">1. Introduce los datos del negocio</h3>
           
-          <div class="form-group">
-            <label class="form-label" for="sc-type">Tipo de Negocio</label>
-            <select class="form-select" id="sc-type">
-              <option value="LocalBusiness">Negocio Local Genérico (LocalBusiness)</option>
-              <option value="ProfessionalService" selected>Servicio Profesional (ProfessionalService)</option>
-              <option value="LegalService">Servicio Legal / Abogados (LegalService)</option>
-              <option value="MedicalBusiness">Clínica / Servicio Médico (MedicalBusiness)</option>
-              <option value="AutomotiveBusiness">Taller / Negocio de Automoción</option>
-              <option value="Restaurant">Restaurante / Hostelería</option>
-              <option value="Store">Tienda Física / Ecommerce Local</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="sc-name">Nombre del Negocio *</label>
-              <input type="text" class="form-input" id="sc-name" value="Mi Negocio SEO" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="sc-url">URL Principal *</label>
-              <input type="url" class="form-input" id="sc-url" value="https://minegocio.com" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="sc-phone">Teléfono *</label>
-              <input type="tel" class="form-input" id="sc-phone" value="+34 600 000 000" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="sc-logo">URL del Logo (opcional)</label>
-              <input type="url" class="form-input" id="sc-logo" placeholder="https://minegocio.com/logo.png">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="sc-image">URL de Foto de Negocio (opcional)</label>
-              <input type="url" class="form-input" id="sc-image" value="https://minegocio.com/foto-local.jpg" placeholder="https://minegocio.com/foto-local.jpg">
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="sc-price">Rango de Precios (opcional)</label>
-              <select class="form-select" id="sc-price">
-                <option value="">No especificar</option>
-                <option value="$" selected>Económico ($)</option>
-                <option value="$$">Moderado ($$)</option>
-                <option value="$$$">Caro ($$$)</option>
-                <option value="$$$$">Muy caro ($$$$)</option>
+          <div class="tool-form">
+            <div class="tool-form__group">
+              <label class="tool-form__label" for="sc-type">Tipo de Negocio</label>
+              <select class="tool-form__select" id="sc-type">
+                <option value="LocalBusiness">Negocio Local Genérico (LocalBusiness)</option>
+                <option value="ProfessionalService" selected>Servicio Profesional (ProfessionalService)</option>
+                <option value="LegalService">Servicio Legal / Abogados (LegalService)</option>
+                <option value="MedicalBusiness">Clínica / Servicio Médico (MedicalBusiness)</option>
+                <option value="AutomotiveBusiness">Taller / Negocio de Automoción</option>
+                <option value="Restaurant">Restaurante / Hostelería</option>
+                <option value="Store">Tienda Física / Ecommerce Local</option>
               </select>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group" style="grid-column: span 2">
-              <label class="form-label" for="sc-street">Calle y número *</label>
-              <input type="text" class="form-input" id="sc-street" value="Calle Ancha 10" required>
+            <div class="tool-form__row">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-name">Nombre del Negocio *</label>
+                <input type="text" class="tool-form__input" id="sc-name" value="Mi Negocio SEO" required>
+              </div>
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-url">URL Principal *</label>
+                <input type="url" class="tool-form__input" id="sc-url" value="https://minegocio.com" required>
+              </div>
             </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="sc-postal">Código Postal *</label>
-              <input type="text" class="form-input" id="sc-postal" value="02001" required>
+            <div class="tool-form__row">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-phone">Teléfono *</label>
+                <input type="tel" class="tool-form__input" id="sc-phone" value="+34 600 000 000" required>
+              </div>
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-logo">URL del Logo (opcional)</label>
+                <input type="url" class="tool-form__input" id="sc-logo" placeholder="https://minegocio.com/logo.png">
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="sc-locality">Ciudad / Municipio *</label>
-              <input type="text" class="form-input" id="sc-locality" value="Albacete" required>
-            </div>
-          </div>
 
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="sc-lat">Latitud (coordenada) *</label>
-              <input type="text" class="form-input" id="sc-lat" value="38.9942">
+            <div class="tool-form__row">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-image">URL de Foto de Negocio (opcional)</label>
+                <input type="url" class="tool-form__input" id="sc-image" value="https://minegocio.com/foto-local.jpg" placeholder="https://minegocio.com/foto-local.jpg">
+              </div>
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-price">Rango de Precios (opcional)</label>
+                <select class="tool-form__select" id="sc-price">
+                  <option value="">No especificar</option>
+                  <option value="$" selected>Económico ($)</option>
+                  <option value="$$">Moderado ($$)</option>
+                  <option value="$$$">Caro ($$$)</option>
+                  <option value="$$$$">Muy caro ($$$$)</option>
+                </select>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="sc-lng">Longitud (coordenada) *</label>
-              <input type="text" class="form-input" id="sc-lng" value="-1.8585">
-            </div>
-          </div>
 
-          <div class="form-group">
-            <label class="form-label" for="sc-same">Redes sociales (una por línea)</label>
-            <textarea class="form-textarea" id="sc-same" rows="3" placeholder="https://www.facebook.com/minegocio&#10;https://www.instagram.com/minegocio"></textarea>
+            <div class="tool-form__row">
+              <div class="tool-form__group" style="grid-column: span 2">
+                <label class="tool-form__label" for="sc-street">Calle y número *</label>
+                <input type="text" class="tool-form__input" id="sc-street" value="Calle Ancha 10" required>
+              </div>
+            </div>
+
+            <div class="tool-form__row">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-postal">Código Postal *</label>
+                <input type="text" class="tool-form__input" id="sc-postal" value="02001" required>
+              </div>
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-locality">Ciudad / Municipio *</label>
+                <input type="text" class="tool-form__input" id="sc-locality" value="Albacete" required>
+              </div>
+            </div>
+
+            <div class="tool-form__row">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-lat">Latitud (coordenada) *</label>
+                <input type="text" class="tool-form__input" id="sc-lat" value="38.9942">
+              </div>
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="sc-lng">Longitud (coordenada) *</label>
+                <input type="text" class="tool-form__input" id="sc-lng" value="-1.8585">
+              </div>
+            </div>
+
+            <div class="tool-form__group">
+              <label class="tool-form__label" for="sc-same">Redes sociales (una por línea)</label>
+              <textarea class="tool-form__textarea" id="sc-same" rows="3" placeholder="https://www.facebook.com/minegocio&#10;https://www.instagram.com/minegocio"></textarea>
+            </div>
           </div>
         </div>
 
         <!-- Código JSON-LD Generado -->
-        <div class="schema-output card" style="display:flex;flex-direction:column;justify-content:space-between">
+        <div class="tool-card tool-card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <h3 style="margin-bottom:1rem;color:var(--orange)">2. Código JSON-LD Generado</h3>
-            <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem">Este código le dice a los algoritmos de Google exactamente qué eres, dónde estás y cómo contactar contigo de manera estructurada.</p>
-            <pre class="schema-code-box"><code id="schema-code"></code></pre>
+            <p style="font-size:.82rem;color:rgba(255,255,255,0.6);margin-bottom:1rem">Este código le dice a los algoritmos de Google exactamente qué eres, dónde estás y cómo contactar contigo de manera estructurada.</p>
+            <pre class="tool-code-display"><code id="schema-code"></code></pre>
           </div>
           
-          <div style="margin-top:1.5rem;display:flex;flex-wrap:wrap;gap:.75rem">
+          <div class="btn-group" style="margin-top:1.5rem;">
             <button class="btn btn--primary" id="btn-copy-schema">Copiar código JSON-LD</button>
             <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">Validar en Google</a>
           </div>

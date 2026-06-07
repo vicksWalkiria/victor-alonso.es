@@ -2050,3 +2050,146 @@ strong {
 #cc-main .pm__section {
   background: rgba(255, 255, 255, 0.01);
 }
+
+/* ── Componentes de Herramientas (Unified Tools Design System) ── */
+.tool-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .tool-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.tool-intro-box {
+  margin-bottom: 3rem;
+}
+
+.tool-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.tool-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.tool-card--dark {
+  background: var(--dark-card);
+  border-color: #2A2A2A;
+  color: var(--white);
+}
+
+.tool-card--dark p {
+  color: rgba(255, 255, 255, .6);
+}
+
+.tool-card--accent {
+  border-top: 4px solid var(--orange);
+}
+
+/* Formulario de Herramientas */
+.tool-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tool-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.tool-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 576px) {
+  .tool-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tool-form__label {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.tool-card--dark .tool-form__label {
+  color: var(--white);
+}
+
+.tool-form__input,
+.tool-form__select,
+.tool-form__textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  font-family: inherit;
+}
+
+.tool-form__input:focus,
+.tool-form__select:focus,
+.tool-form__textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(232, 104, 26, 0.15);
+}
+
+/* Indicadores de Resultados y Reportes */
+.tool-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.tool-status-badge--success {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.tool-status-badge--warning {
+  background: rgba(241, 196, 15, 0.15);
+  color: #f1c40f;
+  border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.tool-status-badge--danger {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.tool-code-display {
+  display: block;
+  background: #0d1117;
+  color: #c9d1d9;
+  padding: 1rem;
+  border-radius: 6px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  border: 1px solid #30363d;
+  margin: 0;
+}
