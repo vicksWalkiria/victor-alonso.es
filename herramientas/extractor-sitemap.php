@@ -344,8 +344,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <div style="display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 2rem;">
                     <button class="btn btn--primary" id="btn-copy-all">Copiar todas las URLs</button>
                     <button class="btn btn--primary" id="btn-download-csv" style="background-color: #2ecc71 !important; border-color: #2ecc71 !important; color: #ffffff !important;">Exportar a CSV</button>
-                    <button class="btn btn--ghost" id="btn-download-json">Exportar a JSON</button>
-                    <button class="btn btn--ghost" onclick="resetTool()" style="margin-left: auto; color: #e74c3c !important; border-color: rgba(231,76,60,0.3) !important;">Limpiar Herramienta</button>
+                    <button class="btn btn--secondary" id="btn-download-json">Exportar a JSON</button>
+                    <button class="btn btn--secondary" onclick="resetTool()" style="margin-left: auto; color: #e74c3c !important; border-color: rgba(231,76,60,0.3) !important;">Limpiar Herramienta</button>
                 </div>
 
                 <!-- Tabla de URLs Auditada -->
@@ -368,7 +368,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <!-- Paginación de Seguridad -->
                 <div id="table-pagination" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; font-size: .8rem; color: var(--muted);">
                     <span id="pagination-info">Mostrando 0 de 0 URLs</span>
-                    <button class="btn btn--ghost" id="btn-load-more" style="padding: .5rem 1rem; font-size: .75rem; display: none;">Cargar más resultados</button>
+                    <button class="btn btn--secondary" id="btn-load-more" style="padding: .5rem 1rem; font-size: .75rem; display: none;">Cargar más resultados</button>
                 </div>
 
             </div>
