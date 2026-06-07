@@ -346,6 +346,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
       </div>
 
+      <!-- Enlazado Interno de Herramientas Relacionadas -->
+      <?php require dirname(__DIR__) . '/includes/related-tools.php'; ?>
+
       <!-- WIDGET DE VOTACIÓN Y AGGREGATE RATING -->
       <?php render_rating_widget('calculadora-wpo', '¿Te ha sido útil esta calculadora WPO?'); ?>
 

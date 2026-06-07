@@ -219,6 +219,9 @@ Redirect 301 /contacto-viejo /contacto/
         </div>
       </div>
 
+      <!-- Enlazado Interno de Herramientas Relacionadas -->
+      <?php require dirname(__DIR__) . '/includes/related-tools.php'; ?>
+
       <!-- WIDGET DE VOTACIÓN -->
       <?php render_rating_widget('tester-htaccess', '¿Te ha sido de utilidad este probador de .htaccess?'); ?>
 
