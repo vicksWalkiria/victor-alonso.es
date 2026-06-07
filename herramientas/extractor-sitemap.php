@@ -277,9 +277,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- Pantalla de carga animada -->
-        <div id="loading-overlay" class="tool-card tool-card--dark" style="display: none; text-align: center;">
+        <div id="loading-overlay" class="tool-card tool-card--accent" style="display: none; text-align: center;">
             <div class="loader-spinner" style="width: 50px; height: 50px; border-width: 5px; border-top-color: var(--orange); margin: 0 auto 1.5rem;"></div>
-            <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;" id="loading-title">Extrayendo información...</h3>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--black); margin-bottom: 0.5rem;" id="loading-title">Extrayendo información...</h3>
             <p style="color: var(--muted); font-size: .9rem;" id="loading-status">Conectando con el servidor remoto bajo agente Googlebot...</p>
         </div>
 
@@ -290,28 +290,28 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div class="tool-layout-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 2.5rem;">
                 
                 <!-- Stat 1: Total URLs -->
-                <div class="tool-card tool-card--dark" style="border-left: 4px solid var(--orange);">
+                <div class="tool-card" style="border-left: 4px solid var(--orange);">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Total URLs Únicas</span>
-                    <span id="stat-total" style="display: block; font-size: 2.25rem; font-weight: 900; color: #fff; margin-top: .25rem;">0</span>
+                    <span id="stat-total" style="display: block; font-size: 2.25rem; font-weight: 900; color: var(--black); margin-top: .25rem;">0</span>
                     <span id="stat-processed-sitemaps" style="display: block; font-size: .78rem; color: #2ecc71; margin-top: .25rem;">1 sitemap procesado</span>
                 </div>
 
                 <!-- Stat 2: Auditoría de Longitud -->
-                <div class="tool-card tool-card--dark" style="border-left: 4px solid #e74c3c;">
+                <div class="tool-card" style="border-left: 4px solid #e74c3c;">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">URLs Críticas (>75 chars)</span>
                     <span id="stat-long-urls" style="display: block; font-size: 2.25rem; font-weight: 900; color: #e74c3c; margin-top: .25rem;">0</span>
                     <span style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">Riesgo de truncado en Google SERPs</span>
                 </div>
 
                 <!-- Stat 3: Frescura de Contenidos -->
-                <div class="tool-card tool-card--dark" style="border-left: 4px solid #2ecc71;">
+                <div class="tool-card" style="border-left: 4px solid #2ecc71;">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Actualizado en 30 días</span>
                     <span id="stat-fresh" style="display: block; font-size: 2.25rem; font-weight: 900; color: #2ecc71; margin-top: .25rem;">0</span>
                     <span id="stat-fresh-pct" style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">0% del total de contenidos</span>
                 </div>
 
                 <!-- Stat 4: Longitud Media -->
-                <div class="tool-card tool-card--dark" style="border-left: 4px solid #3498db;">
+                <div class="tool-card" style="border-left: 4px solid #3498db;">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Longitud Media URL</span>
                     <span id="stat-avg-len" style="display: block; font-size: 2.25rem; font-weight: 900; color: #3498db; margin-top: .25rem;">0</span>
                     <span style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">Caracteres de media</span>
@@ -320,8 +320,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <!-- Panel de control de datos -->
-            <div class="tool-card tool-card--dark">
-                <h3 style="color: #fff; margin-bottom: 1.25rem; font-size: 1.2rem; font-weight: 800;">2. Filtrar, Inspeccionar y Exportar</h3>
+            <div class="tool-card">
+                <h3 style="color: var(--black); margin-bottom: 1.25rem; font-size: 1.2rem; font-weight: 800;">2. Filtrar, Inspeccionar y Exportar</h3>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                     <!-- Buscador dinámico -->
@@ -352,7 +352,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 <div style="overflow-x: auto;">
                     <table class="seo-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: .85rem;">
                         <thead>
-                            <tr style="border-bottom: 2px solid rgba(255,255,255,0.08); color: #fff;">
+                            <tr style="border-bottom: 2px solid var(--border);">
                                 <th style="padding: 1rem; font-weight: 800; cursor: pointer;" onclick="sortTable('url')">URL <span id="sort-icon-url"></span></th>
                                 <th style="padding: 1rem; font-weight: 800; cursor: pointer; width: 150px;" onclick="sortTable('lastmod')">Última Modif. <span id="sort-icon-lastmod"></span></th>
                                 <th style="padding: 1rem; font-weight: 800; text-align: center; width: 90px; cursor: pointer;" onclick="sortTable('images')">Imágenes <span id="sort-icon-images"></span></th>
@@ -427,8 +427,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <style>
 /* Estilos premium específicos para el Extractor */
 .seo-table th {
-    border-bottom: 2px solid rgba(255,255,255,0.08);
-    color: #fff;
+    border-bottom: 2px solid var(--border);
+    color: var(--black);
     padding: 1rem;
     text-transform: uppercase;
     font-size: .75rem;
@@ -436,11 +436,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 }
 .seo-table td {
     padding: 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid var(--border);
     vertical-align: middle;
+    color: var(--text);
 }
 .seo-table tbody tr:hover {
-    background: rgba(255,255,255,0.01);
+    background: var(--bg-hover);
 }
 .seo-table tr.critical-row {
     background: rgba(231,76,60,0.03);
@@ -776,15 +777,15 @@ function sortAndRenderTable() {
         }
         
         tr.innerHTML = `
-            <td style="padding: 1rem; font-family: monospace; word-break: break-all;">
+            <td style="font-family: monospace; word-break: break-all;">
                 <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: #3498db; text-decoration: none;">${item.url}</a>
                 ${isCritical ? `<span class="tool-status-badge tool-status-badge--danger" title="La URL supera los 75 caracteres recomendados para visualización completa en pantallas móviles de Google.">Crítica (${item.url.length} ch)</span>` : ''}
             </td>
-            <td style="padding: 1rem; color: #cbd5e1;">${displayDate}</td>
-            <td style="padding: 1rem; text-align: center; font-weight: 800; color: ${item.images > 0 ? 'var(--orange)' : 'var(--muted)'};">
+            <td style="color: var(--muted);">${displayDate}</td>
+            <td style="text-align: center; font-weight: 800; color: ${item.images > 0 ? 'var(--orange)' : 'var(--muted)'};">
                 ${item.images > 0 ? `<i class="fa-solid fa-image"></i> ${item.images}` : '-'}
             </td>
-            <td style="padding: 1rem; color: var(--muted); font-size: .8rem;">${item.sitemap}</td>
+            <td style="color: var(--muted); font-size: .8rem;">${item.sitemap}</td>
         `;
         tbody.appendChild(tr);
     }
