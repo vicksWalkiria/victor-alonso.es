@@ -179,16 +179,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- Código JSON-LD Generado -->
-        <div class="tool-card tool-card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <div class="tool-card" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <h3 style="margin-bottom:1rem;color:var(--orange)">2. Código JSON-LD Generado</h3>
-            <p style="font-size:.82rem;color:rgba(255,255,255,0.6);margin-bottom:1rem">Este código le dice a los algoritmos de Google exactamente qué eres, dónde estás y cómo contactar contigo de manera estructurada.</p>
+            <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem">Este código le dice a los algoritmos de Google exactamente qué eres, dónde estás y cómo contactar contigo de manera estructurada.</p>
             <pre class="tool-code-display"><code id="schema-code"></code></pre>
           </div>
           
           <div class="btn-group" style="margin-top:1.5rem;">
             <button class="btn btn--primary" id="btn-copy-schema">Copiar código JSON-LD</button>
-            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">Validar en Google</a>
+            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">Validar en Google</a>
           </div>
         </div>
 

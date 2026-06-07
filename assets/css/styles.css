@@ -2215,7 +2215,7 @@ strong {
 
 /* Calificación y Grado de Cumplimiento (Compliance / Grades) */
 .tool-grade-box {
-  background: #0b101c;
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 2.5rem;
@@ -2224,7 +2224,7 @@ strong {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow);
 }
 
 .tool-grade-circle {
@@ -2286,7 +2286,7 @@ strong {
   padding: 0.75rem 1rem 0.75rem 2.25rem;
   border-bottom: 1px solid var(--border);
   font-size: 0.92rem;
-  color: #e2e8f0;
+  color: var(--text);
   position: relative;
 }
 
@@ -2309,7 +2309,7 @@ strong {
 }
 
 .tool-legal-card {
-  background: rgba(255,255,255,0.02);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;

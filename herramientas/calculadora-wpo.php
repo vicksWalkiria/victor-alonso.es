@@ -184,9 +184,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- LOADING STATE -->
-        <div id="wpo-loading" class="tool-card tool-card--dark" style="display: none; text-align: center;">
-          <div class="wpo-spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-radius: 50%; border-top-color: var(--orange); animation: spin 1s linear infinite;"></div>
-          <h3 style="color: #fff; font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Conectando con Google PageSpeed...</h3>
+        <div id="wpo-loading" class="tool-card" style="display: none; text-align: center;">
+          <div class="wpo-spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid var(--border); border-radius: 50%; border-top-color: var(--orange); animation: spin 1s linear infinite;"></div>
+          <h3 style="color: var(--black); font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Conectando con Google PageSpeed...</h3>
           <p style="color: var(--muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.5;">El análisis puede tardar unos segundos porque Google ejecuta una auditoría móvil completa con Lighthouse.</p>
         </div>
 
