@@ -529,7 +529,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div class="tool-card">
               <h3 style="color:var(--black); font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Infracciones y Advertencias (Simulación Dinámica)</h3>
               <?php if (empty($r2['summary']['findings'])): ?>
-                <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.92rem;">
+                <div style="background:rgba(21,128,61,0.1); border:1px solid rgba(21,128,61,0.3); color:#15803d; padding:0.85rem 1rem; border-radius:6px; font-size:0.92rem;">
                   ✓ Buen resultado: no se han detectado problemas RGPD durante la simulación de navegación.
                 </div>
               <?php else: ?>
@@ -574,7 +574,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <?php if (!$p_rej['clicked']): ?>
                     <span style="color:#e74c3c;">🔴 No se ha detectado un botón visible para rechazar cookies o denegar el consentimiento de forma directa.</span>
                   <?php else: ?>
-                    <span style="color:#2ecc71;">🟢 Botón "<?= h($p_rej['buttonText']) ?>" localizado y pulsado correctamente.</span><br><br>
+                    <span style="color:#15803d; font-weight: 500;">🟢 Botón "<?= h($p_rej['buttonText']) ?>" localizado y pulsado correctamente.</span><br><br>
                     <strong>Cookies post-rechazo:</strong> <?= count($p_rej['cookies']) ?>
                     <?php if (count($p_rej['cookies']) > 0): ?>
                       <div style="margin-top:0.5rem; font-family:monospace; font-size:0.8rem; background:var(--white); border:1px solid var(--border); padding:0.5rem; border-radius:4px; color:var(--text);">
@@ -591,7 +591,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <?php if (!$p_acc['clicked']): ?>
                     <span style="color:#f1c40f;">⚠️ No se ha detectado el botón para aceptar cookies.</span>
                   <?php else: ?>
-                    <span style="color:#2ecc71;">🟢 Botón "<?= h($p_acc['buttonText']) ?>" localizado y pulsado correctamente.</span><br><br>
+                    <span style="color:#15803d; font-weight: 500;">🟢 Botón "<?= h($p_acc['buttonText']) ?>" localizado y pulsado correctamente.</span><br><br>
                     <strong>Cookies comerciales cargadas:</strong> <?= count($p_acc['cookies']) ?>
                     <?php if (count($p_acc['cookies']) > 0): ?>
                       <div style="margin-top:0.5rem; font-family:monospace; font-size:0.8rem; background:var(--white); border:1px solid var(--border); padding:0.5rem; border-radius:4px; color:var(--text);">
@@ -804,7 +804,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <div class="tool-legal-card">
                     <div style="font-size:1.25rem; margin-bottom:0.35rem;"><?= $data['found'] ? '🟢' : '🔴' ?></div>
                     <strong style="color:var(--black); font-size:0.9rem; display:block;"><?= h($name) ?></strong>
-                    <span style="font-size:0.8rem; color:<?= $data['found'] ? '#2ecc71' : '#e74c3c' ?>;"><?= $data['found'] ? 'Enlace detectado' : 'No encontrado' ?></span>
+                    <span style="font-size:0.8rem; color:<?= $data['found'] ? '#15803d' : '#e74c3c' ?>;"><?= $data['found'] ? 'Enlace detectado' : 'No encontrado' ?></span>
                   </div>
                 <?php endforeach; ?>
               </div>
@@ -882,7 +882,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <p style="font-size:0.92rem; color:var(--text); margin-bottom:1rem;">Las cookies que se envían en las cabeceras HTTP de respuesta inmediatamente al abrir la URL antes de pulsar ningún botón de banner:</p>
               
               <?php if (empty($result['cookies_set'])): ?>
-                <div style="background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.1); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
+                <div style="background:rgba(21,128,61,0.05); border:1px solid rgba(21,128,61,0.1); color:#15803d; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
                   ✓ No se han detectado cookies en las cabeceras HTTP durante la carga inicial.
                 </div>
               <?php else: ?>
@@ -923,7 +923,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <p style="font-size:0.92rem; color:var(--text); margin-bottom:1rem;">Scripts de terceros detectados en el código de la web y su estado de bloqueo:</p>
               
               <?php if (empty($result['detected_scripts'])): ?>
-                <div style="background:rgba(46,204,113,0.05); border:1px solid rgba(46,204,113,0.1); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
+                <div style="background:rgba(21,128,61,0.05); border:1px solid rgba(21,128,61,0.1); color:#15803d; padding:0.85rem 1rem; border-radius:6px; font-size:0.9rem;">
                   ✓ No se han encontrado scripts de seguimiento conocidos cargados en el código HTML de esta página.
                 </div>
               <?php else: ?>
@@ -943,7 +943,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                           <td style="padding:0.75rem 0.5rem; font-weight:700; color:var(--black);"><?= h($name) ?></td>
                           <td style="padding:0.75rem 0.5rem; font-family:monospace; font-size:0.8rem; color:var(--text);"><?= h($data['src']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
-                            <?= $data['blocked'] ? '<span style="color:#2ecc71;">Bloqueado (tipo text/plain)</span>' : '<span style="color:#e74c3c; font-weight:bold;">Ejecución directa</span>' ?>
+                            <?= $data['blocked'] ? '<span style="color:#15803d;">Bloqueado (tipo text/plain)</span>' : '<span style="color:#e74c3c; font-weight:bold;">Ejecución directa</span>' ?>
                           </td>
                           <td style="padding:0.75rem 0.5rem;">
                             <?php if ($data['blocked']): ?>
