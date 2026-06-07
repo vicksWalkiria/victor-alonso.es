@@ -191,33 +191,33 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- RESULTS STATE -->
-        <div id="wpo-results" class="tool-card tool-card--dark" style="display: none;">
+        <div id="wpo-results" class="tool-card tool-card--accent" style="display: none;">
           
           <div style="text-align: center; margin-bottom: 2.5rem;">
-            <span style="display: inline-block; background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.25); color: #f87171; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.35rem 0.8rem; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem;">
+            <span style="display: inline-block; background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.25); color: #e74c3c; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.35rem 0.8rem; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem;">
               Informe WPO y Pérdidas Proyectadas
             </span>
-            <h2 style="color: #fff; font-size: 1.8rem; margin-bottom: 0.5rem;">Tu web está perdiendo aproximadamente:</h2>
-            <div id="res-loss-container" style="font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 1.5rem 0; text-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--black);">Tu web está perdiendo aproximadamente:</h2>
+            <div id="res-loss-container" style="font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 1.5rem 0; color: var(--black);">
               <span id="res-loss-val">0</span> € <span style="font-size: 1.3rem; color: var(--muted); font-weight: 500;">/ mes</span>
             </div>
             <p style="color: var(--muted); font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.5;">Esta cifra representa el impacto financiero estimado derivado de la reducción de la tasa de conversión móvil por un LCP superior a 2.5 segundos.</p>
             
             <!-- Detalle de la Fórmula de Simulación -->
-            <div id="res-formula-box" style="margin: 1.5rem auto; max-width: 480px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 1.1rem 1.25rem; font-size: 0.88rem; text-align: left;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 0.4rem;">
+            <div id="res-formula-box" style="margin: 1.5rem auto; max-width: 480px; background: var(--bg-hover); border: 1px solid var(--border); border-radius: 8px; padding: 1.1rem 1.25rem; font-size: 0.88rem; text-align: left;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
                 <span>Facturación potencial estimada:</span>
-                <strong id="res-form-pot">--</strong>
+                <strong id="res-form-pot" style="color: var(--black);">--</strong>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 0.4rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
                 <span>LCP móvil detectado:</span>
-                <strong id="res-form-lcp">--</strong>
+                <strong id="res-form-lcp" style="color: var(--black);">--</strong>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #cbd5e1; border-bottom: 1px solid rgba(255,255,255,0.04); padding-bottom: 0.4rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem;">
                 <span>Exceso sobre umbral (2.5 s):</span>
-                <strong id="res-form-excess">--</strong>
+                <strong id="res-form-excess" style="color: var(--black);">--</strong>
               </div>
-              <div style="display: flex; justify-content: space-between; color: #cbd5e1; padding-top: 0.2rem;">
+              <div style="display: flex; justify-content: space-between; color: var(--text); padding-top: 0.2rem;">
                 <span>Pérdida de conversión aplicada:</span>
                 <strong id="res-form-loss-pct" style="color: var(--orange);">--</strong>
               </div>
@@ -228,10 +228,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <span style="display: block; color: var(--orange); font-weight: 700; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
                 <i class="fa-solid fa-circle-exclamation"></i> Prioridad recomendada para mitigar pérdidas:
               </span>
-              <span style="color: #cbd5e1;">Revisar tiempo LCP, eliminar recursos que bloquean el renderizado, optimizar la carga de la imagen hero principal, activar la caché del servidor y auditar scripts de JavaScript de terceros.</span>
+              <span style="color: var(--text);">Revisar tiempo LCP, eliminar recursos que bloquean el renderizado, optimizar la carga de la imagen hero principal, activar la caché del servidor y auditar scripts de JavaScript de terceros.</span>
             </div>
 
-            <p style="color: #94a3b8; font-size: 0.8rem; max-width: 580px; margin: 1.25rem auto 0; line-height: 1.45; font-style: italic;">
+            <p style="color: var(--muted); font-size: 0.8rem; max-width: 580px; margin: 1.25rem auto 0; line-height: 1.45; font-style: italic;">
               * Esta cifra es una simulación orientativa basada en tus datos introducidos y métricas sintéticas Lighthouse de Google. No sustituye datos reales de Analytics, ventas o CRM.
             </p>
 
@@ -241,31 +241,31 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <!-- METRICS GRID -->
           <div class="tool-layout-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 2.5rem;">
             <!-- Puntuación -->
-            <div class="tool-card tool-card--dark" style="text-align: center; position: relative;">
+            <div class="tool-card" style="text-align: center; position: relative;">
               <div id="res-score-bar" style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #e74c3c; border-top-left-radius: 12px; border-top-right-radius: 12px;"></div>
               <span style="display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Performance Score</span>
               <div style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                <span id="res-score-val" style="font-size: 1.8rem; font-weight: 800; color: #fff;">--</span><span style="color: var(--muted); font-weight: 600;">/100</span>
+                <span id="res-score-val" style="font-size: 1.8rem; font-weight: 800; color: var(--black);">--</span><span style="color: var(--muted); font-weight: 600;">/100</span>
               </div>
             </div>
             
             <!-- LCP -->
-            <div class="tool-card tool-card--dark" style="text-align: center; position: relative;">
+            <div class="tool-card" style="text-align: center; position: relative;">
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #3498db; border-top-left-radius: 12px; border-top-right-radius: 12px;"></div>
               <span style="display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;" title="Largest Contentful Paint (Tiempo de Carga Principal)">Tiempo LCP</span>
-              <span id="res-lcp-val" style="font-size: 1.8rem; font-weight: 800; color: #fff; display: block;">--</span>
+              <span id="res-lcp-val" style="font-size: 1.8rem; font-weight: 800; color: var(--black); display: block;">--</span>
             </div>
 
             <!-- CLS -->
-            <div class="tool-card tool-card--dark" style="text-align: center; position: relative;">
+            <div class="tool-card" style="text-align: center; position: relative;">
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #9b59b6; border-top-left-radius: 12px; border-top-right-radius: 12px;"></div>
               <span style="display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;" title="Cumulative Layout Shift (Estabilidad Visual)">CLS</span>
-              <span id="res-cls-val" style="font-size: 1.8rem; font-weight: 800; color: #fff; display: block;">--</span>
+              <span id="res-cls-val" style="font-size: 1.8rem; font-weight: 800; color: var(--black); display: block;">--</span>
             </div>
           </div>
 
           <!-- COMPARTE -->
-          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem; padding: 1.25rem 0; border-top: 1px solid #2a2a2a; border-bottom: 1px solid #2a2a2a; margin-bottom: 2.5rem; font-size: 0.9rem;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem; padding: 1.25rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; font-size: 0.9rem;">
             <span style="color: var(--muted); font-weight: 600;"><i class="fa-solid fa-share-nodes" style="color: var(--orange); margin-right: 0.25rem;"></i> Compartir informe:</span>
             
             <button type="button" onclick="wpoCopyReport()" class="wpo-btn-share" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; background: #222; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s; cursor: pointer;">
