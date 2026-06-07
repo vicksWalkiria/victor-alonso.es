@@ -231,6 +231,18 @@ strong {
   background: rgba(255, 255, 255, .1);
 }
 
+.btn--dark {
+  background: var(--black);
+  color: var(--white);
+  border: 2px solid var(--black);
+}
+
+.btn--dark:hover {
+  background: #333333;
+  border-color: #333333;
+  color: var(--white);
+}
+
 .btn--whatsapp {
   background: #25D366;
   color: var(--white);
