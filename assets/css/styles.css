@@ -2193,3 +2193,131 @@ strong {
   border: 1px solid #30363d;
   margin: 0;
 }
+
+/* Intro box list grids */
+.tool-intro-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.tool-intro-grid__item {
+  background: var(--orange);
+  color: var(--white);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Calificación y Grado de Cumplimiento (Compliance / Grades) */
+.tool-grade-box {
+  background: #0b101c;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.tool-grade-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.tool-grade-circle::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+}
+
+.tool-grade--a .tool-grade-circle {
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.05);
+}
+.tool-grade--a .tool-grade-circle::after { border-color: #2ecc71; }
+
+.tool-grade--b .tool-grade-circle {
+  color: #3498db;
+  background: rgba(52, 152, 219, 0.05);
+}
+.tool-grade--b .tool-grade-circle::after { border-color: #3498db; }
+
+.tool-grade--c .tool-grade-circle {
+  color: #f1c40f;
+  background: rgba(241, 196, 15, 0.05);
+}
+.tool-grade--c .tool-grade-circle::after { border-color: #f1c40f; }
+
+.tool-grade--f .tool-grade-circle {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.05);
+}
+.tool-grade--f .tool-grade-circle::after { border-color: #e74c3c; }
+
+/* Listas de Infracciones / Puntos Fallidos */
+.tool-violation-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0 0;
+  text-align: left;
+  width: 100%;
+}
+
+.tool-violation-item {
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+  color: #e2e8f0;
+  position: relative;
+}
+
+.tool-violation-item::before {
+  content: '✗';
+  color: #e74c3c;
+  font-weight: bold;
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+}
+
+/* Grillas legales de resultados */
+.tool-legal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+  width: 100%;
+}
+
+.tool-legal-card {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .tool-legal-grid {
+    grid-template-columns: 1fr;
+  }
+}

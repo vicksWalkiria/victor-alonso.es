@@ -229,7 +229,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="extractor-grid">
         
         <!-- Bloque de Entrada / Configuración -->
-        <div class="card card--dark border-orange" style="padding: 2.5rem; border-radius: 1.5rem; margin-bottom: 2rem;">
+        <div class="tool-card tool-card--accent">
             <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
                 
                 <div>
@@ -243,9 +243,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
                     <!-- Entrada URL -->
                     <div id="tab-url" class="tab-content active">
-                        <div class="form-group" style="margin-bottom: 1.5rem;">
-                            <label class="form-label" for="sm-url">URL de Sitemap XML (.xml o .xml.gz)</label>
-                            <input type="url" class="form-input" id="sm-url" value="https://www.victor-alonso.es/sitemap.xml" placeholder="https://tuweb.com/sitemap.xml" style="font-family: monospace;">
+                        <div class="tool-form__group">
+                            <label class="tool-form__label" for="sm-url">URL de Sitemap XML (.xml o .xml.gz)</label>
+                            <input type="url" class="tool-form__input" id="sm-url" value="https://www.victor-alonso.es/sitemap.xml" placeholder="https://tuweb.com/sitemap.xml" style="font-family: monospace;">
                         </div>
                         <button class="btn btn--primary" id="btn-parse-sitemap" style="width: 100%; justify-content: center; padding: 1.1rem;">
                             <span id="btn-text">Extraer URLs recursivamente</span>
@@ -262,9 +262,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                             <input type="file" id="file-input" accept=".xml,.txt" style="display: none;">
                         </div>
                         
-                        <div class="form-group">
-                            <label class="form-label" for="raw-xml">O pega el código plano del Sitemap XML</label>
-                            <textarea class="form-textarea" id="raw-xml" rows="5" placeholder="&lt;?xml version='1.0' encoding='UTF-8'?&gt;&#10;&lt;urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'&gt;&#10;  &lt;url&gt;&#10;    &lt;loc&gt;https://tuweb.com/pagina&lt;/loc&gt;&#10;  &lt;/url&gt;&#10;&lt;/urlset&gt;" style="font-family: monospace; font-size: .82rem;"></textarea>
+                        <div class="tool-form__group">
+                            <label class="tool-form__label" for="raw-xml">O pega el código plano del Sitemap XML</label>
+                            <textarea class="tool-form__textarea" id="raw-xml" rows="5" placeholder="&lt;?xml version='1.0' encoding='UTF-8'?&gt;&#10;&lt;urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'&gt;&#10;  &lt;url&gt;&#10;    &lt;loc&gt;https://tuweb.com/pagina&lt;/loc&gt;&#10;  &lt;/url&gt;&#10;&lt;/urlset&gt;" style="font-family: monospace; font-size: .82rem;"></textarea>
                         </div>
                         <button class="btn btn--primary" id="btn-parse-local" style="width: 100%; justify-content: center; padding: 1.1rem; margin-top: 1rem;">
                             Procesar XML pegado
@@ -277,7 +277,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- Pantalla de carga animada -->
-        <div id="loading-overlay" class="card card--dark" style="display: none; padding: 3rem; text-align: center; border-radius: 1.5rem; margin-bottom: 2rem;">
+        <div id="loading-overlay" class="tool-card tool-card--dark" style="display: none; text-align: center;">
             <div class="loader-spinner" style="width: 50px; height: 50px; border-width: 5px; border-top-color: var(--orange); margin: 0 auto 1.5rem;"></div>
             <h3 style="font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;" id="loading-title">Extrayendo información...</h3>
             <p style="color: var(--muted); font-size: .9rem;" id="loading-status">Conectando con el servidor remoto bajo agente Googlebot...</p>
@@ -287,31 +287,31 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div id="results-panel" style="display: none;">
             
             <!-- Dashboard de Estadísticas -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+            <div class="tool-layout-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 2.5rem;">
                 
                 <!-- Stat 1: Total URLs -->
-                <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid var(--orange);">
+                <div class="tool-card tool-card--dark" style="border-left: 4px solid var(--orange);">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Total URLs Únicas</span>
                     <span id="stat-total" style="display: block; font-size: 2.25rem; font-weight: 900; color: #fff; margin-top: .25rem;">0</span>
                     <span id="stat-processed-sitemaps" style="display: block; font-size: .78rem; color: #2ecc71; margin-top: .25rem;">1 sitemap procesado</span>
                 </div>
 
                 <!-- Stat 2: Auditoría de Longitud -->
-                <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #e74c3c;">
+                <div class="tool-card tool-card--dark" style="border-left: 4px solid #e74c3c;">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">URLs Críticas (>75 chars)</span>
                     <span id="stat-long-urls" style="display: block; font-size: 2.25rem; font-weight: 900; color: #e74c3c; margin-top: .25rem;">0</span>
                     <span style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">Riesgo de truncado en Google SERPs</span>
                 </div>
 
                 <!-- Stat 3: Frescura de Contenidos -->
-                <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #2ecc71;">
+                <div class="tool-card tool-card--dark" style="border-left: 4px solid #2ecc71;">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Actualizado en 30 días</span>
                     <span id="stat-fresh" style="display: block; font-size: 2.25rem; font-weight: 900; color: #2ecc71; margin-top: .25rem;">0</span>
                     <span id="stat-fresh-pct" style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">0% del total de contenidos</span>
                 </div>
 
                 <!-- Stat 4: Longitud Media -->
-                <div class="card card--dark" style="padding: 1.5rem; border-radius: 1rem; border-left: 4px solid #3498db;">
+                <div class="tool-card tool-card--dark" style="border-left: 4px solid #3498db;">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Longitud Media URL</span>
                     <span id="stat-avg-len" style="display: block; font-size: 2.25rem; font-weight: 900; color: #3498db; margin-top: .25rem;">0</span>
                     <span style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">Caracteres de media</span>
@@ -320,17 +320,17 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <!-- Panel de control de datos -->
-            <div class="card card--dark" style="padding: 2rem; border-radius: 1.5rem; margin-bottom: 2rem;">
+            <div class="tool-card tool-card--dark">
                 <h3 style="color: #fff; margin-bottom: 1.25rem; font-size: 1.2rem; font-weight: 800;">2. Filtrar, Inspeccionar y Exportar</h3>
                 
                 <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
                     <!-- Buscador dinámico -->
                     <div style="flex-grow: 1; min-width: 260px;">
-                        <input type="text" id="search-input" class="form-input" placeholder="Buscar por palabra clave o extensión de URL (ej: /blog, .pdf, android)..." style="width: 100%; padding: .85rem 1.2rem;">
+                        <input type="text" id="search-input" class="tool-form__input" placeholder="Buscar por palabra clave o extensión de URL (ej: /blog, .pdf, android)..." style="width: 100%; padding: .85rem 1.2rem;">
                     </div>
                     <!-- Selector de tipo de URLs -->
                     <div style="width: 200px; flex-shrink: 0;">
-                        <select id="filter-type" class="form-select" style="padding: .85rem 1.2rem; height: 100%;">
+                        <select id="filter-type" class="tool-form__select" style="padding: .85rem 1.2rem; height: 100%;">
                             <option value="all">Todos los formatos</option>
                             <option value="html">Páginas Web (HTML)</option>
                             <option value="pdf">Ficheros PDF (.pdf)</option>
@@ -448,18 +448,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 .seo-table tr.critical-row:hover {
     background: rgba(231,76,60,0.05);
 }
-.warning-badge {
-    background: rgba(231,76,60,0.15);
-    color: #e74c3c;
-    border: 1px solid rgba(231,76,60,0.2);
-    font-size: .68rem;
-    font-weight: 800;
-    padding: .15rem .4rem;
-    border-radius: .35rem;
-    text-transform: uppercase;
-    margin-left: .5rem;
-    display: inline-block;
-}
+
 </style>
 
 <script>
@@ -789,7 +778,7 @@ function sortAndRenderTable() {
         tr.innerHTML = `
             <td style="padding: 1rem; font-family: monospace; word-break: break-all;">
                 <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="color: #3498db; text-decoration: none;">${item.url}</a>
-                ${isCritical ? `<span class="warning-badge" title="La URL supera los 75 caracteres recomendados para visualización completa en pantallas móviles de Google.">Crítica (${item.url.length} ch)</span>` : ''}
+                ${isCritical ? `<span class="tool-status-badge tool-status-badge--danger" title="La URL supera los 75 caracteres recomendados para visualización completa en pantallas móviles de Google.">Crítica (${item.url.length} ch)</span>` : ''}
             </td>
             <td style="padding: 1rem; color: #cbd5e1;">${displayDate}</td>
             <td style="padding: 1rem; text-align: center; font-weight: 800; color: ${item.images > 0 ? 'var(--orange)' : 'var(--muted)'};">

@@ -296,126 +296,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     </div>
   </section>
 
-  <style>
-    /* Estilos Premium para el Auditor de Cookies */
-    .compliance-grade-box {
-      background: #0b101c;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2.5rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-    .grade-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      font-weight: 900;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.05);
-      position: relative;
-    }
-    .grade-circle::after {
-      content: '';
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 4px solid transparent;
-    }
-    
-    .grade-a .grade-circle {
-      color: #2ecc71;
-      background: rgba(46, 204, 113, 0.05);
-    }
-    .grade-a .grade-circle::after { border-color: #2ecc71; }
-    
-    .grade-b .grade-circle {
-      color: #3498db;
-      background: rgba(52, 152, 219, 0.05);
-    }
-    .grade-b .grade-circle::after { border-color: #3498db; }
-    
-    .grade-c .grade-circle {
-      color: #f1c40f;
-      background: rgba(241, 196, 15, 0.05);
-    }
-    .grade-c .grade-circle::after { border-color: #f1c40f; }
-    
-    .grade-f .grade-circle {
-      color: #e74c3c;
-      background: rgba(231, 76, 60, 0.05);
-    }
-    .grade-f .grade-circle::after { border-color: #e74c3c; }
 
-    .result-badge {
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      display: inline-block;
-    }
-    .badge-success { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.3); }
-    .badge-warning { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241, 196, 15, 0.3); }
-    .badge-danger { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid rgba(231, 76, 60, 0.3); }
-
-    .violation-list {
-      list-style: none;
-      padding: 0;
-      margin: 1.5rem 0 0 0;
-      text-align: left;
-      width: 100%;
-    }
-    .violation-item {
-      padding: 0.75rem 1rem 0.75rem 2.25rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.92rem;
-      color: #e2e8f0;
-      position: relative;
-    }
-    .violation-item::before {
-      content: '✗';
-      color: #e74c3c;
-      font-weight: bold;
-      position: absolute;
-      left: 0.75rem;
-      top: 0.75rem;
-    }
-    
-    .legal-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin: 1.5rem 0;
-      width: 100%;
-    }
-    .legal-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      text-align: center;
-    }
-    
-    @media (max-width: 992px) {
-      .result-container {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-      }
-    }
-    @media (max-width: 768px) {
-      .legal-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 
   <section class="section">
     <div class="container">
@@ -423,23 +304,23 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <!-- Explicación del Auditor de Cookies -->
       <div style="max-width:800px; margin:0 auto 2.5rem auto; color:#cbd5e1; font-size:0.95rem; line-height:1.6;">
         <p style="margin-bottom:1rem; font-weight:600; color:#fff; text-align:center;">¿Qué comprueba esta herramienta online?</p>
-        <ul style="padding-left:0; display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-bottom:1.5rem; list-style-type:none;">
-          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">🔍 <strong>Inyección de Cookies:</strong> Analiza si se depositan cookies no técnicas en la primera carga sin consentimiento.</li>
-          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">🚀 <strong>Bloqueo de Scripts:</strong> Verifica si etiquetas como Google Tag Manager, GA4 o Facebook Pixel se ejecutan directamente.</li>
-          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">📺 <strong>Iframes de Terceros:</strong> Detecta la carga de reproductores de vídeo, mapas o widgets antes de su aceptación.</li>
-          <li style="background:var(--orange); color:#fff; padding:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 4px 10px rgba(0,0,0,0.2);">🛡️ <strong>Estructura Legal:</strong> Comprueba la presencia de enlaces visibles a la Política de Cookies, Privacidad y Aviso Legal.</li>
+        <ul class="tool-intro-grid">
+          <li class="tool-intro-grid__item">🔍 <strong>Inyección de Cookies:</strong> Analiza si se depositan cookies no técnicas en la primera carga sin consentimiento.</li>
+          <li class="tool-intro-grid__item">🚀 <strong>Bloqueo de Scripts:</strong> Verifica si etiquetas como Google Tag Manager, GA4 o Facebook Pixel se ejecutan directamente.</li>
+          <li class="tool-intro-grid__item">📺 <strong>Iframes de Terceros:</strong> Detecta la carga de reproductores de vídeo, mapas o widgets antes de su aceptación.</li>
+          <li class="tool-intro-grid__item">🛡️ <strong>Estructura Legal:</strong> Comprueba la presencia de enlaces visibles a la Política de Cookies, Privacidad y Aviso Legal.</li>
         </ul>
       </div>
 
       <!-- Formulario de Entrada -->
-      <div class="card" style="margin-bottom: 3rem; background: #ffffff !important; border: 1px solid #111111 !important; border-top: 4px solid var(--orange) !important; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important; border-radius: 8px !important; padding: 2rem;">
-        <form id="audit-form" method="POST" action="/herramientas/auditor-cookies/" style="display:flex; flex-direction:column; gap:1.25rem;">
-          <div>
-            <label for="url" style="display:block; margin-bottom:0.5rem; font-weight:600; color:#111111;">Dirección URL a auditar</label>
-            <input type="text" id="url" name="url" placeholder="https://miweb.com" value="<?= h($url) ?>" required style="width:100%; padding:0.85rem 1rem; background:#ffffff; border:1px solid #111111; border-radius:6px; color:#111111; font-size:1rem; outline:none; transition:border-color 0.3s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='#111111'">
+      <div class="tool-card tool-card--accent">
+        <form id="audit-form" method="POST" action="/herramientas/auditor-cookies/" class="tool-form">
+          <div class="tool-form__group">
+            <label for="url" class="tool-form__label" style="color:#111111;">Dirección URL a auditar</label>
+            <input type="text" id="url" name="url" placeholder="https://miweb.com" value="<?= h($url) ?>" required class="tool-form__input" style="color:#111111; border-color:#111111;">
           </div>
           
-            <p style="margin-top:0.75rem; color:#64748b; font-size:0.85rem; line-height:1.5;">El análisis avanzado simula una visita interactiva con un navegador real: verifica el bloqueo inicial y la respuesta al pulsar "Rechazar todo" y "Aceptar todo". (Tarda entre 30 y 45 segundos).</p>
+          <p style="color:#64748b; font-size:0.85rem; line-height:1.5; margin: 0;">El análisis avanzado simula una visita interactiva con un navegador real: verifica el bloqueo inicial y la respuesta al pulsar "Rechazar todo" y "Aceptar todo". (Tarda entre 30 y 45 segundos).</p>
 
           <div id="form-error" style="display:none; background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); color:#e74c3c; padding:0.75rem 1rem; border-radius:6px; font-size:0.9rem;"></div>
 
@@ -449,7 +330,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
           <?php endif; ?>
           
-          <button type="submit" id="submit-btn" class="btn btn--primary" style="align-self:flex-start; padding:0.85rem 2rem;">Iniciar Auditoría RGPD</button>
+          <button type="submit" id="submit-btn" class="btn btn--primary" style="align-self:flex-start;">Iniciar Auditoría RGPD</button>
 
           <!-- Barra de progreso para análisis avanzado -->
           <div id="advanced-progress" style="display:none; margin-top:1rem; padding:1.5rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;">
@@ -604,16 +485,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           $p_acc = $r2['phases']['accept'];
           $score = $r2['summary']['score'];
           
-          if ($score >= 90) { $grade_class = 'grade-a'; $grade_l = 'A'; $r_text = 'Bajo (Cumplimiento Alto)'; }
-          elseif ($score >= 70) { $grade_class = 'grade-b'; $grade_l = 'B'; $r_text = 'Medio (Revisar ajustes)'; }
-          elseif ($score >= 50) { $grade_class = 'grade-c'; $grade_l = 'C'; $r_text = 'Alto (Infracciones detectadas)'; }
-          else { $grade_class = 'grade-f'; $grade_l = 'F'; $r_text = 'Crítico (Incumplimiento RGPD)'; }
+          if ($score >= 90) { $grade_class = 'tool-grade--a'; $grade_l = 'A'; $r_text = 'Bajo (Cumplimiento Alto)'; }
+          elseif ($score >= 70) { $grade_class = 'tool-grade--b'; $grade_l = 'B'; $r_text = 'Medio (Revisar ajustes)'; }
+          elseif ($score >= 50) { $grade_class = 'tool-grade--c'; $grade_l = 'C'; $r_text = 'Alto (Infracciones detectadas)'; }
+          else { $grade_class = 'tool-grade--f'; $grade_l = 'F'; $r_text = 'Crítico (Incumplimiento RGPD)'; }
         ?>
-        <div class="result-container" style="display:grid; grid-template-columns: 350px 1fr; gap:2.5rem; margin-bottom:4rem;">
+        <div class="tool-layout-grid" style="grid-template-columns: 350px 1fr; margin-bottom:4rem;">
           
-          <div class="compliance-grade-box <?= $grade_class ?>" style="align-self: flex-start;">
+          <div class="tool-grade-box <?= $grade_class ?>" style="align-self: flex-start;">
             <span class="section-label" style="margin-bottom: 1rem;">Nivel de Cumplimiento V2</span>
-            <div class="grade-circle"><?= $grade_l ?></div>
+            <div class="tool-grade-circle"><?= $grade_l ?></div>
             <h2 style="font-size:1.6rem; color:#fff; margin-bottom:0.5rem;">Puntuación: <?= $score ?>/100</h2>
             <p style="font-size:0.9rem; color:#ffffff; margin-bottom: 2rem;">Riesgo estimado: <strong><?= $r_text ?></strong></p>
 
@@ -645,18 +526,18 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             <div id="pdf-export-content" style="display:flex; flex-direction:column; gap:2rem;">
             
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Infracciones y Advertencias (Simulación Dinámica)</h3>
               <?php if (empty($r2['summary']['findings'])): ?>
                 <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.92rem;">
                   ✓ Buen resultado: no se han detectado problemas RGPD durante la simulación de navegación.
                 </div>
               <?php else: ?>
-                <ul class="violation-list">
+                <ul class="tool-violation-list">
                   <?php foreach ($r2['summary']['findings'] as $f): ?>
-                    <li class="violation-item" style="color:#ffffff;">
-                      <?php if($f['severity'] === 'alto'): ?> <span class="result-badge badge-danger" style="margin-right:0.5rem">Alto</span>
-                      <?php elseif($f['severity'] === 'medio'): ?> <span class="result-badge badge-warning" style="margin-right:0.5rem">Medio</span>
+                    <li class="tool-violation-item" style="color:#ffffff;">
+                      <?php if($f['severity'] === 'alto'): ?> <span class="tool-status-badge tool-status-badge--danger" style="margin-right:0.5rem">Alto</span>
+                      <?php elseif($f['severity'] === 'medio'): ?> <span class="tool-status-badge tool-status-badge--warning" style="margin-right:0.5rem">Medio</span>
                       <?php endif; ?>
                       <?= h($f['message']) ?>
                     </li>
@@ -665,7 +546,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <?php endif; ?>
             </div>
 
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Auditoría por Fases</h3>
               
               <div style="margin-bottom:2rem;">
@@ -732,12 +613,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
       <?php elseif ($result): ?>
-        <div class="result-container" style="display:grid; grid-template-columns: 350px 1fr; gap:2.5rem; margin-bottom:4rem;">
+        <div class="tool-layout-grid" style="grid-template-columns: 350px 1fr; margin-bottom:4rem;">
           
           <!-- Columna Lateral: Nota Global -->
-          <div class="compliance-grade-box <?= $result['grade_class'] ?>" style="align-self: flex-start;">
+          <div class="tool-grade-box <?= $result['grade_class'] ?>" style="align-self: flex-start;">
             <span class="section-label" style="margin-bottom: 1rem;">Nivel de Cumplimiento</span>
-            <div class="grade-circle"><?= $result['grade'] ?></div>
+            <div class="tool-grade-circle"><?= $result['grade'] ?></div>
             <h2 style="font-size:1.6rem; color:#fff; margin-bottom:0.5rem;">Puntuación: <?= $result['score'] ?>/100</h2>
             <p style="font-size:0.9rem; color:#ffffff; line-height:1.5;"><?= h($result['grade_desc']) ?></p>
             
@@ -801,7 +682,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <div style="display:flex; flex-direction:column; gap:2rem;">
             
             <!-- Listado de Violaciones Detectadas -->
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Infracciones y Advertencias</h3>
               <?php if (empty($result['violations'])): ?>
                 <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); color:#2ecc71; padding:0.85rem 1rem; border-radius:6px; font-size:0.92rem;">
@@ -809,16 +690,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 </div>
               <?php else: ?>
                 <p style="font-size:0.92rem; color:#ffffff; margin-bottom:0.5rem;">Se han detectado los siguientes riesgos legales que podrían ser objeto de sanción por la AEPD (Agencia Española de Protección de Datos):</p>
-                <ul class="violation-list">
+                <ul class="tool-violation-list">
                   <?php foreach ($result['violations'] as $violation): ?>
-                    <li class="violation-item"><?= strip_tags($violation, '<strong><code>') ?></li>
+                    <li class="tool-violation-item"><?= strip_tags($violation, '<strong><code>') ?></li>
                   <?php endforeach; ?>
                 </ul>
               <?php endif; ?>
             </div>
 
             <!-- Diagnóstico Técnico Interpretado -->
-            <div class="card card--dark" style="padding:2rem; border-left:4px solid var(--orange);">
+            <div class="tool-card tool-card--dark" style="border-left:4px solid var(--orange);">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Diagnóstico Técnico Interpretado</h3>
               
               <div style="font-size:0.95rem; line-height:1.6; color:#e2e8f0; display:flex; flex-direction:column; gap:1.25rem;">
@@ -828,10 +709,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   <div>
                     <strong style="color:#fff;">Prioridad de arreglo:</strong> 
                     <?php if ($result['score'] < 50): ?>
-                      <span class="result-badge badge-danger">Alta</span>
+                      <span class="tool-status-badge tool-status-badge--danger">Alta</span>
                       <p style="margin-top:0.5rem; color:#ffffff; font-size:0.9rem;">Se están depositando cookies de terceros o cargando herramientas de seguimiento (como Analytics o píxeles) inmediatamente al entrar al sitio. Esto expone a la web a riesgos de cumplimiento normativo.</p>
                     <?php else: ?>
-                      <span class="result-badge badge-warning">Media</span>
+                      <span class="tool-status-badge tool-status-badge--warning">Media</span>
                       <p style="margin-top:0.5rem; color:#ffffff; font-size:0.9rem;">El sitio web bloquea parte de los trackers, pero se han detectado deficiencias de configuración o la ausencia de páginas de políticas legales obligatorias.</p>
                     <?php endif; ?>
                   </div>
@@ -874,7 +755,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <!-- Estado del Banner y CMP Detectado -->
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Estado de Gestión de Consentimiento (Banner / CMP)</h3>
               <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1.5rem;">Análisis automatizado de la presencia de herramientas para la obtención del consentimiento y su configuración:</p>
               
@@ -915,12 +796,12 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <!-- Menú Legal / Enlaces obligatorios -->
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Presencia de Páginas Legales Obligatorias</h3>
               <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Toda web corporativa o que recopile analíticas debe enlazar de manera visible estas políticas:</p>
-              <div class="legal-grid">
+              <div class="tool-legal-grid">
                 <?php foreach ($result['legal_pages'] as $name => $data): ?>
-                  <div class="legal-card">
+                  <div class="tool-legal-card">
                     <div style="font-size:1.25rem; margin-bottom:0.35rem;"><?= $data['found'] ? '🟢' : '🔴' ?></div>
                     <strong style="color:#fff; font-size:0.9rem; display:block;"><?= h($name) ?></strong>
                     <span style="font-size:0.8rem; color:<?= $data['found'] ? '#2ecc71' : '#e74c3c' ?>;"><?= $data['found'] ? 'Enlace detectado' : 'No encontrado' ?></span>
@@ -931,7 +812,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             <?php if (!empty($result['detected_iframes'])): ?>
               <!-- Iframes de Terceros Detectados -->
-              <div class="card card--dark" style="padding:2rem;">
+              <div class="tool-card tool-card--dark">
                 <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Incrustados (Iframes) de Terceros</h3>
                 <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Elementos embebidos en el HTML inicial que conectan con servicios externos. Deben estar bloqueados hasta obtener el consentimiento:</p>
                 <div style="overflow-x:auto;">
@@ -950,7 +831,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                           <td style="padding:0.75rem 0.5rem;"><strong><?= h($ifr['name']) ?></strong></td>
                           <td style="padding:0.75rem 0.5rem; font-family:monospace; font-size:0.8rem; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?= h($ifr['src']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
-                            <span class="result-badge <?= $ifr['severity'] === 'Alto' ? 'badge-danger' : 'badge-warning' ?>">
+                            <span class="tool-status-badge <?= $ifr['severity'] === 'Alto' ? 'tool-status-badge--danger' : 'tool-status-badge--warning' ?>">
                               <?= h($ifr['severity']) ?>
                             </span>
                           </td>
@@ -965,7 +846,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             <?php if (!empty($result['external_requests'])): ?>
               <!-- Peticiones de Red a Dominios Externos -->
-              <div class="card card--dark" style="padding:2rem;">
+              <div class="tool-card tool-card--dark">
                 <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Conexiones a Dominios de Terceros</h3>
                 <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Dominios externos referenciados en el HTML inicial mediante scripts, CSS, imágenes, iframes o preconexiones:</p>
                 <div style="overflow-x:auto;">
@@ -983,7 +864,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                           <td style="padding:0.75rem 0.5rem; font-family:monospace;"><strong><?= h($req['domain']) ?></strong></td>
                           <td style="padding:0.75rem 0.5rem; font-size:0.82rem; color:#ffffff;"><?= h($req['types']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
-                            <span class="result-badge <?= $req['risk'] === 'Alto' ? 'badge-danger' : 'badge-warning' ?>">
+                            <span class="tool-status-badge <?= $req['risk'] === 'Alto' ? 'tool-status-badge--danger' : 'tool-status-badge--warning' ?>">
                               <?= h($req['risk']) ?>
                             </span>
                           </td>
@@ -996,7 +877,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <?php endif; ?>
 
             <!-- Tabla de Cookies de 1er Impacto -->
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cookies detectadas en cabeceras HTTP durante la carga inicial</h3>
               <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Las cookies que se envían en las cabeceras HTTP de respuesta inmediatamente al abrir la URL antes de pulsar ningún botón de banner:</p>
               
@@ -1023,9 +904,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                           <td style="padding:0.75rem 0.5rem; color:#ffffff;"><?= h($data['description']) ?></td>
                           <td style="padding:0.75rem 0.5rem;">
                             <?php if ($data['category'] === 'necesaria'): ?>
-                              <span class="result-badge badge-success">Necesaria / Técnica</span>
+                              <span class="tool-status-badge tool-status-badge--success">Necesaria / Técnica</span>
                             <?php else: ?>
-                              <span class="result-badge badge-danger">No Consentida (Incumple)</span>
+                              <span class="tool-status-badge tool-status-badge--danger">No Consentida (Incumple)</span>
                             <?php endif; ?>
                           </td>
                         </tr>
@@ -1037,7 +918,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
 
             <!-- Tabla de Scripts Analizados -->
-            <div class="card card--dark" style="padding:2rem;">
+            <div class="tool-card tool-card--dark">
               <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Scripts de Seguimiento en HTML</h3>
               <p style="font-size:0.92rem; color:#ffffff; margin-bottom:1rem;">Scripts de terceros detectados en el código de la web y su estado de bloqueo:</p>
               
@@ -1066,9 +947,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                           </td>
                           <td style="padding:0.75rem 0.5rem;">
                             <?php if ($data['blocked']): ?>
-                              <span class="result-badge badge-success">Correcto</span>
+                              <span class="tool-status-badge tool-status-badge--success">Correcto</span>
                             <?php else: ?>
-                              <span class="result-badge badge-danger">Infracción</span>
+                              <span class="tool-status-badge tool-status-badge--danger">Infracción</span>
                             <?php endif; ?>
                           </td>
                         </tr>
@@ -1081,7 +962,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             <!-- Cadena de redirecciones si hubo -->
             <?php if (!empty($result['redirects'])): ?>
-              <div class="card card--dark" style="padding:2rem;">
+              <div class="tool-card tool-card--dark">
                 <h3 style="color:#fff; font-size:1.25rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">Cadena de Redireccionamientos Auditados</h3>
                 <ol style="margin:0; padding-left:1.25rem; font-size:0.9rem; color:#e2e8f0; display:flex; flex-direction:column; gap:0.5rem;">
                   <?php foreach ($result['redirects'] as $index => $r): ?>
@@ -1167,7 +1048,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     document.addEventListener('DOMContentLoaded', () => {
       // Small delay to ensure rendering is complete
       setTimeout(() => {
-        const results = document.getElementById('pdf-export-content') || document.querySelector('.result-container');
+        const results = document.getElementById('pdf-export-content') || document.querySelector('.tool-layout-grid');
         if (results) {
           // Scroll with an offset to avoid sticking right to the top
           const y = results.getBoundingClientRect().top + window.scrollY - 100;

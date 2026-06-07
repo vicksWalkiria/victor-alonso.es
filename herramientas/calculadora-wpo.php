@@ -148,28 +148,28 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <!-- CALCULATOR COMPONENT -->
       <div class="wpo-calculator-wrapper">
         
-        <div id="wpo-form-container" class="card wpo-form-card">
+        <div id="wpo-form-container" class="tool-card">
           <form id="wpo-calc-form">
-            <div class="form-group">
-              <label class="form-label" for="wpo-url">URL de tu web a analizar <span>*</span></label>
-              <input type="url" class="form-input" id="wpo-url" name="url" required placeholder="https://tuweb.com">
+            <div class="tool-form__group">
+              <label class="tool-form__label" for="wpo-url">URL de tu web a analizar <span>*</span></label>
+              <input type="url" class="tool-form__input" id="wpo-url" name="url" required placeholder="https://tuweb.com">
             </div>
 
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="wpo-visits">Visitas mensuales <span>*</span></label>
-                <input type="number" class="form-input" id="wpo-visits" name="visits" required min="1" placeholder="Ej. 15000">
+            <div class="tool-form__row">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="wpo-visits">Visitas mensuales <span>*</span></label>
+                <input type="number" class="tool-form__input" id="wpo-visits" name="visits" required min="1" placeholder="Ej. 15000">
               </div>
 
-              <div class="form-group">
-                <label class="form-label" for="wpo-ticket">Ticket medio / valor de cliente (€) <span>*</span></label>
-                <input type="number" class="form-input" id="wpo-ticket" name="ticket" required min="1" step="0.01" placeholder="Ej. 65">
+              <div class="tool-form__group">
+                <label class="tool-form__label" for="wpo-ticket">Ticket medio / valor de cliente (€) <span>*</span></label>
+                <input type="number" class="tool-form__input" id="wpo-ticket" name="ticket" required min="1" step="0.01" placeholder="Ej. 65">
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="wpo-conversion">Tasa de conversión estimada (%)</label>
-              <input type="number" class="form-input" id="wpo-conversion" name="conversion" step="0.01" value="1.5">
+            <div class="tool-form__group">
+              <label class="tool-form__label" for="wpo-conversion">Tasa de conversión estimada (%)</label>
+              <input type="number" class="tool-form__input" id="wpo-conversion" name="conversion" step="0.01" value="1.5">
               <p class="form-hint">¿No sabes este dato? Puedes usar 1,5% como referencia inicial, 1% para una estimación conservadora o ajustarlo si conoces tu tasa real.</p>
             </div>
 
@@ -184,14 +184,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
 
         <!-- LOADING STATE -->
-        <div id="wpo-loading" class="card card--dark wpo-state-card" style="display: none; text-align: center;">
+        <div id="wpo-loading" class="tool-card tool-card--dark" style="display: none; text-align: center;">
           <div class="wpo-spinner" style="display: inline-block; width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-radius: 50%; border-top-color: var(--orange); animation: spin 1s linear infinite;"></div>
           <h3 style="color: #fff; font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">Conectando con Google PageSpeed...</h3>
           <p style="color: var(--muted); font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.5;">El análisis puede tardar unos segundos porque Google ejecuta una auditoría móvil completa con Lighthouse.</p>
         </div>
 
         <!-- RESULTS STATE -->
-        <div id="wpo-results" class="card card--dark wpo-state-card" style="display: none;">
+        <div id="wpo-results" class="tool-card tool-card--dark" style="display: none;">
           
           <div style="text-align: center; margin-bottom: 2.5rem;">
             <span style="display: inline-block; background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.25); color: #f87171; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.35rem 0.8rem; border-radius: 20px; text-transform: uppercase; margin-bottom: 1rem;">
@@ -239,9 +239,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
 
           <!-- METRICS GRID -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+          <div class="tool-layout-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 2.5rem;">
             <!-- Puntuación -->
-            <div style="background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.25rem; text-align: center; position: relative;">
+            <div class="tool-card tool-card--dark" style="text-align: center; position: relative;">
               <div id="res-score-bar" style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #e74c3c; border-top-left-radius: 12px; border-top-right-radius: 12px;"></div>
               <span style="display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Performance Score</span>
               <div style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -250,14 +250,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
             
             <!-- LCP -->
-            <div style="background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.25rem; text-align: center; position: relative;">
+            <div class="tool-card tool-card--dark" style="text-align: center; position: relative;">
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #3498db; border-top-left-radius: 12px; border-top-right-radius: 12px;"></div>
               <span style="display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;" title="Largest Contentful Paint (Tiempo de Carga Principal)">Tiempo LCP</span>
               <span id="res-lcp-val" style="font-size: 1.8rem; font-weight: 800; color: #fff; display: block;">--</span>
             </div>
 
             <!-- CLS -->
-            <div style="background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.25rem; text-align: center; position: relative;">
+            <div class="tool-card tool-card--dark" style="text-align: center; position: relative;">
               <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #9b59b6; border-top-left-radius: 12px; border-top-right-radius: 12px;"></div>
               <span style="display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.5rem;" title="Cumulative Layout Shift (Estabilidad Visual)">CLS</span>
               <span id="res-cls-val" style="font-size: 1.8rem; font-weight: 800; color: #fff; display: block;">--</span>
@@ -308,40 +308,40 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </div>
 
       <!-- TEXTOS DE CRITERIO - NO COMMODITY -->
-      <div class="criterio-section" style="margin-top: 4.5rem; border-top: 1px solid var(--border); padding-top: 4rem;">
+      <div class="criterio-section">
         <span class="section-label">WPO de trinchera</span>
         <h2>¿Por qué 1 segundo de carga ralentiza tu facturación?</h2>
         
-        <div class="criterio-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
-          <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
-            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">01.</span> La paciencia móvil no perdona</h3>
-            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">El tráfico móvil representa más del 65% de las visitas comerciales actuales. En redes móviles (4G/5G con latencias inestables), un LCP superior a 2.5 segundos dispara el rebote. Un usuario frustrado no espera: vuelve al buscador y compra en la web de tu competidor.</p>
+        <div class="criterio-grid">
+          <div class="criterio-card">
+            <h3><span style="color:var(--orange)">01.</span> La paciencia móvil no perdona</h3>
+            <p>El tráfico móvil representa más del 65% de las visitas comerciales actuales. En redes móviles (4G/5G con latencias inestables), un LCP superior a 2.5 segundos dispara el rebote. Un usuario frustrado no espera: vuelve al buscador y compra en la web de tu competidor.</p>
           </div>
 
-          <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
-            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">02.</span> El impacto de conversión estimado</h3>
-            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Diversos estudios de rendimiento web han asociado los retrasos de carga con caídas relevantes en conversión. Para hacer una estimación conservadora, el simulador aplica una pérdida del 7% por cada segundo adicional sobre el umbral recomendado de LCP.</p>
+          <div class="criterio-card">
+            <h3><span style="color:var(--orange)">02.</span> El impacto de conversión estimado</h3>
+            <p>Diversos estudios de rendimiento web han asociado los retrasos de carga con caídas relevantes en conversión. Para hacer una estimación conservadora, el simulador aplica una pérdida del 7% por cada segundo adicional sobre el umbral recomendado de LCP.</p>
           </div>
 
-          <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
-            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">03.</span> Experiencia de página y visibilidad</h3>
-            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Las Core Web Vitals forman parte de las señales de experiencia de página. Una web lenta no suele hundirse solo por eso, pero en igualdad de condiciones puede perder competitividad frente a resultados más rápidos y cómodos.</p>
+          <div class="criterio-card">
+            <h3><span style="color:var(--orange)">03.</span> Experiencia de página y visibilidad</h3>
+            <p>Las Core Web Vitals forman parte de las señales de experiencia de página. Una web lenta no suele hundirse solo por eso, pero en igualdad de condiciones puede perder competitividad frente a resultados más rápidos y cómodos.</p>
           </div>
         </div>
       </div>
 
       <!-- CÓMO FUNCIONA LA HERRAMIENTA -->
-      <div class="criterio-section" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem;">
+      <div class="criterio-section" style="margin-top: 4rem;">
         <span class="section-label">Especificaciones técnicas</span>
         <h2>Transparencia absoluta: cómo funciona este simulador</h2>
-        <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem;">
+        <div class="criterio-grid">
           <div>
-            <h3 style="color: var(--orange); font-size: 1.1rem; margin-bottom: 0.5rem;">Conexión directa con Google Lighthouse</h3>
+            <h3 style="color: var(--orange); font-size: 1.1rem; margin-bottom: 0.5rem; border-bottom: none; padding-bottom: 0; display: block;">Conexión directa con Google Lighthouse</h3>
             <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.6;">Al pulsar el botón, nuestro servidor se conecta directamente a la API oficial de <strong>Google PageSpeed Insights v5</strong>. Solicitamos un escaneo en entorno móvil emulado (que simula una conexión de red móvil promedio con hardware de gama media, que es el escenario de mayor estrés y realismo comercial). Extraemos del JSON de respuesta el LCP, CLS y TBT del informe Lighthouse móvil.</p>
           </div>
           <div>
-            <h3 style="color: var(--orange); font-size: 1.1rem; margin-bottom: 0.5rem;">La fórmula matemática</h3>
-            <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.6;">Calculamos la facturación base estimada mensual (`Visitas * Tasa de Conversión * Ticket`). Google define que un LCP excelente está por debajo de **2.5 segundos**. Por cada segundo que tu web supere esa frontera de confort, restamos un **7%** a tu facturación potencial por fricción. La pérdida máxima se acota por seguridad al 90% para reflejar la realidad operativa.</p>
+            <h3 style="color: var(--orange); font-size: 1.1rem; margin-bottom: 0.5rem; border-bottom: none; padding-bottom: 0; display: block;">La fórmula matemática</h3>
+            <p style="font-size: 0.92rem; color: var(--muted); line-height: 1.6;">Calculamos la facturación base estimada mensual (`Visitas * Tasa de Conversión * Ticket`). Google define que un LCP excelente está por debajo de **2.5 segundos**. Por cada segundo que tu web supere esa frontera de confort, restamos un **7%** a tu facturación potencial por fricción. La pérdida máxima se acota por seguridad al 90% para reflejar la reality operativa.</p>
           </div>
         </div>
       </div>
