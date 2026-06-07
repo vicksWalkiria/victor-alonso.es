@@ -17,3 +17,5 @@ data/reports/*
 !data/reports/locks/
 data/reports/locks/*
 !data/reports/locks/.gitkeep
+ejemplo_access_log.txt
+
