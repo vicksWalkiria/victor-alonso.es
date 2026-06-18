@@ -37,6 +37,9 @@ require __DIR__ . '/includes/breadcrumbs.php';
           method="POST"
           novalidate
           aria-label="Formulario de contacto"
+          toolname="contactForm"
+          tooldescription="Formulario para solicitar un diagnóstico SEO gratuito o contratar servicios de SEO, desarrollo WordPress o mantenimiento web con Víctor Alonso. Campos: nombre, email, teléfono (opcional), URL de tu web (opcional), tipo de servicio y mensaje describiendo la situación de tu web."
+          toolautosubmit="false"
         >
           <div class="form-row">
             <div class="form-group">
