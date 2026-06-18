@@ -1,0 +1,17 @@
+# Víctor Alonso SEO
+
+> Consultor SEO técnico en Albacete e ingeniero informático especializado en diagnóstico, optimización técnica, WPO y desarrollo de herramientas.
+
+## Key Services
+- [SEO Técnico](https://www.victor-alonso.es/servicios/seo-tecnico/): Indexación, rastreo, rendimiento (WPO) y optimizaciones estructurales.
+- [Auditoría SEO](https://www.victor-alonso.es/servicios/auditoria-seo/): Diagnóstico completo de arquitectura, contenidos y SEO técnico.
+- [Plugins a medida](https://www.victor-alonso.es/servicios/plugins-wordpress/): Desarrollo de plugins WordPress y automatizaciones a medida.
+
+## Free SEO Tools
+- [Analizador de logs](https://www.victor-alonso.es/herramientas/analizador-logs/): Herramienta local y privada para analizar logs de acceso de servidores.
+- [Analizador SEO](https://www.victor-alonso.es/herramientas/analizador-seo/): Comprobación rápida en un clic de los factores SEO clave de una URL.
+- [Generador Schema Local](https://www.victor-alonso.es/herramientas/generador-schema-local/): Creador de datos estructurados LocalBusiness para SEO local.
+
+## About & Contact
+- [Sobre mí](https://www.victor-alonso.es/sobre-mi/): Perfil profesional y experiencia de Víctor Alonso.
+- [Contacto](https://www.victor-alonso.es/contacto/): Formulario de contacto, ubicación física en Albacete y opciones de WhatsApp.
