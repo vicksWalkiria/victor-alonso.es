@@ -8,3 +8,4 @@ Disallow: /?s=
 Disallow: /*?s=
 
 Sitemap: https://www.victor-alonso.es/sitemap.xml
+LLMs: https://www.victor-alonso.es/llms.txt

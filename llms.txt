@@ -1,17 +1,91 @@
 # Víctor Alonso SEO
 
-> Consultor SEO técnico en Albacete e ingeniero informático especializado en diagnóstico, optimización técnica, WPO y desarrollo de herramientas.
+> Víctor Alonso es ingeniero informático y consultor SEO técnico en Albacete (España). Se especializa en la intersección entre SEO técnico y desarrollo web: diagnostica problemas técnicos directamente en el código, en la arquitectura y en el contenido, y los resuelve sin intermediarios. Trabaja desde Albacete con clientes en toda España, con enfoque en diagnóstico real, estrategia ejecutable e implementación directa.
 
-## Key Services
-- [SEO Técnico](https://www.victor-alonso.es/servicios/seo-tecnico/): Indexación, rastreo, rendimiento (WPO) y optimizaciones estructurales.
-- [Auditoría SEO](https://www.victor-alonso.es/servicios/auditoria-seo/): Diagnóstico completo de arquitectura, contenidos y SEO técnico.
-- [Plugins a medida](https://www.victor-alonso.es/servicios/plugins-wordpress/): Desarrollo de plugins WordPress y automatizaciones a medida.
+Perfil técnico: Ingeniero informático, consultor SEO, desarrollador WordPress/PHP, analítica web y rendimiento (WPO). Dominio de Core Web Vitals, rastreo, indexación, datos estructurados, migraciones, JS SEO, WooCommerce y herramientas de desarrollo SEO propias.
 
-## Free SEO Tools
-- [Analizador de logs](https://www.victor-alonso.es/herramientas/analizador-logs/): Herramienta local y privada para analizar logs de acceso de servidores.
-- [Analizador SEO](https://www.victor-alonso.es/herramientas/analizador-seo/): Comprobación rápida en un clic de los factores SEO clave de una URL.
-- [Generador Schema Local](https://www.victor-alonso.es/herramientas/generador-schema-local/): Creador de datos estructurados LocalBusiness para SEO local.
+Contacto: soy@victor-alonso.es · Tel: +34 675 946 486 · WhatsApp: https://wa.me/+34675946486
+Dirección: Calle Iris 25, 02005 Albacete, Castilla-La Mancha, España
+Horario: Lunes a Viernes 09:30–19:30 · Sábados 10:00–14:00
 
-## About & Contact
-- [Sobre mí](https://www.victor-alonso.es/sobre-mi/): Perfil profesional y experiencia de Víctor Alonso.
-- [Contacto](https://www.victor-alonso.es/contacto/): Formulario de contacto, ubicación física en Albacete y opciones de WhatsApp.
+Redes profesionales:
+- LinkedIn: https://www.linkedin.com/in/vialonso/
+- GitHub: https://github.com/vicksWalkiria
+- X (Twitter): https://x.com/vicks630
+- Walkiria Apps: https://www.walkiriaapps.com
+
+## Servicios SEO y Posicionamiento
+
+- [Inicio · Consultor SEO en Albacete](https://www.victor-alonso.es/): Servicio principal de consultoría SEO para empresas y negocios locales en Albacete. Diagnóstico técnico, estrategia y implementación directa. Sin intermediarios ni promesas infladas.
+- [SEO en Albacete](https://www.victor-alonso.es/servicios/seo-albacete/): SEO local para negocios de Albacete. Incluye Google Business Profile, arquitectura web, contenido local, enlazado interno y medición real de resultados.
+- [SEO para España](https://www.victor-alonso.es/servicios/seo-espana/): Estrategia SEO nacional con enfoque técnico: clusters de contenido, arquitectura de información, análisis de intención de búsqueda y monitorización en Search Console y Analytics.
+- [Auditoría SEO](https://www.victor-alonso.es/servicios/auditoria-seo/): Auditoría SEO completa (técnica + contenidos): estado de indexación, arquitectura web, WPO, datos estructurados y canonicals. Entregable priorizado por impacto, no un informe de 100 páginas que nadie implementa.
+- [SEO Técnico](https://www.victor-alonso.es/servicios/seo-tecnico/): Análisis y resolución de problemas de rastreo, indexación, renderizado JavaScript, Core Web Vitals (LCP, CLS, INP), canonicals, sitemaps, hreflang, migraciones de dominio y JS SEO.
+
+## Servicios WordPress y Desarrollo
+
+- [Mantenimiento WordPress](https://www.victor-alonso.es/servicios/mantenimiento-wordpress/): Mantenimiento técnico continuo: actualizaciones de WordPress, temas y plugins; backups automatizados; seguridad activa; limpieza de malware; optimización de rendimiento (WPO) y soporte técnico.
+- [Desarrollo WordPress](https://www.victor-alonso.es/servicios/desarrollo-wordpress/): Desarrollo de temas WordPress a medida (sin plantillas genéricas), Custom Post Types (CPT), campos personalizados (ACF), rendimiento desde el código base y SEO técnico integrado desde el inicio.
+- [Plugins WordPress a medida](https://www.victor-alonso.es/servicios/plugins-wordpress/): Desarrollo de plugins WordPress personalizados: shortcodes, formularios avanzados, integraciones con APIs externas, extensiones de WooCommerce, automatizaciones y paneles de administración a medida. Código seguro, documentado y mantenible.
+
+## Herramientas SEO Técnicas Gratuitas
+
+Herramientas propias desarrolladas a medida, sin registro, de uso gratuito y procesamiento privado.
+
+- [Herramientas SEO (índice completo)](https://www.victor-alonso.es/herramientas/): Listado de todas las herramientas disponibles.
+
+- [Analizador SEO de URLs (TTFB y redirecciones)](https://www.victor-alonso.es/herramientas/analizador-seo/): Auditoría técnica express de cualquier URL. Analiza: código de respuesta HTTP, tiempo de carga del servidor (TTFB en ms), etiquetas Title/Meta Description/H1, canonical, directivas robots (noindex/nofollow) y cabeceras de seguridad OWASP. Sin instalación, en tiempo real.
+
+- [Analizador de Logs Apache y Nginx](https://www.victor-alonso.es/herramientas/analizador-logs/): Herramienta de auditoría del presupuesto de rastreo (Crawl Budget). Sube o pega tu fichero de logs de acceso del servidor y visualiza: rastreo de Googlebot y otros bots, errores 404 recurrentes para 301, IPs sospechosas, scrapers y picos de tráfico anómalos. Procesamiento 100% privado en memoria (RGPD-compliant).
+
+- [Generador de Schema LocalBusiness JSON-LD](https://www.victor-alonso.es/herramientas/generador-schema-local/): Genera el marcado de datos estructurados Schema.org en JSON-LD para negocios locales según las directrices de Google. Tipos: ProfessionalService, Store, Restaurant y más. Incluye dirección estandarizada, geolocalización, redes sociales y logo. Código copiable al instante con validación incorporada.
+
+- [Calculadora de Pérdidas WPO](https://www.victor-alonso.es/herramientas/calculadora-wpo/): Simulador interactivo que conecta el rendimiento técnico con el impacto económico. Analiza la web en vivo con la API de Google PageSpeed (Lighthouse) y calcula el dinero perdido por tiempos de carga lentos (LCP elevado) según estudios oficiales de tasa de conversión. Adaptable a tu volumen de visitas y ticket medio.
+
+- [Extractor y Auditor de Sitemaps XML](https://www.victor-alonso.es/herramientas/extractor-sitemap/): Extrae recursivamente todas las URLs de cualquier sitemap XML o índice de sitemaps anidados. Audita longitudes de URL críticas para móvil (>75 chars), extrae imágenes, prioridades y fechas lastmod. Exportación a CSV, JSON y TXT.
+
+- [Extractor de Entidades y Grafos Semánticos](https://www.victor-alonso.es/herramientas/extractor-entidades/): Herramienta de minería semántica NLP. Extrae entidades nombradas (Personas, Ubicaciones, Marcas), mapea triples semánticos (Sujeto-Verbo-Objeto), genera un grafo interactivo en HTML5 Canvas y detecta brechas de cobertura semántica (Semantic Gap) frente a competidores.
+
+- [Auditor de Cookies y Privacidad](https://www.victor-alonso.es/herramientas/auditor-cookies/): Detecta cookies de marketing y analítica cargadas antes del consentimiento del usuario, scripts de terceros sin bloquear, ausencia de enlaces legales obligatorios (Aviso Legal, Política de Cookies, Privacidad). Calificación rápida (Apto / No Apto) conforme a RGPD y LOPDGDD.
+
+- [Tester de .htaccess y Validador de Reglas Apache](https://www.victor-alonso.es/herramientas/tester-htaccess/): Simulador mod_rewrite interactivo y visual. Prueba reglas de redirección 301/302, condiciones RewriteCond, expresiones regulares, configuraciones de HTTPS, WWW y trailing slash. Traza detallada paso a paso en español, detección de bucles de redirección infinitos. Sin llamadas externas, 100% seguro.
+
+- [Auditor de Coherencia SEO Local GMB (Extensión de Chrome)](https://www.victor-alonso.es/herramientas/auditor-seo-local-gmb/): Extensión para Google Chrome que audita en un clic la coherencia entre la ficha de Google Business Profile y la web. Verifica NAP (Nombre, Dirección, Teléfono), Schema LocalBusiness en JSON-LD y Microdatos, concordancia de servicios e información de contacto. Exporta informes a Markdown.
+
+## Casos de Estudio SEO Reales
+
+Proyectos reales anonimizados con contexto, diagnóstico y acciones concretas. Sin cifras inventadas ni resultados garantizados.
+
+- [Casos de estudio (índice)](https://www.victor-alonso.es/casos-reales/): Listado de todos los casos.
+
+  - **WordPress infectado con malware (WooCommerce)**: Detección de código malicioso en archivos PHP del tema y base de datos. El malware era silencioso y redirigía solo a usuarios procedentes de Google. Limpieza completa, hardening y recuperación de reputación en Google Safe Browsing en 48h.
+  - **Caída de tráfico tras migración de dominio**: Migración de dominio sin planificación de redirecciones. Pérdida drástica de autoridad del dominio antiguo. Diagnóstico en Ahrefs y Search Console, mapeamiento de URLs, corrección de redirects 302 a 301 y monitorización de cobertura de indexación.
+  - **Web lenta: LCP de 7 segundos en móvil (Elementor)**: Análisis de cascada de carga en restaurante con Elementor. Imagen hero de 3 MB, CSS render-blocking, 6 Google Fonts síncronas, plugins de redes sociales con scripts externos. Solución: WebP + preload LCP + CSS diferido + fuentes asíncronas. Core Web Vitals en verde.
+  - **Caída de tráfico tras broad core update de Google**: Pérdida del 30-40% del tráfico orgánico. Diagnóstico de páginas con contenido genérico y problemas de canibalización (varias páginas atacando las mismas keywords). Consolidación de páginas, reescritura por intención y mejora de enlazado interno.
+  - **Blog sin arquitectura, sin resultados**: Dos años de contenido en blog sin visibilidad de páginas de servicio. Diagnóstico: blog atacando keywords informativas mientras las páginas transaccionales eran invisibles. Solución: arquitectura pillar-cluster, enlazado interno y reescritura de páginas de servicio.
+  - **Ecommerce WooCommerce con crawl budget drenado**: Filtros de WooCommerce generando miles de URLs duplicadas indexadas por Google. Solución: análisis de parámetros de URL, bloqueo en robots.txt, canonicals en páginas de categoría y limpieza del sitemap.
+
+## Perfil Profesional
+
+- [Sobre mí](https://www.victor-alonso.es/sobre-mi/): Ingeniero informático y consultor SEO técnico. Combina SEO con programación directa en PHP, WordPress y Python. No solo recomienda: implementa los cambios técnicos. Sin intermediarios ni cadenas de subcontratación.
+- [CV Interactivo Web](https://vickswalkiria.github.io/cv-victor/): Currículum vitae web interactivo y actualizado.
+- [CV Especialista Android (PDF)](https://vickswalkiria.github.io/cv-victor/dist/cv-victor-android-es.pdf)
+- [CV FullStack & SEO (PDF)](https://vickswalkiria.github.io/cv-victor/dist/cv-victor-fullstack-seo-es.pdf)
+- [CV Formato ATS (PDF)](https://vickswalkiria.github.io/cv-victor/dist/cv-victor-ats-es.pdf)
+
+## Contacto y Solicitud de Diagnóstico
+
+- [Formulario de contacto](https://www.victor-alonso.es/contacto/): Solicita diagnóstico SEO gratuito o consulta sobre servicios. Respuesta directa sin comerciales.
+- [WhatsApp directo](https://wa.me/+34675946486): Contacto inmediato por WhatsApp.
+
+## Legal
+
+- [Aviso Legal](https://www.victor-alonso.es/aviso-legal/)
+- [Política de Privacidad](https://www.victor-alonso.es/politica-privacidad/)
+- [Política de Cookies](https://www.victor-alonso.es/politica-cookies/)
+
+## Optional
+
+- [Walkiria Apps](https://www.walkiriaapps.com): Empresa de aplicaciones móviles y proyectos web propios de Víctor Alonso.
+- [LinkedIn](https://www.linkedin.com/in/vialonso/)
+- [GitHub (vicksWalkiria)](https://github.com/vicksWalkiria): Repositorios de proyectos propios y herramientas open source.
