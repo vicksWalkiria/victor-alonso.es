@@ -372,7 +372,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
             </label>
             <input type="email" id="user_email" name="user_email" placeholder="ejemplo@tuweb.com" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(34, 49, 63, 0.2); border-radius: 8px; font-size: 0.95rem; background: #fff; color: var(--black); transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(34,49,63,0.2)'">
             <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: var(--muted); line-height: 1.4;">
-              Si indicas tu email, te enviaré una copia del informe PDF directamente a tu bandeja de entrada en cuanto finalice (y opcionalmente te suscribirás a mi boletín de consejos SEO).
+              Si indicas tu email, te enviaré una copia del informe PDF directamente a tu bandeja de entrada en cuanto finalice y te suscribirás a mi boletín de consejos SEO.
             </p>
           </div>
 
