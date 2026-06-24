@@ -4,6 +4,8 @@
  * Autor: Víctor Alonso
  */
 
+require_once dirname(__DIR__) . '/includes/config.php';
+
 header('Content-Type: application/json; charset=utf-8');
 
 // Configuración de rutas y archivos
@@ -312,6 +314,130 @@ switch ($action) {
         header('Content-Type: image/png');
         header('Cache-Control: private, max-age=3600');
         readfile($real_file_path);
+        exit;
+
+    case 'send_pdf':
+        $audit_id = $_GET['id'] ?? '';
+        $email = trim($_POST['email'] ?? '');
+        
+        if (!preg_match('/^aud_[a-f0-9]{32}$/', $audit_id)) {
+            echo json_encode(['success' => false, 'error' => 'ID de auditoría no válido.']);
+            exit;
+        }
+        
+        if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['success' => false, 'error' => 'Por favor, introduce un correo electrónico válido.']);
+            exit;
+        }
+        
+        $report_dir = $base_dir . '/' . $audit_id;
+        $pdf_file = $report_dir . '/informe.pdf';
+        
+        // Si el PDF no existe, lo generamos en el momento
+        if (!file_exists($pdf_file)) {
+            $node_bin = get_node_binary_path();
+            $script_path = __DIR__ . '/auditor-v2/generate-pdf.js';
+            
+            $cmd = sprintf(
+                '%s %s --id=%s --tool=cookies 2>&1',
+                escapeshellarg($node_bin),
+                escapeshellarg($script_path),
+                escapeshellarg($audit_id)
+            );
+            $output = shell_exec($cmd);
+            
+            if (!file_exists($pdf_file)) {
+                echo json_encode(['success' => false, 'error' => 'No se pudo compilar el PDF de la auditoría.']);
+                exit;
+            }
+        }
+        
+        // 1. Guardar el lead en CSV local (cookie_leads.csv)
+        $csv_file = dirname(__DIR__) . '/data/cookie_leads.csv';
+        $csv_dir = dirname($csv_file);
+        if (!is_dir($csv_dir)) {
+            @mkdir($csv_dir, 0755, true);
+        }
+        
+        // Obtener el dominio auditado del result.json (si existe)
+        $domain = '';
+        $result_file = $report_dir . '/result.json';
+        if (file_exists($result_file)) {
+            $res_data = json_decode(file_get_contents($result_file), true);
+            $domain = $res_data['url'] ?? '';
+        }
+        
+        $fp = fopen($csv_file, 'a');
+        if ($fp) {
+            fputcsv($fp, [date('Y-m-d H:i:s'), $email, $domain, $audit_id]);
+            fclose($fp);
+        }
+        
+        // 2. Enviar a Mailrelay (Grupo 7)
+        $mailrelay_key = getenv('MAILRELAY_API_KEY') ?: ($_ENV['MAILRELAY_API_KEY'] ?? '');
+        if ($mailrelay_key) {
+            $post_data = json_encode([
+                'status' => 'active',
+                'email'  => $email,
+                'group_ids' => [7]
+            ]);
+            
+            $ch = curl_init('https://walkiriaapps.ipzmarketing.com/api/v1/subscribers');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'X-Auth-Token: ' . $mailrelay_key
+            ]);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+            curl_exec($ch);
+            curl_close($ch);
+        }
+        
+        // 3. Enviar email con PDF adjunto al usuario
+        $to = $email;
+        $subject = 'Tu informe de Auditoría de Cookies y Privacidad RGPD';
+        
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "From: Víctor Alonso SEO <soy@victor-alonso.es>\r\n";
+        $headers .= "Reply-To: soy@victor-alonso.es\r\n";
+        $headers .= "Bcc: soy@victor-alonso.es\r\n";
+        
+        $boundary = md5(time());
+        $headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+        
+        $body = "--$boundary\r\n";
+        $body .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+        
+        $body_html = "<p>Hola,</p>";
+        $body_html .= "<p>He procesado con éxito la auditoría de cookies y privacidad RGPD para el sitio: <strong>" . htmlspecialchars($domain) . "</strong>.</p>";
+        $body_html .= "<p>Adjunto a este correo encontrarás el informe completo en PDF con el nivel de cumplimiento detectado, la puntuación obtenida, las evidencias por fase y las recomendaciones técnicas para subsanar cualquier posible infracción de la normativa de la AEPD.</p>";
+        $body_html .= "<p>Si necesitas ayuda para configurar correctamente el consentimiento de cookies, bloquear scripts de seguimiento de forma técnica o implantar un CMP conforme a la ley, no dudes en responderme a este correo.</p>";
+        $body_html .= "<p>Un saludo cordial,<br><strong>Víctor Alonso SEO</strong><br><a href=\"https://www.victor-alonso.es\">victor-alonso.es</a></p>\r\n";
+        
+        $body .= $body_html . "\r\n";
+        
+        // Adjuntar PDF
+        $file_size = filesize($pdf_file);
+        $handle = fopen($pdf_file, "r");
+        $content = fread($handle, $file_size);
+        fclose($handle);
+        $encoded_content = chunk_split(base64_encode($content));
+        
+        $body .= "--$boundary\r\n";
+        $body .= "Content-Type: application/pdf; name=\"auditoria-cookies-rgpd.pdf\"\r\n";
+        $body .= "Content-Transfer-Encoding: base64\r\n";
+        $body .= "Content-Disposition: attachment; filename=\"auditoria-cookies-rgpd.pdf\"\r\n\r\n";
+        $body .= $encoded_content . "\r\n";
+        $body .= "--$boundary--";
+        
+        if (mail($to, $subject, $body, $headers)) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'No se pudo enviar el email con la configuración del servidor.']);
+        }
         exit;
 
     default:

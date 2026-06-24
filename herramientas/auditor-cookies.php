@@ -464,6 +464,54 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             submitBtn.innerHTML = 'Iniciar Auditoría RGPD';
             advancedProgress.style.display = 'none';
           }
+
+          document.addEventListener('submit', function(e) {
+            if (e.target && e.target.id === 'email-capture-form') {
+              e.preventDefault();
+              const form = e.target;
+              const emailInput = form.querySelector('input[name="email"]');
+              const auditId = form.querySelector('input[name="audit_id"]').value;
+              const submitBtn = form.querySelector('button[type="submit"]');
+              const statusMsg = document.getElementById('email-status-msg');
+              
+              if (!emailInput.value) return;
+              
+              submitBtn.disabled = true;
+              const origText = submitBtn.textContent;
+              submitBtn.textContent = 'Enviando...';
+              statusMsg.style.display = 'none';
+              
+              const formData = new FormData(form);
+              
+              fetch(`/herramientas/auditor-cookies-api.php?action=send_pdf&id=${auditId}`, {
+                method: 'POST',
+                body: formData
+              })
+              .then(res => res.json())
+              .then(data => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = origText;
+                if (data.success) {
+                  statusMsg.style.color = '#15803d';
+                  statusMsg.innerHTML = '🟢 ¡Enviado con éxito! Revisa tu bandeja de entrada en unos instantes.';
+                  statusMsg.style.display = 'block';
+                  emailInput.value = '';
+                } else {
+                  statusMsg.style.color = '#e74c3c';
+                  statusMsg.innerHTML = '⚠️ Error: ' + (data.error || 'No se pudo enviar el email.');
+                  statusMsg.style.display = 'block';
+                }
+              })
+              .catch(err => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = origText;
+                statusMsg.style.color = '#e74c3c';
+                statusMsg.innerHTML = '⚠️ Error de conexión con el servidor.';
+                statusMsg.style.display = 'block';
+                console.error(err);
+              });
+            }
+          });
         </script>
         <style>
           @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -518,11 +566,27 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
           
           <div style="display:flex; flex-direction:column; gap:2rem;">
-            <!-- Botón de descarga PDF nativo -->
-            <a href="/herramientas/auditor-cookies-api.php?action=pdf&id=<?= h($r2['id']) ?>" id="btn-download-pdf" class="btn btn--primary" style="align-self:flex-start; display:flex; align-items:center; gap:0.5rem; background:#E8681A; border:none; padding:0.75rem 1.25rem; font-weight:600; font-size:0.95rem; text-decoration:none;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              Descargar Informe PDF
-            </a>
+            <!-- Botón de descarga PDF nativo y Captación de Lead -->
+            <div style="display: flex; flex-direction: column; gap: 1.25rem; background: #ffffff; padding: 1.75rem; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+              <h4 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.25rem; font-weight: 700;">Guardar informe de auditoría</h4>
+              <p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--text);">
+                Descarga el informe en PDF o recíbelo directamente en tu bandeja de entrada para compartirlo o revisarlo más tarde.
+              </p>
+              
+              <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: stretch;">
+                <a href="/herramientas/auditor-cookies-api.php?action=pdf&id=<?= h($r2['id']) ?>" id="btn-download-pdf" class="btn btn--primary" style="display:flex; align-items:center; justify-content: center; gap:0.5rem; background:#E8681A; border:none; padding:0.75rem 1.25rem; font-weight:600; font-size:0.95rem; text-decoration:none; margin: 0; min-width: 200px;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Descargar PDF
+                </a>
+                
+                <form id="email-capture-form" style="display: flex; flex: 1; gap: 0.5rem; min-width: 280px; margin: 0;">
+                  <input type="hidden" name="audit_id" value="<?= h($r2['id']) ?>">
+                  <input type="email" name="email" placeholder="tu@email.com" required style="flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; color: var(--black); background: var(--bg);" class="tool-form__input">
+                  <button type="submit" class="btn btn--primary" style="background: var(--black); border: none; padding: 0.75rem 1.25rem; font-weight: 600; font-size: 0.95rem; margin: 0;">Enviar al email</button>
+                </form>
+              </div>
+              <div id="email-status-msg" style="display: none; font-size: 0.9rem; margin-top: 0.5rem; font-weight: 600;"></div>
+            </div>
 
             <div id="pdf-export-content" style="display:flex; flex-direction:column; gap:2rem;">
             
