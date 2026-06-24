@@ -201,6 +201,15 @@ Redirect 301 /contacto-viejo /contacto/
             <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Al reescribir URLs dinámicas, si no utilizas la bandera QSA (Query String Append), Apache desechará cualquier parámetro de seguimiento (como IDs de afiliado, UTMs de analítica o filtros de producto). Tus campañas de marketing perderán datos de atribución y los listados filtrados se romperán.</p>
           </div>
         </div>
+
+        <div style="margin-top: 3rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
+          <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+            <i class="fa-solid fa-circle-question" style="color: var(--orange);"></i> ¿Dudas con la configuración de tu servidor o redirecciones?
+          </h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
+            Si estás planificando una migración compleja de dominio o temes romper la indexación de tu web, contar con un soporte técnico especializado marca la diferencia. Como especialista en <a href="/servicios/seo-tecnico/">SEO técnico</a> y desarrollo web, puedo ayudarte a realizar una <a href="/servicios/auditoria-seo/">auditoría SEO</a> profunda de rastreo. En <a href="/">Víctor Alonso SEO</a> implementamos los cambios directamente en tu servidor de manera segura.
+          </p>
+        </div>
       </div>
 
       <!-- EXPLICACIÓN TÉCNICA DEL FUNCIONAMIENTO -->

@@ -216,6 +216,15 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <p>Google monitoriza y penaliza el marcado fraudulento o inconsistente con el contenido visible de la página. Si marcas valoraciones de estrellas ficticias o utilizas un tipo de negocio que no se corresponde con tu actividad real, puedes recibir una acción manual en Search Console por datos estructurados engañosos.</p>
           </div>
         </div>
+
+        <div style="margin-top: 3.5rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
+          <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+            <i class="fa-solid fa-map-location-dot" style="color: var(--orange);"></i> ¿Quieres consolidar tu presencia local frente a tus competidores?
+          </h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
+            La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/">servicio SEO en Albacete</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos. Consigue resultados reales con un trabajo de <a href="/">posicionamiento web</a> profesional y de trinchera.
+          </p>
+        </div>
       </div>
 
       <!-- Enlazado Interno de Herramientas Relacionadas -->

@@ -328,6 +328,15 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <p>Las Core Web Vitals forman parte de las señales de experiencia de página. Una web lenta no suele hundirse solo por eso, pero en igualdad de condiciones puede perder competitividad frente a resultados más rápidos y cómodos.</p>
           </div>
         </div>
+
+        <div style="margin-top: 3.5rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
+          <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+            <i class="fa-solid fa-gauge-high" style="color: var(--orange);"></i> ¿Tu web arroja pérdidas financieras por velocidad de carga?
+          </h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
+            La velocidad de carga no solo es crucial para la experiencia de usuario, sino también para mejorar tu visibilidad en buscadores. Si notas lentitud en el móvil o tu servidor tiene un tiempo de respuesta elevado, contar con soporte experto es vital. En <a href="/">Víctor Alonso SEO</a> diseñamos auditorías de optimización <a href="/servicios/seo-tecnico/">WPO y SEO técnico</a> adaptadas a las Core Web Vitals para mejorar el rendimiento de tu negocio online.
+          </p>
+        </div>
       </div>
 
       <!-- CÓMO FUNCIONA LA HERRAMIENTA -->

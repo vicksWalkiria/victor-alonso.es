@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
     'title'        => 'SEO Albacete · Consultor SEO Técnico | Víctor Alonso',
-    'description'  => 'Consultor SEO en Albacete e ingeniero informático. Auditoría técnica, contenidos, WordPress y estrategia SEO para mejorar tráfico, visibilidad y contactos.',
+    'description'  => '¿Buscas mejorar tu posicionamiento SEO en Albacete? Auditoría técnica y estrategia real sin humo por ingeniero informático. ¡Solicita tu diagnóstico gratis!',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service'],
@@ -145,7 +145,7 @@ require __DIR__ . '/includes/header.php';
   <section class="section section--alt" id="servicios" aria-labelledby="servicios-heading">
     <div class="container">
       <span class="section-label">Lo que hago</span>
-      <h2 class="section-title" id="servicios-heading">Servicio de marketing por Internet especializado en SEO técnico</h2>
+      <h2 class="section-title" id="servicios-heading">Servicios de posicionamiento SEO en Albacete y optimización técnica</h2>
       <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento web en Albacete, desarrollo WordPress y mantenimiento para negocios que necesitan algo más que textos bonitos.</p>
       <div class="cards-grid">
         <article class="card">
