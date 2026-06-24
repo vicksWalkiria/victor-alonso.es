@@ -3,6 +3,20 @@ require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/schema.php';
 require_once __DIR__ . '/../includes/ratings-helper.php';
 
+// Cargar/Inicializar contador de informes
+$counter_file = BASE_DIR . "/data/gsc_reports_counter.txt";
+$reports_count = 0;
+if (file_exists($counter_file)) {
+    $reports_count = (int)file_get_contents($counter_file);
+} else {
+    $reports_count = 142; // base inicial
+    $dir = dirname($counter_file);
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+    file_put_contents($counter_file, $reports_count);
+}
+
 // ─── 1. Limpieza periódica automática de archivos temporales (antigüedad > 1 hora) ───
 $gsc_reports_dir = BASE_DIR . "/data/reports/gsc";
 if (is_dir($gsc_reports_dir)) {
@@ -139,102 +153,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     }
     
-    // Procesar email de contacto si fue suministrado
-    $user_email = isset($_POST['user_email']) ? trim($_POST['user_email']) : '';
-    $user_email = filter_var($user_email, FILTER_VALIDATE_EMAIL);
-
-    if ($user_email) {
-        // Guardar email en base de datos CSV local gratis y segura
-        $leads_file = BASE_DIR . "/data/gsc_leads.csv";
-        $dir = dirname($leads_file);
+    // Incrementar contador de informes generados
+    $counter_file = BASE_DIR . "/data/gsc_reports_counter.txt";
+    $new_count = 143;
+    if (file_exists($counter_file)) {
+        $current_count = (int)file_get_contents($counter_file);
+        $new_count = $current_count + 1;
+        file_put_contents($counter_file, $new_count);
+    } else {
+        $dir = dirname($counter_file);
         if (!is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
-        $file_exists = file_exists($leads_file);
-        $fp = fopen($leads_file, 'a');
-        if ($fp) {
-            if (!$file_exists) {
-                fputcsv($fp, ['Fecha', 'Email', 'Archivo ZIP']);
-            }
-            fputcsv($fp, [date('Y-m-d H:i:s'), $user_email, $file_name]);
-            fclose($fp);
-        }
-
-        // --- Conexión con Mailrelay API ---
-        $mailrelay_key = $_ENV['MAILRELAY_API_KEY'] ?? getenv('MAILRELAY_API_KEY') ?? '';
-        if (!empty($mailrelay_key)) {
-            $url = 'https://walkiriaapps.ipzmarketing.com/api/v1/subscribers';
-            $data = [
-                'email' => $user_email,
-                'status' => 'active',
-                'group_ids' => [7]
-            ];
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'X-AUTH-TOKEN: ' . $mailrelay_key
-            ]);
-            // Ejecutar con un timeout bajo para no bloquear el flujo del usuario
-            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
-            curl_exec($ch);
-            curl_close($ch);
-        }
+        file_put_contents($counter_file, 143);
     }
     
-    // Enviar correo de notificación de respaldo con el archivo adjunto
-    if (file_exists($pdf_path)) {
-        $to = 'soy@victor-alonso.es';
-        $subject = 'Nuevo informe de Search Console generado - ' . date('d/m/Y');
-        
-        $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "From: Víctor Alonso SEO <soy@victor-alonso.es>\r\n";
-        $headers .= "Reply-To: soy@victor-alonso.es\r\n";
-        
-        if ($user_email) {
-            $to = $user_email;
-            $subject = 'Tu informe de rendimiento SEO de Google Search Console está listo';
-            $headers .= "Bcc: soy@victor-alonso.es\r\n";
-        }
-        
-        $boundary = md5(time());
-        $headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-        
-        $body = "--$boundary\r\n";
-        $body .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-        
-        if ($user_email) {
-            $body .= "<p>Hola,</p>";
-            $body .= "<p>He preparado y compilado con éxito el informe SEO solicitado a partir de los datos de Google Search Console.</p>";
-            $body .= "<p>Adjunto a este correo encontrarás el documento PDF con todos tus indicadores clave (KPIs), tendencias de rendimiento y el listado de tus palabras clave oportunidad en la página 2 de Google.</p>";
-            $body .= "<p>Espero que te resulte de gran valor para optimizar la visibilidad orgánica de tu proyecto.</p>";
-            $body .= "<p>Un saludo cordial,<br><strong>Víctor Alonso SEO</strong><br><a href=\"https://www.victor-alonso.es\">victor-alonso.es</a></p>\r\n";
-        } else {
-            $body .= "<p>Se ha generado un nuevo informe PDF de Search Console a través del sitio web.</p>";
-            $body .= "<p>Adjunto encontrarás el informe en PDF generado para tu revisión.</p>\r\n";
-        }
-        
-        $file_size = filesize($pdf_path);
-        $handle = fopen($pdf_path, "r");
-        $content = fread($handle, $file_size);
-        fclose($handle);
-        $encoded_content = chunk_split(base64_encode($content));
-        
-        $body .= "--$boundary\r\n";
-        $body .= "Content-Type: application/pdf; name=\"informe-gsc-auditoria.pdf\"\r\n";
-        $body .= "Content-Transfer-Encoding: base64\r\n";
-        $body .= "Content-Disposition: attachment; filename=\"informe-gsc-auditoria.pdf\"\r\n\r\n";
-        $body .= $encoded_content . "\r\n";
-        $body .= "--$boundary--";
-        
-        mail($to, $subject, $body, $headers);
-    }
-    
-    // Retornar éxito con el hash de descarga
-    echo json_encode(['success' => true, 'download_url' => "?download=$hash"]);
+    // Retornar éxito con el hash de descarga y el contador actualizado
+    echo json_encode(['success' => true, 'download_url' => "?download=$hash", 'new_count' => number_format($new_count, 0, ',', '.')]);
     exit;
 }
 
@@ -283,6 +218,48 @@ require __DIR__ . '/../includes/breadcrumbs.php';
   <section class="section">
     <div class="container" style="max-width: 800px;">
       
+      <!-- Estilos personalizados para el contador animado -->
+      <style>
+      @keyframes counter-pulse {
+        0% {
+          transform: scale(1);
+          text-shadow: 0 4px 12px rgba(232, 104, 26, 0.3);
+        }
+        50% {
+          transform: scale(1.1);
+          text-shadow: 0 0 20px rgba(232, 104, 26, 0.6), 0 4px 15px rgba(232, 104, 26, 0.4);
+          color: #ff8e43;
+        }
+        100% {
+          transform: scale(1);
+          text-shadow: 0 4px 12px rgba(232, 104, 26, 0.3);
+        }
+      }
+      .pulse-glow {
+        display: inline-block;
+        animation: counter-pulse 0.8s ease-out;
+      }
+      </style>
+
+      <!-- Contador de Informes Generados -->
+      <div class="gsc-counter-card" style="background: linear-gradient(135deg, var(--black) 0%, #2c3e50 100%); color: #fff; padding: 2rem; border-radius: 16px; margin-bottom: 2.5rem; text-align: center; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(34, 49, 63, 0.15); border: 1px solid rgba(255,255,255,0.05);">
+        <!-- Círculos decorativos de fondo para estética premium -->
+        <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(232, 104, 26, 0.15); border-radius: 50%; filter: blur(30px); pointer-events: none;"></div>
+        <div style="position: absolute; bottom: -50px; left: -50px; width: 150px; height: 150px; background: rgba(232, 104, 26, 0.08); border-radius: 50%; filter: blur(25px); pointer-events: none;"></div>
+        
+        <div style="position: relative; z-index: 1;">
+          <span style="display: block; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; font-weight: 600;">
+            📊 Auditorías Completadas
+          </span>
+          <div id="gsc-counter-value" style="font-size: 3.5rem; font-weight: 800; color: var(--orange); line-height: 1; margin: 0.5rem 0; text-shadow: 0 4px 12px rgba(232, 104, 26, 0.3); transition: all 0.3s ease;">
+            <?= number_format($reports_count, 0, ',', '.') ?>
+          </div>
+          <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.6);">
+            Informes de Search Console generados por SEOs, desarrolladores y dueños de proyectos.
+          </p>
+        </div>
+      </div>
+
       <!-- Cartel de Privacidad -->
       <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; gap: 1.25rem; align-items: flex-start; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
         <i class="fa-solid fa-shield-halved" style="color: var(--orange); font-size: 1.75rem; margin-top: 0.2rem;"></i>
@@ -321,17 +298,6 @@ require __DIR__ . '/../includes/breadcrumbs.php';
               <span id="selected-file-name" style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">archivo.zip</span>
               <span style="font-size: 0.9rem; color: var(--muted);">Listo para procesar. Haz clic para cambiarlo.</span>
             </div>
-          </div>
-
-          <!-- Campo de Email (Opcional) -->
-          <div style="margin-top: 1.75rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
-            <label for="user_email" style="display: block; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; font-size: 0.95rem;">
-              📧 ¿Quieres recibir el PDF en tu correo? (Opcional)
-            </label>
-            <input type="email" id="user_email" name="user_email" placeholder="ejemplo@tuweb.com" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(34, 49, 63, 0.2); border-radius: 8px; font-size: 0.95rem; background: #fff; color: var(--black); transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(34,49,63,0.2)'">
-            <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: var(--muted); line-height: 1.4;">
-              Si indicas tu email, te enviaré una copia del informe PDF directamente a tu bandeja de entrada en cuanto finalice el procesamiento.
-            </p>
           </div>
 
           <div style="margin-top: 2rem; display: flex; justify-content: center;">
@@ -470,8 +436,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function resetForm() {
         fileInput.value = '';
-        const emailInput = document.getElementById('user_email');
-        if (emailInput) emailInput.value = '';
         dropzonePrompt.style.display = 'block';
         fileInfo.style.display = 'none';
         btnSubmit.disabled = true;
@@ -503,11 +467,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData();
         formData.append('gsc_zip', file);
         formData.append('action', 'process');
-        
-        const emailInput = document.getElementById('user_email');
-        if (emailInput && emailInput.value.trim() !== '') {
-            formData.append('user_email', emailInput.value.trim());
-        }
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', window.location.pathname, true);
@@ -523,6 +482,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Redirigir para forzar la descarga del PDF
                         window.location.href = response.download_url;
+                        
+                        if (response.new_count) {
+                            animateCounter(response.new_count);
+                        }
                         
                         setTimeout(() => {
                             resetForm();
@@ -552,6 +515,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         xhr.send(formData);
     });
+
+    function animateCounter(targetCountStr) {
+        const counterElement = document.getElementById('gsc-counter-value');
+        if (!counterElement) return;
+        
+        const startValue = parseInt(counterElement.textContent.replace(/\./g, '')) || 0;
+        const endValue = parseInt(targetCountStr.replace(/\./g, '')) || 0;
+        
+        if (startValue >= endValue) {
+            counterElement.textContent = targetCountStr;
+            return;
+        }
+        
+        const duration = 1500; // 1.5 segundos
+        const startTime = performance.now();
+        
+        function updateCounter(currentTime) {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            // Easing de salida (deceleración al final)
+            const easeProgress = progress * (2 - progress);
+            
+            const currentValue = Math.floor(startValue + (endValue - startValue) * easeProgress);
+            counterElement.textContent = new Intl.NumberFormat('es-ES').format(currentValue);
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            } else {
+                counterElement.textContent = targetCountStr;
+                counterElement.classList.add('pulse-glow');
+                setTimeout(() => counterElement.classList.remove('pulse-glow'), 1000);
+            }
+        }
+        
+        requestAnimationFrame(updateCounter);
+    }
 
     function enableFormUI() {
         btnSubmit.disabled = false;
