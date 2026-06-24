@@ -7,6 +7,18 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Leer logo corporativo en Base64
+const logoPath = path.resolve(__dirname, '../../apple-touch-icon.png');
+let logoBase64 = '';
+try {
+  if (fs.existsSync(logoPath)) {
+    const logoBuf = fs.readFileSync(logoPath);
+    logoBase64 = `data:image/png;base64,${logoBuf.toString('base64')}`;
+  }
+} catch (e) {
+  console.error('Error al cargar logo:', e);
+}
+
 function getExecutablePath() {
   if (process.env.CHROMIUM_PATH) return process.env.CHROMIUM_PATH;
   const platform = os.platform();
@@ -115,7 +127,7 @@ function buildCookiesHtml(reportData) {
 </head>
 <body>
   <div class="header">
-    <div class="logo">VA</div>
+    ${logoBase64 ? `<img src="${logoBase64}" style="width: 44px; height: 44px; border-radius: 8px; margin-right: 15px; object-fit: cover;" />` : `<div class="logo">VA</div>`}
     <div class="title">
       <h1>Víctor Alonso SEO</h1>
       <h2>Informe Automático de Cumplimiento RGPD</h2>
@@ -219,7 +231,7 @@ function buildLogsHtml(reportData) {
 </head>
 <body>
   <div class="header">
-    <div class="logo">VA</div>
+    ${logoBase64 ? `<img src="${logoBase64}" style="width: 44px; height: 44px; border-radius: 8px; margin-right: 15px; object-fit: cover;" />` : `<div class="logo">VA</div>`}
     <div class="title">
       <h1>Víctor Alonso SEO</h1>
       <h2>Informe de Crawl Budget y Logs Técnicos</h2>
@@ -335,7 +347,7 @@ function buildEntidadesHtml(reportData) {
 </head>
 <body>
   <div class="header">
-    <div class="logo">VA</div>
+    ${logoBase64 ? `<img src="${logoBase64}" style="width: 44px; height: 44px; border-radius: 8px; margin-right: 15px; object-fit: cover;" />` : `<div class="logo">VA</div>`}
     <div class="title">
       <h1>Víctor Alonso SEO</h1>
       <h2>Informe de Extracción Semántica y Knowledge Graph</h2>
