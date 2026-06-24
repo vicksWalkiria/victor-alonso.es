@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     
     // Ejecutar el motor de Python
-    $engine_path = __DIR__ . '/generador-informe-gsc/engine.py';
+    $engine_path = __DIR__ . '/gsc-report-engine/engine.py';
     $cmd = "python3 " . escapeshellarg($engine_path) . " " . escapeshellarg($zip_path) . " " . escapeshellarg($pdf_path) . " 2>&1";
     
     exec($cmd, $cmd_output, $return_var);
