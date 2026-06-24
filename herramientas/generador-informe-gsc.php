@@ -139,22 +139,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         exit;
     }
     
-    // Enviar correo de notificación de respaldo con el archivo adjunto a soy@victor-alonso.es
+    // Procesar email de contacto si fue suministrado
+    $user_email = isset($_POST['user_email']) ? trim($_POST['user_email']) : '';
+    $user_email = filter_var($user_email, FILTER_VALIDATE_EMAIL);
+
+    if ($user_email) {
+        // Guardar email en base de datos CSV local gratis y segura
+        $leads_file = BASE_DIR . "/data/gsc_leads.csv";
+        $dir = dirname($leads_file);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+        $file_exists = file_exists($leads_file);
+        $fp = fopen($leads_file, 'a');
+        if ($fp) {
+            if (!$file_exists) {
+                fputcsv($fp, ['Fecha', 'Email', 'Archivo ZIP']);
+            }
+            fputcsv($fp, [date('Y-m-d H:i:s'), $user_email, $file_name]);
+            fclose($fp);
+        }
+    }
+    
+    // Enviar correo de notificación de respaldo con el archivo adjunto
     if (file_exists($pdf_path)) {
         $to = 'soy@victor-alonso.es';
         $subject = 'Nuevo informe de Search Console generado - ' . date('d/m/Y');
-        $boundary = md5(time());
         
         $headers = "MIME-Version: 1.0\r\n";
-        $headers .= "From: soy@victor-alonso.es\r\n";
+        $headers .= "From: Víctor Alonso SEO <soy@victor-alonso.es>\r\n";
         $headers .= "Reply-To: soy@victor-alonso.es\r\n";
+        
+        if ($user_email) {
+            $to = $user_email;
+            $subject = 'Tu informe de rendimiento SEO de Google Search Console está listo';
+            $headers .= "Bcc: soy@victor-alonso.es\r\n";
+        }
+        
+        $boundary = md5(time());
         $headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
         
         $body = "--$boundary\r\n";
         $body .= "Content-Type: text/html; charset=UTF-8\r\n";
         $body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-        $body .= "<p>Se ha generado un nuevo informe PDF de Search Console a través del sitio web.</p>";
-        $body .= "<p>Adjunto encontrarás el informe en PDF generado para tu revisión.</p>\r\n";
+        
+        if ($user_email) {
+            $body .= "<p>Hola,</p>";
+            $body .= "<p>He preparado y compilado con éxito el informe SEO solicitado a partir de los datos de Google Search Console.</p>";
+            $body .= "<p>Adjunto a este correo encontrarás el documento PDF con todos tus indicadores clave (KPIs), tendencias de rendimiento y el listado de tus palabras clave oportunidad en la página 2 de Google.</p>";
+            $body .= "<p>Espero que te resulte de gran valor para optimizar la visibilidad orgánica de tu proyecto.</p>";
+            $body .= "<p>Un saludo cordial,<br><strong>Víctor Alonso SEO</strong><br><a href=\"https://www.victor-alonso.es\">victor-alonso.es</a></p>\r\n";
+        } else {
+            $body .= "<p>Se ha generado un nuevo informe PDF de Search Console a través del sitio web.</p>";
+            $body .= "<p>Adjunto encontrarás el informe en PDF generado para tu revisión.</p>\r\n";
+        }
         
         $file_size = filesize($pdf_path);
         $handle = fopen($pdf_path, "r");
@@ -246,6 +284,17 @@ require __DIR__ . '/../includes/breadcrumbs.php';
               <span id="selected-file-name" style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">archivo.zip</span>
               <span style="font-size: 0.9rem; color: var(--muted);">Listo para procesar. Haz clic para cambiarlo.</span>
             </div>
+          </div>
+
+          <!-- Campo de Email (Opcional) -->
+          <div style="margin-top: 1.75rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+            <label for="user_email" style="display: block; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; font-size: 0.95rem;">
+              📧 ¿Quieres recibir el PDF en tu correo? (Opcional)
+            </label>
+            <input type="email" id="user_email" name="user_email" placeholder="ejemplo@tuweb.com" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(34, 49, 63, 0.2); border-radius: 8px; font-size: 0.95rem; background: #fff; color: var(--black); transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(34,49,63,0.2)'">
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: var(--muted); line-height: 1.4;">
+              Si indicas tu email, te enviaré una copia del informe PDF directamente a tu bandeja de entrada en cuanto finalice el procesamiento.
+            </p>
           </div>
 
           <div style="margin-top: 2rem; display: flex; justify-content: center;">
@@ -377,6 +426,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function resetForm() {
         fileInput.value = '';
+        const emailInput = document.getElementById('user_email');
+        if (emailInput) emailInput.value = '';
         dropzonePrompt.style.display = 'block';
         fileInfo.style.display = 'none';
         btnSubmit.disabled = true;
@@ -408,6 +459,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData();
         formData.append('gsc_zip', file);
         formData.append('action', 'process');
+        
+        const emailInput = document.getElementById('user_email');
+        if (emailInput && emailInput.value.trim() !== '') {
+            formData.append('user_email', emailInput.value.trim());
+        }
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', window.location.pathname, true);

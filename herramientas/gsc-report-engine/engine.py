@@ -656,8 +656,6 @@ Basándome en mi análisis cuantitativo de tus datos de Search Console, te sugie
           Revisa las páginas de tu web con más tráfico que tengan un CTR bajo. Te recomiendo redactar descripciones meta más atractivas, incluyendo una llamada a la acción clara para captar más clics frente a la competencia.
     \item \textbf{Optimización del Enlazado Interno:}
           Te aconsejo distribuir la autoridad interna de tus herramientas con más visitas hacia tu página de inicio u otras páginas críticas. Evita anchors de coincidencia exacta repetitivos y varía los textos de forma natural (ej. «consultor SEO técnico», «auditoría web», «Víctor Alonso SEO»).
-    \item \textbf{Control de Canibalizaciones (Búsqueda Cruzada):}
-          Dado que la exportación estándar en ZIP de Search Console no incluye la relación de URLs por palabra clave, te sugiero entrar a tu panel de GSC, filtrar por tus consultas principales e ir a la pestaña «Páginas». Si ves que más de una URL está recibiendo clics o impresiones para la misma consulta, estarás ante una canibalización. Te recomiendo resolverla unificando contenidos o consolidando el enlazado interno.
     \end{enumerate}
 
 \vspace{1.5cm}
