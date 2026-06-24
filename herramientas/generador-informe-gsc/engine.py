@@ -108,6 +108,7 @@ class GSCReportGenerator:
         self.output_pdf = output_pdf
         self.temp_dir = None
         self.extracted_files = {}
+        self.logo_exists = False
         
         # Datos procesados
         self.domain = "tuweb.com"
@@ -129,6 +130,15 @@ class GSCReportGenerator:
             # 1. Crear directorio temporal
             self.temp_dir = tempfile.mkdtemp(prefix="gsc_report_")
             log_info(f"Creado directorio temporal: {self.temp_dir}")
+
+            # Copiar logo corporativo si existe
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.dirname(os.path.dirname(script_dir))
+            logo_src = os.path.join(project_root, "apple-touch-icon.png")
+            if os.path.exists(logo_src):
+                shutil.copy2(logo_src, os.path.join(self.temp_dir, "logo.png"))
+                self.logo_exists = True
+                log_info("Logo corporativo copiado para compilación LaTeX.")
 
             # 2. Extraer ZIP
             with zipfile.ZipFile(self.zip_path, 'r') as zip_ref:
@@ -165,7 +175,7 @@ class GSCReportGenerator:
                 name_lower = file.lower()
                 filepath = os.path.join(root, file)
                 
-                if "fechas" in name_lower or "dates" in name_lower:
+                if "fechas" in name_lower or "dates" in name_lower or "gráfico" in name_lower or "grafico" in name_lower or "chart" in name_lower:
                     self.extracted_files["dates"] = filepath
                 elif "consultas" in name_lower or "queries" in name_lower:
                     self.extracted_files["queries"] = filepath
@@ -183,11 +193,11 @@ class GSCReportGenerator:
             h_clean = h.lower().strip()
             if h_clean in ("fecha", "date", "fechas", "dates"):
                 mapping["date"] = idx
-            elif h_clean in ("consulta", "query", "queries", "consultas"):
+            elif "consulta" in h_clean or "query" in h_clean or "queries" in h_clean or "consultas" in h_clean:
                 mapping["query"] = idx
-            elif h_clean in ("página", "pagina", "page", "pages", "páginas"):
+            elif "página" in h_clean or "pagina" in h_clean or "page" in h_clean or "pages" in h_clean or "páginas" in h_clean:
                 mapping["page"] = idx
-            elif h_clean in ("dispositivo", "device", "devices", "dispositivos"):
+            elif "dispositivo" in h_clean or "device" in h_clean or "devices" in h_clean or "dispositivos" in h_clean:
                 mapping["device"] = idx
             elif h_clean in ("clics", "clicks", "click", "clic"):
                 mapping["clicks"] = idx
@@ -478,9 +488,9 @@ class GSCReportGenerator:
 \begin{center}
     \vspace*{1.5cm}
     % Logo (Si existe, si no se dibuja una bonita caja)
-    \begin{tcolorbox}[colback=brandorange, colframe=brandorange, arc=5mm, width=2.5cm, height=2.5cm, halign=center, valign=center]
+    """ + (r"""\includegraphics[width=2.5cm]{logo.png}""" if self.logo_exists else r"""\begin{tcolorbox}[colback=brandorange, colframe=brandorange, arc=5mm, width=2.5cm, height=2.5cm, halign=center, valign=center]
         \color{white}\bfseries\Huge VA
-    \end{tcolorbox}
+    \end{tcolorbox}""") + r"""
     \vspace{1cm}
     
     {\Huge\color{branddark}\bfseries AUDITORÍA DE RENDIMIENTO ORGÁNICO}\\[0.4cm]
