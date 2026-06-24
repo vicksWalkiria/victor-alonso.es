@@ -18,6 +18,7 @@ $page = page_config([
         ['name' => 'Auditor de Cookies y Privacidad RGPD', 'url' => '/herramientas/auditor-cookies/'],
         ['name' => 'Auditor de Coherencia SEO Local GMB', 'url' => '/herramientas/auditor-seo-local-gmb/'],
         ['name' => 'Tester de .htaccess y Validador mod_rewrite', 'url' => '/herramientas/tester-htaccess/'],
+        ['name' => 'Generador de Informes GSC PDF', 'url' => '/herramientas/generador-informe-gsc/'],
     ],
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
@@ -78,6 +79,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <a href="#auditor-cookies" class="tool-pill">🍪 Auditor de Cookies</a>
         <a href="#auditor-gmb" class="tool-pill">📍 Auditor GMB</a>
         <a href="#tester-htaccess" class="tool-pill">⚡ Tester .htaccess</a>
+        <a href="#generador-gsc" class="tool-pill">📊 Reporte GSC PDF</a>
       </div>
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
@@ -281,6 +283,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </ul>
           </div>
           <a href="/herramientas/auditor-seo-local-gmb/" class="btn btn--primary" style="width:100%;justify-content:center">Descargar Extensión GMB</a>
+        </article>
+
+        <!-- CARD 10: GENERADOR INFORME GSC -->
+        <article id="generador-gsc" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Generador de Informes GSC PDF</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Sube el ZIP exportado de Google Search Console y genera una auditoría en PDF maquetada con LaTeX de calidad editorial, con gráficas de tendencia vectoriales y keywords oportunidad.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Cálculo automatizado de CTR y posición media ponderada.</li>
+              <li class="checklist-item">Gráficas vectoriales nativas mediante PGFPlots en LaTeX.</li>
+              <li class="checklist-item">Detección de consultas estancadas en página 2 con alto potencial.</li>
+              <li class="checklist-item">Privacidad 100%: los archivos se eliminan tras la descarga.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/generador-informe-gsc/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Generador GSC</a>
         </article>
 
 

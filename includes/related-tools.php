@@ -46,6 +46,11 @@ $tools_list = [
         'file' => 'analizador-seo.php',
         'href' => '/herramientas/analizador-seo/',
         'label' => 'Analizador SEO'
+    ],
+    [
+        'file' => 'generador-informe-gsc.php',
+        'href' => '/herramientas/generador-informe-gsc/',
+        'label' => 'Generador GSC PDF'
     ]
 ];
 ?>
