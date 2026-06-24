@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/schema.php';
+require_once __DIR__ . '/../includes/ratings-helper.php';
 
 // ─── 1. Limpieza periódica automática de archivos temporales (antigüedad > 1 hora) ───
 $gsc_reports_dir = BASE_DIR . "/data/reports/gsc";
@@ -21,6 +22,31 @@ if (is_dir($gsc_reports_dir)) {
             }
         }
     }
+}
+
+// ─── 1.5. Controlador AJAX de Valoraciones (Ratings) ───
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'rate') {
+    header('Content-Type: application/json');
+    $tool_id = trim($_POST['tool_id'] ?? '');
+    $rating = (int)($_POST['rating'] ?? 0);
+    
+    if (isset($_COOKIE['voted_' . $tool_id])) {
+        echo json_encode(['success' => false, 'message' => 'Ya has valorado esta herramienta.']);
+        exit;
+    }
+    
+    $res = save_vote($tool_id, $rating);
+    if ($res) {
+        setcookie('voted_' . $tool_id, '1', time() + (365 * 24 * 60 * 60), '/');
+        echo json_encode([
+            'success' => true,
+            'count' => $res['count'],
+            'average' => $res['average']
+        ]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error al registrar valoración.']);
+    }
+    exit;
 }
 
 // ─── 2. Acción de descarga directa del PDF ───
@@ -157,6 +183,8 @@ $page = page_config([
     'description'  => 'Sube el ZIP exportado de Google Search Console y obtén un informe de rendimiento y auditoría SEO en PDF maquetado profesionalmente con LaTeX y gráficas vectoriales.',
     'canonical'    => '/herramientas/generador-informe-gsc/',
     'body_class'   => 'page-tool-gsc',
+    'schema_types' => ['WebApplication'],
+    'rating_id'    => 'generador-informe-gsc',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
@@ -261,6 +289,9 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           Si el informe revela problemas de indexación o muchas palabras clave estancadas en la página 2 de Google, te puedo ayudar a empujarlas. Como <a href="/">consultor SEO en Albacete</a> con enfoque técnico, diseño y ejecuto estrategias de <a href="/servicios/seo-tecnico/">SEO técnico</a> y auditorías a medida para que consigas más negocio con tu tráfico orgánico. Escríbeme y lo valoramos juntos.
         </p>
       </div>
+
+      <!-- Sistema de Valoraciones (Reviews) -->
+      <?php render_rating_widget('generador-informe-gsc', '¿Te ha sido útil este generador de informes GSC PDF?'); ?>
 
     </div>
   </section>

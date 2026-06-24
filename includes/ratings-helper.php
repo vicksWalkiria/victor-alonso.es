@@ -45,6 +45,11 @@ function get_ratings() {
             'count' => 2,
             'sum' => 10,
             'average' => 5.0
+        ],
+        'generador-informe-gsc' => [
+            'count' => 3,
+            'sum' => 15,
+            'average' => 5.0
         ]
     ];
 
