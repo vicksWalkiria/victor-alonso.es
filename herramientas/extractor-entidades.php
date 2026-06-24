@@ -286,6 +286,25 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 </div>
             </div>
 
+            <!-- Guardar informe por email -->
+            <div id="entities-email-card" style="display: none; background: #0b101c; border: 1px solid rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 1.25rem; margin-bottom: 1.5rem; text-align: left;">
+              <h4 style="color: #fff; font-size: 1.05rem; margin: 0 0 0.25rem 0; font-weight: 700;">Recibir informe semántico en tu email</h4>
+              <p style="margin: 0 0 1rem 0; font-size: 0.82rem; color: #cbd5e1;">
+                Te enviaremos el documento PDF con el análisis de brecha semántica y la lista de entidades clave de tu competidor de forma gratuita.
+              </p>
+              
+              <form id="entities-email-form" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0;">
+                <input type="email" name="email" id="entities-email-input" placeholder="tu@email.com" required style="flex: 1; min-width: 250px; padding: 0.65rem 1rem; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; font-size: 0.9rem; color: #fff; background: #060911;" class="tool-form__input">
+                <button type="submit" id="btn-entities-send-email" class="btn btn--primary" style="background: var(--orange); border: none; padding: 0.65rem 1.25rem; font-weight: 600; font-size: 0.9rem; margin: 0; min-width: 150px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                  Enviar informe
+                </button>
+                <button type="button" id="btn-entities-direct-download" class="btn btn--secondary" style="margin: 0; padding: 0.65rem 1.25rem; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #fff;">
+                  Descargar directo
+                </button>
+              </form>
+              <div id="entities-email-status" style="display: none; font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600;"></div>
+            </div>
+
             <!-- Pestaña 1: Grafo en Canvas -->
             <div id="tab-graph" class="tab-visual-content active">
                 <div class="card card--dark" style="padding: 1.5rem; border-radius: 1.5rem; position: relative;">
@@ -624,22 +643,56 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Configurar exportaciones
     document.getElementById('btn-export-csv').addEventListener('click', exportEntitiesToCSV);
-    document.getElementById('btn-export-pdf').addEventListener('click', exportGraphToPDF);
+    
+    // Toggle de la tarjeta de email al hacer clic en Exportar PDF
+    document.getElementById('btn-export-pdf').addEventListener('click', function() {
+        const card = document.getElementById('entities-email-card');
+        const statusMsg = document.getElementById('entities-email-status');
+        if (statusMsg) statusMsg.style.display = 'none';
+        if (card.style.display === 'none') {
+            card.style.display = 'block';
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Descarga directa desde la tarjeta de email
+    document.getElementById('btn-entities-direct-download').addEventListener('click', function() {
+        exportGraphToPDF(null);
+    });
+
+    // Envío de email desde el formulario
+    document.getElementById('entities-email-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailVal = document.getElementById('entities-email-input').value.trim();
+        if (emailVal) {
+            exportGraphToPDF(emailVal);
+        }
+    });
     
     // Configurar interacciones del canvas
     setupCanvasInteraction();
 });
 
 // Exportar Grafo de Conocimiento Semántico como PDF usando Puppeteer
-async function exportGraphToPDF() {
+async function exportGraphToPDF(email = null) {
     if (nodes.length === 0) {
         alert("Primero debes extraer entidades para generar el informe.");
         return;
     }
     
-    const btn = document.getElementById('btn-export-pdf');
+    // Si se pasa email, usamos el botón de enviar email como loader
+    const btn = email ? document.getElementById('btn-entities-send-email') : document.getElementById('btn-export-pdf');
+    const statusMsg = document.getElementById('entities-email-status');
+    if (email && statusMsg) {
+        statusMsg.style.display = 'none';
+    }
+
     const originalContent = btn.innerHTML;
-    btn.innerHTML = '<span class="loader-spinner" style="display:inline-block; margin-right:5px; border-color:#e74c3c transparent transparent transparent; width:12px; height:12px; border-width:2px;"></span> Generando PDF...';
+    btn.innerHTML = email 
+      ? '<span class="loader-spinner" style="display:inline-block; margin-right:5px; border-color:#fff transparent transparent transparent; width:12px; height:12px; border-width:2px;"></span> Enviando...'
+      : '<span class="loader-spinner" style="display:inline-block; margin-right:5px; border-color:#e74c3c transparent transparent transparent; width:12px; height:12px; border-width:2px;"></span> Generando PDF...';
     btn.disabled = true;
 
     // Crear un canvas temporal para asegurar el fondo oscuro premium en la imagen
@@ -667,6 +720,7 @@ async function exportGraphToPDF() {
     }
 
     const payload = {
+        email: email,
         url1: document.getElementById('sm-url1').value,
         url2: document.getElementById('sm-url2').value,
         entities: analysisData.entities1,
@@ -691,23 +745,54 @@ async function exportGraphToPDF() {
             if (blob.type === 'application/json') {
                 const text = await blob.text();
                 const res = JSON.parse(text);
-                alert('Error al generar PDF: ' + (res.message || 'Error desconocido'));
+                if (email) {
+                    if (res.success) {
+                        statusMsg.style.color = '#2ecc71';
+                        statusMsg.innerHTML = '🟢 ¡Informe enviado con éxito! Revisa tu bandeja de entrada.';
+                        statusMsg.style.display = 'block';
+                        document.getElementById('entities-email-input').value = '';
+                    } else {
+                        statusMsg.style.color = '#e74c3c';
+                        statusMsg.innerHTML = '⚠️ Error: ' + (res.message || 'No se pudo enviar.');
+                        statusMsg.style.display = 'block';
+                    }
+                } else {
+                    alert('Error al generar PDF: ' + (res.message || 'Error desconocido'));
+                }
             } else {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `informe-semantico-${Date.now()}.pdf`;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-                window.URL.revokeObjectURL(url);
+                if (email) {
+                    statusMsg.style.color = '#2ecc71';
+                    statusMsg.innerHTML = '🟢 ¡Informe enviado con éxito!';
+                    statusMsg.style.display = 'block';
+                } else {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `informe-semantico-${Date.now()}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    window.URL.revokeObjectURL(url);
+                }
             }
         } else {
-            alert('Error al generar PDF: el servidor devolvió un error ' + response.status);
+            if (email) {
+                statusMsg.style.color = '#e74c3c';
+                statusMsg.innerHTML = '⚠️ Error de servidor al enviar el email.';
+                statusMsg.style.display = 'block';
+            } else {
+                alert('Error al generar PDF: el servidor devolvió un error ' + response.status);
+            }
         }
     } catch (err) {
         console.error(err);
-        alert('Error de red o conexión al generar PDF.');
+        if (email) {
+            statusMsg.style.color = '#e74c3c';
+            statusMsg.innerHTML = '⚠️ Error de red o conexión al enviar el email.';
+            statusMsg.style.display = 'block';
+        } else {
+            alert('Error de red o conexión al generar PDF.');
+        }
     } finally {
         btn.innerHTML = originalContent;
         btn.disabled = false;
