@@ -173,7 +173,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
     <div class="container">
       <span class="page-hero-eyebrow">Herramientas SEO Gratuitas</span>
       <h1 id="gsc-h1">Generador de Informes PDF de Google Search Console</h1>
-      <p class="page-hero-desc">Sube el archivo ZIP completo exportado de Google Search Console y genera una auditoría en PDF maquetada profesionalmente con LaTeX, gráficas de tendencia vectoriales y listados de palabras clave oportunidad.</p>
+      <p class="page-hero-desc">Sube el archivo ZIP completo exportado de Google Search Console y te generaré una auditoría en PDF maquetada profesionalmente con LaTeX, gráficas de tendencia vectoriales y listados de palabras clave oportunidad.</p>
     </div>
   </section>
 
@@ -184,9 +184,9 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; gap: 1.25rem; align-items: flex-start; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
         <i class="fa-solid fa-shield-halved" style="color: var(--orange); font-size: 1.75rem; margin-top: 0.2rem;"></i>
         <div>
-          <h3 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">🔒 Privacidad absoluta garantizada</h3>
+          <h3 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">🔒 No me quedo con tus datos</h3>
           <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
-            No almacenamos tus datos de búsqueda ni nos quedamos con tus archivos. El ZIP subido, las tablas de datos procesadas y el documento PDF resultante **se eliminan de manera inmediata y permanente** del servidor en cuanto finaliza tu descarga. Si por algún motivo no descargas el archivo, los datos temporales se autodestruyen automáticamente pasados 60 minutos.
+            No almaceno tus datos de búsqueda ni me quedo con tus archivos. El ZIP que subas, las tablas de datos procesadas y el documento PDF resultante <strong>se eliminarán de manera inmediata y permanente</strong> del servidor en cuanto finalice tu descarga. Si por algún motivo no descargas el informe, los datos temporales se autodestruirán automáticamente pasados 60 minutos.
           </p>
         </div>
       </div>
@@ -201,7 +201,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);">
         <h2 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--black);">Sube tu exportación de GSC</h2>
         <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-bottom: 2rem;">
-          Para obtener tu informe, ve a tu panel de Google Search Console, selecciona el periodo de tiempo deseado y haz clic en el botón <strong>"Exportar"</strong> (arriba a la derecha), eligiendo la opción <strong>"Descargar archivo ZIP"</strong>. Sube ese mismo archivo aquí sin descomprimir.
+          Para que pueda generar tu informe, ve a tu panel de Google Search Console, selecciona el periodo de tiempo deseado y haz clic en el botón <strong>"Exportar"</strong> (arriba a la derecha), eligiendo la opción <strong>"Descargar archivo ZIP"</strong>. Sube ese mismo archivo aquí sin descomprimir.
         </p>
 
         <form id="gsc-upload-form" method="POST" enctype="multipart/form-data">
@@ -241,26 +241,24 @@ require __DIR__ . '/../includes/breadcrumbs.php';
         <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
           <div class="card" style="padding: 1.5rem; border-radius: 8px;">
             <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><i class="fa-solid fa-chart-line" style="color: var(--orange); margin-right: 0.5rem;"></i> KPIs y Tendencias Mensuales</h3>
-            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Agrupa las métricas del periodo para calcular el CTR ponderado y la evolución mensual de clics frente a impresiones con gráficas vectoriales.</p>
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Agrupo las métricas del periodo para calcular tu CTR ponderado y la evolución mensual de clics frente a impresiones con gráficas vectoriales.</p>
           </div>
           <div class="card" style="padding: 1.5rem; border-radius: 8px;">
             <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><i class="fa-solid fa-arrow-trend-up" style="color: var(--orange); margin-right: 0.5rem;"></i> Oportunidades en Página 2</h3>
-            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Extrae las consultas con alto volumen de impresiones situadas entre los puestos 11 y 20, listas para subir a primera página con pequeños cambios On-Page.</p>
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Extraigo las consultas con alto volumen de impresiones situadas entre los puestos 11 y 20, listas para subir a primera página con pequeños cambios On-Page.</p>
           </div>
           <div class="card" style="padding: 1.5rem; border-radius: 8px;">
             <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><i class="fa-solid fa-mobile-screen" style="color: var(--orange); margin-right: 0.5rem;"></i> Distribución de Dispositivos</h3>
-            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Compara la visibilidad y tasa de clics entre ordenadores, móviles y tablets para guiar la optimización de fragmentos y el WPO móvil.</p>
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Comparo la visibilidad y tasa de clics entre ordenadores, móviles y tablets para guiar la optimización de fragmentos y el WPO móvil.</p>
           </div>
         </div>
       </div>
 
-      <!-- Enlace de contacto lateral/inferior contextual -->
-      <div style="margin-top: 4rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
-        <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
-          <i class="fa-solid fa-circle-question" style="color: var(--orange);"></i> ¿Necesitas ayuda para interpretar o implementar estas mejoras?
-        </h3>
-        <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
-          Si el informe revela problemas de indexación o muchas oportunidades estancadas en página 2, puedo ayudarte. Como consultor especializado en <a href="/servicios/seo-tecnico/">SEO técnico</a> y <a href="/">posicionamiento web en Albacete</a>, diseño y ejecuto estrategias a medida para impulsar tus resultados. Ponte en contacto para una <a href="/servicios/auditoria-seo/">auditoría SEO</a> completa.
+      <!-- Bloque de Conversión / CTA de rigor -->
+      <div style="margin-top: 3.5rem; background: rgba(232, 104, 26, 0.03); border-left: 4px solid var(--orange); padding: 1.5rem 2rem; border-radius: 0 12px 12px 0;">
+        <h4 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">¿Necesitas ayuda para interpretar o implementar estas mejoras?</h4>
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
+          Si el informe revela problemas de indexación o muchas palabras clave estancadas en la página 2 de Google, te puedo ayudar a empujarlas. Como <a href="/">consultor SEO en Albacete</a> con enfoque técnico, diseño y ejecuto estrategias de <a href="/servicios/seo-tecnico/">SEO técnico</a> y auditorías a medida para que consigas más negocio con tu tráfico orgánico. Escríbeme y lo valoramos juntos.
         </p>
       </div>
 
