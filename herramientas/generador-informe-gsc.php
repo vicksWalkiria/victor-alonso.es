@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
     
     // Retornar éxito con el hash de descarga
-    echo json_encode(['success' => true, 'download_url' => "/herramientas/generador-informe-gsc/?download=$hash"]);
+    echo json_encode(['success' => true, 'download_url' => "?download=$hash"]);
     exit;
 }
 
