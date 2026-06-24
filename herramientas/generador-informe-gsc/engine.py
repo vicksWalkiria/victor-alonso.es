@@ -506,7 +506,7 @@ class GSCReportGenerator:
     \end{tcolorbox}
     
     \vfill
-    \textcolor{branddark}{\small Este informe contiene información confidencial procesada de manera segura. Las recomendaciones vertidas en él se basan en el análisis cuantitativo de los datos de tráfico de búsqueda de Google y están orientadas a optimizar la visibilidad orgánica On-Page y la indexación técnica.}
+    \textcolor{branddark}{\small He preparado este informe con información confidencial de tu Search Console. Las recomendaciones se basan en mi análisis cuantitativo de tus datos de tráfico en Google y están orientadas a optimizar tu visibilidad orgánica On-Page y tu indexación técnica.}
     
     \vspace*{1cm}
 \end{center}
@@ -514,7 +514,7 @@ class GSCReportGenerator:
 
 % --- RESUMEN EJECUTIVO ---
 \section{Resumen Ejecutivo (KPIs Globales)}
-El análisis de rendimiento orgánico refleja el estado de indexación y clicks en las páginas de búsqueda de Google. A continuación, se muestran los principales indicadores clave de rendimiento (KPIs) del periodo analizado:
+Mi análisis de rendimiento orgánico refleja el estado de indexación y clics en las páginas de búsqueda de Google. A continuación, te presento los principales indicadores clave de rendimiento (KPIs) del periodo analizado:
 
 \vspace{0.4cm}
 \begin{center}
@@ -544,7 +544,7 @@ El análisis de rendimiento orgánico refleja el estado de indexación y clicks 
 
 \vspace{0.5cm}
 \subsection{Distribución por Dispositivo}
-El rendimiento por dispositivo revela la experiencia de búsqueda predominante de tu audiencia. Los datos móviles suelen tener un CTR distinto debido a la disposición de la pantalla en dispositivos reducidos.
+El rendimiento por dispositivo te revela la experiencia de búsqueda predominante de tu audiencia. Comparo estos datos ya que el CTR móvil suele variar considerablemente por la disposición de las pantallas.
 
 \vspace{0.2cm}
 \begin{center}
@@ -564,7 +564,7 @@ El rendimiento por dispositivo revela la experiencia de búsqueda predominante d
 
 % --- EVOLUCIÓN TEMPORAL ---
 \section{Evolución de Clics e Impresiones}
-La gráfica a continuación muestra la tendencia mensual agregada de los clics recibidos desde el buscador. Permite identificar de manera visual si la estrategia actual está ganando tracción en volumen total de tráfico.
+En esta gráfica te muestro la tendencia mensual agregada de los clics recibidos desde el buscador Google. Te servirá para identificar de manera visual si tu estrategia está ganando tracción y visibilidad.
 
 \vspace{0.8cm}
 \begin{center}
@@ -607,7 +607,7 @@ La gráfica a continuación muestra la tendencia mensual agregada de los clics r
 * \textbf{Nota de tendencia:} La línea continua naranja representa los clics de tráfico real, mientras que la línea discontinua oscura muestra la visibilidad total (impresiones). Un aumento de impresiones no correspondido por clics suele indicar la necesidad de optimizar los fragmentos SERP (títulos y descripciones).
 
 \section{Páginas con Mayor Rendimiento}
-Estas son las 10 landing pages de tu sitio que concentran la mayor cantidad de clics directos del buscador Google. Constituyen el núcleo de autoridad y atracción de leads de la web.
+He identificado las 10 páginas de tu sitio que concentran más clics directos en Google. Considero que constituyen el núcleo de autoridad y tu principal fuente de atracción de negocio.
 
 \vspace{0.3cm}
 \begin{center}
@@ -627,7 +627,7 @@ Estas son las 10 landing pages de tu sitio que concentran la mayor cantidad de c
 
 % --- OPORTUNIDADES ---
 \section{Palabras Clave de Alta Oportunidad (Limbo de Página 2)}
-Estas consultas se encuentran actualmente posicionadas **entre la posición 11 y 20** (Página 2 de Google). Tienen un volumen de impresiones representativo, lo que significa que si logramos empujarlas a la primera página mediante optimizaciones On-Page y enlazado interno, su CTR y clics aumentarán de forma exponencial.
+He seleccionado estas consultas porque están posicionadas entre la posición 11 y la 20 (página 2 de Google). Tienen un volumen de impresiones muy interesante, lo que significa que si las empujas a primera página con optimizaciones On-Page y enlazado interno, tu CTR y clics crecerán exponencialmente.
 
 \vspace{0.4cm}
 \begin{center}
@@ -647,21 +647,23 @@ Estas consultas se encuentran actualmente posicionadas **entre la posición 11 y
 \end{center}
 
 \section{Estrategia de Optimización Recomendada}
-Basándonos en el análisis cuantitativo de tus datos de Search Console, te sugerimos aplicar las siguientes acciones de optimización técnica:
+Basándome en mi análisis cuantitativo de tus datos de Search Console, te sugiero aplicar estas acciones de optimización:
 
 \begin{enumerate}
-    \item \textbf{Ataque Directo a Palabras Clave Oportunidad:} 
-          Selecciona las 3 palabras clave del bloque anterior que tengan mayor relevancia de negocio. Busca artículos o páginas de servicios en tu web donde se mencionen estos términos y enriquécelos añadiendo encabezados (H2/H3) semánticos que resuelvan la intención de búsqueda exacta.
-    \item \textbf{Mejora de la Fasa de Clics (CTR) en Páginas Top:}
-          Analiza aquellas páginas de alto tráfico que tengan un CTR inferior a la media de tu sector. Redacta meta-descripciones más sugerentes que incluyan una llamada a la acción clara y un gancho (ej. «¡Solicita diagnóstico gratuito!») para incentivar el clic frente a la competencia.
-    \item \textbf{Enlazado Interno desde Herramientas:}
-          Distribuye la autoridad interna de tus herramientas de alto tráfico hacia la página de inicio u otras landing pages críticas. Evita anchors abusivos de coincidencia exacta y varía los textos de forma natural (ej. «consultor SEO técnico», «auditoría web», «Víctor Alonso SEO»).
+    \item \textbf{Ataque Directo a Palabras Oportunidad:} 
+          Te sugiero seleccionar las 3 palabras clave del bloque anterior que tengan mayor relevancia para tu negocio. Busca páginas o artículos donde las menciones y enriquécelos con encabezados H2 o H3 que resuelvan la intención de búsqueda exacta.
+    \item \textbf{Mejora del CTR en tus Páginas Top:}
+          Revisa las páginas de tu web con más tráfico que tengan un CTR bajo. Te recomiendo redactar descripciones meta más atractivas, incluyendo una llamada a la acción clara para captar más clics frente a la competencia.
+    \item \textbf{Optimización del Enlazado Interno:}
+          Te aconsejo distribuir la autoridad interna de tus herramientas con más visitas hacia tu página de inicio u otras páginas críticas. Evita anchors de coincidencia exacta repetitivos y varía los textos de forma natural (ej. «consultor SEO técnico», «auditoría web», «Víctor Alonso SEO»).
+    \item \textbf{Control de Canibalizaciones (Búsqueda Cruzada):}
+          Dado que la exportación estándar en ZIP de Search Console no incluye la relación de URLs por palabra clave, te sugiero entrar a tu panel de GSC, filtrar por tus consultas principales e ir a la pestaña «Páginas». Si ves que más de una URL está recibiendo clics o impresiones para la misma consulta, estarás ante una canibalización. Te recomiendo resolverla unificando contenidos o consolidando el enlazado interno.
     \end{enumerate}
 
 \vspace{1.5cm}
 \begin{tcolorbox}[colback=lightorange, colframe=brandorange, arc=3mm, title=\textbf{¿Necesitas ayuda para ejecutar estas mejoras?}]
 \color{branddark}
-La interpretación de datos de Search Console es solo el primer paso. Si no dispones de tiempo o conocimientos técnicos para implementar estas recomendaciones de arquitectura web, WPO o estructuración de datos, puedes contar con mis servicios. 
+La interpretación de datos de Search Console es solo el primer paso. Si no dispones de tiempo o conocimientos técnicos para implementar estas recomendaciones de arquitectura, WPO o enlazado interno, estaré encantado de ayudarte. Puedes contar con mis servicios de consultoría.
 
 Escríbeme sin compromiso a \href{mailto:soy@victor-alonso.es}{soy@victor-alonso.es} o a través de \href{https://www.victor-alonso.es/contacto/}{victor-alonso.es/contacto/} para coordinar una consultoría técnica.
 \end{tcolorbox}
