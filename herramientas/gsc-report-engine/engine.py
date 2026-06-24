@@ -442,6 +442,37 @@ class GSCReportGenerator:
                 return url[:47] + "..."
             return url
 
+        # Obtener palabras oportunidad top para el texto
+        opp_examples = [q['query'] for q in top_opps[:3]]
+        opp_examples_str = ", ".join([f"«\\textit{{{tex_esc(q)}}}»" for q in opp_examples]) if opp_examples else ""
+        
+        # Obtener consultas top para ejemplos de anchor text
+        anchor_examples = [q['query'] for q in top_queries[:3]]
+        anchor_examples_str = ", ".join([f"«\\textit{{{tex_esc(q)}}}»" for q in anchor_examples]) if anchor_examples else ""
+            
+        # Obtener páginas top con CTR menor que avg_ctr si existen, o simplemente las primeras
+        low_ctr_pages = [p for p in top_pages if p['ctr'] < self.avg_ctr]
+        page_examples = [p['page'] for p in (low_ctr_pages if low_ctr_pages else top_pages)[:2]]
+        page_examples_str = ", ".join([f"«\\texttt{{{tex_esc(shorten_url(p))}}}»" for p in page_examples]) if page_examples else ""
+
+        opp_text = ""
+        if opp_examples_str:
+            opp_text = f"Especialmente para términos como {opp_examples_str}, localiza la URL que Google está posicionando para esa búsqueda y enriquécela con variaciones de estas palabras clave en encabezados H2/H3 y en los primeros párrafos."
+        else:
+            opp_text = "Busca las páginas web asociadas a estas búsquedas en tu Search Console, y enriquécelas añadiendo estos términos de forma natural en encabezados H2/H3 y en el cuerpo del texto."
+
+        page_text = ""
+        if page_examples_str:
+            page_text = f"Páginas críticas como {page_examples_str} concentran gran parte de tu tráfico orgánico actual. Revisa si sus etiquetas Title y descripciones Meta son atractivas en las SERPs, ya que pequeñas mejoras en su copy aumentarán significativamente tus visitas sin necesidad de mejorar su posición actual."
+        else:
+            page_text = "Revisa las páginas de tu web con más tráfico que tengan un CTR bajo. Te recomiendo redactar descripciones meta más atractivas, incluyendo una llamada a la acción clara para captar más clics frente a la competencia."
+
+        anchor_text = ""
+        if anchor_examples_str:
+            anchor_text = f"Por ejemplo, puedes enlazar desde tus artículos o secciones secundarias de mayor autoridad hacia tus landing pages usando variaciones naturales basadas en tus términos top actuales: {anchor_examples_str}."
+        else:
+            anchor_text = "Evita textos de enlace (anchors) repetitivos de coincidencia exacta y varía la redacción de forma natural para ayudar a los rastreadores a entender mejor tu jerarquía."
+
         # Definir estructura LaTeX
         latex_code = r"""\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -651,12 +682,12 @@ Basándome en mi análisis cuantitativo de tus datos de Search Console, te sugie
 
 \begin{enumerate}
     \item \textbf{Ataque Directo a Palabras Oportunidad:} 
-          Te sugiero seleccionar las 3 palabras clave del bloque anterior que tengan mayor relevancia para tu negocio. Busca páginas o artículos donde las menciones y enriquécelos con encabezados H2 o H3 que resuelvan la intención de búsqueda exacta.
+          Identifica las palabras clave en el limbo de página 2 con mayor potencial de conversión. """ + opp_text + r"""
     \item \textbf{Mejora del CTR en tus Páginas Top:}
-          Revisa las páginas de tu web con más tráfico que tengan un CTR bajo. Te recomiendo redactar descripciones meta más atractivas, incluyendo una llamada a la acción clara para captar más clics frente a la competencia.
+          """ + page_text + r"""
     \item \textbf{Optimización del Enlazado Interno:}
-          Te aconsejo distribuir la autoridad interna de tus herramientas con más visitas hacia tu página de inicio u otras páginas críticas. Evita anchors de coincidencia exacta repetitivos y varía los textos de forma natural (ej. «consultor SEO técnico», «auditoría web», «Víctor Alonso SEO»).
-    \end{enumerate}
+          Distribuye la autoridad interna desde las páginas más fuertes hacia aquellas que deseas impulsar. """ + anchor_text + r"""
+\end{enumerate}
 
 \vspace{1.5cm}
 \begin{tcolorbox}[colback=lightorange, colframe=brandorange, arc=3mm, title=\textbf{¿Necesitas ayuda para ejecutar estas mejoras?}]
