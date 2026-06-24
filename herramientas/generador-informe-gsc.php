@@ -168,6 +168,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         file_put_contents($counter_file, 143);
     }
     
+    // Procesar email de suscripción si fue suministrado (Mailrelay)
+    $user_email = isset($_POST['user_email']) ? trim($_POST['user_email']) : '';
+    $user_email = filter_var($user_email, FILTER_VALIDATE_EMAIL);
+    if ($user_email) {
+        // --- Conexión con Mailrelay API ---
+        $mailrelay_key = $_ENV['MAILRELAY_API_KEY'] ?? getenv('MAILRELAY_API_KEY') ?? '';
+        if (!empty($mailrelay_key)) {
+            $url = 'https://walkiriaapps.ipzmarketing.com/api/v1/subscribers';
+            $data = [
+                'email' => $user_email,
+                'status' => 'active',
+                'group_ids' => [7]
+            ];
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'X-AUTH-TOKEN: ' . $mailrelay_key
+            ]);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+            curl_exec($ch);
+            curl_close($ch);
+        }
+    }
+    
     // Retornar éxito con el hash de descarga y el contador actualizado
     echo json_encode(['success' => true, 'download_url' => "?download=$hash", 'new_count' => number_format($new_count, 0, ',', '.')]);
     exit;
@@ -298,6 +325,17 @@ require __DIR__ . '/../includes/breadcrumbs.php';
               <span id="selected-file-name" style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">archivo.zip</span>
               <span style="font-size: 0.9rem; color: var(--muted);">Listo para procesar. Haz clic para cambiarlo.</span>
             </div>
+          </div>
+
+          <!-- Campo de Email para Suscripción al Boletín (Opcional) -->
+          <div style="margin-top: 1.75rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+            <label for="user_email" style="display: block; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; font-size: 0.95rem;">
+              📧 Suscríbete a mi boletín de consejos SEO (Opcional)
+            </label>
+            <input type="email" id="user_email" name="user_email" placeholder="ejemplo@tuweb.com" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid rgba(34, 49, 63, 0.2); border-radius: 8px; font-size: 0.95rem; background: #fff; color: var(--black); transition: border-color 0.2s;" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(34,49,63,0.2)'">
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: var(--muted); line-height: 1.4;">
+              De forma opcional, únete gratis a mi newsletter donde comparto periódicamente tips de SEO técnico, WPO y posicionamiento web. No te enviaré spam y puedes darte de baja cuando quieras.
+            </p>
           </div>
 
           <div style="margin-top: 2rem; display: flex; justify-content: center;">
@@ -436,6 +474,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function resetForm() {
         fileInput.value = '';
+        const emailInput = document.getElementById('user_email');
+        if (emailInput) emailInput.value = '';
         dropzonePrompt.style.display = 'block';
         fileInfo.style.display = 'none';
         btnSubmit.disabled = true;
@@ -467,6 +507,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData();
         formData.append('gsc_zip', file);
         formData.append('action', 'process');
+
+        const emailInput = document.getElementById('user_email');
+        if (emailInput && emailInput.value.trim() !== '') {
+            formData.append('user_email', emailInput.value.trim());
+        }
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', window.location.pathname, true);
