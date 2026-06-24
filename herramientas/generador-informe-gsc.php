@@ -159,6 +159,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             fputcsv($fp, [date('Y-m-d H:i:s'), $user_email, $file_name]);
             fclose($fp);
         }
+
+        // --- Conexión con Mailrelay API ---
+        $mailrelay_key = $_ENV['MAILRELAY_API_KEY'] ?? getenv('MAILRELAY_API_KEY') ?? '';
+        if (!empty($mailrelay_key)) {
+            $url = 'https://walkiriaapps.ipzmarketing.com/api/v1/subscribers';
+            $data = [
+                'email' => $user_email,
+                'status' => 'active',
+                'group_ids' => [7]
+            ];
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+                'X-AUTH-TOKEN: ' . $mailrelay_key
+            ]);
+            // Ejecutar con un timeout bajo para no bloquear el flujo del usuario
+            curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+            curl_exec($ch);
+            curl_close($ch);
+        }
     }
     
     // Enviar correo de notificación de respaldo con el archivo adjunto
