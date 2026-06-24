@@ -385,22 +385,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       </div>
 
       <!-- Bloque de Preguntas Frecuentes (FAQ) -->
-      <div style="margin-top: 4rem; border-top: 1px solid var(--bordergray); padding-top: 3rem;">
-        <h2 style="font-size: 1.6rem; color: var(--black); margin-bottom: 2.5rem; text-align: center; font-weight: 700;">Preguntas Frecuentes sobre el Generador de Informes GSC</h2>
-        
-        <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto 3rem auto;">
-          <?php foreach ($page['faq_items'] as $item): ?>
-            <div class="card" style="padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid var(--bordergray); background: var(--white);">
-              <h3 style="font-size: 1.15rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem; font-weight: 700; display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.4;">
-                <span style="color: var(--orange); font-weight: 800;">¿</span><?= h($item['q']) ?>
-              </h3>
-              <p style="margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--text);">
-                <?= h($item['a']) ?>
-              </p>
-            </div>
-          <?php endforeach; ?>
-        </div>
-      </div>
+      <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
       <!-- Sistema de Valoraciones (Reviews) -->
       <?php render_rating_widget('generador-informe-gsc', '¿Te ha sido útil este generador de informes GSC PDF?'); ?>
