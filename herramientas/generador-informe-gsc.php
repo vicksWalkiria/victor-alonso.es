@@ -244,13 +244,27 @@ $page = page_config([
     'description'  => 'Sube el ZIP exportado de Google Search Console y obtén un informe de rendimiento y auditoría SEO en PDF maquetado profesionalmente con LaTeX y gráficas vectoriales.',
     'canonical'    => '/herramientas/generador-informe-gsc/',
     'body_class'   => 'page-tool-gsc',
-    'schema_types' => ['WebApplication'],
+    'schema_types' => ['WebApplication', 'FAQPage'],
     'rating_id'    => 'generador-informe-gsc',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Generador GSC PDF', 'url' => ''],
     ],
+    'faq_items'    => [
+        [
+            'q' => '¿Qué tipo de análisis realiza este generador de informes?',
+            'a' => 'Esta herramienta ofrece una auditoría básica del rendimiento orgánico de tu sitio a partir del archivo ZIP exportado de Google Search Console. Analiza métricas globales, CTR promedio, tendencias de clics frente a impresiones y palabras clave oportunidad posicionadas en la página 2 de Google.'
+        ],
+        [
+            'q' => '¿Este informe sustituye a una auditoría SEO profesional?',
+            'a' => 'No. Este informe automatizado sirve como un diagnóstico inicial y orientación rápida del estado de tu web. Una auditoría SEO profesional realizada por un consultor experto implica un análisis exhaustivo de intenciones de búsqueda, arquitectura web detallada, enlazado interno estratégico, rastreabilidad, optimización de velocidad de carga (WPO) y un plan de acción a medida adaptado al negocio.'
+        ],
+        [
+            'q' => '¿Es seguro subir mis datos de Search Console aquí?',
+            'a' => 'Totalmente. El archivo ZIP y el PDF resultante se procesan de forma efímera. Los archivos se eliminan de forma permanente e inmediata en cuanto finaliza tu descarga, y se destruyen por completo en 60 minutos si no se descargan, garantizando la privacidad de tus datos.'
+        ]
+    ]
 ]);
 
 require __DIR__ . '/../includes/header.php';
@@ -367,6 +381,24 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--lg" style="flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; min-width: 220px; font-weight: 700;">
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 0.2rem;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Hablar por WhatsApp
           </a>
+        </div>
+      </div>
+
+      <!-- Bloque de Preguntas Frecuentes (FAQ) -->
+      <div style="margin-top: 4rem; border-top: 1px solid var(--bordergray); padding-top: 3rem;">
+        <h2 style="font-size: 1.6rem; color: var(--black); margin-bottom: 2.5rem; text-align: center; font-weight: 700;">Preguntas Frecuentes sobre el Generador de Informes GSC</h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; margin: 0 auto 3rem auto;">
+          <?php foreach ($page['faq_items'] as $item): ?>
+            <div class="card" style="padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); border: 1px solid var(--bordergray); background: var(--white);">
+              <h3 style="font-size: 1.15rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem; font-weight: 700; display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.4;">
+                <span style="color: var(--orange); font-weight: 800;">¿</span><?= h($item['q']) ?>
+              </h3>
+              <p style="margin: 0; font-size: 0.95rem; line-height: 1.65; color: var(--text);">
+                <?= h($item['a']) ?>
+              </p>
+            </div>
+          <?php endforeach; ?>
         </div>
       </div>
 
