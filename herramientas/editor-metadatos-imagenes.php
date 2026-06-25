@@ -79,7 +79,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       
       <!-- Cartel de Privacidad TOP -->
       <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; gap: 1.25rem; align-items: flex-start; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.02);">
-        <i class="fa-solid fa-shield-check" style="color: #10b981; font-size: 1.75rem; margin-top: 0.2rem;"></i>
+        🛡️
         <div>
           <h3 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">✨ 100% Privado: Todo ocurre en tu navegador</h3>
           <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
@@ -92,10 +92,10 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       <div class="tabs-container" style="margin-bottom: 2rem;">
         <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--bordergray); margin-bottom: 1.5rem;">
           <button id="tab-write-btn" class="tab-btn active" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 700; color: var(--orange); border-bottom: 3px solid var(--orange); cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
-            <i class="fa-solid fa-pen-to-square" style="margin-right: 0.5rem;"></i> Añadir / Editar EXIF
+            📝 Añadir / Editar EXIF
           </button>
           <button id="tab-read-btn" class="tab-btn" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
-            <i class="fa-solid fa-magnifying-glass" style="margin-right: 0.5rem;"></i> Leer Metadatos
+            🔍 Leer Metadatos
           </button>
           
         </div>
@@ -116,7 +116,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
                 </div>
 
                 <div id="prompt-write">
-                  <i class="fa-solid fa-image" style="font-size: 3rem; color: var(--orange); margin-bottom: 1.25rem; display: block;"></i>
+                  <span style="font-size: 3rem; margin-bottom: 1.25rem; display: block;">🖼️</span>
                   <span style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">Arrastra tu imagen JPG aquí</span>
                   <span style="font-size: 0.9rem; color: var(--muted);">o haz clic para explorar</span>
                 </div>
@@ -155,7 +155,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
                 </div>
 
                 <button id="btn-generate" class="btn btn--primary btn--lg" style="width: 100%; justify-content: center;" disabled>
-                  <i class="fa-solid fa-download" style="margin-right: 0.5rem;"></i> Guardar y Descargar
+                  💾 Guardar y Descargar
                 </button>
 
               </div>
@@ -176,7 +176,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
               <input type="file" id="gps-img-read" accept="image/jpeg, image/jpg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
               
               <div id="prompt-read">
-                <i class="fa-solid fa-magnifying-glass-location" style="font-size: 3rem; color: var(--orange); margin-bottom: 1.25rem; display: block;"></i>
+                <span style="font-size: 3rem; margin-bottom: 1.25rem; display: block;">🗺️</span>
                 <span style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">Arrastra aquí tu imagen JPG para leerla</span>
               </div>
             </div>
@@ -217,7 +217,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
           <div>
             <div style="width: 48px; height: 48px; background: rgba(232, 104, 26, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <i class="fa-solid fa-store" style="color: var(--orange); font-size: 1.5rem;"></i>
+              <span style="font-size: 1.5rem;">🏪</span>
             </div>
             <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">SEO Local Extremo</h3>
             <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
@@ -227,7 +227,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           
           <div>
             <div style="width: 48px; height: 48px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <i class="fa-solid fa-copyright" style="color: #10b981; font-size: 1.5rem;"></i>
+              <span style="font-size: 1.5rem;">©️</span>
             </div>
             <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Protección de Autoría</h3>
             <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
@@ -237,7 +237,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           
           <div>
             <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <i class="fa-solid fa-camera-rotate" style="color: #3b82f6; font-size: 1.5rem;"></i>
+              <span style="font-size: 1.5rem;">📸</span>
             </div>
             <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Corrección de Cámara</h3>
             <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
