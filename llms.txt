@@ -2,90 +2,190 @@
 
 > Víctor Alonso es ingeniero informático y consultor SEO técnico en Albacete (España). Se especializa en la intersección entre SEO técnico y desarrollo web: diagnostica problemas técnicos directamente en el código, en la arquitectura y en el contenido, y los resuelve sin intermediarios. Trabaja desde Albacete con clientes en toda España, con enfoque en diagnóstico real, estrategia ejecutable e implementación directa.
 
-Perfil técnico: Ingeniero informático, consultor SEO, desarrollador WordPress/PHP, analítica web y rendimiento (WPO). Dominio de Core Web Vitals, rastreo, indexación, datos estructurados, migraciones, JS SEO, WooCommerce y herramientas de desarrollo SEO propias.
-
-Contacto: soy@victor-alonso.es · Tel: +34 675 946 486 · WhatsApp: https://wa.me/+34675946486
-Dirección: Calle Iris 25, 02005 Albacete, Castilla-La Mancha, España
-Horario: Lunes a Viernes 09:30–19:30 · Sábados 10:00–14:00
-
-Redes profesionales:
-- LinkedIn: https://www.linkedin.com/in/vialonso/
-- GitHub: https://github.com/vicksWalkiria
-- X (Twitter): https://x.com/vicks630
-- Walkiria Apps: https://www.walkiriaapps.com
-
-## Servicios SEO y Posicionamiento
-
-- [Inicio · Consultor SEO en Albacete](https://www.victor-alonso.es/): Servicio principal de consultoría SEO para empresas y negocios locales en Albacete. Diagnóstico técnico, estrategia y implementación directa. Sin intermediarios ni promesas infladas.
-- [SEO en Albacete](https://www.victor-alonso.es/servicios/seo-albacete/): SEO local para negocios de Albacete. Incluye Google Business Profile, arquitectura web, contenido local, enlazado interno y medición real de resultados.
-- [SEO para España](https://www.victor-alonso.es/servicios/seo-espana/): Estrategia SEO nacional con enfoque técnico: clusters de contenido, arquitectura de información, análisis de intención de búsqueda y monitorización en Search Console y Analytics.
-- [Auditoría SEO](https://www.victor-alonso.es/servicios/auditoria-seo/): Auditoría SEO completa (técnica + contenidos): estado de indexación, arquitectura web, WPO, datos estructurados y canonicals. Entregable priorizado por impacto, no un informe de 100 páginas que nadie implementa.
-- [SEO Técnico](https://www.victor-alonso.es/servicios/seo-tecnico/): Análisis y resolución de problemas de rastreo, indexación, renderizado JavaScript, Core Web Vitals (LCP, CLS, INP), canonicals, sitemaps, hreflang, migraciones de dominio y JS SEO.
-
-## Servicios WordPress y Desarrollo
-
-- [Mantenimiento WordPress](https://www.victor-alonso.es/servicios/mantenimiento-wordpress/): Mantenimiento técnico continuo: actualizaciones de WordPress, temas y plugins; backups automatizados; seguridad activa; limpieza de malware; optimización de rendimiento (WPO) y soporte técnico.
-- [Desarrollo WordPress](https://www.victor-alonso.es/servicios/desarrollo-wordpress/): Desarrollo de temas WordPress a medida (sin plantillas genéricas), Custom Post Types (CPT), campos personalizados (ACF), rendimiento desde el código base y SEO técnico integrado desde el inicio.
-- [Plugins WordPress a medida](https://www.victor-alonso.es/servicios/plugins-wordpress/): Desarrollo de plugins WordPress personalizados: shortcodes, formularios avanzados, integraciones con APIs externas, extensiones de WooCommerce, automatizaciones y paneles de administración a medida. Código seguro, documentado y mantenible.
-
-## Herramientas SEO Técnicas Gratuitas
-
-Herramientas propias desarrolladas a medida, sin registro, de uso gratuito y procesamiento privado.
-
-- [Herramientas SEO (índice completo)](https://www.victor-alonso.es/herramientas/): Listado de todas las herramientas disponibles.
-
-- [Analizador SEO de URLs (TTFB y redirecciones)](https://www.victor-alonso.es/herramientas/analizador-seo/): Auditoría técnica express de cualquier URL. Analiza: código de respuesta HTTP, tiempo de carga del servidor (TTFB en ms), etiquetas Title/Meta Description/H1, canonical, directivas robots (noindex/nofollow) y cabeceras de seguridad OWASP. Sin instalación, en tiempo real.
-
-- [Analizador de Logs Apache y Nginx](https://www.victor-alonso.es/herramientas/analizador-logs/): Herramienta de auditoría del presupuesto de rastreo (Crawl Budget). Sube o pega tu fichero de logs de acceso del servidor y visualiza: rastreo de Googlebot y otros bots, errores 404 recurrentes para 301, IPs sospechosas, scrapers y picos de tráfico anómalos. Procesamiento 100% privado en memoria (RGPD-compliant).
-
-- [Generador de Schema LocalBusiness JSON-LD](https://www.victor-alonso.es/herramientas/generador-schema-local/): Genera el marcado de datos estructurados Schema.org en JSON-LD para negocios locales según las directrices de Google. Tipos: ProfessionalService, Store, Restaurant y más. Incluye dirección estandarizada, geolocalización, redes sociales y logo. Código copiable al instante con validación incorporada.
-
-- [Calculadora de Pérdidas WPO](https://www.victor-alonso.es/herramientas/calculadora-wpo/): Simulador interactivo que conecta el rendimiento técnico con el impacto económico. Analiza la web en vivo con la API de Google PageSpeed (Lighthouse) y calcula el dinero perdido por tiempos de carga lentos (LCP elevado) según estudios oficiales de tasa de conversión. Adaptable a tu volumen de visitas y ticket medio.
-
-- [Extractor y Auditor de Sitemaps XML](https://www.victor-alonso.es/herramientas/extractor-sitemap/): Extrae recursivamente todas las URLs de cualquier sitemap XML o índice de sitemaps anidados. Audita longitudes de URL críticas para móvil (>75 chars), extrae imágenes, prioridades y fechas lastmod. Exportación a CSV, JSON y TXT.
-
-- [Extractor de Entidades y Grafos Semánticos](https://www.victor-alonso.es/herramientas/extractor-entidades/): Herramienta de minería semántica NLP. Extrae entidades nombradas (Personas, Ubicaciones, Marcas), mapea triples semánticos (Sujeto-Verbo-Objeto), genera un grafo interactivo en HTML5 Canvas y detecta brechas de cobertura semántica (Semantic Gap) frente a competidores.
-
-- [Auditor de Cookies y Privacidad](https://www.victor-alonso.es/herramientas/auditor-cookies/): Detecta cookies de marketing y analítica cargadas antes del consentimiento del usuario, scripts de terceros sin bloquear, ausencia de enlaces legales obligatorios (Aviso Legal, Política de Cookies, Privacidad). Calificación rápida (Apto / No Apto) conforme a RGPD y LOPDGDD.
-
-- [Tester de .htaccess y Validador de Reglas Apache](https://www.victor-alonso.es/herramientas/tester-htaccess/): Simulador mod_rewrite interactivo y visual. Prueba reglas de redirección 301/302, condiciones RewriteCond, expresiones regulares, configuraciones de HTTPS, WWW y trailing slash. Traza detallada paso a paso en español, detección de bucles de redirección infinitos. Sin llamadas externas, 100% seguro.
-
-- [Auditor de Coherencia SEO Local GMB (Extensión de Chrome)](https://www.victor-alonso.es/herramientas/auditor-seo-local-gmb/): Extensión para Google Chrome que audita en un clic la coherencia entre la ficha de Google Business Profile y la web. Verifica NAP (Nombre, Dirección, Teléfono), Schema LocalBusiness en JSON-LD y Microdatos, concordancia de servicios e información de contacto. Exporta informes a Markdown.
-
-## Casos de Estudio SEO Reales
-
-Proyectos reales anonimizados con contexto, diagnóstico y acciones concretas. Sin cifras inventadas ni resultados garantizados.
-
-- [Casos de estudio (índice)](https://www.victor-alonso.es/casos-reales/): Listado de todos los casos.
-
-  - **WordPress infectado con malware (WooCommerce)**: Detección de código malicioso en archivos PHP del tema y base de datos. El malware era silencioso y redirigía solo a usuarios procedentes de Google. Limpieza completa, hardening y recuperación de reputación en Google Safe Browsing en 48h.
-  - **Caída de tráfico tras migración de dominio**: Migración de dominio sin planificación de redirecciones. Pérdida drástica de autoridad del dominio antiguo. Diagnóstico en Ahrefs y Search Console, mapeamiento de URLs, corrección de redirects 302 a 301 y monitorización de cobertura de indexación.
-  - **Web lenta: LCP de 7 segundos en móvil (Elementor)**: Análisis de cascada de carga en restaurante con Elementor. Imagen hero de 3 MB, CSS render-blocking, 6 Google Fonts síncronas, plugins de redes sociales con scripts externos. Solución: WebP + preload LCP + CSS diferido + fuentes asíncronas. Core Web Vitals en verde.
-  - **Caída de tráfico tras broad core update de Google**: Pérdida del 30-40% del tráfico orgánico. Diagnóstico de páginas con contenido genérico y problemas de canibalización (varias páginas atacando las mismas keywords). Consolidación de páginas, reescritura por intención y mejora de enlazado interno.
-  - **Blog sin arquitectura, sin resultados**: Dos años de contenido en blog sin visibilidad de páginas de servicio. Diagnóstico: blog atacando keywords informativas mientras las páginas transaccionales eran invisibles. Solución: arquitectura pillar-cluster, enlazado interno y reescritura de páginas de servicio.
-  - **Ecommerce WooCommerce con crawl budget drenado**: Filtros de WooCommerce generando miles de URLs duplicadas indexadas por Google. Solución: análisis de parámetros de URL, bloqueo en robots.txt, canonicals en páginas de categoría y limpieza del sitemap.
-
 ## Perfil Profesional
+- **Rol:** Ingeniero informático y Consultor SEO Técnico.
+- **Especialidades:** SEO técnico, desarrollo WordPress, desarrollo PHP/Python, optimización de velocidad de carga (WPO) y analítica web.
+- **Contacto:** soy@victor-alonso.es | Tel/WhatsApp: [+34 675 946 486](https://wa.me/+34675946486)
+- **Ubicación:** Calle Iris 25, 02005 Albacete, Castilla-La Mancha, España
+- **Horario:** Lunes a Viernes 09:30–19:30, Sábados 10:00–14:00
 
-- [Sobre mí](https://www.victor-alonso.es/sobre-mi/): Ingeniero informático y consultor SEO técnico. Combina SEO con programación directa en PHP, WordPress y Python. No solo recomienda: implementa los cambios técnicos. Sin intermediarios ni cadenas de subcontratación.
-- [CV Interactivo Web](https://vickswalkiria.github.io/cv-victor/): Currículum vitae web interactivo y actualizado.
-- [CV Especialista Android (PDF)](https://vickswalkiria.github.io/cv-victor/dist/cv-victor-android-es.pdf)
-- [CV FullStack & SEO (PDF)](https://vickswalkiria.github.io/cv-victor/dist/cv-victor-fullstack-seo-es.pdf)
-- [CV Formato ATS (PDF)](https://vickswalkiria.github.io/cv-victor/dist/cv-victor-ats-es.pdf)
+---
 
-## Contacto y Solicitud de Diagnóstico
+## Canales Oficiales y Redes
+- **Sitio Web Principal:** https://www.victor-alonso.es
+- **LinkedIn:** https://www.linkedin.com/in/vialonso/
+- **GitHub:** https://github.com/vicksWalkiria
+- **Walkiria Apps:** https://www.walkiriaapps.com
+- **Currículum Vitae Web:** https://vickswalkiria.github.io/cv-victor/
 
-- [Formulario de contacto](https://www.victor-alonso.es/contacto/): Solicita diagnóstico SEO gratuito o consulta sobre servicios. Respuesta directa sin comerciales.
-- [WhatsApp directo](https://wa.me/+34675946486): Contacto inmediato por WhatsApp.
+---
 
-## Legal
+## Servicios de Consultoría SEO y Desarrollo
 
-- [Aviso Legal](https://www.victor-alonso.es/aviso-legal/)
-- [Política de Privacidad](https://www.victor-alonso.es/politica-privacidad/)
-- [Política de Cookies](https://www.victor-alonso.es/politica-cookies/)
+### 1. Posicionamiento y SEO Técnico
+- **[Inicio · Consultor SEO en Albacete](https://www.victor-alonso.es/):** Servicios directos de posicionamiento para negocios locales e interactivos.
+- **[SEO en Albacete](https://www.victor-alonso.es/servicios/seo-albacete/):** Optimización local en Google Business Profile, contenido local y mapas.
+- **[SEO para España](https://www.victor-alonso.es/servicios/seo-espana/):** Estrategia orgánica a nivel nacional, intención de búsqueda y estructuración de información.
+- **[Auditoría SEO](https://www.victor-alonso.es/servicios/auditoria-seo/):** Diagnóstico completo priorizado por impacto real de indexabilidad y contenidos.
+- **[SEO Técnico](https://www.victor-alonso.es/servicios/seo-tecnico/):** Resolución directa de problemas de rastreo, Core Web Vitals (LCP, CLS, INP) y renderizado JavaScript.
 
-## Optional
+### 2. WordPress y Desarrollo a Medida
+- **[Mantenimiento WordPress](https://www.victor-alonso.es/servicios/mantenimiento-wordpress/):** Copias de seguridad automáticas, actualizaciones, seguridad activa y soporte técnico continuo.
+- **[Desarrollo WordPress](https://www.victor-alonso.es/servicios/desarrollo-wordpress/):** Temas a medida sin maquetadores lentos, optimizados desde el código base.
+- **[Plugins WordPress a Medida](https://www.victor-alonso.es/servicios/plugins-wordpress/):** Desarrollo de extensiones funcionales, integraciones API y adaptaciones para WooCommerce.
 
-- [Walkiria Apps](https://www.walkiriaapps.com): Empresa de aplicaciones móviles y proyectos web propios de Víctor Alonso.
-- [LinkedIn](https://www.linkedin.com/in/vialonso/)
-- [GitHub (vicksWalkiria)](https://github.com/vicksWalkiria): Repositorios de proyectos propios y herramientas open source.
+---
+
+## Descubrimiento de Herramientas WebMCP para Agentes de IA
+
+Todas las herramientas son gratuitas, no requieren registro y procesan la información de manera privada en memoria (cumpliendo estrictamente con RGPD/LSSI). Los agentes de IA pueden interactuar con ellas directamente a través de sus formularios anotados con WebMCP en el DOM.
+
+### 1. Analizador SEO de URLs
+* **URL:** https://www.victor-alonso.es/herramientas/analizador-seo/
+* **WebMCP `toolname`:** `seoPageAnalyzer`
+* **Formulario ID:** `#seo-analyzer-form`
+* **Definición:** Audita cabeceras de respuesta HTTP, tiempos TTFB en milisegundos, metaetiquetas principales (Title, Description, H1), directivas robots (index/noindex) y cabeceras de seguridad web.
+* **Parámetros del formulario:**
+  - `url` (type: `url`, required): La dirección web completa a auditar (ej. `https://tuweb.com/pagina`).
+* **Auto-submit:** `false`
+
+### 2. Analizador de Logs Apache y Nginx
+* **URL:** https://www.victor-alonso.es/herramientas/analizador-logs/
+* **WebMCP `toolname`:** `apacheNginxLogAnalyzer`
+* **Formulario ID:** `#logsForm`
+* **Definición:** Extrae estadísticas avanzadas de archivos de registro (Common o Combined) de servidores web Apache o Nginx para estimar el crawl budget de Googlebot y detectar errores 404 recurrentes o IPs hostiles.
+* **Parámetros del formulario:**
+  - `log_file` (type: `file`, accept: `.log,.txt`): Fichero de log del servidor.
+  - `log_text` (type: `textarea`): Líneas de log copiadas directamente en formato texto plano.
+* **Auto-submit:** `false`
+
+### 3. Generador de Marcado Schema LocalBusiness
+* **URL:** https://www.victor-alonso.es/herramientas/generador-schema-local/
+* **WebMCP `toolname`:** `localBusinessSchemaGenerator`
+* **Formulario ID:** `#schema-local-form`
+* **Definición:** Generador de datos estructurados JSON-LD validados para negocios locales.
+* **Parámetros del formulario:**
+  - `sc-type` (type: `select`): Tipo específico de Schema (ej. `ProfessionalService`, `Store`, `Restaurant`, `LocalBusiness`).
+  - `sc-name` (type: `text`): Nombre del negocio.
+  - `sc-url` (type: `url`): Dirección del sitio web.
+  - `sc-logo` (type: `url`): Enlace al logotipo.
+  - `sc-tel` (type: `tel`): Teléfono de contacto.
+  - `sc-street` (type: `text`): Calle y número.
+  - `sc-city` (type: `text`): Ciudad o localidad.
+  - `sc-postal` (type: `text`): Código postal.
+  - `sc-lat` (type: `text`): Latitud geográfica.
+  - `sc-lng` (type: `text`): Longitud geográfica.
+  - `sc-same` (type: `textarea`): Enlaces de perfiles sociales (uno por línea).
+* **Auto-submit:** `false`
+
+### 4. Calculadora de Impacto WPO (Web Performance Optimization)
+* **URL:** https://www.victor-alonso.es/herramientas/calculadora-wpo/
+* **WebMCP `toolname`:** `wpoLossCalculator`
+* **Formulario ID:** `#wpo-calc-form`
+* **Definición:** Conecta el rendimiento técnico de carga móvil analizado en tiempo real a través de PageSpeed Insights con la pérdida de ingresos financieros estimada para el negocio.
+* **Parámetros del formulario:**
+  - `url` (type: `url`, required): URL de la página a evaluar.
+  - `visits` (type: `number`, required): Volumen de visitas orgánicas mensuales estimadas.
+  - `ticket` (type: `number`, required): Ticket medio de compra en euros.
+  - `conversion` (type: `number`, required): Tasa de conversión media actual en porcentaje (ej. `1.2`).
+* **Auto-submit:** `false`
+
+### 5. Extractor y Auditor de Sitemaps XML (Remoto)
+* **URL:** https://www.victor-alonso.es/herramientas/extractor-sitemap/
+* **WebMCP `toolname`:** `sitemapUrlExtractor`
+* **Formulario ID:** `#tab-url`
+* **Definición:** Descarga de forma remota sitemaps XML o sitemaps índices estructurados para extraer de forma recursiva todas las URLs únicas y validar su longitud de cadena para móviles.
+* **Parámetros del formulario:**
+  - `sm-url` (type: `url`, required): URL del Sitemap XML remoto a procesar.
+* **Auto-submit:** `false`
+
+### 6. Extractor y Auditor de Sitemaps XML (Carga Local)
+* **URL:** https://www.victor-alonso.es/herramientas/extractor-sitemap/
+* **WebMCP `toolname`:** `sitemapRawExtractor`
+* **Formulario ID:** `#tab-upload`
+* **Definición:** Analiza código XML pegado directamente o un fichero local de sitemap para la extracción estructurada de URLs sin realizar peticiones de red externas.
+* **Parámetros del formulario:**
+  - `file-input` (type: `file`, accept: `.xml,.txt`): Archivo local a subir.
+  - `raw-xml` (type: `textarea`): Contenido de código XML pegado en plano.
+* **Auto-submit:** `false`
+
+### 7. Extractor de Entidades Semánticas y Modelador NLP
+* **URL:** https://www.victor-alonso.es/herramientas/extractor-entidades/
+* **WebMCP `toolname`:** `semanticEntityExtractor`
+* **Formulario ID:** `#semantic-analysis-form`
+* **Definición:** Procesa el texto limpio de una URL para identificar entidades nombradas (Personas, Organizaciones, Lugares), modelar triples de conocimiento semántico y calcular la brecha semántica frente a un competidor.
+* **Parámetros del formulario:**
+  - `sm-url1` (type: `url`, required): URL de tu página o artículo a procesar.
+  - `sm-url2` (type: `url`): URL de tu competidor directo a comparar de forma opcional.
+* **Auto-submit:** `false`
+
+### 8. Envío de Informe de Grafo Semántico por Correo
+* **URL:** https://www.victor-alonso.es/herramientas/extractor-entidades/
+* **WebMCP `toolname`:** `emailSemanticReport`
+* **Formulario ID:** `#entities-email-form`
+* **Definición:** Solicita el envío por correo electrónico en formato PDF del informe completo del análisis semántico realizado.
+* **Parámetros del formulario:**
+  - `email` (type: `email`, required): Correo electrónico del destinatario.
+* **Auto-submit:** `false`
+
+### 9. Auditor de Cookies y Privacidad RGPD/LSSI
+* **URL:** https://www.victor-alonso.es/herramientas/auditor-cookies/
+* **WebMCP `toolname`:** `cookieConsentAuditor`
+* **Formulario ID:** `#audit-form`
+* **Definición:** Evalúa si la web carga cookies de rastreo antes del consentimiento, si dispone de enlaces legales obligatorios y califica dinámicamente si es apto o no apto.
+* **Parámetros del formulario:**
+  - `url` (type: `url`, required): URL del sitio web a analizar.
+* **Auto-submit:** `false`
+
+### 10. Envío de Informe de Cookies por Correo
+* **URL:** https://www.victor-alonso.es/herramientas/auditor-cookies/
+* **WebMCP `toolname`:** `emailCookieAuditReport`
+* **Formulario ID:** `#email-capture-form`
+* **Definición:** Solicita la generación y envío del PDF de la auditoría de cookies directo al correo electrónico.
+* **Parámetros del formulario:**
+  - `email` (type: `email`, required): Correo electrónico para el informe.
+* **Auto-submit:** `false`
+
+### 11. Validador de Redirecciones Apache .htaccess
+* **URL:** https://www.victor-alonso.es/herramientas/tester-htaccess/
+* **WebMCP `toolname`:** `htaccessTester`
+* **Formulario ID:** `#htaccess-test-form`
+* **Definición:** Simula paso a paso la resolución de rutas mediante directivas Apache .htaccess para encontrar bucles y validar expresiones de redirección.
+* **Parámetros del formulario:**
+  - `htaccess-code` (type: `textarea`, required): Código plano del .htaccess.
+  - `test-url` (type: `url`, required): URL de prueba sobre la que ejecutar la simulación.
+  - `test-ua` (type: `select`): User-Agent (ej. Navegador estándar, Googlebot, ChatGPT-User).
+  - `test-files-exists` (type: `checkbox`): Activa la simulación de existencia física de ficheros/carpetas en el servidor.
+* **Auto-submit:** `false`
+
+### 12. Generador de Informes de Google Search Console
+* **URL:** https://www.victor-alonso.es/herramientas/generador-informe-gsc/
+* **WebMCP `toolname`:** `gscReportGenerator`
+* **Formulario ID:** `#gsc-upload-form`
+* **Definición:** Procesa la exportación oficial en ZIP de Google Search Console para generar informes consolidados interactivos de rendimiento orgánico.
+* **Parámetros del formulario:**
+  - `gsc_zip` (type: `file`, accept: `.zip`, required): El fichero ZIP exportado desde la consola oficial de búsqueda de Google.
+* **Auto-submit:** `false`
+
+### 13. Editor GPS en Imágenes EXIF
+* **URL:** https://www.victor-alonso.es/herramientas/editor-gps-imagenes/
+* **WebMCP `toolname`:** `gpsExifEditor`
+* **Formulario ID:** `#dropzone-write` y `#dropzone-read`
+* **Definición:** Editor y lector de metadatos EXIF enfocado en geolocalización SEO Local. Permite añadir, leer o modificar coordenadas GPS y datos de autor en archivos JPG mediante procesamiento 100% en memoria en el lado del cliente.
+* **Parámetros del formulario:**
+  - `gps-img-write` (type: `file`, accept: `image/jpeg`): Imagen original a geolocalizar.
+  - `input-lat` (type: `text`): Latitud geográfica.
+  - `input-lng` (type: `text`): Longitud geográfica.
+  - `input-artist` (type: `text`, optional): Autor/Fotógrafo.
+  - `input-desc` (type: `text`, optional): Descripción de la imagen.
+  - `gps-img-read` (type: `file`, accept: `image/jpeg`): Imagen a auditar para extraer datos.
+* **Auto-submit:** `false`
+
+---
+
+## Casos de Estudio Reales Analizados
+- **WordPress con malware (WooCommerce):** Limpieza completa de inyecciones silenciosas de redirección y restauración en Safe Browsing.
+- **Caída de tráfico tras migración:** Mapeo y corrección de redirecciones 302 erróneas a 301.
+- **Optimización LCP de 7s (Elementor):** Conversión WebP, CSS crítico pre-cargado e inline de fuentes.
+- **Penalización Broad Core Update:** Redireccionamiento de canibalizaciones y reestructuración temática pillar-cluster.
+- **Drenaje de Crawl Budget en WooCommerce:** Bloqueo de filtros redundantes e indexación controlada.
