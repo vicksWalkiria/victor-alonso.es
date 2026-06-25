@@ -167,17 +167,16 @@ Todas las herramientas son gratuitas, no requieren registro y procesan la inform
   - `gsc_zip` (type: `file`, accept: `.zip`, required): El fichero ZIP exportado desde la consola oficial de búsqueda de Google.
 * **Auto-submit:** `false`
 
-### 13. Editor GPS en Imágenes EXIF
-* **URL:** https://www.victor-alonso.es/herramientas/editor-gps-imagenes/
-* **WebMCP `toolname`:** `gpsExifEditor`
+### 13. Editor de Metadatos EXIF
+* **URL:** https://www.victor-alonso.es/herramientas/editor-metadatos-imagenes/
+* **WebMCP `toolname`:** `exifMetadataEditor`
 * **Formulario ID:** `#dropzone-write` y `#dropzone-read`
-* **Definición:** Editor y lector de metadatos EXIF enfocado en geolocalización SEO Local. Permite añadir, leer o modificar coordenadas GPS y datos de autor en archivos JPG mediante procesamiento 100% en memoria en el lado del cliente.
+* **Definición:** Editor y lector avanzado de metadatos EXIF. Permite inyectar coordenadas GPS para SEO Local, alterar la fecha de captura original, y añadir protección de autoría. El procesamiento ocurre de forma 100% privada en la RAM del navegador del cliente mediante JavaScript.
 * **Parámetros del formulario:**
-  - `gps-img-write` (type: `file`, accept: `image/jpeg`): Imagen original a geolocalizar.
-  - `input-lat` (type: `text`): Latitud geográfica.
-  - `input-lng` (type: `text`): Longitud geográfica.
-  - `input-artist` (type: `text`, optional): Autor/Fotógrafo.
-  - `input-desc` (type: `text`, optional): Descripción de la imagen.
+  - `gps-img-write` (type: `file`, accept: `image/jpeg`): Imagen original a auditar o modificar.
+  - `input-lat` (type: `text`): Latitud geográfica de la imagen.
+  - `input-lng` (type: `text`): Longitud geográfica de la imagen.
+  - `dynamic-write-fields` (container): Inputs dinámicos parseados del EXIF nativo, incluyendo un campo `datetime-local` adaptativo para modificar la fecha EXIF original de captura (`DateTimeOriginal`).
   - `gps-img-read` (type: `file`, accept: `image/jpeg`): Imagen a auditar para extraer datos.
 * **Auto-submit:** `false`
 
