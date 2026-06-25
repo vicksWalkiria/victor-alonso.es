@@ -92,14 +92,12 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       <div class="tabs-container" style="margin-bottom: 2rem;">
         <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--bordergray); margin-bottom: 1.5rem;">
           <button id="tab-write-btn" class="tab-btn active" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 700; color: var(--orange); border-bottom: 3px solid var(--orange); cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
-            <i class="fa-solid fa-location-dot" style="margin-right: 0.5rem;"></i> Añadir Metadatos
+            <i class="fa-solid fa-pen-to-square" style="margin-right: 0.5rem;"></i> Añadir / Editar EXIF
           </button>
           <button id="tab-read-btn" class="tab-btn" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
             <i class="fa-solid fa-magnifying-glass" style="margin-right: 0.5rem;"></i> Leer Metadatos
           </button>
-          <button id="tab-edit-btn" class="tab-btn" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
-            <i class="fa-solid fa-pen-to-square" style="margin-right: 0.5rem;"></i> Editar Todo
-          </button>
+          
         </div>
 
         <!-- Pestaña: ESCRIBIR (AÑADIR) METADATOS -->
@@ -147,23 +145,17 @@ require __DIR__ . '/../includes/breadcrumbs.php';
                   </div>
                 </div>
 
-                <!-- Campos adicionales opcionales EXIF -->
-                <details style="margin-bottom: 1.5rem; background: #f8f9fa; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 1rem;">
-                  <summary style="font-weight: 600; cursor: pointer; color: var(--orange);">➕ Opciones avanzadas (Opcional)</summary>
-                  <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
-                    <div>
-                      <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--black); margin-bottom: 0.25rem;">Autor / Artista (Author):</label>
-                      <input type="text" id="input-artist" placeholder="Ej: Víctor Alonso" style="width: 100%; padding: 0.5rem; border: 1px solid rgba(0,0,0,0.2); border-radius: 4px;">
-                    </div>
-                    <div>
-                      <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--black); margin-bottom: 0.25rem;">Descripción (ImageDescription):</label>
-                      <input type="text" id="input-desc" placeholder="Ej: Fachada de mi negocio en Albacete" style="width: 100%; padding: 0.5rem; border: 1px solid rgba(0,0,0,0.2); border-radius: 4px;">
-                    </div>
-                  </div>
-                </details>
+                <!-- Campos dinámicos de EXIF -->
+                <div style="margin-bottom: 1.5rem; background: #f8f9fa; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; padding: 1.5rem;">
+                  <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; margin-top: 0;">📝 Metadatos de la Imagen</h4>
+                  <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.5;">
+                    Edita libremente los valores. Los arrays como <code>[300, 1]</code> son fracciones numéricas.
+                  </p>
+                  <div id="dynamic-write-fields" style="display: grid; grid-template-columns: 1fr; gap: 1rem;"></div>
+                </div>
 
                 <button id="btn-generate" class="btn btn--primary btn--lg" style="width: 100%; justify-content: center;" disabled>
-                  <i class="fa-solid fa-download" style="margin-right: 0.5rem;"></i> Añadir GPS y Descargar
+                  <i class="fa-solid fa-download" style="margin-right: 0.5rem;"></i> Guardar y Descargar
                 </button>
 
               </div>
@@ -207,40 +199,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           </div>
         </div>
 
-        <!-- Pestaña: EDITAR METADATOS -->
-        <div id="tab-edit-content" class="tab-content" style="display: none;">
-          <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);">
-            <h2 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--black);">Editor Avanzado EXIF</h2>
-            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-bottom: 2rem;">
-              Sube una imagen para cargar todos sus metadatos internos en formato de formulario. Podrás editar libremente cualquier etiqueta soportada (textos, fechas y números) de forma segura.
-            </p>
-
-            <div id="dropzone-edit" style="border: 2px dashed rgba(34, 49, 63, 0.2); border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; background: var(--lightgray); cursor: pointer; transition: all 0.25s ease; position: relative;">
-              <input type="file" id="gps-img-edit" accept="image/jpeg, image/jpg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
-              
-              <div id="prompt-edit">
-                <i class="fa-solid fa-pen-to-square" style="font-size: 3rem; color: var(--orange); margin-bottom: 1.25rem; display: block;"></i>
-                <span style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">Arrastra tu imagen JPG aquí</span>
-              </div>
-            </div>
-
-            <!-- Resultados EDICIÓN -->
-            <div id="edit-results" style="display: none; margin-top: 2rem; border-top: 1px solid var(--bordergray); padding-top: 1.5rem;">
-              <h3 style="font-size: 1.2rem; color: var(--black); margin-bottom: 1rem;">📝 Editar Campos EXIF:</h3>
-              <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;">
-                Los campos bloqueados (grises) contienen datos binarios estructurados no editables en texto plano. Los arrays como <code>[300, 1]</code> son fracciones numéricas. Edita los valores y haz clic en guardar.
-              </p>
-              
-              <form id="form-edit-exif" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
-                <div id="dynamic-edit-fields" style="display: grid; grid-template-columns: 1fr; gap: 1rem;"></div>
-                <button type="button" id="btn-save-edit" class="btn btn--primary btn--lg" style="justify-content: center; margin-top: 1rem;">
-                  <i class="fa-solid fa-floppy-disk" style="margin-right: 0.5rem;"></i> Guardar Cambios y Descargar
-                </button>
-              </form>
-            </div>
-
-          </div>
-        </div>
+        
 
       </div>
 
@@ -323,19 +282,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     tabWriteBtn.addEventListener('click', () => {
-        setTabActive(tabWriteBtn, tabWriteContent, [tabReadBtn, tabEditBtn], [tabReadContent, tabEditContent]);
+        setTabActive(tabWriteBtn, tabWriteContent, [tabReadBtn], [tabReadContent]);
         if(writeMap) writeMap.invalidateSize();
     });
 
     tabReadBtn.addEventListener('click', () => {
-        setTabActive(tabReadBtn, tabReadContent, [tabWriteBtn, tabEditBtn], [tabWriteContent, tabEditContent]);
+        setTabActive(tabReadBtn, tabReadContent, [tabWriteBtn], [tabWriteContent]);
         if(readMap) readMap.invalidateSize();
     });
 
-    tabEditBtn.addEventListener('click', () => {
-        setTabActive(tabEditBtn, tabEditContent, [tabWriteBtn, tabReadBtn], [tabWriteContent, tabReadContent]);
-    });
-
+    
     // --- MAPA DE ESCRITURA (LEAFLET) ---
     // Centro inicial: Madrid
     writeMap = L.map('map-write').setView([40.416775, -3.703790], 5);
@@ -401,6 +357,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if(this.files && this.files[0]) processFileWrite(this.files[0]);
     });
 
+        let currentWriteExifObj = null;
+
     function processFileWrite(file) {
         if(!file.type.match('image/jpeg')) {
             alert("Por favor, sube una imagen JPG o JPEG.");
@@ -417,10 +375,124 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('img-preview').src = currentImageBase64;
             document.getElementById('filename-preview').textContent = currentImageName;
             
-            btnGenerate.disabled = false;
+            const fieldsContainer = document.getElementById('dynamic-write-fields');
+            fieldsContainer.innerHTML = '';
+
+            try {
+                try {
+                    currentWriteExifObj = piexif.load(currentImageBase64);
+                } catch (err) {
+                    currentWriteExifObj = {"0th":{}, "Exif":{}, "GPS":{}, "Interop":{}, "1st":{}, "thumbnail":null};
+                }
+
+                // Inject default camera fields if missing
+                if(!currentWriteExifObj["0th"][piexif.ImageIFD.Make]) currentWriteExifObj["0th"][piexif.ImageIFD.Make] = "";
+                if(!currentWriteExifObj["0th"][piexif.ImageIFD.Model]) currentWriteExifObj["0th"][piexif.ImageIFD.Model] = "";
+                if(!currentWriteExifObj["0th"][piexif.ImageIFD.Software]) currentWriteExifObj["0th"][piexif.ImageIFD.Software] = "";
+                if(!currentWriteExifObj["0th"][piexif.ImageIFD.DateTime]) currentWriteExifObj["0th"][piexif.ImageIFD.DateTime] = "";
+                if(!currentWriteExifObj["0th"][piexif.ImageIFD.Artist]) currentWriteExifObj["0th"][piexif.ImageIFD.Artist] = "";
+                if(!currentWriteExifObj["0th"][piexif.ImageIFD.ImageDescription]) currentWriteExifObj["0th"][piexif.ImageIFD.ImageDescription] = "";
+
+                // Populate Map if GPS exists
+                if(currentWriteExifObj["GPS"] && currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLatitude]) {
+                    const latRef = currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLatitudeRef] || "N";
+                    const lngRef = currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLongitudeRef] || "E";
+                    // Hack to parse decimal
+                    function _getGpsDecimal(gpsData, ref) {
+                        if (!gpsData || gpsData.length !== 3) return null;
+                        let d = gpsData[0][0] / gpsData[0][1];
+                        let m = gpsData[1][0] / gpsData[1][1];
+                        let s = gpsData[2][0] / gpsData[2][1];
+                        let decimal = d + (m / 60) + (s / 3600);
+                        if (ref === "S" || ref === "W") decimal = decimal * -1;
+                        return decimal;
+                    }
+                    let parsedLat = _getGpsDecimal(currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLatitude], latRef);
+                    let parsedLng = _getGpsDecimal(currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLongitude], lngRef);
+                    
+                    if(parsedLat !== null && parsedLng !== null && writeMap) {
+                        writeMap.setView([parsedLat, parsedLng], 15);
+                        writeMarker.setLatLng([parsedLat, parsedLng]);
+                        updateInputs(parsedLat, parsedLng);
+                    }
+                }
+
+                for (let ifd in currentWriteExifObj) {
+                    if (ifd === "thumbnail" || !currentWriteExifObj[ifd]) continue;
+                    
+                    for (let tag in currentWriteExifObj[ifd]) {
+                        // Skip GPS raw coordinates as they are handled by the map
+                        if(ifd === 'GPS' && (tag == piexif.GPSIFD.GPSLatitude || tag == piexif.GPSIFD.GPSLongitude || tag == piexif.GPSIFD.GPSLatitudeRef || tag == piexif.GPSIFD.GPSLongitudeRef)) {
+                            continue;
+                        }
+
+                        let tagName = piexif.TAGS[ifd] && piexif.TAGS[ifd][tag] ? piexif.TAGS[ifd][tag]["name"] : tag;
+                        let val = currentWriteExifObj[ifd][tag];
+                        
+                        let isReadonly = false;
+                        let displayVal = val;
+                        let dataType = "string";
+
+                        if (Array.isArray(val)) {
+                            if (val.length <= 6) {
+                                displayVal = JSON.stringify(val);
+                                dataType = "array";
+                            } else {
+                                displayVal = "[Datos Binarios (No editable)]";
+                                isReadonly = true;
+                                dataType = "binary";
+                            }
+                        } else if (typeof val === 'string' && val.length > 200) {
+                            displayVal = "[Texto demasiado largo (No editable)]";
+                            isReadonly = true;
+                            dataType = "longstring";
+                        } else if (typeof val === 'number') {
+                            dataType = "number";
+                        }
+
+                        const row = document.createElement('div');
+                        row.style.display = 'flex';
+                        row.style.flexDirection = 'column';
+                        
+                        const label = document.createElement('label');
+                        label.style.fontSize = '0.85rem';
+                        label.style.fontWeight = '600';
+                        label.style.color = 'var(--black)';
+                        label.style.marginBottom = '0.25rem';
+                        label.textContent = `[${ifd}] ${tagName}`;
+                        
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = displayVal;
+                        input.dataset.ifd = ifd;
+                        input.dataset.tag = tag;
+                        input.dataset.type = dataType;
+                        input.style.width = '100%';
+                        input.style.padding = '0.5rem';
+                        input.style.border = '1px solid rgba(0,0,0,0.2)';
+                        input.style.borderRadius = '4px';
+
+                        if(isReadonly) {
+                            input.readOnly = true;
+                            input.style.background = '#e2e8f0';
+                            input.style.color = '#64748b';
+                            input.style.border = '1px solid transparent';
+                        }
+
+                        row.appendChild(label);
+                        row.appendChild(input);
+                        fieldsContainer.appendChild(row);
+                    }
+                }
+                btnGenerate.disabled = false;
+            } catch(err) {
+                console.error(err);
+                fieldsContainer.innerHTML = '<p style="color:var(--orange)">Error al cargar los metadatos.</p>';
+            }
         };
         reader.readAsDataURL(file);
     }
+
 
     // Convertir de decimal a formato GPS EXIF
     function decimalToGpsFormat(decimal) {
@@ -439,46 +511,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- GENERAR Y DESCARGAR ---
     btnGenerate.addEventListener('click', () => {
-        if(!currentImageBase64) return;
-
-        let lat = parseFloat(document.getElementById('input-lat').value);
-        let lng = parseFloat(document.getElementById('input-lng').value);
-        let artist = document.getElementById('input-artist').value.trim();
-        let desc = document.getElementById('input-desc').value.trim();
-
-        // Calcular referencias (N/S, E/W)
-        const latRef = lat >= 0 ? "N" : "S";
-        const lngRef = lng >= 0 ? "E" : "W";
-
-        lat = Math.abs(lat);
-        lng = Math.abs(lng);
-
-        const gpsLat = decimalToGpsFormat(lat);
-        const gpsLng = decimalToGpsFormat(lng);
+        if(!currentWriteExifObj || !currentImageBase64) return;
 
         try {
-            // Leer EXIF actual (o crear uno nuevo si no existe)
-            let exifObj;
-            try {
-                exifObj = piexif.load(currentImageBase64);
-            } catch (err) {
-                exifObj = {"0th":{}, "Exif":{}, "GPS":{}, "Interop":{}, "1st":{}, "thumbnail":null};
-            }
+            // Recorrer los inputs y actualizar currentWriteExifObj
+            const inputs = document.querySelectorAll('#dynamic-write-fields input');
+            inputs.forEach(input => {
+                if(input.readOnly) return; 
 
-            // Inyectar GPS
-            exifObj["GPS"][piexif.GPSIFD.GPSLatitudeRef] = latRef;
-            exifObj["GPS"][piexif.GPSIFD.GPSLatitude] = gpsLat;
-            exifObj["GPS"][piexif.GPSIFD.GPSLongitudeRef] = lngRef;
-            exifObj["GPS"][piexif.GPSIFD.GPSLongitude] = gpsLng;
+                let valStr = input.value.trim();
+                let ifd = input.dataset.ifd;
+                let tag = input.dataset.tag;
+                let type = input.dataset.type;
 
-            // Inyectar Autor y Descripción si existen
-            if(artist) exifObj["0th"][piexif.ImageIFD.Artist] = artist;
-            if(desc) exifObj["0th"][piexif.ImageIFD.ImageDescription] = desc;
+                // Si está vacío, borrarlo si es string, para no dejar basura si el usuario lo vacía
+                if(valStr === "") {
+                    if(type === "string" && currentWriteExifObj[ifd]) {
+                        delete currentWriteExifObj[ifd][tag];
+                    }
+                    return; 
+                }
 
-            const exifBytes = piexif.dump(exifObj);
+                if(type === "array") {
+                    try {
+                        let arr = JSON.parse(valStr);
+                        if(Array.isArray(arr)) currentWriteExifObj[ifd][tag] = arr;
+                    } catch(e) {
+                        console.warn("No se pudo parsear array para", ifd, tag);
+                    }
+                } else if(type === "number") {
+                    currentWriteExifObj[ifd][tag] = Number(valStr);
+                } else {
+                    currentWriteExifObj[ifd][tag] = valStr;
+                }
+            });
+
+            // Recuperar Lat y Lng del mapa
+            let lat = parseFloat(document.getElementById('input-lat').value);
+            let lng = parseFloat(document.getElementById('input-lng').value);
+
+            const latRef = lat >= 0 ? "N" : "S";
+            const lngRef = lng >= 0 ? "E" : "W";
+            lat = Math.abs(lat);
+            lng = Math.abs(lng);
+
+            if(!currentWriteExifObj["GPS"]) currentWriteExifObj["GPS"] = {};
+            currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLatitudeRef] = latRef;
+            currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLatitude] = decimalToGpsFormat(lat);
+            currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLongitudeRef] = lngRef;
+            currentWriteExifObj["GPS"][piexif.GPSIFD.GPSLongitude] = decimalToGpsFormat(lng);
+
+            // Recompilar
+            const exifBytes = piexif.dump(currentWriteExifObj);
             const newJpegData = piexif.insert(exifBytes, currentImageBase64);
 
-            // Descargar archivo modificado
+            // Descargar archivo
             const a = document.createElement('a');
             a.href = newJpegData;
             a.download = currentImageName.replace(/\.[^/.]+$/, "") + "-geolocalizada.jpg";
@@ -486,12 +573,11 @@ document.addEventListener('DOMContentLoaded', function() {
             a.click();
             document.body.removeChild(a);
 
-        } catch (error) {
+        } catch(error) {
             console.error(error);
-            alert("Ocurrió un error al inyectar los metadatos. Asegúrate de que la imagen sea JPG válido.");
+            alert("Ocurrió un error al guardar los metadatos. Verifica que las fracciones estén en formato [num, den] y que el JPG sea válido.");
         }
     });
-
     // --- LÓGICA DE LECTURA (READ EXIF) ---
     const dropRead = document.getElementById('dropzone-read');
     const inputRead = document.getElementById('gps-img-read');
@@ -611,170 +697,6 @@ document.addEventListener('DOMContentLoaded', function() {
         tbody.appendChild(tr);
     }
 
-    // --- LÓGICA DE EDICIÓN AVANZADA ---
-    const dropEdit = document.getElementById('dropzone-edit');
-    const inputEdit = document.getElementById('gps-img-edit');
-    let currentEditBase64 = null;
-    let currentEditFileName = "";
-    let currentEditExifObj = null;
-
-    ['dragenter', 'dragover'].forEach(evt => dropEdit.addEventListener(evt, e => {
-        e.preventDefault(); dropEdit.classList.add('dragover');
-    }, false));
-    ['dragleave', 'drop'].forEach(evt => dropEdit.addEventListener(evt, e => {
-        e.preventDefault(); dropEdit.classList.remove('dragover');
-    }, false));
-
-    inputEdit.addEventListener('change', function(e) {
-        if(this.files && this.files[0]) processFileEdit(this.files[0]);
-    });
-
-    function processFileEdit(file) {
-        if(!file.type.match('image/jpeg')) {
-            alert("Por favor, sube una imagen JPG o JPEG.");
-            return;
-        }
-        currentEditFileName = file.name;
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            currentEditBase64 = e.target.result;
-            
-            document.getElementById('edit-results').style.display = 'block';
-            const fieldsContainer = document.getElementById('dynamic-edit-fields');
-            fieldsContainer.innerHTML = '';
-            
-            try {
-                currentEditExifObj = piexif.load(currentEditBase64);
-                let count = 0;
-
-                for (let ifd in currentEditExifObj) {
-                    if (ifd === "thumbnail" || !currentEditExifObj[ifd]) continue;
-                    
-                    for (let tag in currentEditExifObj[ifd]) {
-                        let tagName = piexif.TAGS[ifd] && piexif.TAGS[ifd][tag] ? piexif.TAGS[ifd][tag]["name"] : tag;
-                        let val = currentEditExifObj[ifd][tag];
-                        
-                        let isReadonly = false;
-                        let displayVal = val;
-                        let dataType = "string";
-
-                        if (Array.isArray(val)) {
-                            // Arrays cortos suelen ser racionales [num, den]
-                            if (val.length <= 6) {
-                                displayVal = JSON.stringify(val);
-                                dataType = "array";
-                            } else {
-                                displayVal = "[Datos Binarios (No editable)]";
-                                isReadonly = true;
-                                dataType = "binary";
-                            }
-                        } else if (typeof val === 'string' && val.length > 200) {
-                            displayVal = "[Texto demasiado largo (No editable)]";
-                            isReadonly = true;
-                            dataType = "longstring";
-                        } else if (typeof val === 'number') {
-                            dataType = "number";
-                        }
-
-                        // Crear campo
-                        const row = document.createElement('div');
-                        row.style.display = 'flex';
-                        row.style.flexDirection = 'column';
-                        
-                        const label = document.createElement('label');
-                        label.style.fontSize = '0.85rem';
-                        label.style.fontWeight = '600';
-                        label.style.color = 'var(--black)';
-                        label.style.marginBottom = '0.25rem';
-                        label.textContent = `[${ifd}] ${tagName}`;
-                        
-                        const input = document.createElement('input');
-                        input.type = 'text';
-                        input.value = displayVal;
-                        input.dataset.ifd = ifd;
-                        input.dataset.tag = tag;
-                        input.dataset.type = dataType;
-                        input.style.width = '100%';
-                        input.style.padding = '0.5rem';
-                        input.style.border = '1px solid rgba(0,0,0,0.2)';
-                        input.style.borderRadius = '4px';
-
-                        if(isReadonly) {
-                            input.readOnly = true;
-                            input.style.background = '#e2e8f0';
-                            input.style.color = '#64748b';
-                            input.style.border = '1px solid transparent';
-                        }
-
-                        row.appendChild(label);
-                        row.appendChild(input);
-                        fieldsContainer.appendChild(row);
-                        count++;
-                    }
-                }
-
-                if(count === 0) {
-                    fieldsContainer.innerHTML = '<p style="color:var(--muted)">Esta imagen no tiene metadatos EXIF. Ve a la pestaña "Añadir" para crear uno nuevo.</p>';
-                    document.getElementById('btn-save-edit').disabled = true;
-                } else {
-                    document.getElementById('btn-save-edit').disabled = false;
-                }
-
-            } catch(err) {
-                console.error(err);
-                fieldsContainer.innerHTML = '<p style="color:var(--orange)">Error al cargar los metadatos de esta imagen.</p>';
-            }
-        };
-        reader.readAsDataURL(file);
-    }
-
-    // Guardar los cambios dinámicos
-    document.getElementById('btn-save-edit').addEventListener('click', () => {
-        if(!currentEditExifObj || !currentEditBase64) return;
-
-        try {
-            // Recorrer los inputs y actualizar currentEditExifObj
-            const inputs = document.querySelectorAll('#dynamic-edit-fields input');
-            inputs.forEach(input => {
-                if(input.readOnly) return; // Omitir bloqueados
-
-                let valStr = input.value.trim();
-                let ifd = input.dataset.ifd;
-                let tag = input.dataset.tag;
-                let type = input.dataset.type;
-
-                if(type === "array") {
-                    try {
-                        let arr = JSON.parse(valStr);
-                        if(Array.isArray(arr)) currentEditExifObj[ifd][tag] = arr;
-                    } catch(e) {
-                        console.warn("No se pudo parsear array para", tagName);
-                    }
-                } else if(type === "number") {
-                    currentEditExifObj[ifd][tag] = Number(valStr);
-                } else {
-                    currentEditExifObj[ifd][tag] = valStr;
-                }
-            });
-
-            // Recompilar
-            const exifBytes = piexif.dump(currentEditExifObj);
-            const newJpegData = piexif.insert(exifBytes, currentEditBase64);
-
-            // Descargar archivo
-            const a = document.createElement('a');
-            a.href = newJpegData;
-            a.download = currentEditFileName.replace(/\.[^/.]+$/, "") + "-editada.jpg";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-
-        } catch(error) {
-            console.error(error);
-            alert("Ocurrió un error al guardar los metadatos. Verifica que las fracciones estén en formato [num, den].");
-        }
-    });
 });
 </script>
 
