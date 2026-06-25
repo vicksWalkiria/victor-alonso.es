@@ -1062,6 +1062,19 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </div>
         </form>
 
+        <!-- Loader Overlay -->
+        <div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(17, 17, 17, 0.85); z-index: 9999; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(4px);">
+          <div style="width: 60px; height: 60px; border: 5px solid rgba(255, 255, 255, 0.2); border-top-color: #e8681a; border-radius: 50%; animation: spinLogs 1s linear infinite; margin-bottom: 1.5rem;"></div>
+          <style>@keyframes spinLogs { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+          <h3 style="color: #ffffff; margin: 0; font-size: 1.5rem; text-align: center;">Subiendo y analizando logs...</h3>
+          <p style="color: rgba(255, 255, 255, 0.7); margin-top: 0.5rem; font-size: 0.95rem; text-align: center;">Se está generando tu informe LaTeX. Esto puede tardar unos segundos.<br>Por favor, no cierres esta ventana.</p>
+        </div>
+        <script>
+          document.getElementById('logsForm').addEventListener('submit', function() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+          });
+        </script>
+
         <?php if ($error): ?>
           <div class="alert alert--danger" style="margin-top: 1.5rem;"><?= h($error) ?></div>
         <?php endif; ?>
