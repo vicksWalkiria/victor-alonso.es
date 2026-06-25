@@ -52,15 +52,39 @@ $page = page_config([
     'faq_items'    => [
         [
             'q' => '¿Por qué geolocalizar mis imágenes ayuda al SEO Local?',
-            'a' => 'Google rastrea y lee los metadatos EXIF de las imágenes originales que subes a tu web (y a tu perfil de Google Business Profile). Incluir coordenadas GPS exactas ayuda a validar y dar contexto semántico de ubicación a tus contenidos visuales, potenciando tu relevancia local.'
+            'a' => 'Google rastrea y lee los metadatos EXIF de las imágenes originales que subes a tu web y a tu perfil de Google Business Profile. Incluir coordenadas GPS exactas ayuda a validar y dar contexto semántico de ubicación a tus contenidos visuales, potenciando tu relevancia local. Una foto de un establecimiento o servicio con las coordenadas de Albacete, Madrid o Valencia en sus metadatos es una señal local más que Google puede procesar.'
         ],
         [
             'q' => '¿Las imágenes se suben a tu servidor?',
-            'a' => 'No. Esta herramienta procesa el 100% de los datos directamente en la memoria RAM de tu navegador gracias a JavaScript. Tus fotos originales jamás tocan mi servidor ni viajan por Internet, garantizando máxima privacidad.'
+            'a' => 'No, en ningún momento. Esta herramienta procesa el 100% de los datos directamente en la memoria RAM de tu navegador gracias a JavaScript y la librería piexif.js. Tus fotos originales jamás tocan mi servidor ni viajan por Internet, garantizando máxima privacidad y cumplimiento con el RGPD. A diferencia de otras webs de edición EXIF online, aquí nada se almacena ni se registra.'
         ],
         [
             'q' => '¿Qué formatos soporta la herramienta?',
-            'a' => 'Actualmente, el estándar de metadatos EXIF está altamente optimizado para el formato JPEG (.jpg o .jpeg). Te recomiendo subir siempre imágenes en JPG. Si necesitas hacerlo de forma masiva (en bulk) para grandes volúmenes, contáctame y te preparo un script a medida.'
+            'a' => 'El estándar de metadatos EXIF está diseñado específicamente para JPEG (.jpg o .jpeg). Formatos como PNG, WebP, AVIF o HEIC no soportan EXIF de forma nativa o lo hacen de manera parcial. Para obtener los mejores resultados editando o añadiendo GPS a una imagen, te recomiendo trabajar siempre con archivos JPG. Si tus imágenes están en otro formato, conviértelas primero a JPEG antes de procesarlas con esta herramienta.'
+        ],
+        [
+            'q' => '¿Cómo puedo borrar los metadatos de una foto antes de enviarla?',
+            'a' => 'En la pestaña "Añadir / Editar EXIF", sube tu imagen, deja todos los campos en blanco y pulsa "Guardar y Descargar". La herramienta generará una nueva versión del archivo JPEG sin ningún dato en los metadatos: sin nombre de cámara, sin fecha de captura, sin coordenadas GPS y sin datos de autoría. Es el método más rápido para anonimizar una foto antes de enviarla por correo, WhatsApp o publicarla online.'
+        ],
+        [
+            'q' => '¿Se necesita instalar algo para editar los metadatos EXIF?',
+            'a' => 'No. La herramienta funciona directamente en tu navegador web sin instalaciones, sin plugins, sin extensiones de Chrome y sin registros de usuario. Tan solo necesitas un navegador moderno con JavaScript activado (Chrome, Firefox, Safari o Edge). No hay aplicación que descargar ni cuenta que crear.'
+        ],
+        [
+            'q' => '¿Qué diferencia hay entre los metadatos EXIF y los metadatos IPTC o XMP?',
+            'a' => 'EXIF (Exchangeable Image File Format) almacena datos técnicos de captura: coordenadas GPS, fecha, modelo de cámara, apertura, ISO. IPTC es un estándar de la industria periodística para datos editoriales como créditos, pie de foto o palabras clave. XMP es el formato moderno de Adobe, extensible y compatible con todos los anteriores. Esta herramienta se centra en los campos EXIF más relevantes para SEO, privacidad y autoría digital, que son los que Google y la mayoría de plataformas leen de forma prioritaria.'
+        ],
+        [
+            'q' => '¿Google realmente lee los metadatos GPS de las imágenes?',
+            'a' => 'Sí, aunque con matices. Google Imágenes y el crawler general de Googlebot son capaces de leer los metadatos EXIF de los archivos JPEG originales. Sin embargo, muchos CMS como WordPress comprimen y reescriben las imágenes al subirlas, eliminando los metadatos en el proceso. Para que Google pueda leer las coordenadas GPS, la imagen debe servirse directamente con sus metadatos intactos, lo cual ocurre principalmente cuando se sube el archivo original a Google Business Profile o se sirve desde el servidor sin procesamiento adicional.'
+        ],
+        [
+            'q' => '¿Puedo añadir GPS a una imagen que no tiene metadatos EXIF?',
+            'a' => 'Sí. La herramienta es capaz de crear un bloque EXIF completo desde cero en imágenes JPEG que nunca han tenido metadatos, como capturas de pantalla, imágenes de stock o fotos exportadas desde aplicaciones de diseño. Solo tienes que arrastrar la imagen, hacer clic en el mapa para colocar el pin en la ubicación deseada o introducir manualmente las coordenadas, rellenar los demás campos que necesites y descargar el nuevo archivo.'
+        ],
+        [
+            'q' => '¿Existe alguna forma de añadir coordenadas GPS a muchas fotos a la vez (en batch o bulk)?',
+            'a' => 'Esta herramienta online está optimizada para el flujo individual: una imagen, edición precisa, descarga inmediata. Si necesitas geolocalizar docenas o cientos de imágenes de forma automatizada (por ejemplo, el portfolio completo de un fotógrafo o el catálogo de imágenes de una cadena de negocios), puedo prepararte un script Python o PHP personalizado que procese tus imágenes en lote. Escríbeme a través del formulario de contacto y cuéntame tu caso.'
         ]
     ]
 ]);
