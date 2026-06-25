@@ -51,6 +51,89 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
   exit;
 }
 
+// Interceptar acción AJAX de envío PDF
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_pdf') {
+  header('Content-Type: application/json');
+  $user_email = filter_var(trim($_POST['user_email'] ?? ''), FILTER_VALIDATE_EMAIL);
+  $audit_id = trim($_POST['audit_id'] ?? '');
+
+  if (!$user_email || !preg_match('/^[a-f0-9]{32}$/', $audit_id)) {
+    echo json_encode(['success' => false, 'message' => 'Email inválido o ID incorrecto.']);
+    exit;
+  }
+
+  $dir_path = BASE_DIR . "/data/reports/logs/tmp_$audit_id";
+  $json_path = "$dir_path/data.json";
+  $pdf_path = "$dir_path/report.pdf";
+
+  if (!file_exists($json_path) || !file_exists($pdf_path)) {
+    echo json_encode(['success' => false, 'message' => 'El informe ya expiró o no está disponible.']);
+    exit;
+  }
+
+  $result_json = json_decode(file_get_contents($json_path), true);
+
+  // Suscribir a Mailrelay grupo 7
+  $mailrelay_key = $_ENV['MAILRELAY_API_KEY'] ?? getenv('MAILRELAY_API_KEY') ?? '';
+  if (!empty($mailrelay_key)) {
+    $ch = curl_init('https://walkiriaapps.ipzmarketing.com/api/v1/subscribers');
+    curl_setopt_array($ch, [
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_POST           => true,
+      CURLOPT_POSTFIELDS     => json_encode(['email' => $user_email, 'status' => 'active', 'group_ids' => [7]]),
+      CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'X-AUTH-TOKEN: ' . $mailrelay_key],
+      CURLOPT_TIMEOUT        => 3,
+    ]);
+    curl_exec($ch);
+    curl_close($ch);
+  }
+
+  // Enviar correo
+  $to = $user_email;
+  $subject = 'Tu informe de análisis de logs está listo — ' . $result_json['source_name'];
+  $boundary = md5(uniqid());
+
+  $mail_headers  = "MIME-Version: 1.0\r\n";
+  $mail_headers .= "From: Víctor Alonso SEO <soy@victor-alonso.es>\r\n";
+  $mail_headers .= "Reply-To: soy@victor-alonso.es\r\n";
+  $mail_headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+
+  $html_body  = '<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:0 auto;color:#111">';
+  $html_body .= '<div style="background:#111;padding:2rem;text-align:center;border-radius:8px 8px 0 0">';
+  $html_body .= '<h1 style="color:#e8681a;margin:0;font-size:1.5rem">📊 Informe de Logs Completado</h1>';
+  $html_body .= '<p style="color:rgba(255,255,255,.7);margin:.5rem 0 0;font-size:.9rem">victor-alonso.es · Herramientas SEO</p></div>';
+  $html_body .= '<div style="background:#fff9f5;border:1px solid #e8681a;border-top:none;padding:2rem;border-radius:0 0 8px 8px">';
+  $html_body .= '<p>Hola,</p>';
+  $html_body .= '<p>He procesado el log <strong>' . h($result_json['source_name']) . '</strong> y te adjunto el informe completo en PDF.</p>';
+  $html_body .= '<table style="width:100%;border-collapse:collapse;margin-bottom:1.5rem">';
+  $html_body .= '<tr><td style="padding:.5rem;background:#111;color:#fff;font-weight:700">Métrica</td><td style="padding:.5rem;background:#111;color:#fff;font-weight:700">Valor</td></tr>';
+  $html_body .= '<tr><td style="padding:.5rem;border-bottom:1px solid #eee">Peticiones</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . number_format($result_json['parsed_lines'], 0, ',', '.') . '</td></tr>';
+  $html_body .= '<tr><td style="padding:.5rem;border-bottom:1px solid #eee">IPs únicas</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . number_format($result_json['unique_ips_count'], 0, ',', '.') . '</td></tr>';
+  $html_body .= '<tr><td style="padding:.5rem">Ancho de banda</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . $result_json['bandwidth_mb'] . ' MB</td></tr>';
+  $html_body .= '</table>';
+  $html_body .= '<p>📎 <strong>El informe PDF completo está adjunto a este correo.</strong></p>';
+  $html_body .= '<p style="font-size:.85rem;color:#666;margin-top:1.5rem">Un saludo,<br><strong>Víctor Alonso SEO</strong><br><a href="https://www.victor-alonso.es" style="color:#e8681a">victor-alonso.es</a></p>';
+  $html_body .= '</div></div>';
+
+  $mail_body  = "--$boundary\r\n";
+  $mail_body .= "Content-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\n\r\n";
+  $mail_body .= $html_body . "\r\n";
+
+  $pdf_content = chunk_split(base64_encode(file_get_contents($pdf_path)));
+  $mail_body .= "--$boundary\r\n";
+  $mail_body .= "Content-Type: application/pdf; name=\"informe-logs-" . date('Y-m-d') . ".pdf\"\r\n";
+  $mail_body .= "Content-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\"informe-logs-" . date('Y-m-d') . ".pdf\"\r\n\r\n";
+  $mail_body .= $pdf_content . "\r\n";
+  $mail_body .= "--$boundary--";
+
+  if (mail($to, $subject, $mail_body, $mail_headers)) {
+    echo json_encode(['success' => true]);
+  } else {
+    echo json_encode(['success' => false, 'message' => 'Fallo al enviar correo.']);
+  }
+  exit;
+}
+
 $error = null;
 $warning = null;
 $result = null;
@@ -454,71 +537,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log('[logs-engine] PDF generado: ' . $pdf_path);
       } else {
         error_log('[logs-engine] Fallo al generar PDF: ' . implode("\n", $engine_output));
-      }
-
-      // ── Email opcional: Mailrelay + PDF adjunto ────────────────────────────
-      $user_email = isset($_POST['user_email']) ? trim($_POST['user_email']) : '';
-      $user_email = filter_var($user_email, FILTER_VALIDATE_EMAIL);
-      if ($user_email) {
-        // Suscribir a Mailrelay grupo 7 (mismo que GSC)
-        $mailrelay_key = $_ENV['MAILRELAY_API_KEY'] ?? getenv('MAILRELAY_API_KEY') ?? '';
-        if (!empty($mailrelay_key)) {
-          $ch = curl_init('https://walkiriaapps.ipzmarketing.com/api/v1/subscribers');
-          curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST           => true,
-            CURLOPT_POSTFIELDS     => json_encode(['email' => $user_email, 'status' => 'active', 'group_ids' => [7]]),
-            CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'X-AUTH-TOKEN: ' . $mailrelay_key],
-            CURLOPT_TIMEOUT        => 3,
-          ]);
-          curl_exec($ch);
-          curl_close($ch);
-        }
-
-        // Enviar correo con PDF adjunto si se generó, o solo HTML si no
-        $to      = $user_email;
-        $subject = 'Tu informe de análisis de logs está listo — ' . $result['source_name'];
-        $boundary = md5(uniqid());
-
-        $mail_headers  = "MIME-Version: 1.0\r\n";
-        $mail_headers .= "From: Víctor Alonso SEO <soy@victor-alonso.es>\r\n";
-        $mail_headers .= "Reply-To: soy@victor-alonso.es\r\n";
-        $mail_headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-
-        $html_body  = '<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:0 auto;color:#111">';
-        $html_body .= '<div style="background:#111;padding:2rem;text-align:center;border-radius:8px 8px 0 0">';
-        $html_body .= '<h1 style="color:#e8681a;margin:0;font-size:1.5rem">📊 Informe de Logs Completado</h1>';
-        $html_body .= '<p style="color:rgba(255,255,255,.7);margin:.5rem 0 0;font-size:.9rem">victor-alonso.es · Herramientas SEO</p></div>';
-        $html_body .= '<div style="background:#fff9f5;border:1px solid #e8681a;border-top:none;padding:2rem;border-radius:0 0 8px 8px">';
-        $html_body .= '<p>Hola,</p>';
-        $html_body .= '<p>He procesado el log <strong>' . h($result['source_name']) . '</strong> y te adjunto el informe completo en PDF.</p>';
-        $html_body .= '<table style="width:100%;border-collapse:collapse;margin-bottom:1.5rem">';
-        $html_body .= '<tr><td style="padding:.5rem;background:#111;color:#fff;font-weight:700">Métrica</td><td style="padding:.5rem;background:#111;color:#fff;font-weight:700">Valor</td></tr>';
-        $html_body .= '<tr><td style="padding:.5rem;border-bottom:1px solid #eee">Peticiones</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . number_format($result['parsed_lines'], 0, ',', '.') . '</td></tr>';
-        $html_body .= '<tr><td style="padding:.5rem;border-bottom:1px solid #eee">IPs únicas</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . number_format($result['unique_ips_count'], 0, ',', '.') . '</td></tr>';
-        $html_body .= '<tr><td style="padding:.5rem">Ancho de banda</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . $result['bandwidth_mb'] . ' MB</td></tr>';
-        $html_body .= '</table>';
-        if ($pdf_generated) {
-          $html_body .= '<p>📎 <strong>El informe PDF completo está adjunto a este correo.</strong></p>';
-        }
-        $html_body .= '<p style="font-size:.85rem;color:#666;margin-top:1.5rem">Un saludo,<br><strong>Víctor Alonso SEO</strong><br><a href="https://www.victor-alonso.es" style="color:#e8681a">victor-alonso.es</a></p>';
-        $html_body .= '</div></div>';
-
-        $mail_body  = "--$boundary\r\n";
-        $mail_body .= "Content-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\n\r\n";
-        $mail_body .= $html_body . "\r\n";
-
-        // Adjuntar PDF si existe
-        if ($pdf_generated) {
-          $pdf_content = chunk_split(base64_encode(file_get_contents($pdf_path)));
-          $mail_body .= "--$boundary\r\n";
-          $mail_body .= "Content-Type: application/pdf; name=\"informe-logs-" . date('Y-m-d') . ".pdf\"\r\n";
-          $mail_body .= "Content-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\"informe-logs-" . date('Y-m-d') . ".pdf\"\r\n\r\n";
-          $mail_body .= $pdf_content . "\r\n";
-        }
-        $mail_body .= "--$boundary--";
-
-        mail($to, $subject, $mail_body, $mail_headers);
       }
     }
   }
@@ -1043,19 +1061,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
           </div>
 
-          <!-- Campo de Email Opcional -->
-          <div style="margin-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 1.5rem;">
-            <label for="user_email_logs" style="display: block; font-weight: 700; color: #111111; margin-bottom: 0.5rem; font-size: 0.95rem;">
-              📧 ¿Quieres recibir un resumen del análisis en tu correo? <span style="font-weight: 400; color: var(--muted);">(Opcional)</span>
-            </label>
-            <input type="email" id="user_email_logs" name="user_email"
-              placeholder="ejemplo@tuweb.com"
-              style="width: 100%; max-width: 420px; padding: 0.65rem 1rem; border: 1px solid rgba(34,49,63,0.2); border-radius: 8px; font-size: 0.95rem; background: #fff; color: #111111; transition: border-color 0.2s;"
-              onfocus="this.style.borderColor='#e8681a'" onblur="this.style.borderColor='rgba(34,49,63,0.2)'">
-            <p style="margin: 0.4rem 0 0 0; font-size: 0.82rem; color: var(--muted); line-height: 1.4;">
-              Si indicas tu email, te enviaré un resumen con las métricas clave, errores 404 y crawlers detectados, y te suscribirás a mi boletín SEO.
-            </p>
-          </div>
+
 
           <div style="text-align: right; margin-top: 1.5rem;">
             <button type="submit" class="btn btn--primary" style="margin-top: 0;">Procesar y Analizar Logs</button>
@@ -1096,11 +1102,54 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 style="color: #111111; font-weight: 400;"><?= h($result['source_name']) ?></span>
             </h3>
             <?php if (!empty($result['pdf_download'])): ?>
-            <a href="<?= h($result['pdf_download']) ?>" class="btn btn--secondary btn-pdf-export"
-              style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 2px solid #e8681a; background: #e8681a; color: #ffffff; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-weight: 700; text-decoration: none;"
-              title="Descargar informe PDF de análisis de logs">
-              <span>📄</span> Descargar Informe PDF
-            </a>
+            <div id="leadMagnetBox" style="background: #fff9f5; border: 2px solid #e8681a; border-radius: 8px; padding: 1.5rem; text-align: left; width: 100%; max-width: 500px; box-shadow: 0 4px 15px rgba(232,104,26,0.1);">
+              <h4 style="margin: 0 0 0.5rem 0; color: #111111; font-size: 1.1rem;">📄 ¿Quieres el informe PDF completo en alta calidad?</h4>
+              <p style="margin: 0 0 1rem 0; font-size: 0.9rem; color: #4b5563;">Te lo envío gratis a tu correo (incluye gráficas y listado completo de top IPs y bots).</p>
+              <form id="leadMagnetForm" onsubmit="sendPdfEmail(event, '<?= h($result['audit_id'] ?? '') ?>')" style="display: flex; gap: 0.5rem;">
+                <input type="email" id="lm_email" required placeholder="Tu mejor correo..." style="flex: 1; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem;">
+                <button type="submit" class="btn btn--primary" style="margin: 0; padding: 0.6rem 1rem; border-radius: 6px; font-size: 0.9rem;">Enviar PDF</button>
+              </form>
+              <div id="lm_msg" style="margin-top: 0.8rem; font-size: 0.85rem; font-weight: 600; display: none;"></div>
+            </div>
+            <script>
+            function sendPdfEmail(e, auditId) {
+              e.preventDefault();
+              const btn = e.target.querySelector('button');
+              const msg = document.getElementById('lm_msg');
+              const email = document.getElementById('lm_email').value;
+              btn.disabled = true;
+              btn.innerText = 'Enviando...';
+              msg.style.display = 'none';
+
+              const formData = new FormData();
+              formData.append('action', 'send_pdf');
+              formData.append('audit_id', auditId);
+              formData.append('user_email', email);
+
+              fetch('/herramientas/analizador-logs/', { method: 'POST', body: formData })
+                .then(r => r.json())
+                .then(data => {
+                  msg.style.display = 'block';
+                  if(data.success) {
+                    msg.style.color = '#2ecc71';
+                    msg.innerHTML = '¡Enviado! Revisa tu bandeja de entrada.';
+                    e.target.style.display = 'none';
+                  } else {
+                    msg.style.color = '#e74c3c';
+                    msg.innerHTML = data.message || 'Hubo un error al enviar el informe.';
+                    btn.disabled = false;
+                    btn.innerText = 'Enviar PDF';
+                  }
+                })
+                .catch(() => {
+                  msg.style.display = 'block';
+                  msg.style.color = '#e74c3c';
+                  msg.innerHTML = 'Error de conexión. Inténtalo de nuevo.';
+                  btn.disabled = false;
+                  btn.innerText = 'Enviar PDF';
+                });
+            }
+            </script>
             <?php else: ?>
             <span class="btn btn--secondary btn-pdf-export"
               style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 1px solid #ccc; background: #f5f5f5; color: #999; border-radius: 6px; cursor: not-allowed; font-weight: 600;"
