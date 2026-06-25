@@ -97,6 +97,9 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           <button id="tab-read-btn" class="tab-btn" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
             <i class="fa-solid fa-magnifying-glass" style="margin-right: 0.5rem;"></i> Leer Metadatos
           </button>
+          <button id="tab-edit-btn" class="tab-btn" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
+            <i class="fa-solid fa-pen-to-square" style="margin-right: 0.5rem;"></i> Editar Todo
+          </button>
         </div>
 
         <!-- Pestaña: ESCRIBIR (AÑADIR) METADATOS -->
@@ -204,6 +207,41 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           </div>
         </div>
 
+        <!-- Pestaña: EDITAR METADATOS -->
+        <div id="tab-edit-content" class="tab-content" style="display: none;">
+          <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);">
+            <h2 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--black);">Editor Avanzado EXIF</h2>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-bottom: 2rem;">
+              Sube una imagen para cargar todos sus metadatos internos en formato de formulario. Podrás editar libremente cualquier etiqueta soportada (textos, fechas y números) de forma segura.
+            </p>
+
+            <div id="dropzone-edit" style="border: 2px dashed rgba(34, 49, 63, 0.2); border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; background: var(--lightgray); cursor: pointer; transition: all 0.25s ease; position: relative;">
+              <input type="file" id="gps-img-edit" accept="image/jpeg, image/jpg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
+              
+              <div id="prompt-edit">
+                <i class="fa-solid fa-pen-to-square" style="font-size: 3rem; color: var(--orange); margin-bottom: 1.25rem; display: block;"></i>
+                <span style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">Arrastra tu imagen JPG aquí</span>
+              </div>
+            </div>
+
+            <!-- Resultados EDICIÓN -->
+            <div id="edit-results" style="display: none; margin-top: 2rem; border-top: 1px solid var(--bordergray); padding-top: 1.5rem;">
+              <h3 style="font-size: 1.2rem; color: var(--black); margin-bottom: 1rem;">📝 Editar Campos EXIF:</h3>
+              <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem;">
+                Los campos bloqueados (grises) contienen datos binarios estructurados no editables en texto plano. Los arrays como <code>[300, 1]</code> son fracciones numéricas. Edita los valores y haz clic en guardar.
+              </p>
+              
+              <form id="form-edit-exif" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                <div id="dynamic-edit-fields" style="display: grid; grid-template-columns: 1fr; gap: 1rem;"></div>
+                <button type="button" id="btn-save-edit" class="btn btn--primary btn--lg" style="justify-content: center; margin-top: 1rem;">
+                  <i class="fa-solid fa-floppy-disk" style="margin-right: 0.5rem;"></i> Guardar Cambios y Descargar
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -235,7 +273,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 .tab-btn:hover {
   color: var(--orange) !important;
 }
-#dropzone-write.dragover, #dropzone-read.dragover {
+#dropzone-write.dragover, #dropzone-read.dragover, #dropzone-edit.dragover {
   border-color: var(--orange) !important;
   background: rgba(232, 104, 26, 0.03) !important;
 }
@@ -257,44 +295,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- LÓGICA DE PESTAÑAS ---
     const tabWriteBtn = document.getElementById('tab-write-btn');
     const tabReadBtn = document.getElementById('tab-read-btn');
+    const tabEditBtn = document.getElementById('tab-edit-btn');
     const tabWriteContent = document.getElementById('tab-write-content');
     const tabReadContent = document.getElementById('tab-read-content');
+    const tabEditContent = document.getElementById('tab-edit-content');
     
     let writeMap, writeMarker;
     let readMap, readMarker;
 
+    function setTabActive(btnActive, contentActive, otrosBtns, otrosContents) {
+        btnActive.classList.add('active');
+        btnActive.style.borderBottomColor = 'var(--orange)';
+        btnActive.style.color = 'var(--orange)';
+        btnActive.style.fontWeight = '700';
+        contentActive.style.display = 'block';
+
+        otrosBtns.forEach(b => {
+            b.classList.remove('active');
+            b.style.borderBottomColor = 'transparent';
+            b.style.color = 'var(--muted)';
+            b.style.fontWeight = '600';
+        });
+
+        otrosContents.forEach(c => {
+            c.style.display = 'none';
+        });
+    }
+
     tabWriteBtn.addEventListener('click', () => {
-        tabWriteBtn.classList.add('active');
-        tabWriteBtn.style.borderBottomColor = 'var(--orange)';
-        tabWriteBtn.style.color = 'var(--orange)';
-        tabWriteBtn.style.fontWeight = '700';
-
-        tabReadBtn.classList.remove('active');
-        tabReadBtn.style.borderBottomColor = 'transparent';
-        tabReadBtn.style.color = 'var(--muted)';
-        tabReadBtn.style.fontWeight = '600';
-
-        tabWriteContent.style.display = 'block';
-        tabReadContent.style.display = 'none';
+        setTabActive(tabWriteBtn, tabWriteContent, [tabReadBtn, tabEditBtn], [tabReadContent, tabEditContent]);
         if(writeMap) writeMap.invalidateSize();
     });
 
     tabReadBtn.addEventListener('click', () => {
-        tabReadBtn.classList.add('active');
-        tabReadBtn.style.borderBottomColor = 'var(--orange)';
-        tabReadBtn.style.color = 'var(--orange)';
-        tabReadBtn.style.fontWeight = '700';
-
-        tabWriteBtn.classList.remove('active');
-        tabWriteBtn.style.borderBottomColor = 'transparent';
-        tabWriteBtn.style.color = 'var(--muted)';
-        tabWriteBtn.style.fontWeight = '600';
-
-        tabReadContent.style.display = 'block';
-        tabWriteContent.style.display = 'none';
-        
-        // Inicializar mapa de lectura si se muestran resultados
+        setTabActive(tabReadBtn, tabReadContent, [tabWriteBtn, tabEditBtn], [tabWriteContent, tabEditContent]);
         if(readMap) readMap.invalidateSize();
+    });
+
+    tabEditBtn.addEventListener('click', () => {
+        setTabActive(tabEditBtn, tabEditContent, [tabWriteBtn, tabReadBtn], [tabWriteContent, tabReadContent]);
     });
 
     // --- MAPA DE ESCRITURA (LEAFLET) ---
@@ -571,6 +610,171 @@ document.addEventListener('DOMContentLoaded', function() {
         tr.appendChild(td2);
         tbody.appendChild(tr);
     }
+
+    // --- LÓGICA DE EDICIÓN AVANZADA ---
+    const dropEdit = document.getElementById('dropzone-edit');
+    const inputEdit = document.getElementById('gps-img-edit');
+    let currentEditBase64 = null;
+    let currentEditFileName = "";
+    let currentEditExifObj = null;
+
+    ['dragenter', 'dragover'].forEach(evt => dropEdit.addEventListener(evt, e => {
+        e.preventDefault(); dropEdit.classList.add('dragover');
+    }, false));
+    ['dragleave', 'drop'].forEach(evt => dropEdit.addEventListener(evt, e => {
+        e.preventDefault(); dropEdit.classList.remove('dragover');
+    }, false));
+
+    inputEdit.addEventListener('change', function(e) {
+        if(this.files && this.files[0]) processFileEdit(this.files[0]);
+    });
+
+    function processFileEdit(file) {
+        if(!file.type.match('image/jpeg')) {
+            alert("Por favor, sube una imagen JPG o JPEG.");
+            return;
+        }
+        currentEditFileName = file.name;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            currentEditBase64 = e.target.result;
+            
+            document.getElementById('edit-results').style.display = 'block';
+            const fieldsContainer = document.getElementById('dynamic-edit-fields');
+            fieldsContainer.innerHTML = '';
+            
+            try {
+                currentEditExifObj = piexif.load(currentEditBase64);
+                let count = 0;
+
+                for (let ifd in currentEditExifObj) {
+                    if (ifd === "thumbnail" || !currentEditExifObj[ifd]) continue;
+                    
+                    for (let tag in currentEditExifObj[ifd]) {
+                        let tagName = piexif.TAGS[ifd] && piexif.TAGS[ifd][tag] ? piexif.TAGS[ifd][tag]["name"] : tag;
+                        let val = currentEditExifObj[ifd][tag];
+                        
+                        let isReadonly = false;
+                        let displayVal = val;
+                        let dataType = "string";
+
+                        if (Array.isArray(val)) {
+                            // Arrays cortos suelen ser racionales [num, den]
+                            if (val.length <= 6) {
+                                displayVal = JSON.stringify(val);
+                                dataType = "array";
+                            } else {
+                                displayVal = "[Datos Binarios (No editable)]";
+                                isReadonly = true;
+                                dataType = "binary";
+                            }
+                        } else if (typeof val === 'string' && val.length > 200) {
+                            displayVal = "[Texto demasiado largo (No editable)]";
+                            isReadonly = true;
+                            dataType = "longstring";
+                        } else if (typeof val === 'number') {
+                            dataType = "number";
+                        }
+
+                        // Crear campo
+                        const row = document.createElement('div');
+                        row.style.display = 'flex';
+                        row.style.flexDirection = 'column';
+                        
+                        const label = document.createElement('label');
+                        label.style.fontSize = '0.85rem';
+                        label.style.fontWeight = '600';
+                        label.style.color = 'var(--black)';
+                        label.style.marginBottom = '0.25rem';
+                        label.textContent = `[${ifd}] ${tagName}`;
+                        
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.value = displayVal;
+                        input.dataset.ifd = ifd;
+                        input.dataset.tag = tag;
+                        input.dataset.type = dataType;
+                        input.style.width = '100%';
+                        input.style.padding = '0.5rem';
+                        input.style.border = '1px solid rgba(0,0,0,0.2)';
+                        input.style.borderRadius = '4px';
+
+                        if(isReadonly) {
+                            input.readOnly = true;
+                            input.style.background = '#e2e8f0';
+                            input.style.color = '#64748b';
+                            input.style.border = '1px solid transparent';
+                        }
+
+                        row.appendChild(label);
+                        row.appendChild(input);
+                        fieldsContainer.appendChild(row);
+                        count++;
+                    }
+                }
+
+                if(count === 0) {
+                    fieldsContainer.innerHTML = '<p style="color:var(--muted)">Esta imagen no tiene metadatos EXIF. Ve a la pestaña "Añadir" para crear uno nuevo.</p>';
+                    document.getElementById('btn-save-edit').disabled = true;
+                } else {
+                    document.getElementById('btn-save-edit').disabled = false;
+                }
+
+            } catch(err) {
+                console.error(err);
+                fieldsContainer.innerHTML = '<p style="color:var(--orange)">Error al cargar los metadatos de esta imagen.</p>';
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+
+    // Guardar los cambios dinámicos
+    document.getElementById('btn-save-edit').addEventListener('click', () => {
+        if(!currentEditExifObj || !currentEditBase64) return;
+
+        try {
+            // Recorrer los inputs y actualizar currentEditExifObj
+            const inputs = document.querySelectorAll('#dynamic-edit-fields input');
+            inputs.forEach(input => {
+                if(input.readOnly) return; // Omitir bloqueados
+
+                let valStr = input.value.trim();
+                let ifd = input.dataset.ifd;
+                let tag = input.dataset.tag;
+                let type = input.dataset.type;
+
+                if(type === "array") {
+                    try {
+                        let arr = JSON.parse(valStr);
+                        if(Array.isArray(arr)) currentEditExifObj[ifd][tag] = arr;
+                    } catch(e) {
+                        console.warn("No se pudo parsear array para", tagName);
+                    }
+                } else if(type === "number") {
+                    currentEditExifObj[ifd][tag] = Number(valStr);
+                } else {
+                    currentEditExifObj[ifd][tag] = valStr;
+                }
+            });
+
+            // Recompilar
+            const exifBytes = piexif.dump(currentEditExifObj);
+            const newJpegData = piexif.insert(exifBytes, currentEditBase64);
+
+            // Descargar archivo
+            const a = document.createElement('a');
+            a.href = newJpegData;
+            a.download = currentEditFileName.replace(/\.[^/.]+$/, "") + "-editada.jpg";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+        } catch(error) {
+            console.error(error);
+            alert("Ocurrió un error al guardar los metadatos. Verifica que las fracciones estén en formato [num, den].");
+        }
+    });
 });
 </script>
 
