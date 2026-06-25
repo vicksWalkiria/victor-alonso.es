@@ -3,6 +3,29 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 require_once dirname(__DIR__) . '/includes/ratings-helper.php';
 
+// ── Descarga directa del PDF de logs ──────────────────────────────────────
+if (isset($_GET['download'])) {
+  $hash = preg_replace('/[^a-f0-9]/', '', $_GET['download']);
+  if (strlen($hash) === 32) {
+    $pdf_path = BASE_DIR . "/data/reports/logs/tmp_$hash/report.pdf";
+    $dir_path = BASE_DIR . "/data/reports/logs/tmp_$hash";
+    if (file_exists($pdf_path)) {
+      header('Content-Type: application/pdf');
+      header('Content-Disposition: attachment; filename="informe-logs-' . date('Y-m-d') . '.pdf"');
+      header('Content-Length: ' . filesize($pdf_path));
+      header('Pragma: public');
+      header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+      readfile($pdf_path);
+      // Borrar tras descarga
+      foreach (glob("$dir_path/*") as $f) { if (is_file($f)) unlink($f); }
+      rmdir($dir_path);
+      exit;
+    } else {
+      $error_msg = 'El informe ya expiró o fue descargado. Sube tu log de nuevo para regenerarlo.';
+    }
+  }
+}
+
 // Interceptar acción AJAX de votación
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'rate') {
   header('Content-Type: application/json');
@@ -33,8 +56,8 @@ $warning = null;
 $result = null;
 
 // Límites de seguridad
-define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5 MB
-define('MAX_LINES', 15000); // 15.000 líneas
+define('MAX_FILE_SIZE', 50 * 1024 * 1024); // 50 MB
+define('MAX_LINES', 100000); // 100.000 líneas
 
 /**
  * Formatea fechas de log apache de "24/May/2026:00:07:51 +0000" a "24 de Mayo, 2026 — 00:07:51"
@@ -145,7 +168,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_FILES['log_file']) && $_FILES['log_file']['error'] === UPLOAD_ERR_OK) {
     $file_size = $_FILES['log_file']['size'];
     if ($file_size > MAX_FILE_SIZE) {
-      $error = 'El archivo subido supera el límite de seguridad de 5 MB.';
+      $error = 'El archivo subido supera el límite de seguridad de 50 MB.';
     } else {
       $stream = fopen($_FILES['log_file']['tmp_name'], 'r');
       $source_name = $_FILES['log_file']['name'];
@@ -153,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif (!empty($_POST['log_text'])) {
     $text_len = strlen($_POST['log_text']);
     if ($text_len > MAX_FILE_SIZE) {
-      $error = 'El texto pegado supera el límite de seguridad de 5 MB.';
+      $error = 'El texto pegado supera el límite de seguridad de 50 MB.';
     } else {
       $stream = fopen('php://temp', 'r+');
       fwrite($stream, $_POST['log_text']);
@@ -199,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $total_lines_checked++;
       if ($total_lines_checked > MAX_LINES) {
-        $warning = 'El archivo es muy extenso. Por motivos de rendimiento del servidor, solo se han analizado las primeras ' . number_format(MAX_LINES, 0, ',', '.') . ' líneas.';
+        $warning = 'El archivo es muy extenso. Por motivos de rendimiento del servidor, solo se han analizado las primeras ' . number_format(MAX_LINES, 0, '.', '.') . ' líneas.';
         break;
       }
 
@@ -398,20 +421,105 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'js_entries' => $js_entries
       ];
 
-      // Save result for PDF generation
-      $result['audit_id'] = 'log_' . bin2hex(random_bytes(16));
-      $reports_dir = dirname(dirname(__DIR__)) . '/data/reports/logs';
-      if (!is_dir($reports_dir)) {
-          mkdir($reports_dir, 0777, true);
+      // ── Guardar JSON + Generar PDF con el engine LaTeX ──────────────────────
+      $audit_hash = bin2hex(random_bytes(16));
+      $result['audit_id'] = 'log_' . $audit_hash;
+      $reports_base = BASE_DIR . '/data/reports/logs';
+      $report_dir   = $reports_base . '/tmp_' . $audit_hash;
+      if (!is_dir($report_dir)) mkdir($report_dir, 0755, true);
+
+      // Limpiar directorios temporales antiguos (> 1 hora)
+      foreach (glob($reports_base . '/tmp_*') as $old_dir) {
+        if (is_dir($old_dir) && filemtime($old_dir) < time() - 3600) {
+          foreach (glob("$old_dir/*") as $f) { if (is_file($f)) unlink($f); }
+          @rmdir($old_dir);
+        }
       }
-      // Limpiar logs antiguos (más de 1 hora)
-      $old_logs = glob($reports_dir . '/*.json');
-      if ($old_logs) {
-          foreach ($old_logs as $file) {
-              if (filemtime($file) < time() - 3600) @unlink($file);
-          }
+
+      $json_path = $report_dir . '/data.json';
+      $pdf_path  = $report_dir . '/report.pdf';
+      // Guardar JSON (sin js_entries para no inflar el fichero)
+      $result_for_json = $result;
+      unset($result_for_json['js_entries']);
+      file_put_contents($json_path, json_encode($result_for_json));
+
+      // Llamar al engine Python para generar el PDF
+      $engine_path = __DIR__ . '/log-report-engine/engine.py';
+      $cmd = 'python3 ' . escapeshellarg($engine_path) . ' ' . escapeshellarg($json_path) . ' ' . escapeshellarg($pdf_path) . ' 2>&1';
+      exec($cmd, $engine_output, $engine_code);
+      $pdf_generated = ($engine_code === 0 && file_exists($pdf_path));
+
+      if ($pdf_generated) {
+        $result['pdf_download'] = '?download=' . $audit_hash;
+        error_log('[logs-engine] PDF generado: ' . $pdf_path);
+      } else {
+        error_log('[logs-engine] Fallo al generar PDF: ' . implode("\n", $engine_output));
       }
-      file_put_contents($reports_dir . '/' . $result['audit_id'] . '.json', json_encode($result));
+
+      // ── Email opcional: Mailrelay + PDF adjunto ────────────────────────────
+      $user_email = isset($_POST['user_email']) ? trim($_POST['user_email']) : '';
+      $user_email = filter_var($user_email, FILTER_VALIDATE_EMAIL);
+      if ($user_email) {
+        // Suscribir a Mailrelay grupo 7 (mismo que GSC)
+        $mailrelay_key = $_ENV['MAILRELAY_API_KEY'] ?? getenv('MAILRELAY_API_KEY') ?? '';
+        if (!empty($mailrelay_key)) {
+          $ch = curl_init('https://walkiriaapps.ipzmarketing.com/api/v1/subscribers');
+          curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => json_encode(['email' => $user_email, 'status' => 'active', 'group_ids' => [7]]),
+            CURLOPT_HTTPHEADER     => ['Content-Type: application/json', 'X-AUTH-TOKEN: ' . $mailrelay_key],
+            CURLOPT_TIMEOUT        => 3,
+          ]);
+          curl_exec($ch);
+          curl_close($ch);
+        }
+
+        // Enviar correo con PDF adjunto si se generó, o solo HTML si no
+        $to      = $user_email;
+        $subject = 'Tu informe de análisis de logs está listo — ' . $result['source_name'];
+        $boundary = md5(uniqid());
+
+        $mail_headers  = "MIME-Version: 1.0\r\n";
+        $mail_headers .= "From: Víctor Alonso SEO <soy@victor-alonso.es>\r\n";
+        $mail_headers .= "Reply-To: soy@victor-alonso.es\r\n";
+        $mail_headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+
+        $html_body  = '<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;max-width:600px;margin:0 auto;color:#111">';
+        $html_body .= '<div style="background:#111;padding:2rem;text-align:center;border-radius:8px 8px 0 0">';
+        $html_body .= '<h1 style="color:#e8681a;margin:0;font-size:1.5rem">📊 Informe de Logs Completado</h1>';
+        $html_body .= '<p style="color:rgba(255,255,255,.7);margin:.5rem 0 0;font-size:.9rem">victor-alonso.es · Herramientas SEO</p></div>';
+        $html_body .= '<div style="background:#fff9f5;border:1px solid #e8681a;border-top:none;padding:2rem;border-radius:0 0 8px 8px">';
+        $html_body .= '<p>Hola,</p>';
+        $html_body .= '<p>He procesado el log <strong>' . h($result['source_name']) . '</strong> y te adjunto el informe completo en PDF.</p>';
+        $html_body .= '<table style="width:100%;border-collapse:collapse;margin-bottom:1.5rem">';
+        $html_body .= '<tr><td style="padding:.5rem;background:#111;color:#fff;font-weight:700">Métrica</td><td style="padding:.5rem;background:#111;color:#fff;font-weight:700">Valor</td></tr>';
+        $html_body .= '<tr><td style="padding:.5rem;border-bottom:1px solid #eee">Peticiones</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . number_format($result['parsed_lines'], 0, ',', '.') . '</td></tr>';
+        $html_body .= '<tr><td style="padding:.5rem;border-bottom:1px solid #eee">IPs únicas</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . number_format($result['unique_ips_count'], 0, ',', '.') . '</td></tr>';
+        $html_body .= '<tr><td style="padding:.5rem">Ancho de banda</td><td style="padding:.5rem;font-weight:700;color:#e8681a">' . $result['bandwidth_mb'] . ' MB</td></tr>';
+        $html_body .= '</table>';
+        if ($pdf_generated) {
+          $html_body .= '<p>📎 <strong>El informe PDF completo está adjunto a este correo.</strong></p>';
+        }
+        $html_body .= '<p style="font-size:.85rem;color:#666;margin-top:1.5rem">Un saludo,<br><strong>Víctor Alonso SEO</strong><br><a href="https://www.victor-alonso.es" style="color:#e8681a">victor-alonso.es</a></p>';
+        $html_body .= '</div></div>';
+
+        $mail_body  = "--$boundary\r\n";
+        $mail_body .= "Content-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\n\r\n";
+        $mail_body .= $html_body . "\r\n";
+
+        // Adjuntar PDF si existe
+        if ($pdf_generated) {
+          $pdf_content = chunk_split(base64_encode(file_get_contents($pdf_path)));
+          $mail_body .= "--$boundary\r\n";
+          $mail_body .= "Content-Type: application/pdf; name=\"informe-logs-" . date('Y-m-d') . ".pdf\"\r\n";
+          $mail_body .= "Content-Transfer-Encoding: base64\r\nContent-Disposition: attachment; filename=\"informe-logs-" . date('Y-m-d') . ".pdf\"\r\n\r\n";
+          $mail_body .= $pdf_content . "\r\n";
+        }
+        $mail_body .= "--$boundary--";
+
+        mail($to, $subject, $mail_body, $mail_headers);
+      }
     }
   }
 }
@@ -908,14 +1016,17 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <button type="button" class="tab-btn" onclick="switchTab('pegar-texto')">Pegar Líneas de Log</button>
         </div>
 
-        <form action="/herramientas/analizador-logs/" method="POST" enctype="multipart/form-data" id="logsForm">
+        <form action="/herramientas/analizador-logs/" method="POST" enctype="multipart/form-data" id="logsForm"
+          toolname="apacheNginxLogAnalyzer"
+          tooldescription="Audita la salud técnica de tu servidor analizando archivos de log Common o Combined de Apache o Nginx en vivo, detectando errores 404, actividad de bots de búsqueda e IPs."
+          toolautosubmit="false">
 
           <!-- Pestaña 1: Subir Archivo -->
           <div id="subir-archivo" class="tab-content active">
             <div class="drag-area" id="dragArea" onclick="document.getElementById('fileInput').click()">
               <div class="drag-icon">📁</div>
               <div class="drag-text">Arrastra tu archivo de log aquí o haz clic para buscarlo</div>
-              <div class="drag-subtext">Formatos aceptados: .log, .txt (Máximo 5 MB)</div>
+              <div class="drag-subtext">Formatos aceptados: .log, .txt (Máximo 50 MB)</div>
               <input type="file" name="log_file" id="fileInput" style="display: none;"
                 onchange="handleFileSelect(this)">
             </div>
@@ -932,9 +1043,21 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </div>
           </div>
 
+          <!-- Campo de Email Opcional -->
+          <div style="margin-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 1.5rem;">
+            <label for="user_email_logs" style="display: block; font-weight: 700; color: #111111; margin-bottom: 0.5rem; font-size: 0.95rem;">
+              📧 ¿Quieres recibir un resumen del análisis en tu correo? <span style="font-weight: 400; color: var(--muted);">(Opcional)</span>
+            </label>
+            <input type="email" id="user_email_logs" name="user_email"
+              placeholder="ejemplo@tuweb.com"
+              style="width: 100%; max-width: 420px; padding: 0.65rem 1rem; border: 1px solid rgba(34,49,63,0.2); border-radius: 8px; font-size: 0.95rem; background: #fff; color: #111111; transition: border-color 0.2s;"
+              onfocus="this.style.borderColor='#e8681a'" onblur="this.style.borderColor='rgba(34,49,63,0.2)'">
+            <p style="margin: 0.4rem 0 0 0; font-size: 0.82rem; color: var(--muted); line-height: 1.4;">
+              Si indicas tu email, te enviaré un resumen con las métricas clave, errores 404 y crawlers detectados, y te suscribirás a mi boletín SEO.
+            </p>
+          </div>
 
-
-          <div style="text-align: right;">
+          <div style="text-align: right; margin-top: 1.5rem;">
             <button type="submit" class="btn btn--primary" style="margin-top: 0;">Procesar y Analizar Logs</button>
           </div>
         </form>
@@ -959,10 +1082,19 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <span>📊</span> Dashboard de Análisis: <span
                 style="color: #111111; font-weight: 400;"><?= h($result['source_name']) ?></span>
             </h3>
-            <a href="/herramientas/auditor-cookies-api.php?action=pdf&tool=logs&id=<?= h($result['audit_id'] ?? '') ?>" class="btn btn--secondary btn-pdf-export"
-              style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 1px solid #111111; background: #ffffff; color: #111111; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-weight: 600; text-decoration: none;">
-              <span>🖨️</span> Descargar Informe PDF
+            <?php if (!empty($result['pdf_download'])): ?>
+            <a href="<?= h($result['pdf_download']) ?>" class="btn btn--secondary btn-pdf-export"
+              style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 2px solid #e8681a; background: #e8681a; color: #ffffff; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-weight: 700; text-decoration: none;"
+              title="Descargar informe PDF de análisis de logs">
+              <span>📄</span> Descargar Informe PDF
             </a>
+            <?php else: ?>
+            <span class="btn btn--secondary btn-pdf-export"
+              style="display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; padding: 0.5rem 1.2rem; font-size: 0.85rem; border: 1px solid #ccc; background: #f5f5f5; color: #999; border-radius: 6px; cursor: not-allowed; font-weight: 600;"
+              title="El PDF no pudo generarse en esta ocasión">
+              <span>🖨️</span> PDF no disponible
+            </span>
+            <?php endif; ?>
           </div>
 
           <!-- Filtro temporal reactivo en cliente (JS) -->
