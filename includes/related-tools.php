@@ -51,6 +51,11 @@ $tools_list = [
         'file' => 'generador-informe-gsc.php',
         'href' => '/herramientas/generador-informe-gsc/',
         'label' => 'Generador GSC PDF'
+    ],
+    [
+        'file' => 'editor-metadatos-imagenes.php',
+        'href' => '/herramientas/editor-metadatos-imagenes/',
+        'label' => 'Editor de Metadatos EXIF'
     ]
 ];
 ?>

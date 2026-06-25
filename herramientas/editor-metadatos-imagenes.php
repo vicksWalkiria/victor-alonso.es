@@ -255,6 +255,9 @@ require __DIR__ . '/../includes/breadcrumbs.php';
         </div>
       </div>
 
+  <!-- Enlazado Interno de Herramientas Relacionadas -->
+  <?php require dirname(__DIR__) . '/includes/related-tools.php'; ?>
+
   <!-- FAQ -->
   <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
