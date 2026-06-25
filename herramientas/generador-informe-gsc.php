@@ -346,10 +346,13 @@ require __DIR__ . '/../includes/breadcrumbs.php';
       <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);">
         <h2 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--black);">Sube tu exportación de GSC</h2>
         <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin-bottom: 2rem;">
-          Para que pueda generar tu informe, ve a tu panel de Google Search Console, selecciona el periodo de tiempo deseado y haz clic en el botón <strong>"Exportar"</strong> (arriba a la derecha), eligiendo la opción <strong>"Descargar archivo ZIP"</strong>. Sube ese mismo archivo aquí sin descomprimir.
+          Para que pueda generar tu informe, ve a tu panel de Google Search Console, selecciona el periodo de tiempo deseado y haz clic en el botón <strong>"Exportar"</strong> (arriba a la derecha), eligiendo la opción <strong>"Descargar CSV"</strong> (esto te descargará un archivo .zip en tu ordenador). Sube ese mismo archivo ZIP aquí sin descomprimir.
         </p>
 
-        <form id="gsc-upload-form" method="POST" enctype="multipart/form-data">
+        <form id="gsc-upload-form" method="POST" enctype="multipart/form-data"
+          toolname="gscReportGenerator"
+          tooldescription="Genera informes avanzados en PDF y análisis detallados a partir de la exportación en ZIP de Google Search Console."
+          toolautosubmit="false">
           <!-- Dropzone -->
           <div id="dropzone" style="border: 2px dashed rgba(34, 49, 63, 0.2); border-radius: 12px; padding: 3rem 1.5rem; text-align: center; background: var(--lightgray); cursor: pointer; transition: all 0.25s ease; position: relative;">
             <input type="file" id="gsc_zip" name="gsc_zip" accept=".zip" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
