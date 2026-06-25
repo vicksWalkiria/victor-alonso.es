@@ -206,6 +206,47 @@ require __DIR__ . '/../includes/breadcrumbs.php';
     </div>
   </section>
 
+  
+      <!-- Contenido Adicional SEO / Casos de Uso -->
+      <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); margin-top: 3rem; margin-bottom: 3rem;">
+        <h2 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--black);">💡 ¿Para qué utilizar este Editor de Metadatos EXIF?</h2>
+        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 2rem;">
+          Los metadatos EXIF son información oculta incrustada dentro de cada fotografía. No todas las herramientas de compresión (como WhatsApp o el guardado para web) los conservan. Manipular estos datos te abre un abanico de posibilidades tanto para marketing y posicionamiento web, como para proteger tu trabajo o privacidad personal.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+          <div>
+            <div style="width: 48px; height: 48px; background: rgba(232, 104, 26, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <i class="fa-solid fa-store" style="color: var(--orange); font-size: 1.5rem;"></i>
+            </div>
+            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">SEO Local Extremo</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
+              Añadir coordenadas GPS exactas a una imagen online te permite asociar visualmente tus fotos con tu Google Business Profile. Modifica el campo <code>ImageDescription</code> para incluir tus keywords y geolocaliza las fotos en la dirección exacta de tu local antes de subirlas a tu web o ficha de negocio.
+            </p>
+          </div>
+          
+          <div>
+            <div style="width: 48px; height: 48px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <i class="fa-solid fa-copyright" style="color: #10b981; font-size: 1.5rem;"></i>
+            </div>
+            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Protección de Autoría</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
+              Si eres creador de contenido o fotógrafo, puedes inyectar tu nombre en el campo <code>Artist</code> o <code>Copyright</code>. Aunque a simple vista no se vea, el archivo siempre llevará tu firma incrustada en su código binario.
+            </p>
+          </div>
+          
+          <div>
+            <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+              <i class="fa-solid fa-camera-rotate" style="color: #3b82f6; font-size: 1.5rem;"></i>
+            </div>
+            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Corrección de Cámara</h3>
+            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
+              ¿Tiraste fotos con la cámara mal configurada o usaste una imagen de stock sin datos? Puedes falsificar o corregir el fabricante (<code>Make</code>), el modelo (<code>Model</code>) y arreglar una <code>DateTimeOriginal</code> errónea gracias al calendario integrado.
+            </p>
+          </div>
+        </div>
+      </div>
+
   <!-- FAQ -->
   <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
@@ -459,14 +500,35 @@ document.addEventListener('DOMContentLoaded', function() {
                         label.style.fontWeight = '600';
                         label.style.color = 'var(--black)';
                         label.style.marginBottom = '0.25rem';
-                        label.textContent = `[${ifd}] ${tagName}`;
+                        label.textContent = tagName;
                         
-                        const input = document.createElement('input');
+                                                const input = document.createElement('input');
                         input.type = 'text';
                         input.value = displayVal;
                         input.dataset.ifd = ifd;
                         input.dataset.tag = tag;
                         input.dataset.type = dataType;
+                        
+                        // Si es una fecha EXIF, usar el calendario
+                        if (tagName.includes('Date') || tagName.includes('Time')) {
+                            // Convertir formato EXIF "YYYY:MM:DD HH:MM:SS" a formato datetime-local "YYYY-MM-DDTHH:MM"
+                            let dateStr = String(displayVal).trim();
+                            if(dateStr.length >= 10 && dateStr.includes(':')) {
+                                let parts = dateStr.split(' ');
+                                if(parts.length >= 1) {
+                                    let dPart = parts[0].replace(/:/g, '-');
+                                    let tPart = parts[1] || '00:00:00';
+                                    // datetime-local soporta segundos, pero a veces falla en navegadores viejos. Usamos formato con segundos por si acaso, o lo truncamos.
+                                    // YYYY-MM-DDTHH:MM:SS
+                                    let isoStr = dPart + 'T' + tPart;
+                                    input.type = 'datetime-local';
+                                    input.step = '1'; // Permite segundos
+                                    input.value = isoStr;
+                                    input.dataset.type = "datetime";
+                                }
+                            }
+                        }
+
                         input.style.width = '100%';
                         input.style.padding = '0.5rem';
                         input.style.border = '1px solid rgba(0,0,0,0.2)';
@@ -538,6 +600,17 @@ document.addEventListener('DOMContentLoaded', function() {
                         if(Array.isArray(arr)) currentWriteExifObj[ifd][tag] = arr;
                     } catch(e) {
                         console.warn("No se pudo parsear array para", ifd, tag);
+                    }
+                } else if(type === "datetime") {
+                    // Revertir de "YYYY-MM-DDTHH:MM:SS" a EXIF "YYYY:MM:DD HH:MM:SS"
+                    let parts = valStr.split('T');
+                    if(parts.length === 2) {
+                        let dPart = parts[0].replace(/-/g, ':');
+                        let tPart = parts[1];
+                        if(tPart.length === 5) tPart += ':00'; // Asegurar segundos
+                        currentWriteExifObj[ifd][tag] = dPart + ' ' + tPart;
+                    } else {
+                        currentWriteExifObj[ifd][tag] = valStr;
                     }
                 } else if(type === "number") {
                     currentWriteExifObj[ifd][tag] = Number(valStr);
