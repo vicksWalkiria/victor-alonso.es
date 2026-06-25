@@ -298,6 +298,23 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 </style>
 
 <script>
+const exifDict = {
+    "Make": { label: "Fabricante de Cámara", desc: "Marca o fabricante del dispositivo (ej. Sony, Apple)." },
+    "Model": { label: "Modelo de Cámara", desc: "Modelo exacto del dispositivo (ej. iPhone 14)." },
+    "Software": { label: "Software de Edición", desc: "Programa usado (ej. Adobe Photoshop)." },
+    "DateTime": { label: "Fecha de Modificación", desc: "Cuándo se modificó por última vez." },
+    "DateTimeOriginal": { label: "Fecha de Captura", desc: "Momento exacto de la fotografía." },
+    "DateTimeDigitized": { label: "Fecha de Digitalización", desc: "Cuándo se digitalizó la foto." },
+    "Artist": { label: "Autor / Fotógrafo", desc: "Creador de la imagen. Ideal para SEO y Copyright." },
+    "Copyright": { label: "Copyright", desc: "Aviso legal de derechos de autor." },
+    "ImageDescription": { label: "Descripción", desc: "Título breve. Muy útil para inyectar keywords SEO." },
+    "Orientation": { label: "Orientación", desc: "Rotación de la imagen." },
+    "XResolution": { label: "Resolución X", desc: "Resolución horizontal." },
+    "YResolution": { label: "Resolución Y", desc: "Resolución vertical." },
+    "ResolutionUnit": { label: "Unidad de Resolución", desc: "Unidad de medida (ej. 2 = Pulgadas)." },
+    "UserComment": { label: "Comentarios", desc: "Notas libres en el archivo." }
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // --- LÓGICA DE PESTAÑAS ---
@@ -508,9 +525,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         label.style.fontWeight = '600';
                         label.style.color = 'var(--black)';
                         label.style.marginBottom = '0.25rem';
-                        label.textContent = tagName;
                         
-                                                const input = document.createElement('input');
+                        if(exifDict[tagName]) {
+                            label.innerHTML = `${exifDict[tagName].label} <span title="${exifDict[tagName].desc}" style="cursor:help; color:var(--muted); font-size:0.9rem;">ℹ️</span>`;
+                        } else {
+                            label.textContent = tagName;
+                        }
+                        
+                        const input = document.createElement('input');
                         input.type = 'text';
                         input.value = displayVal;
                         input.dataset.ifd = ifd;
@@ -519,21 +541,21 @@ document.addEventListener('DOMContentLoaded', function() {
                         
                         // Si es una fecha EXIF, usar el calendario
                         if (tagName.includes('Date') || tagName.includes('Time')) {
-                            // Convertir formato EXIF "YYYY:MM:DD HH:MM:SS" a formato datetime-local "YYYY-MM-DDTHH:MM"
+                            input.type = 'datetime-local';
+                            input.step = '1'; // Permite segundos
+                            input.dataset.type = "datetime";
+
                             let dateStr = String(displayVal).trim();
                             if(dateStr.length >= 10 && dateStr.includes(':')) {
                                 let parts = dateStr.split(' ');
                                 if(parts.length >= 1) {
                                     let dPart = parts[0].replace(/:/g, '-');
                                     let tPart = parts[1] || '00:00:00';
-                                    // datetime-local soporta segundos, pero a veces falla en navegadores viejos. Usamos formato con segundos por si acaso, o lo truncamos.
-                                    // YYYY-MM-DDTHH:MM:SS
                                     let isoStr = dPart + 'T' + tPart;
-                                    input.type = 'datetime-local';
-                                    input.step = '1'; // Permite segundos
                                     input.value = isoStr;
-                                    input.dataset.type = "datetime";
                                 }
+                            } else {
+                                input.value = '';
                             }
                         }
 
@@ -594,9 +616,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 let tag = input.dataset.tag;
                 let type = input.dataset.type;
 
-                // Si está vacío, borrarlo si es string, para no dejar basura si el usuario lo vacía
+                // Si está vacío, borrarlo para no dejar basura en el EXIF final
                 if(valStr === "") {
-                    if(type === "string" && currentWriteExifObj[ifd]) {
+                    if(currentWriteExifObj[ifd]) {
                         delete currentWriteExifObj[ifd][tag];
                     }
                     return; 
