@@ -19,7 +19,7 @@ $page = page_config([
         ['name' => 'Auditor de Coherencia SEO Local GMB', 'url' => '/herramientas/auditor-seo-local-gmb/'],
         ['name' => 'Tester de .htaccess y Validador mod_rewrite', 'url' => '/herramientas/tester-htaccess/'],
         ['name' => 'Generador de Informes GSC PDF', 'url' => '/herramientas/generador-informe-gsc/'],
-        ['name' => 'Editor GPS en Imágenes EXIF', 'url' => '/herramientas/editor-gps-imagenes/'],
+        ['name' => 'Editor Metadatos EXIF', 'url' => '/herramientas/editor-metadatos-imagenes/'],
     ],
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
@@ -81,7 +81,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <a href="#auditor-gmb" class="tool-pill">📍 Auditor GMB</a>
         <a href="#tester-htaccess" class="tool-pill">⚡ Tester .htaccess</a>
         <a href="#generador-gsc" class="tool-pill">📊 Reporte GSC PDF</a>
-        <a href="#editor-gps" class="tool-pill">📍 Editor GPS Imágenes</a>
+        <a href="#editor-metadatos" class="tool-pill">📍 Editor Metadatos EXIF</a>
       </div>
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
@@ -312,14 +312,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </article>
 
         <!-- CARD 11: EDITOR GPS IMÁGENES -->
-        <article id="editor-gps" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+        <article id="editor-metadatos" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>
             <div class="card-icon" style="background: rgba(232,104,26,.1)">
               <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle>
               </svg>
             </div>
-            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Editor GPS en Imágenes EXIF</h2>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Editor Metadatos de Imágenes EXIF</h2>
             <p style="margin-bottom:1.5rem;font-size:.95rem">Geolocaliza tus imágenes JPG al instante desde el navegador para potenciar el SEO Local de tu negocio. Sin registros, de forma 100% privada (la imagen nunca toca mis servidores).</p>
             <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
               <li class="checklist-item">Añade o edita metadatos de ubicación GPS directamente en el EXIF.</li>
@@ -328,7 +328,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <li class="checklist-item">Procesamiento ultra-rápido basado en JavaScript (privacidad total).</li>
             </ul>
           </div>
-          <a href="/herramientas/editor-metadatos-imagenes/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Editor GPS</a>
+          <a href="/herramientas/editor-metadatos-imagenes/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Editor de Metadatos</a>
         </article>
 
       </div>
