@@ -41,6 +41,14 @@ $page = page_config([
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
         ['label' => 'Editor de Metadatos de Imágenes', 'url' => ''],
     ],
+    'applicationCategory' => 'MultimediaApplication',
+    'featureList' => [
+        'Geolocalización GPS en lote',
+        'Inyección de coordenadas en imágenes sin EXIF',
+        'Edición manual de campos Make, Model, DateTimeOriginal, Software, Artist',
+        'Eliminación de metadatos privados',
+        'Procesamiento en el cliente con JavaScript (PieXIF)'
+    ],
     'faq_items'    => [
         [
             'q' => '¿Por qué geolocalizar mis imágenes ayuda al SEO Local?',

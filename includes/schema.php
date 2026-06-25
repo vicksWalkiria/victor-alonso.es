@@ -48,13 +48,16 @@ function render_schemas(array $page): void {
         $nodes[] = _node_contact_page($page['canonical']);
     }
 
-    if (in_array('WebApplication', $types) && !empty($page['rating_id'])) {
-        require_once __DIR__ . '/ratings-helper.php';
-        $ratings    = get_ratings();
-        $rating_data = $ratings[$page['rating_id']] ?? null;
-        if ($rating_data) {
-            $nodes[] = _node_web_application($page['title'], $page['description'], $page['canonical'], $rating_data);
+    if (in_array('WebApplication', $types)) {
+        $rating_data = null;
+        if (!empty($page['rating_id'])) {
+            require_once __DIR__ . '/ratings-helper.php';
+            $ratings    = get_ratings();
+            $rating_data = $ratings[$page['rating_id']] ?? null;
         }
+        $category = $page['applicationCategory'] ?? 'DeveloperApplication';
+        $features = $page['featureList'] ?? null;
+        $nodes[] = _node_web_application($page['title'], $page['description'], $page['canonical'], $rating_data, $category, $features);
     }
 
     if (in_array('ItemList', $types) && !empty($page['item_list'])) {
@@ -277,13 +280,13 @@ function _node_contact_page(string $canonical): array {
     ];
 }
 
-function _node_web_application(string $name, string $description, string $canonical, array $rating_data): array {
-    return [
+function _node_web_application(string $name, string $description, string $canonical, ?array $rating_data = null, string $category = 'DeveloperApplication', ?array $features = null): array {
+    $node = [
         '@type'                => 'WebApplication',
         'name'                 => $name,
         'description'          => $description,
         'url'                  => SITE_URL . $canonical,
-        'applicationCategory'  => 'DeveloperApplication',
+        'applicationCategory'  => $category,
         'operatingSystem'      => 'Web',
         'browserRequirements'  => 'Requiere JavaScript',
         'isAccessibleForFree'  => true,
@@ -294,14 +297,22 @@ function _node_web_application(string $name, string $description, string $canoni
             'priceCurrency' => 'EUR',
         ],
         'provider'             => ['@id' => SITE_URL . '/#localbusiness'],
-        'aggregateRating'      => [
+    ];
+
+    if ($features) {
+        $node['featureList'] = $features;
+    }
+
+    if ($rating_data && !empty($rating_data['count'])) {
+        $node['aggregateRating'] = [
             '@type'       => 'AggregateRating',
             'ratingValue' => (string)$rating_data['average'],
             'ratingCount' => (string)$rating_data['count'],
             'bestRating'  => '5',
             'worstRating' => '1',
-        ],
-    ];
+        ];
+    }
+    return $node;
 }
 
 function _node_item_list(string $name, string $canonical, array $items): array {
