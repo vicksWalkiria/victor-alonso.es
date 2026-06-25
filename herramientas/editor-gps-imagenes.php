@@ -498,19 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let parsedLat = null;
                 let parsedLng = null;
 
-                // Extraer 0th (Autor, Desc)
-                if (exifObj["0th"]) {
-                    if(exifObj["0th"][piexif.ImageIFD.Artist]) {
-                        addRow(tbody, 'Autor (Artist)', exifObj["0th"][piexif.ImageIFD.Artist]);
-                        hasExif = true;
-                    }
-                    if(exifObj["0th"][piexif.ImageIFD.ImageDescription]) {
-                        addRow(tbody, 'Descripción', exifObj["0th"][piexif.ImageIFD.ImageDescription]);
-                        hasExif = true;
-                    }
-                }
-
-                // Extraer GPS
+                // Mostrar en el mapa de lectura si hay GPS
                 if(exifObj["GPS"] && exifObj["GPS"][piexif.GPSIFD.GPSLatitude]) {
                     const latRef = exifObj["GPS"][piexif.GPSIFD.GPSLatitudeRef] || "N";
                     const lngRef = exifObj["GPS"][piexif.GPSIFD.GPSLongitudeRef] || "E";
@@ -518,11 +506,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     parsedLat = getGpsDecimal(exifObj["GPS"][piexif.GPSIFD.GPSLatitude], latRef);
                     parsedLng = getGpsDecimal(exifObj["GPS"][piexif.GPSIFD.GPSLongitude], lngRef);
                     
-                    addRow(tbody, 'Latitud', parsedLat.toFixed(6) + ' (' + latRef + ')');
-                    addRow(tbody, 'Longitud', parsedLng.toFixed(6) + ' (' + lngRef + ')');
+                    addRow(tbody, '📍 GPS Latitud (Parseado)', parsedLat.toFixed(6) + ' (' + latRef + ')');
+                    addRow(tbody, '📍 GPS Longitud (Parseado)', parsedLng.toFixed(6) + ' (' + lngRef + ')');
                     hasExif = true;
 
-                    // Mostrar en el mapa de lectura
                     document.getElementById('read-map').style.display = 'block';
                     if(!readMap) {
                         readMap = L.map('read-map').setView([parsedLat, parsedLng], 14);
@@ -534,16 +521,35 @@ document.addEventListener('DOMContentLoaded', function() {
                         readMap.setView([parsedLat, parsedLng], 14);
                         readMarker.setLatLng([parsedLat, parsedLng]);
                     }
-                    // Dar tiempo al dom
                     setTimeout(()=> readMap.invalidateSize(), 100);
                 } else {
                     document.getElementById('read-map').style.display = 'none';
                 }
 
+                // Volcar el resto de metadatos completos
+                for (let ifd in exifObj) {
+                    if (ifd === "thumbnail" || !exifObj[ifd]) continue;
+                    for (let tag in exifObj[ifd]) {
+                        let tagName = piexif.TAGS[ifd] && piexif.TAGS[ifd][tag] ? piexif.TAGS[ifd][tag]["name"] : tag;
+                        let val = exifObj[ifd][tag];
+                        
+                        // Formatear arrays de racionales o valores binarios largos
+                        if (Array.isArray(val)) {
+                            if (val.length > 8) val = "[Datos Binarios/Array Largo]";
+                            else val = JSON.stringify(val);
+                        } else if (typeof val === 'string' && val.length > 100) {
+                            val = val.substring(0, 100) + '...';
+                        }
+                        
+                        addRow(tbody, `[${ifd}] ${tagName}`, String(val));
+                        hasExif = true;
+                    }
+                }
+
                 if(!hasExif) {
                     addRow(tbody, 'Estado', '❌ No se encontraron metadatos EXIF útiles o GPS en esta imagen.');
                 } else {
-                    addRow(tbody, 'Estado General', '✅ Metadatos leídos correctamente.');
+                    addRow(tbody, 'Estado General', '✅ Se han extraído todos los metadatos de la imagen.');
                 }
 
             } catch(err) {
