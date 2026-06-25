@@ -328,7 +328,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <li class="checklist-item">Procesamiento ultra-rápido basado en JavaScript (privacidad total).</li>
             </ul>
           </div>
-          <a href="/herramientas/editor-gps-imagenes/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Editor GPS</a>
+          <a href="/herramientas/editor-metadatos-imagenes/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Editor GPS</a>
         </article>
 
       </div>

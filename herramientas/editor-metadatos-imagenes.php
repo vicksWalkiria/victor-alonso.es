@@ -30,16 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Configuración de metadatos de la página
 $page = page_config([
-    'title'        => 'Añadir Coordenadas GPS a Imágenes Gratis | Editor EXIF SEO Local',
-    'description'  => 'Geolocaliza tus imágenes JPG al instante sin subir nada al servidor. Añade, edita o lee coordenadas GPS desde el navegador para potenciar tu SEO Local.',
-    'canonical'    => '/herramientas/editor-gps-imagenes/',
+    'title'        => 'Editor de Metadatos de Imágenes Gratis | Modificar EXIF y GPS',
+    'description'  => 'Edita, lee y modifica los metadatos EXIF de tus fotos en local. Herramienta ideal para añadir coordenadas gps a una imagen online, cambiar la fecha o el autor sin subir nada al servidor.',
+    'canonical'    => '/herramientas/editor-metadatos-imagenes/',
     'body_class'   => 'page-tool-gps-exif',
     'schema_types' => ['WebApplication', 'FAQPage'],
-    'rating_id'    => 'editor-gps-imagenes',
+    'rating_id'    => 'editor-metadatos-imagenes',
     'active_nav'   => 'herramientas',
     'breadcrumbs'  => [
         ['label' => 'Herramientas', 'url' => '/herramientas/'],
-        ['label' => 'Editor GPS en Imágenes', 'url' => ''],
+        ['label' => 'Editor de Metadatos de Imágenes', 'url' => ''],
     ],
     'faq_items'    => [
         [
@@ -69,8 +69,8 @@ require __DIR__ . '/../includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="gps-h1">
     <div class="container">
       <span class="page-hero-eyebrow">SEO Local y Privacidad</span>
-      <h1 id="gps-h1">Añadir Coordenadas GPS a Imágenes (EXIF)</h1>
-      <p class="page-hero-desc">Geolocaliza tus imágenes directamente desde el navegador, sin registros y sin subir nada a mis servidores. Potencia tu SEO Local asociando tus fotos al NAP de tu negocio.</p>
+      <h1 id="gps-h1">Editor de Metadatos de Imágenes (EXIF y GPS)</h1>
+      <p class="page-hero-desc">Modifica todos los metadatos internos de tus fotos (cámara, autor, fecha) directamente en tu navegador. Útil para SEO Local y para <strong>añadir coordenadas GPS a una imagen online</strong> sin perder privacidad.</p>
     </div>
   </section>
 
@@ -83,7 +83,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
         <div>
           <h3 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">✨ 100% Privado: Todo ocurre en tu navegador</h3>
           <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
-            A diferencia de otras herramientas que te piden subir la imagen a su servidor (para luego "borrarla"), yo he desarrollado esto en puro JavaScript. <strong>La imagen nunca sale de tu dispositivo</strong>. Es instantáneo, seguro y privado. (PD: Si quieres geolocalizar imágenes en lote/bulk automáticamente, ¡escríbeme!).
+            A diferencia de otras webs de edición EXIF que te piden subir la imagen a su servidor, yo he desarrollado esto en JavaScript. <strong>La imagen nunca sale de tu dispositivo</strong>. Es instantáneo, seguro y privado. (PD: Si quieres geolocalizar imágenes en lote/bulk automáticamente, ¡escríbeme!).
           </p>
         </div>
       </div>
@@ -210,7 +210,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
   <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <!-- Valoraciones -->
-  <?php render_rating_widget('editor-gps-imagenes', '¿Te ha resultado útil esta herramienta de privacidad?'); ?>
+  <?php render_rating_widget('editor-metadatos-imagenes', '¿Te ha resultado útil esta herramienta de privacidad?'); ?>
 
   <!-- CTA -->
   <?php
