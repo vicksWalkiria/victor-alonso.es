@@ -210,6 +210,14 @@ function _node_service(array $data, string $description): array {
         ];
     }
 
+    if (!empty($data['audience'])) {
+        $node['audience'] = $data['audience'];
+    }
+
+    if (!empty($data['serviceOutput'])) {
+        $node['serviceOutput'] = $data['serviceOutput'];
+    }
+
     return $node;
 }
 

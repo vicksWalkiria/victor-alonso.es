@@ -24,6 +24,11 @@ $page = page_config([
           'Agencia SEO loterías Albacete'
       ],
       'serviceType'   => 'Consultoría SEO para Loterías',
+      'audience'      => [
+          '@type' => 'Audience',
+          'audienceType' => 'Administraciones de Lotería'
+      ],
+      'serviceOutput' => 'Auditoría SEO de plataforma de lotería, optimización de velocidad de carga y posicionamiento local en Google Maps',
       'areaServed'    => [
           ['@type' => 'City', 'name' => 'Albacete'],
           ['@type' => 'AdministrativeArea', 'name' => 'Provincia de Albacete'],
