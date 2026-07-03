@@ -249,19 +249,25 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                     </div>
 
                     <!-- Entrada URL -->
-                    <div id="tab-url" class="tab-content active">
+                    <form id="tab-url" class="tab-content active"
+                      toolname="sitemapUrlExtractor"
+                      tooldescription="Descarga y extrae recursivamente todas las URLs de un Sitemap XML o Índice de Sitemaps de forma remota simulando Googlebot."
+                      toolautosubmit="false">
                         <div class="tool-form__group">
                             <label class="tool-form__label" for="sm-url">URL de Sitemap XML (.xml o .xml.gz)</label>
                             <input type="url" class="tool-form__input" id="sm-url" value="https://www.victor-alonso.es/sitemap.xml" placeholder="https://tuweb.com/sitemap.xml" style="font-family: monospace;">
                         </div>
-                        <button class="btn btn--primary" id="btn-parse-sitemap" style="width: 100%; justify-content: center; padding: 1.1rem;">
+                        <button type="submit" class="btn btn--primary" id="btn-parse-sitemap" style="width: 100%; justify-content: center; padding: 1.1rem;">
                             <span id="btn-text">Extraer URLs recursivamente</span>
                             <span id="btn-loader" class="loader-spinner" style="display: none;"></span>
                         </button>
-                    </div>
+                    </form>
 
                     <!-- Entrada Fichero / Código -->
-                    <div id="tab-upload" class="tab-content" style="display: none;">
+                    <form id="tab-upload" class="tab-content" style="display: none;"
+                      toolname="sitemapRawExtractor"
+                      tooldescription="Procesa y audita el código XML plano de un sitemap de forma local, extrayendo y clasificando todas las URLs."
+                      toolautosubmit="false">
                         <div id="drop-zone" style="border: 2px dashed rgba(232,104,26,.3); border-radius: 1rem; padding: 2rem; text-align: center; background: rgba(0,0,0,.2); cursor: pointer; transition: all 0.3s ease; margin-bottom: 1.5rem;">
                             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 1rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                             <p style="font-weight: 700; margin-bottom: .25rem; font-size: .95rem;">Arrastra aquí tu fichero XML</p>
@@ -273,10 +279,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                             <label class="tool-form__label" for="raw-xml">O pega el código plano del Sitemap XML</label>
                             <textarea class="tool-form__textarea" id="raw-xml" rows="5" placeholder="&lt;?xml version='1.0' encoding='UTF-8'?&gt;&#10;&lt;urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'&gt;&#10;  &lt;url&gt;&#10;    &lt;loc&gt;https://tuweb.com/pagina&lt;/loc&gt;&#10;  &lt;/url&gt;&#10;&lt;/urlset&gt;" style="font-family: monospace; font-size: .82rem;"></textarea>
                         </div>
-                        <button class="btn btn--primary" id="btn-parse-local" style="width: 100%; justify-content: center; padding: 1.1rem; margin-top: 1rem;">
+                        <button type="submit" class="btn btn--primary" id="btn-parse-local" style="width: 100%; justify-content: center; padding: 1.1rem; margin-top: 1rem;">
                             Procesar XML pegado
                         </button>
-                    </div>
+                    </form>
 
                 </div>
 
@@ -477,8 +483,14 @@ const pageSize = 150;
 document.addEventListener('DOMContentLoaded', function() {
     
     // Asignar listeners
-    document.getElementById('btn-parse-sitemap').addEventListener('click', startSitemapFetch);
-    document.getElementById('btn-parse-local').addEventListener('click', processLocalText);
+    document.getElementById('tab-url').addEventListener('submit', function(e) {
+        e.preventDefault();
+        startSitemapFetch();
+    });
+    document.getElementById('tab-upload').addEventListener('submit', function(e) {
+        e.preventDefault();
+        processLocalText();
+    });
     document.getElementById('search-input').addEventListener('input', applyFilters);
     document.getElementById('filter-type').addEventListener('change', applyFilters);
     document.getElementById('btn-copy-all').addEventListener('click', copyAllToClipboard);

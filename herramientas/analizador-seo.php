@@ -494,7 +494,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </div>
 
       <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
-        <form id="seo-analyzer-form" action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:0;">
+        <form id="seo-analyzer-form" action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:0;"
+          toolname="seoPageAnalyzer"
+          tooldescription="Realiza una auditoría técnica SEO instantánea de una URL en vivo, analizando velocidad de carga, cabeceras HTTP de respuesta, directivas de rastreo e indexación y microdatos schema."
+          toolautosubmit="false">
           <div class="form-group-row">
             <input 
               type="url" 

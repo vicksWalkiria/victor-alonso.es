@@ -314,7 +314,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
       <!-- Formulario de Entrada -->
       <div class="tool-card tool-card--accent">
-        <form id="audit-form" method="POST" action="/herramientas/auditor-cookies/" class="tool-form">
+        <form id="audit-form" method="POST" action="/herramientas/auditor-cookies/" class="tool-form"
+          toolname="cookieConsentAuditor"
+          tooldescription="Audita el cumplimiento legal RGPD/LSSI de las cookies en una página web simulando la aceptación, el rechazo y el bloqueo previo, detectando scripts invasivos."
+          toolautosubmit="false">
           <div class="tool-form__group">
             <label for="url" class="tool-form__label" style="color:#111111;">Dirección URL a auditar</label>
             <input type="text" id="url" name="url" placeholder="https://miweb.com" value="<?= h($url) ?>" required class="tool-form__input" style="color:#111111; border-color:#111111;">
@@ -579,7 +582,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                   Descargar PDF
                 </a>
                 
-                <form id="email-capture-form" style="display: flex; flex: 1; gap: 0.5rem; min-width: 280px; margin: 0;">
+                <form id="email-capture-form" style="display: flex; flex: 1; gap: 0.5rem; min-width: 280px; margin: 0;"
+                  toolname="emailCookieAuditReport"
+                  tooldescription="Envía el informe de auditoría de cookies en formato PDF al correo electrónico especificado."
+                  toolautosubmit="false">
                   <input type="hidden" name="audit_id" value="<?= h($r2['id']) ?>">
                   <input type="email" name="email" placeholder="tu@email.com" required style="flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; color: var(--black); background: var(--bg);" class="tool-form__input">
                   <button type="submit" class="btn btn--primary" style="background: var(--black); border: none; padding: 0.75rem 1.25rem; font-weight: 600; font-size: 0.95rem; margin: 0;">Enviar al email</button>

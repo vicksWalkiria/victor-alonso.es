@@ -149,7 +149,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="wpo-calculator-wrapper">
         
         <div id="wpo-form-container" class="tool-card">
-          <form id="wpo-calc-form">
+          <form id="wpo-calc-form"
+            toolname="wpoLossCalculator"
+            tooldescription="Calcula las pérdidas económicas estimadas que sufre un sitio web por cada segundo de retraso en su velocidad de carga (WPO), a partir del tráfico, conversión y ticket medio del negocio."
+            toolautosubmit="false">
             <div class="tool-form__group">
               <label class="tool-form__label" for="wpo-url">URL de tu web a analizar <span>*</span></label>
               <input type="url" class="tool-form__input" id="wpo-url" name="url" required placeholder="https://tuweb.com">

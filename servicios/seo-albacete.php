@@ -87,31 +87,31 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <h2>Errores habituales que veo en webs de empresas de Albacete</h2>
         <p>No es una crítica, es una observación de lo que se repite:</p>
         <ul class="checklist" style="margin:1rem 0 1.5rem">
-          <li class="checklist-item">Tener una sola página de servicios genérica en lugar de páginas específicas por servicio y zona.</li>
-          <li class="checklist-item">GBP sin verificar o con información desactualizada (horario, descripción, fotos).</li>
-          <li class="checklist-item">Web en WordPress con WPO pésimo: LCP superior a 4 segundos en móvil. Esto lo soluciono directamente mediante mi servicio de <a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">mantenimiento de WordPress</a> enfocado a rendimiento.</li>
-          <li class="checklist-item">Contenido copiado de competidores o generado con IA sin revisión, que no responde a intención real.</li>
-          <li class="checklist-item">NAP inconsistente: el teléfono en la web no coincide con el del GBP ni con el de los directorios.</li>
-          <li class="checklist-item">Ninguna estrategia de reseñas. Google interpreta pocas reseñas como señal de baja popularidad local.</li>
+          <li class="checklist-item"><div>Tener una sola página de servicios genérica en lugar de páginas específicas por servicio y zona.</div></li>
+          <li class="checklist-item"><div>GBP sin verificar o con información desactualizada (horario, descripción, fotos).</div></li>
+          <li class="checklist-item"><div>Web en WordPress con WPO pésimo: LCP superior a 4 segundos en móvil. Esto lo soluciono directamente mediante mi servicio de <a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">mantenimiento de WordPress</a> enfocado a rendimiento.</div></li>
+          <li class="checklist-item"><div>Contenido copiado de competidores o generado con IA sin revisión, que no responde a intención real.</div></li>
+          <li class="checklist-item"><div>NAP inconsistente: el teléfono en la web no coincide con el del GBP ni con el de los directorios.</div></li>
+          <li class="checklist-item"><div>Ninguna estrategia de reseñas. Google interpreta pocas reseñas como señal de baja popularidad local.</div></li>
         </ul>
 
         <h2>Cuándo tiene sentido contratar SEO local</h2>
         <p>El SEO local es especialmente adecuado cuando:</p>
         <ul class="checklist" style="margin:1rem 0 1.5rem">
-          <li class="checklist-item">Tu negocio atiende a clientes en Albacete o zona de Castilla-La Mancha de forma presencial.</li>
-          <li class="checklist-item">Detectas que tu competencia aparece en Google y tú no, o apareces en posiciones bajas.</li>
-          <li class="checklist-item">Tienes una web que ya existe pero no genera contactos desde búsquedas orgánicas.</li>
-          <li class="checklist-item">Acabas de abrir un negocio y quieres construir visibilidad desde el principio bien hecha.</li>
-          <li class="checklist-item">Quieres reducir la dependencia de publicidad de pago y construir tráfico orgánico sostenible.</li>
+          <li class="checklist-item"><div>Tu negocio atiende a clientes en Albacete o zona de Castilla-La Mancha de forma presencial.</div></li>
+          <li class="checklist-item"><div>Detectas que tu competencia aparece en Google y tú no, o apareces en posiciones bajas.</div></li>
+          <li class="checklist-item"><div>Tienes una web que ya existe pero no genera contactos desde búsquedas orgánicas.</div></li>
+          <li class="checklist-item"><div>Acabas de abrir un negocio y quieres construir visibilidad desde el principio bien hecha.</div></li>
+          <li class="checklist-item"><div>Quieres reducir la dependencia de publicidad de pago y construir tráfico orgánico sostenible.</div></li>
         </ul>
 
         <h2>Cuándo NO tiene sentido contratar SEO</h2>
         <p>Prefiero ser directo para evitar perder tu tiempo y el mío:</p>
         <ul class="checklist" style="margin:1rem 0 1.5rem">
-          <li class="checklist-item">Si buscas resultados en 2-4 semanas. El SEO no funciona así.</li>
-          <li class="checklist-item">Si tu producto o servicio no tiene demanda de búsqueda real. El SEO no crea demanda.</li>
-          <li class="checklist-item">Si no tienes presupuesto para implementar los cambios técnicos que el diagnóstico encuentre.</li>
-          <li class="checklist-item">Si tu negocio funciona solo por boca a boca y no necesitas más volumen. Hay prioridades mejores.</li>
+          <li class="checklist-item"><div>Si buscas resultados en 2-4 semanas. El SEO no funciona así.</div></li>
+          <li class="checklist-item"><div>Si tu producto o servicio no tiene demanda de búsqueda real. El SEO no crea demanda.</div></li>
+          <li class="checklist-item"><div>Si no tienes presupuesto para implementar los cambios técnicos que el diagnóstico encuentre.</div></li>
+          <li class="checklist-item"><div>Si tu negocio funciona solo por boca a boca y no necesitas más volumen. Hay prioridades mejores.</div></li>
         </ul>
 
         <!-- Mapa -->
@@ -152,6 +152,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <li><a href="/servicios/auditoria-seo/" style="color:var(--orange)">→ Auditoría SEO</a></li>
             <li><a href="/servicios/seo-tecnico/" style="color:var(--orange)">→ SEO Técnico</a></li>
             <li><a href="/servicios/seo-espana/" style="color:var(--orange)">→ SEO para España</a></li>
+            <li><a href="/servicios/seo-loterias-albacete/" style="color:var(--orange)">→ SEO para Loterías</a></li>
             <li><a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
           </ul>
         </div>

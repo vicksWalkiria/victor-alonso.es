@@ -105,7 +105,10 @@ Redirect 301 /contacto-viejo /contacto/
             <h3><i class="fa-solid fa-vial" style="color: var(--orange);"></i> Escenario de Prueba</h3>
           </div>
 
-          <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 0; background: rgba(232, 104, 26, 0.02); border: 1.5px solid rgba(232, 104, 26, 0.2); box-shadow: none;">
+          <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 0; background: rgba(232, 104, 26, 0.02); border: 1.5px solid rgba(232, 104, 26, 0.2); box-shadow: none;"
+            toolname="htaccessTester"
+            tooldescription="Prueba reglas de redirección y reescritura de un archivo .htaccess de Apache simulando peticiones HTTP con User-Agent y cabeceras personalizadas."
+            toolautosubmit="false">
             <div class="form-group">
               <label class="form-label" for="test-url" style="color: var(--black);">URL a probar <span>*</span></label>
               <input type="url" class="form-input" id="test-url" required value="http://victor-alonso.es/contacto-viejo" placeholder="http://tusitio.com/pagina-a-testear">

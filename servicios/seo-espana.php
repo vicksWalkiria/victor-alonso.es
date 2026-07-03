@@ -60,10 +60,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <h2>Lo que no hago</h2>
         <p>Para que no haya sorpresas:</p>
         <ul class="checklist" style="margin:1rem 0 2rem">
-          <li class="checklist-item">No genero contenido IA en masa sin estrategia y sin revisión.</li>
-          <li class="checklist-item">No compro enlaces en redes de blogs privadas (PBN) ni en sitios de baja calidad.</li>
-          <li class="checklist-item">No prometo posiciones concretas en fechas concretas.</li>
-          <li class="checklist-item">No entrego auditorías de 100 páginas que nadie implementa. Entrego prioridades ejecutables.</li>
+          <li class="checklist-item"><div>No genero contenido IA en masa sin estrategia y sin revisión.</div></li>
+          <li class="checklist-item"><div>No compro enlaces en redes de blogs privadas (PBN) ni en sitios de baja calidad.</div></li>
+          <li class="checklist-item"><div>No prometo posiciones concretas en fechas concretas.</div></li>
+          <li class="checklist-item"><div>No entrego auditorías de 100 páginas que nadie implementa. Entrego prioridades ejecutables.</div></li>
         </ul>
 
         <h2>Priorización: el criterio que más falta</h2>

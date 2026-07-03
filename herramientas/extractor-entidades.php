@@ -229,7 +229,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="extractor-grid">
         
         <!-- Bloque de Entrada / Configuración -->
-        <div class="card border-orange" style="padding: 2.5rem; border-radius: 1.5rem; margin-bottom: 2rem;">
+        <form id="semantic-analysis-form" class="card border-orange" style="padding: 2.5rem; border-radius: 1.5rem; margin-bottom: 2rem;"
+          toolname="semanticEntityExtractor"
+          tooldescription="Extrae entidades semánticas de una URL y compara las brechas de cobertura semántica con una URL competidora opcional, modelando un grafo conceptual e identificando conceptos clave omitidos."
+          toolautosubmit="false">
             <h3 style="color: var(--orange); margin-bottom: 1.25rem; font-size: 1.3rem; font-weight: 800; text-transform: uppercase;">1. Configurar Análisis Semántico</h3>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
@@ -243,11 +246,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 </div>
             </div>
 
-            <button class="btn btn--primary" id="btn-analyze-entities" style="width: 100%; justify-content: center; padding: 1.1rem;">
+            <button type="submit" class="btn btn--primary" id="btn-analyze-entities" style="width: 100%; justify-content: center; padding: 1.1rem;">
                 <span id="btn-text">Extraer Entidades y Modelar Grafo</span>
                 <span id="btn-loader" class="loader-spinner" style="display: none;"></span>
             </button>
-        </div>
+        </form>
 
         <!-- Pantalla de carga animada -->
         <div id="loading-overlay" class="card card--dark" style="display: none; padding: 3rem; text-align: center; border-radius: 1.5rem; margin-bottom: 2rem;">
@@ -293,7 +296,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 Te enviaremos el documento PDF con el análisis de brecha semántica y la lista de entidades clave de tu competidor de forma gratuita.
               </p>
               
-              <form id="entities-email-form" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0;">
+              <form id="entities-email-form" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0;"
+                toolname="emailSemanticReport"
+                tooldescription="Envía el informe semántico detallado en formato PDF al correo electrónico especificado."
+                toolautosubmit="false">
                 <input type="email" name="email" id="entities-email-input" placeholder="tu@email.com" required style="flex: 1; min-width: 250px; padding: 0.65rem 1rem; border: 1px solid rgba(255,255,255,0.15); border-radius: 6px; font-size: 0.9rem; color: #fff; background: #060911;" class="tool-form__input">
                 <button type="submit" id="btn-entities-send-email" class="btn btn--primary" style="background: var(--orange); border: none; padding: 0.65rem 1.25rem; font-weight: 600; font-size: 0.9rem; margin: 0; min-width: 150px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
                   Enviar informe
@@ -639,7 +645,10 @@ let startPan = { x: 0, y: 0 };
 let animationFrameId = null;
 
 document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('btn-analyze-entities').addEventListener('click', startSemanticScraping);
+    document.getElementById('semantic-analysis-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        startSemanticScraping();
+    });
     
     // Configurar exportaciones
     document.getElementById('btn-export-csv').addEventListener('click', exportEntitiesToCSV);

@@ -89,7 +89,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="tool-card tool-card--accent">
           <h3 style="margin-bottom:1.25rem;color:var(--orange)">1. Introduce los datos del negocio</h3>
           
-          <div class="tool-form">
+          <form id="schema-local-form" class="tool-form"
+            toolname="localBusinessSchemaGenerator"
+            tooldescription="Genera de forma interactiva el marcado Schema JSON-LD de LocalBusiness para SEO local, personalizando tipo de negocio, contacto y geolocalización."
+            toolautosubmit="false"
+            onsubmit="event.preventDefault();">
             <div class="tool-form__group">
               <label class="tool-form__label" for="sc-type">Tipo de Negocio</label>
               <select class="tool-form__select" id="sc-type">
@@ -175,7 +179,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <label class="tool-form__label" for="sc-same">Redes sociales (una por línea)</label>
               <textarea class="tool-form__textarea" id="sc-same" rows="3" placeholder="https://www.facebook.com/minegocio&#10;https://www.instagram.com/minegocio"></textarea>
             </div>
-          </div>
+          </form>
         </div>
 
         <!-- Código JSON-LD Generado -->
