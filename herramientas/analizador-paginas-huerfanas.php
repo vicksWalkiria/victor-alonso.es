@@ -425,21 +425,23 @@ function handleFile(file) {
     document.getElementById('file-name-display').style.fontWeight = 'bold';
     
     Papa.parse(file, {
+        skipEmptyLines: true,
         complete: function(results) {
             csvUrls.clear();
             
-            // Si tiene cabecera, saltar primera línea
-            let startIdx = 0;
-            if(results.data.length > 0 && results.data[0][0] && !results.data[0][0].toLowerCase().startsWith('http')) {
-                startIdx = 1;
-            }
-            
-            for(let i=startIdx; i<results.data.length; i++) {
-                if(results.data[i] && results.data[i][0]) {
-                    const url = results.data[i][0].trim();
-                    if(url.startsWith('http')) {
-                        // Limpiar trailing slash para comparativa más fiable
-                        csvUrls.add(url.replace(/\/$/, ''));
+            for(let i=0; i<results.data.length; i++) {
+                const row = results.data[i];
+                if (!row) continue;
+                
+                // Buscamos la primera celda de la fila que contenga una URL válida
+                for (let j=0; j<row.length; j++) {
+                    if (row[j] && typeof row[j] === 'string') {
+                        const cell = row[j].trim();
+                        if (cell.startsWith('http://') || cell.startsWith('https://')) {
+                            // Limpiar trailing slash
+                            csvUrls.add(cell.replace(/\/$/, ''));
+                            break; // Pasar a la siguiente fila
+                        }
                     }
                 }
             }
