@@ -420,36 +420,42 @@ function setupDragAndDrop() {
 }
 
 function handleFile(file) {
-    document.getElementById('file-name-display').textContent = file.name;
-    document.getElementById('file-name-display').style.color = '#2ecc71';
+    document.getElementById('file-name-display').textContent = 'Analizando ' + file.name + '...';
+    document.getElementById('file-name-display').style.color = 'var(--orange)';
     document.getElementById('file-name-display').style.fontWeight = 'bold';
     
-    Papa.parse(file, {
-        skipEmptyLines: true,
-        complete: function(results) {
-            csvUrls.clear();
-            
-            for(let i=0; i<results.data.length; i++) {
-                const row = results.data[i];
-                if (!row) continue;
-                
-                // Buscamos la primera celda de la fila que contenga una URL válida
-                for (let j=0; j<row.length; j++) {
-                    if (row[j] && typeof row[j] === 'string') {
-                        const cell = row[j].trim();
-                        if (cell.startsWith('http://') || cell.startsWith('https://')) {
-                            // Limpiar trailing slash
-                            csvUrls.add(cell.replace(/\/$/, ''));
-                            break; // Pasar a la siguiente fila
-                        }
-                    }
-                }
-            }
-        },
-        error: function(error) {
-            alert("Error al leer el CSV: " + error.message);
+    const reader = new FileReader();
+    
+    reader.onload = function(e) {
+        const text = e.target.result;
+        csvUrls.clear();
+        
+        // Expresión regular para capturar cualquier URL válida que empiece por http/https
+        // Se detiene al encontrar comillas, comas, punto y coma, tabulaciones o espacios
+        const regex = /https?:\/\/[^"';,\t\n\r\s]+/gi;
+        let match;
+        
+        while ((match = regex.exec(text)) !== null) {
+            let url = match[0].trim();
+            // Limpiar trailing slash
+            csvUrls.add(url.replace(/\/$/, ''));
         }
-    });
+        
+        if (csvUrls.size > 0) {
+            document.getElementById('file-name-display').textContent = file.name + ' (' + csvUrls.size.toLocaleString() + ' URLs detectadas)';
+            document.getElementById('file-name-display').style.color = '#2ecc71';
+        } else {
+            document.getElementById('file-name-display').textContent = file.name + ' (No se detectaron URLs)';
+            document.getElementById('file-name-display').style.color = '#e74c3c';
+            alert("No se detectó ninguna URL en el archivo. Esto puede ocurrir si el archivo es un Excel binario (.xlsx) renombrado, o si Screaming Frog lo exportó sin el protocolo 'http'. Por favor, asegúrate de subir un CSV de texto plano.");
+        }
+    };
+    
+    reader.onerror = function() {
+        alert("El navegador no pudo leer el archivo local.");
+    };
+    
+    reader.readAsText(file);
 }
 
 function startAnalysis() {
