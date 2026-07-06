@@ -3,6 +3,11 @@ $current_page = basename($_SERVER['SCRIPT_NAME']);
 
 $tools_list = [
     [
+        'file' => 'analizador-paginas-huerfanas.php',
+        'href' => '/herramientas/analizador-paginas-huerfanas/',
+        'label' => 'Analizador de Páginas Huérfanas'
+    ],
+    [
         'file' => 'analizador-logs.php',
         'href' => '/herramientas/analizador-logs/',
         'label' => 'Analizador de Logs HTTP'
