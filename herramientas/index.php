@@ -9,6 +9,7 @@ $page = page_config([
     'body_class'   => 'page-herramientas-hub',
     'schema_types' => ['ItemList'],
     'item_list'    => [
+        ['name' => 'Analizador de Páginas Huérfanas', 'url' => '/herramientas/analizador-paginas-huerfanas/'],
         ['name' => 'Analizador Técnico de URLs', 'url' => '/herramientas/analizador-seo/'],
         ['name' => 'Generador Schema LocalBusiness JSON-LD', 'url' => '/herramientas/generador-schema-local/'],
         ['name' => 'Calculadora de Pérdidas WPO', 'url' => '/herramientas/calculadora-wpo/'],
@@ -71,6 +72,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <!-- Pastillas de Acceso Rápido (Autoscroll) -->
       <div class="tools-pills-container" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2.5rem;justify-content:center;">
         <span style="align-self:center;font-size:0.9rem;color:#334155;font-weight:600;margin-right:0.5rem">Accesos rápidos:</span>
+        <a href="#analizador-huerfanas" class="tool-pill">👻 Páginas Huérfanas</a>
         <a href="#analizador-seo" class="tool-pill">🔍 Analizador SEO</a>
         <a href="#generador-schema" class="tool-pill">📦 Schema Local</a>
         <a href="#calculadora-wpo" class="tool-pill">🧮 Calculadora WPO</a>
@@ -86,6 +88,27 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
       <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 2rem;">
         
+        <!-- CARD 0: ANALIZADOR DE PÁGINAS HUÉRFANAS -->
+        <article id="analizador-huerfanas" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div class="card-icon" style="background: rgba(232,104,26,.1)">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+            <h2 style="font-size:1.5rem;margin-bottom:.75rem;color:#fff">Analizador de Páginas Huérfanas</h2>
+            <p style="margin-bottom:1.5rem;font-size:.95rem">Cruza automáticamente el listado de tu Sitemap XML con el rastreo de Screaming Frog para detectar contenidos aislados. Identifica y soluciona problemas críticos de enlazado interno y Crawl Budget.</p>
+            <ul class="checklist" style="margin-bottom:2rem;color:rgba(255,255,255,.7)">
+              <li class="checklist-item">Soporte automático para Sitemap Indexes anidados.</li>
+              <li class="checklist-item">Parseo agresivo universal de archivos CSV y TXT de crawlers.</li>
+              <li class="checklist-item">Detección inmediata de diferencias entre indexabilidad y rastreo.</li>
+              <li class="checklist-item">Exportación de páginas aisladas listas para redirigir o enlazar.</li>
+            </ul>
+          </div>
+          <a href="/herramientas/analizador-paginas-huerfanas/" class="btn btn--primary" style="width:100%;justify-content:center">Acceder al Analizador de Huérfanas</a>
+        </article>
+
         <!-- CARD 1: ANALIZADOR DE URL -->
         <article id="analizador-seo" class="card card--dark" style="display:flex;flex-direction:column;justify-content:space-between">
           <div>

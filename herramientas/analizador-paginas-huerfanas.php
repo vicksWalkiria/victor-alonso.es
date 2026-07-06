@@ -592,3 +592,5 @@ function exportToCSV() {
     document.body.removeChild(link);
 }
 </script>
+
+<?php require dirname(__DIR__) . '/includes/footer.php'; ?>
