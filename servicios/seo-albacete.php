@@ -11,8 +11,8 @@ $faq = [
 ];
 
 $page = page_config([
-  'title'        => 'SEO en Albacete para empresas y negocios',
-  'description'  => 'Consultor SEO en Albacete para negocios que necesitan mejorar visibilidad, tráfico cualificado y rendimiento web con una estrategia técnica, medible y realista.',
+  'title'        => 'SEO local en Albacete para empresas | Víctor Alonso',
+  'description'  => 'Mejora la visibilidad local de tu empresa en Albacete con una estrategia técnica: Google Business Profile, arquitectura, contenido local y medición.',
   'canonical'    => '/servicios/seo-albacete/',
   'body_class'   => 'page-servicio page-seo-albacete',
   'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
@@ -39,7 +39,7 @@ $page = page_config([
   'faq_items'    => $faq,
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
-    ['label' => 'SEO en Albacete', 'url' => ''],
+    ['label' => 'SEO local en Albacete', 'url' => ''],
   ],
 ]);
 
@@ -51,26 +51,26 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">SEO en Albacete para empresas que necesitan algo más que <span>aparecer en Google</span></h1>
-      <p class="page-hero-desc">Antes de escribir más contenido, reviso si Google puede rastrear, entender e indexar bien tu web. El SEO útil empieza separando síntomas de causas.</p>
+      <h1 id="page-h1">SEO local en Albacete para empresas y negocios</h1>
+      <p class="page-hero-desc">Servicio orientado a negocios que dependen de clientes de su zona. El SEO local tiene reglas propias que lo diferencian de una consultoría SEO general: optimización de Google Business Profile, arquitectura de servicios locales y medición de llamadas.</p>
     </div>
   </section>
 
   <section class="section" aria-labelledby="intro-seo-albacete">
     <div class="container service-detail">
       <div class="service-content">
-        <h2 id="intro-seo-albacete">¿Qué significa trabajar SEO local en Albacete?</h2>
-        <p>El SEO local en Albacete no es solo meter la palabra "Albacete" en el título y esperar a que Google te posicione. Es un conjunto de señales técnicas, de contenido y de autoridad que le indica a Google que tu negocio es relevante para usuarios en esta zona.</p>
-        <p>Trabajo con tres capas que deben funcionar juntas:</p>
+        <h2 id="intro-seo-albacete">Qué incluye el servicio</h2>
+        <p>El SEO local en Albacete no es solo meter la palabra "Albacete" en el título. Trabajo con un proceso claro y entregables reales para tu empresa:</p>
         <ul class="checklist" style="margin:1.5rem 0">
-          <li class="checklist-item"><div><strong>Google Business Profile</strong> Verificado, completo, con categorías correctas, horario actualizado, fotos y gestión de reseñas. El punto de entrada más visible en búsquedas locales. (Tip: usa mi <a href="/herramientas/editor-metadatos-imagenes/" style="color:var(--orange)">editor de metadatos GPS</a> gratuito para geolocalizar fotos antes de subirlas a tu ficha).</div></li>
-          <li class="checklist-item"><div><strong>Arquitectura web local</strong> Páginas de servicio específicas por localidad o zona, enlazado interno estratégico y estructura que Google puede rastrear sin problemas como explico en mi servicio de <a href="/servicios/seo-tecnico/" style="color:var(--orange)">SEO Técnico</a>.</div></li>
-          <li class="checklist-item"><div><strong>Contenido con intención local</strong> No relleno de keywords. Páginas que responden a lo que un usuario de Albacete busca realmente cuando necesita tu servicio.</div></li>
-          <li class="checklist-item"><div><strong>Autoridad y citas NAP</strong> Menciones coherentes del nombre, dirección y teléfono en directorios relevantes. Una señal de confianza para el algoritmo local.</div></li>
-          <li class="checklist-item"><div><strong>Conversión</strong> De nada sirve posicionar si la web no convierte. Velocidad, claridad y llamadas a la acción forman parte de la estrategia.</div></li>
+          <li class="checklist-item"><div><h3>Diagnóstico local</h3> Auditoría completa de tu perfil GBP y mapa de páginas locales necesarias.</div></li>
+          <li class="checklist-item"><div><h3>Arquitectura y páginas de servicio</h3> Estructura que Google puede rastrear sin problemas como explico en mi servicio de <a href="/servicios/seo-tecnico/" style="color:var(--orange)">SEO Técnico</a>.</div></li>
+          <li class="checklist-item"><div><h3>Optimización de Google Business Profile</h3> Perfil verificado, con categorías correctas, horario actualizado, fotos y gestión de reseñas. (Tip: usa mi <a href="/herramientas/generador-schema-local/" style="color:var(--orange)">generador Schema Local</a> gratuito).</div></li>
+          <li class="checklist-item"><div><h3>Contenido local</h3> Páginas que responden a lo que un usuario de Albacete busca realmente cuando necesita tu servicio.</div></li>
+          <li class="checklist-item"><div><h3>Consistencia NAP y menciones</h3> Auditoría y corrección de Nombre, Dirección y Teléfono en directorios relevantes de Albacete.</div></li>
+          <li class="checklist-item"><div><h3>Medición de llamadas y contactos</h3> Configuración de conversiones en Analytics para que sepas exactamente qué contactos genera el SEO.</div></li>
         </ul>
 
-        <h2>Qué suelo revisar en una auditoría SEO local</h2>
+        <h2>Qué reviso en la web y en Google Business Profile</h2>
         <p>Cuando analizo un proyecto local en Albacete mediante una <a href="/servicios/auditoria-seo/" style="color:var(--orange)">Auditoría SEO completa</a>, reviso en este orden:</p>
         <ol style="display:grid;gap:.6rem;margin:1rem 0 1.5rem;padding-left:1.25rem;list-style:decimal;font-size:.92rem;color:var(--muted)">
           <li>Estado del perfil de Google Business Profile y categorías seleccionadas.</li>
@@ -95,7 +95,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item"><div>Ninguna estrategia de reseñas. Google interpreta pocas reseñas como señal de baja popularidad local.</div></li>
         </ul>
 
-        <h2>Cuándo tiene sentido contratar SEO local</h2>
+        <h2>Para qué negocios de Albacete tiene sentido</h2>
         <p>El SEO local es especialmente adecuado cuando:</p>
         <ul class="checklist" style="margin:1rem 0 1.5rem">
           <li class="checklist-item"><div>Tu negocio atiende a clientes en Albacete o zona de Castilla-La Mancha de forma presencial.</div></li>
@@ -141,8 +141,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
       <aside class="service-sidebar">
         <div class="card" style="margin-bottom:1.5rem">
-          <h3 style="color:var(--orange);margin-bottom:.75rem">Solicitar diagnóstico SEO</h3>
-          <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame qué ocurre con tu web y te respondo con una primera valoración sin compromiso.</p>
+          <h3 style="color:var(--orange);margin-bottom:.75rem">Solicitar primera valoración</h3>
+          <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame qué ocurre con tu web y te respondo con un diagnóstico sin compromiso directo de <a href="/" style="color:inherit;text-decoration:underline;">Víctor Alonso, consultor SEO</a>.</p>
            <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
           <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp</a>
         </div>

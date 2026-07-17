@@ -5,7 +5,7 @@
 $_nav = $page['active_nav'] ?? 'inicio';
 
 $_services = [
-    ['href' => '/servicios/seo-albacete/',            'label' => 'SEO en Albacete'],
+    ['href' => '/servicios/seo-albacete/',            'label' => 'SEO local en Albacete'],
     ['href' => '/servicios/seo-espana/',              'label' => 'SEO para España'],
     ['href' => '/servicios/auditoria-seo/',           'label' => 'Auditoría SEO'],
     ['href' => '/servicios/seo-tecnico/',             'label' => 'SEO Técnico'],
