@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // Configuración de metadatos de la página
 $page = page_config([
     'title'        => 'Editor EXIF y GPS online gratis',
-    'description'  => 'Geolocaliza y edita metadatos EXIF de imágenes desde tu navegador. Mejora tu SEO local de forma 100% privada sin subir los archivos al servidor.',
+    'description'  => 'Edita metadatos EXIF de imágenes desde tu navegador para mantener el control sobre la autoría y privacidad. 100% privado sin subir archivos al servidor.',
     'canonical'    => '/herramientas/editor-metadatos-imagenes/',
     'body_class'   => 'page-tool-gps-exif',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -51,8 +51,8 @@ $page = page_config([
     ],
     'faq_items'    => [
         [
-            'q' => '¿Por qué geolocalizar mis imágenes ayuda al SEO Local?',
-            'a' => 'Google rastrea y lee los metadatos EXIF de las imágenes originales que subes a tu web y a tu perfil de Google Business Profile. Incluir coordenadas GPS exactas ayuda a validar y dar contexto semántico de ubicación a tus contenidos visuales, potenciando tu relevancia local. Una foto de un establecimiento o servicio con las coordenadas de Albacete, Madrid o Valencia en sus metadatos es una señal local más que Google puede procesar.'
+            'q' => '¿Qué utilidad tienen los metadatos de las imágenes para mi web?',
+            'a' => 'Los metadatos EXIF ayudan a proteger la privacidad, definir la autoría y organizar el archivo digital. Para optimizar imágenes de cara al posicionamiento en Google, la documentación oficial recomienda centrarse en el contexto de la página, el texto alternativo (alt text), nombres de archivo descriptivos y datos estructurados, usando los metadatos IPTC para la información de derechos y licencias.'
         ],
         [
             'q' => '¿Las imágenes se suben a tu servidor?',
@@ -100,9 +100,9 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="gps-h1">
     <div class="container">
-      <span class="page-hero-eyebrow">SEO Local y Privacidad</span>
+      <span class="page-hero-eyebrow">Privacidad y Control de Autoría</span>
       <h1 id="gps-h1">Editor de Metadatos de Imágenes (EXIF y GPS)</h1>
-      <p class="page-hero-desc">Modifica todos los metadatos internos de tus fotos (cámara, autor, fecha) directamente en tu navegador. Útil para SEO Local y para <strong>añadir coordenadas GPS a una imagen online</strong> sin perder privacidad.</p>
+      <p class="page-hero-desc">Modifica todos los metadatos internos de tus fotos (cámara, autor, fecha) directamente en tu navegador. Útil para la organización del archivo digital y para <strong>añadir o limpiar coordenadas GPS</strong> de una imagen online sin perder privacidad.</p>
     </div>
   </section>
 
@@ -251,9 +251,9 @@ require __DIR__ . '/../includes/breadcrumbs.php';
             <div style="width: 48px; height: 48px; background: rgba(232, 104, 26, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
               <span style="font-size: 1.5rem;">🏪</span>
             </div>
-            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">SEO Local Extremo</h3>
+            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Control del contexto fotográfico</h3>
             <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
-              Añadir coordenadas GPS exactas a una imagen online te permite asociar visualmente tus fotos con tu Google Business Profile. Modifica el campo <code>ImageDescription</code> para incluir tus keywords y geolocaliza las fotos en la dirección exacta de tu local antes de subirlas a tu web o ficha de negocio.
+              Aunque Google usa el contexto de la página y el texto alternativo como señales principales para indexar las imágenes, mantener unos metadatos limpios, ordenados y geolocalizados te permite gestionar tu archivo digital y preservar datos técnicos de la fotografía para tu organización interna o portfolios.
             </p>
           </div>
           

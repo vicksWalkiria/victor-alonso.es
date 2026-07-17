@@ -88,3 +88,17 @@
 - **KPI Asociado:** Desaparición de los errores 404 en Search Console.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** Varias (`calculadora-wpo.php`, `generador-schema-local.php`, `editor-metadatos-imagenes.php`)
+- **Cambio:** Mitigación de afirmaciones categóricas y absolutistas (SEO-13 y SEO-14). Se ha eliminado la vinculación de coordenadas GPS con el "SEO Local", aclarando que son para autoría y contexto. Se ha matizado el impacto porcentual de LCP/TTFB indicando que depende de cada sector. Se ha aclarado que Schema no mejora rankings, sino que reduce fricción semántica.
+- **Motivo:** Mejorar el E-E-A-T, eliminando ruido dogmático y alineando el contenido técnico con la realidad documental de Google.
+- **KPI Asociado:** Credibilidad y retención de perfiles técnicos (E-E-A-T).
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
+
+- **URL:** `/includes/related-tools.php`
+- **Cambio:** Reestructuración completa del sistema de enlazado interno (interlinking) de las herramientas (SEO-15). Se ha implementado un hub contextual por silos: cada herramienta ahora recomienda solo herramientas de su propia categoría (máximo 3) y enlaza directamente hacia la landing comercial (`/servicios/`) pertinente.
+- **Motivo:** Evitar la fuga de autoridad de página y centralizar la transferencia de PageRank hacia URLs de negocio.
+- **KPI Asociado:** Aumento de rastreo y distribución de autoridad en URLs de servicio.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.

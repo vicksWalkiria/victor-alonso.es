@@ -208,7 +208,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <div class="criterio-card">
             <h3>Schema no te hará subir posiciones mágicamente</h3>
             <p>Mucha gente en el mundillo te dirá que inyectar Schema LocalBusiness te subirá directamente al top del Local Pack de Google Maps. No funciona así. El marcado estructurado es una capa de entendimiento semántico.</p>
-            <p>No añade ranking; reduce fricción. Le ahorra recursos a Googlebot a la hora de relacionar los datos NAP de tu web con tu perfil de Google Business Profile. Si a Google le cuesta menos entender quién eres, catalogará tu negocio de manera correcta más rápido.</p>
+            <p>Los datos estructurados ayudan a Google a entender el contenido y pueden habilitar resultados enriquecidos (rich results), pero no garantizan ni su aparición ni mejores posiciones directas. Simplemente reducen la fricción semántica al relacionar la web con tu perfil de negocio.</p>
           </div>
 
           <div class="criterio-card">

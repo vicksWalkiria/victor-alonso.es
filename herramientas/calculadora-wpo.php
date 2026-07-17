@@ -107,7 +107,7 @@ $page = page_config([
     'faq_items' => [
         [
             'q' => '¿Qué precisión tienen los resultados de esta calculadora WPO?',
-            'a' => 'La calculadora extrae métricas sintéticas (Lab Data) directamente desde la API oficial de Google Lighthouse en su entorno de emulación móvil (Moto G4). Las pérdidas económicas son simulaciones conservadoras basadas en estudios de conversión del sector retail, donde se documenta que cada segundo adicional de retardo en LCP merma la conversión en torno a un 7%. Úsala como mapa de referencia, no como un dato analítico absoluto.'
+            'a' => 'La calculadora extrae métricas sintéticas (Lab Data) directamente desde la API oficial de Google Lighthouse en su entorno de emulación móvil (Moto G4). Las pérdidas económicas son simulaciones orientativas, ya que el impacto de la lentitud depende del sector, dispositivo, fuente de tráfico e intención del usuario. Úsala como mapa de referencia, no como un dato analítico absoluto.'
         ],
         [
             'q' => '¿Qué métrica de rendimiento (Web Vitals) es la más crítica para la conversión?',
@@ -318,17 +318,17 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="criterio-grid">
           <div class="criterio-card">
             <h3><span style="color:var(--orange)">01.</span> La paciencia móvil no perdona</h3>
-            <p>El tráfico móvil representa más del 65% de las visitas comerciales actuales. En redes móviles (4G/5G con latencias inestables), un LCP superior a 2.5 segundos dispara el rebote. Un usuario frustrado no espera: vuelve al buscador y compra en la web de tu competidor.</p>
+            <p>Las Core Web Vitals forman parte de los sistemas de Google y son importantes para la experiencia de usuario, pero una buena puntuación no garantiza posiciones. Sin embargo, el tráfico móvil representa más del 65% de las visitas comerciales actuales. En redes móviles, un LCP superior a 2.5 segundos puede disparar el rebote, afectando negativamente la conversión de tu negocio.</p>
           </div>
 
           <div class="criterio-card">
             <h3><span style="color:var(--orange)">02.</span> El impacto de conversión estimado</h3>
-            <p>Diversos estudios de rendimiento web han asociado los retrasos de carga con caídas relevantes en conversión. Para hacer una estimación conservadora, el simulador aplica una pérdida del 7% por cada segundo adicional sobre el umbral recomendado de LCP.</p>
+            <p>Para hacer una estimación orientativa, el simulador aplica una pérdida del 7% por cada segundo adicional sobre el umbral recomendado de LCP. Ten en cuenta que esta estimación depende del sector, el dispositivo, la fuente de tráfico, la intención y el comportamiento real de los usuarios.</p>
           </div>
 
           <div class="criterio-card">
             <h3><span style="color:var(--orange)">03.</span> Experiencia de página y visibilidad</h3>
-            <p>Las Core Web Vitals forman parte de las señales de experiencia de página. Una web lenta no suele hundirse solo por eso, pero en igualdad de condiciones puede perder competitividad frente a resultados más rápidos y cómodos.</p>
+            <p>Aunque un TTFB alto no agote necesariamente el crawl budget (Google prioriza la gestión de presupuesto de rastreo para webs muy grandes o que se actualizan a diario), las Core Web Vitals y la experiencia de página son un factor más de calidad en el ecosistema de Google.</p>
           </div>
         </div>
 
