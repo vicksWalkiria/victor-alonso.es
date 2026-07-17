@@ -27,3 +27,10 @@
 - **KPI Asociado:** Impresiones y clics del clúster de mantenimiento (Search Console).
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** `/servicios/reparacion-wordpress-urgente/`
+- **Cambio:** Creada nueva landing dedicada a emergencias, limpieza de malware, caídas y errores críticos. Incorporados metadatos, FAQs (Schema FAQPage), secciones forenses y enlazado desde Home, Mantenimiento y Casos reales. Añadida a sitemap.xml.
+- **Motivo:** SEO-05. Separar la intención de emergencias y hackeos de la del mantenimiento preventivo recurrente. Responde específicamente a consultas transaccionales críticas de alta prioridad ("wordpress hackeado", "urgencia", "reparación").
+- **KPI Asociado:** Impresiones de consultas urgentes en GSC y leads directos vía WhatsApp.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.

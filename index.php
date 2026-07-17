@@ -185,7 +185,7 @@ require __DIR__ . '/includes/header.php';
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3>Mantenimiento WordPress</h3>
-          <p>Actualizaciones, backups, seguridad, limpieza de malware, WPO y soporte técnico continuo.</p>
+          <p>Actualizaciones, backups, seguridad, WPO y soporte continuo. Si tu web está hackeada, pide una <a href="/servicios/reparacion-wordpress-urgente/" style="color:inherit;text-decoration:underline;font-weight:600;">reparación urgente de WordPress</a>.</p>
           <a href="/servicios/mantenimiento-wordpress/" class="card-link">mantenimiento WordPress →</a>
         </article>
         <article class="card">
