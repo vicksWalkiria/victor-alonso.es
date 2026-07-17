@@ -34,3 +34,11 @@
 - **KPI Asociado:** Impresiones de consultas urgentes en GSC y leads directos vía WhatsApp.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** `/herramientas/tester-htaccess/`
+- **Cambio:** Optimización de metadatos y contenido de la herramienta de simulador `.htaccess`. Añadida tabla de contenidos (TOC), corrección de explicación técnica sobre redirecciones 302 y 301, y alerta de aviso sobre limitaciones del entorno simulado (no sustituye staging).
+- **Motivo:** SEO-06. Consolidar el CTR de la página en SERPs mediante metadatos optimizados y aumentar el tiempo de permanencia con mejor estructuración y copy técnico sin sobredensidad de palabras clave.
+- **KPI Asociado:** Mejora de posición media (de 10.1 a top 5) y CTR para consultas como "htaccess tester" o "rewrite rule htaccess".
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
+

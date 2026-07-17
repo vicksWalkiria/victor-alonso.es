@@ -4,8 +4,8 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 require_once dirname(__DIR__) . '/includes/ratings-helper.php';
 
 $page = page_config([
-    'title'        => 'Tester .htaccess Online: prueba RewriteRule, RewriteCond y redirecciones 301',
-    'description'  => 'Prueba reglas .htaccess online antes de subirlas a tu servidor. Simula RewriteRule, RewriteCond, redirecciones 301/302, HTTPS, www y bucles de mod_rewrite con traza paso a paso.',
+    'title'        => 'Tester .htaccess online: RewriteRule y redirecciones 301',
+    'description'  => 'Prueba RewriteRule, RewriteCond y redirecciones 301 sin tocar el servidor. Simulador .htaccess online con traza paso a paso.',
     'canonical'    => '/herramientas/tester-htaccess/',
     'body_class'   => 'page-tester-htaccess',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -55,6 +55,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="tool-intro">
         <h2>Simulador mod_rewrite e intérprete de redirecciones</h2>
         <p>Escribe o pega el contenido de tu archivo <code>.htaccess</code> a la izquierda, introduce una URL de prueba a la derecha y analiza instantáneamente cómo se comporta el servidor.</p>
+        <div class="alert alert--info" style="margin-top: 1rem; text-align: left; font-size: 0.9rem;">
+          <strong>Aviso sobre las pruebas:</strong> Esta herramienta es un simulador. No reproduce todos los módulos, variables ni configuraciones complejas de Apache. Una prueba positiva aquí ayuda a validar tu lógica, pero no sustituye probar los cambios en un entorno de staging antes de subirlos a producción.
+        </div>
       </div>
 
       <!-- WORKSPACE DEL TESTER (Unified side-by-side workspace) -->
@@ -183,8 +186,19 @@ Redirect 301 /contacto-viejo /contacto/
       </div>
     </div>
 
+      <!-- TABLA DE CONTENIDOS -->
+      <nav class="toc" style="margin-top: 3rem; margin-bottom: 3rem; background: var(--bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border);">
+        <h2 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 1rem;">Contenidos</h2>
+        <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; font-size: 0.95rem;">
+          <li><a href="#seo-tecnico-indexacion" style="color: var(--orange); text-decoration: underline;">1. Por qué un mal .htaccess afecta al SEO</a></li>
+          <li><a href="#como-funciona-mod-rewrite" style="color: var(--orange); text-decoration: underline;">2. ¿Cómo funciona el motor mod_rewrite?</a></li>
+          <li><a href="#ejemplos-htaccess" style="color: var(--orange); text-decoration: underline;">3. Recetario de redirecciones útiles</a></li>
+          <li><a href="#faq" style="color: var(--orange); text-decoration: underline;">4. Preguntas frecuentes</a></li>
+        </ul>
+      </nav>
+
       <!-- TEXTOS DE CRITERIO - NO COMMODITY -->
-      <div class="criterio-section" style="margin-top: 4.5rem; border-top: 1px solid var(--border); padding-top: 4rem;">
+      <div id="seo-tecnico-indexacion" class="criterio-section" style="margin-top: 4.5rem; border-top: 1px solid var(--border); padding-top: 4rem;">
         <span class="section-label">SEO Técnico e Indexación</span>
         <h2>¿Por qué un mal .htaccess destruye tu SEO en segundos?</h2>
         
@@ -195,8 +209,8 @@ Redirect 301 /contacto-viejo /contacto/
           </div>
 
           <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
-            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">02.</span> Redirecciones 302 accidentales</h3>
-            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Si usas la bandera <code>[R]</code> en una <code>RewriteRule</code> sin especificar el código 301 (ej: <code>[R=301,L]</code>), Apache aplicará por defecto una redirección temporal 302. Google no traspasará la fuerza de enlace (link equity) ni consolidará la URL canonical, lo que arruinará tu traspaso de autoridad durante una migración.</p>
+            <h3 style="color: var(--black); margin-bottom: 0.75rem;"><span style="color:var(--orange)">02.</span> Redirecciones 302 temporales</h3>
+            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.6;">Si usas la bandera <code>[R]</code> sin especificar el código (ej: <code>[R=301,L]</code>), Apache aplicará por defecto una redirección temporal 302. Aunque una redirección temporal puede ser interpretada por los buscadores con el tiempo, para un traslado definitivo o consolidación siempre deben utilizarse redirecciones permanentes (301 o 308) para traspasar eficientemente el PageRank.</p>
           </div>
 
           <div class="criterio-card" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem;">
@@ -216,7 +230,7 @@ Redirect 301 /contacto-viejo /contacto/
       </div>
 
       <!-- EXPLICACIÓN TÉCNICA DEL FUNCIONAMIENTO -->
-      <div class="criterio-section" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem;">
+      <div id="como-funciona-mod-rewrite" class="criterio-section" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem;">
         <span class="section-label">Especificaciones técnicas</span>
         <h2>¿Cómo funciona el motor de reescritura mod_rewrite?</h2>
         <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2rem;">
@@ -238,7 +252,7 @@ Redirect 301 /contacto-viejo /contacto/
       <?php render_rating_widget('tester-htaccess', '¿Te ha sido de utilidad este probador de .htaccess?'); ?>
 
       <!-- SECCIÓN DE EJEMPLOS ESTÁTICOS INDEXABLES (SEO Y UX) -->
-      <div class="criterio-section" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem;">
+      <div id="ejemplos-htaccess" class="criterio-section" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 4rem;">
         <span class="section-label">Recetario Útil</span>
         <h2>Ejemplos prácticos de .htaccess que puedes probar y usar</h2>
         <p style="font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 2.5rem; max-width: 800px;">
