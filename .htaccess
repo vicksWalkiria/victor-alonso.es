@@ -12,6 +12,7 @@ Options -Indexes
 
   # 0.4. 301 Redirects: URLs cambiadas
   RewriteRule ^herramientas/editor-gps-imagenes/?$ /herramientas/editor-metadatos-imagenes/ [R=301,L]
+  RewriteRule ^servicios/seo-local/?$ /servicios/seo-albacete/ [R=301,L]
 
   # 0.5. Bloqueo inmediato de escaneos de vulnerabilidades comunes (CMS, Git, Env, Shells)
   #      Evita sobrecargar PHP-FPM rechazando la petición a nivel de servidor (403 Forbidden)
