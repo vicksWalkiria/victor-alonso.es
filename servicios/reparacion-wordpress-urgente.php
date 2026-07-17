@@ -125,10 +125,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
       </div>
       <aside class="service-sidebar">
-        <div class="card" style="border:2px solid #e74c3c;">
-          <h3 style="color:#e74c3c;margin-bottom:.75rem;font-size:1.25rem;">Solicitar ayuda de emergencia</h3>
+        <div class="card" style="border:2px solid var(--orange);">
+          <h3 style="color:var(--orange);margin-bottom:.75rem;font-size:1.25rem;">Solicitar ayuda de emergencia</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Si necesitas intervención urgente, envíame la URL afectada, qué está fallando exactamente y si dispones de alguna copia de seguridad reciente descargable.</p>
-          <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center;background:#e74c3c;border-color:#c0392b">Escribir por correo urgente</a>
+          <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center;">Escribir por correo urgente</a>
           <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp Urgencias</a>
         </div>
         <div class="card" style="margin-top:1rem">
