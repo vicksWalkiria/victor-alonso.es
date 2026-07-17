@@ -66,6 +66,56 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item">Instalar plugins de seguridad como sustituto de un desarrollo seguro.</li>
         </ul>
 
+        <h2>Ficha técnica del servicio</h2>
+        <div class="service-ficha" style="background: var(--bg-hover); border-radius: 12px; padding: 2rem; margin-top: 2rem; border: 1px solid var(--border);">
+          <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; font-size: 0.95rem;">
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-check" style="color: var(--orange); margin-right: 0.5rem;"></i> Qué incluye exactamente:</span>
+              <span style="color: var(--text);">Funcionalidades adicionales para WordPress, personalización y creación de themes y plantillas, mejoras técnicas, WPO, Core Web Vitals, instalación de scripts y tags de Google Analytics y otras redes. Instalación, maquetación y puesta a punto de páginas web en WordPress. Eliminación de constructores visuales (Divi, Elementor) y sustitución por código HTML y PHP puro con CSS para mayor velocidad.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-xmark" style="color: #ef4444; margin-right: 0.5rem;"></i> Qué NO incluye:</span>
+              <span style="color: var(--text);">Elaboración del diseño gráfico ni implementación con constructores visuales.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-box-open" style="color: var(--muted); margin-right: 0.5rem;"></i> Entregables y despliegue:</span>
+              <span style="color: var(--text);">Web funcional en entorno de pruebas (no visible durante la validación). La web original no se ve afectada; el paso a producción se hace en pocos minutos para evitar la caída del servicio.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-clock" style="color: var(--muted); margin-right: 0.5rem;"></i> Duración habitual:</span>
+              <span style="color: var(--text);">Entre 2 y 4 semanas.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-list-check" style="color: var(--muted); margin-right: 0.5rem;"></i> Requisitos del cliente:</span>
+              <span style="color: var(--text);">Proporcionar su propio dominio, así como el diseño o directrices de diseño.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-triangle-exclamation" style="color: var(--orange); margin-right: 0.5rem;"></i> Cuándo NO merece la pena:</span>
+              <span style="color: var(--text);">Cuando quieres una web montada con Elementor, pesada, lenta y que realmente no vayas a usar para captar tráfico serio.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-code" style="color: var(--muted); margin-right: 0.5rem;"></i> Stack Tecnológico:</span>
+              <span style="color: var(--text);">WordPress, PHP, CSS, HTML.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-star" style="color: var(--orange); margin-right: 0.5rem;"></i> Casos de uso / Ejemplos:</span>
+              <span style="color: var(--text);">Proyectos como walkiriaapps.com o aprendizdeseo.top.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-tag" style="color: var(--muted); margin-right: 0.5rem;"></i> Inversión ("Desde"):</span>
+              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange);">450 €</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-handshake" style="color: var(--muted); margin-right: 0.5rem;"></i> Proceso de contratación:</span>
+              <span style="color: var(--text);">Siempre trabajo solicitando un 50% por adelantado antes de empezar, y el 50% restante cuando se valida el proyecto en el servidor de pruebas.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem;">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-arrow-right-arrow-left" style="color: var(--muted); margin-right: 0.5rem;"></i> Alternativa si no encajamos:</span>
+              <span style="color: var(--text);">Si por presupuesto o enfoque no te encaja, habla conmigo igualmente. Conozco gente del sector de absoluta confianza que te puedo recomendar.</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
       <aside class="service-sidebar">
         <div class="card">

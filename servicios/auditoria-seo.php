@@ -105,6 +105,52 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <h2>Opción de implementación incluida</h2>
         <p>Si no tienes equipo técnico o tu desarrollador actual no tiene experiencia en SEO técnico, puedo implementar directamente los cambios prioritarios. Esto evita el cuello de botella habitual: el informe se hace, el cliente lo recibe, y nadie lo ejecuta.</p>
 
+        <h2>Ficha técnica del servicio</h2>
+        <div class="service-ficha" style="background: var(--bg-hover); border-radius: 12px; padding: 2rem; margin-top: 2rem; border: 1px solid var(--border);">
+          <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; font-size: 0.95rem;">
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-check" style="color: var(--orange); margin-right: 0.5rem;"></i> Qué incluye exactamente:</span>
+              <span style="color: var(--text);">Auditoría técnica SEO integral: detección de errores de enlazado interno, bucles de redirecciones, problemas técnicos estructurales, lentitud (WPO/Core Web Vitals), duplicidades y páginas huérfanas.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-xmark" style="color: #ef4444; margin-right: 0.5rem;"></i> Qué NO incluye:</span>
+              <span style="color: var(--text);">Los arreglos y ejecuciones en el código (la implementación se puede contratar y presupuestar aparte).</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-box-open" style="color: var(--muted); margin-right: 0.5rem;"></i> Entregables:</span>
+              <span style="color: var(--text);">Informe PDF ejecutivo con los detalles de los problemas detectados y la especificación técnica exacta de la solución para cada uno.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-clock" style="color: var(--muted); margin-right: 0.5rem;"></i> Duración habitual:</span>
+              <span style="color: var(--text);">1 semana de trabajo intensivo.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-list-check" style="color: var(--muted); margin-right: 0.5rem;"></i> Requisitos del cliente:</span>
+              <span style="color: var(--text);">No importa el tipo de web. Solo necesito accesos a Google Search Console, Google Analytics y (si es posible) al backend/servidor.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-bullseye" style="color: var(--orange); margin-right: 0.5rem;"></i> Cuándo ES MÁS NECESARIA:</span>
+              <span style="color: var(--text);">Es indispensable cuando el equipo de desarrollo no ha tenido en cuenta el SEO o cuando mucha gente ha pasado por la web creando contenido y artículos a lo largo del tiempo sin una estructura lógica.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-code" style="color: var(--muted); margin-right: 0.5rem;"></i> Tecnologías / CMS compatibles:</span>
+              <span style="color: var(--text);">Cualquier tecnología WEB (WordPress, Shopify, Prestashop, desarrollos a medida en React/Angular/PHP, etc.).</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-tag" style="color: var(--muted); margin-right: 0.5rem;"></i> Inversión ("Desde"):</span>
+              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange);">350 €</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-handshake" style="color: var(--muted); margin-right: 0.5rem;"></i> Proceso de contratación:</span>
+              <span style="color: var(--text);">Siempre trabajo solicitando un 50% por adelantado antes de empezar la auditoría, y el 50% restante a la entrega del informe final.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem;">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-arrow-right-arrow-left" style="color: var(--muted); margin-right: 0.5rem;"></i> Alternativa si no encajamos:</span>
+              <span style="color: var(--text);">Si buscas un consultor SEO para cuota mensual o el presupuesto no encaja, habla conmigo igualmente. Conozco a gente del sector de confianza a la que te puedo derivar.</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
       <aside class="service-sidebar">
         <div class="card">

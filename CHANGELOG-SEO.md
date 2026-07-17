@@ -102,3 +102,10 @@
 - **KPI Asociado:** Aumento de rastreo y distribución de autoridad en URLs de servicio.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** Varias (`desarrollo-wordpress.php`, `plugins-wordpress.php`, `auditoria-seo.php`)
+- **Cambio:** Integración de "Fichas técnicas de servicio" estructuradas (SEO-10). Se ha añadido información comercial de alta relevancia transaccional: qué incluye, qué no incluye, entregables, duración, requisitos, cuándo no merece la pena, precios base y proceso de contratación.
+- **Motivo:** Fortalecer las landings transaccionales que presentaban riesgo de "thin content" aportando datos de decisión reales que enriquecen el contenido, cualifican al lead y mejoran la conversión y relevancia semántica.
+- **KPI Asociado:** Aumento del tiempo de permanencia, mejora de conversión y enriquecimiento semántico de la página.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.

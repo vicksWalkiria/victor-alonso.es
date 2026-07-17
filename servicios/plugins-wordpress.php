@@ -77,6 +77,56 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item">Generadores de documentos PDF desde datos del formulario o del pedido.</li>
         </ul>
 
+        <h2>Ficha técnica del servicio</h2>
+        <div class="service-ficha" style="background: var(--bg-hover); border-radius: 12px; padding: 2rem; margin-top: 2rem; border: 1px solid var(--border);">
+          <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; font-size: 0.95rem;">
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-check" style="color: var(--orange); margin-right: 0.5rem;"></i> Qué incluye exactamente:</span>
+              <span style="color: var(--text);">Creación o edición de plugins de WordPress para aumentar su funcionalidad, adaptarla a las necesidades exactas del cliente o eliminar carga de código innecesaria.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-xmark" style="color: #ef4444; margin-right: 0.5rem;"></i> Qué NO incluye:</span>
+              <span style="color: var(--text);">Diseños de plugins que necesiten un contenido visual muy fuerte (mi enfoque es la eficiencia técnica y funcional).</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-box-open" style="color: var(--muted); margin-right: 0.5rem;"></i> Entregables y despliegue:</span>
+              <span style="color: var(--text);">Plugin funcional, testeado primero en una copia de la web del cliente para minimizar cualquier impacto y evitar caídas en producción.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-clock" style="color: var(--muted); margin-right: 0.5rem;"></i> Duración habitual:</span>
+              <span style="color: var(--text);">Entre 2 y 4 semanas.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-list-check" style="color: var(--muted); margin-right: 0.5rem;"></i> Requisitos del cliente:</span>
+              <span style="color: var(--text);">Acceso para realizar una copia de su sitio web y los diseños previos (si fuesen necesarios para la interfaz del plugin).</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-triangle-exclamation" style="color: var(--orange); margin-right: 0.5rem;"></i> Cuándo NO merece la pena:</span>
+              <span style="color: var(--text);">Cuando ya existe un plugin gratuito, seguro y ligero que hace exactamente la función que necesitas.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-code" style="color: var(--muted); margin-right: 0.5rem;"></i> Stack Tecnológico:</span>
+              <span style="color: var(--text);">WordPress, PHP, CSS, HTML.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-star" style="color: var(--orange); margin-right: 0.5rem;"></i> Casos de uso / Ejemplos:</span>
+              <span style="color: var(--text);">Por ejemplo, mi propio <a href="https://aprendizdeseo.gumroad.com/l/plugin-reviews" target="_blank" rel="noopener noreferrer" style="color:var(--orange);text-decoration:underline;">Plugin de Reseñas</a>.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-tag" style="color: var(--muted); margin-right: 0.5rem;"></i> Inversión ("Desde"):</span>
+              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange);">150 €</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-handshake" style="color: var(--muted); margin-right: 0.5rem;"></i> Proceso de contratación:</span>
+              <span style="color: var(--text);">Siempre trabajo solicitando un 50% por adelantado antes de empezar, y el 50% restante cuando la funcionalidad se valida en el servidor de pruebas.</span>
+            </li>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem;">
+              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-arrow-right-arrow-left" style="color: var(--muted); margin-right: 0.5rem;"></i> Alternativa si no encajamos:</span>
+              <span style="color: var(--text);">Si no te encaja mi servicio, contacta conmigo igualmente. Conozco a gente del sector de absoluta confianza a los que te puedo derivar.</span>
+            </li>
+          </ul>
+        </div>
+
       </div>
       <aside class="service-sidebar">
         <div class="card">
