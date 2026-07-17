@@ -55,3 +55,9 @@
 - **KPI Asociado:** Mejora de posición media para `analizador seo` y `analizador técnico urls`. Aumento del CTR interno hacia las landings de servicios.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+- **URL:** `/herramientas/generador-schema-local/`
+- **Cambio:** Mejoras UX y estructurales en el Generador de Schema LocalBusiness. Se han añadido botones para descargar el JSON directamente y validarlo, así como eventos de rastreo analítico (copia, descarga, validación). Se ha rebajado la afirmación de que el Schema consolida el Local Pack directamente, y se ha mejorado la instrucción sobre campos obligatorios y opcionales. El CTA contextual ahora apunta explícitamente a `/servicios/seo-local/`.
+- **Motivo:** SEO-09. Mejorar la utilidad de la herramienta para los usuarios y poder medir correctamente qué interacciones de conversión ocurren con el código generado.
+- **KPI Asociado:** Eventos de uso (`schema_copy_click`, `schema_download_click`) y CTR a la landing de servicio local.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.

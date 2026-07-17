@@ -70,8 +70,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="schema-h1">
     <div class="container">
       <span class="hero-eyebrow">SEO Local Semántico</span>
-      <h1 id="schema-h1">Generador Schema <span>JSON-LD Local</span></h1>
-      <p class="page-hero-desc">Genera el marcado estructurado recomendado por Google para consolidar la consistencia de tu negocio físico en los resultados de búsqueda.</p>
+      <h1 id="schema-h1">Generador Schema <span>LocalBusiness</span></h1>
+      <p class="page-hero-desc">Genera el marcado estructurado recomendado por Google para ayudar a los buscadores a procesar y entender mejor la información básica de tu negocio físico.</p>
     </div>
   </section>
 
@@ -80,7 +80,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <div class="tool-intro tool-intro-box">
         <h2>Estructura la información de tu negocio</h2>
-        <p>Rellena los datos de tu empresa a continuación. Generaremos en tiempo real el bloque estructurado en formato JSON-LD. Copia el código e instálalo en el <code>&lt;head&gt;</code> de tu página web.</p>
+        <p>Rellena los datos de tu empresa a continuación. Para que Google procese correctamente tu negocio, es imprescindible incluir el <strong>Nombre, URL, Teléfono y Dirección completa</strong> (marcados con *). Los campos opcionales (como logo, foto o rango de precios) enriquecen el resultado final en Schema.org, pero la herramienta te generará un JSON válido aunque los dejes vacíos.</p>
       </div>
 
       <div class="tool-layout-grid">
@@ -190,9 +190,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <pre class="tool-code-display"><code id="schema-code"></code></pre>
           </div>
           
-          <div class="btn-group" style="margin-top:1.5rem;">
+          <div class="btn-group" style="margin-top:1.5rem; flex-wrap:wrap; gap:0.5rem;">
             <button class="btn btn--primary" id="btn-copy-schema">Copiar código JSON-LD</button>
-            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">Validar en Google</a>
+            <button class="btn btn--secondary" id="btn-download-json">Descargar JSON</button>
+            <a href="https://search.google.com/test/rich-results" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" id="btn-validate-schema">Validar en Google</a>
           </div>
         </div>
 
@@ -225,8 +226,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
             <i class="fa-solid fa-map-location-dot" style="color: var(--orange);"></i> ¿Quieres consolidar tu presencia local frente a tus competidores?
           </h3>
-          <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
-            La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/">servicio SEO en Albacete</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos. Consigue resultados reales con un trabajo de <a href="/">posicionamiento web</a> profesional y de trinchera.
+            La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/servicios/seo-local/" style="color:var(--orange); text-decoration:underline;">servicio de SEO Local</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos frente a la competencia de tu sector.
           </p>
         </div>
       </div>
@@ -259,6 +259,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Analytics Helper
+    function trackEvent(eventName, params) {
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', eventName, params);
+        } else if (typeof window.dataLayer !== 'undefined' && Array.isArray(window.dataLayer)) {
+            window.dataLayer.push({ event: eventName, ...params });
+        }
+    }
     
     const scType = document.getElementById('sc-type');
     const scName = document.getElementById('sc-name');
@@ -373,6 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     btnCopy.addEventListener('click', function() {
+        trackEvent('schema_copy_click', { tool: 'localbusiness' });
         navigator.clipboard.writeText(schemaCode.textContent).then(() => {
             const originalText = btnCopy.textContent;
             btnCopy.textContent = '¡Copiado con éxito!';
@@ -385,6 +394,29 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('No se pudo copiar de forma automática. Selecciona el código manualmente.');
         });
     });
+
+    const btnDownload = document.getElementById('btn-download-json');
+    if (btnDownload) {
+        btnDownload.addEventListener('click', function() {
+            trackEvent('schema_download_click', { tool: 'localbusiness' });
+            const blob = new Blob([schemaCode.textContent], { type: 'application/ld+json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'localbusiness-schema.json';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        });
+    }
+
+    const btnValidate = document.getElementById('btn-validate-schema');
+    if (btnValidate) {
+        btnValidate.addEventListener('click', function() {
+            trackEvent('schema_validate_click', { tool: 'localbusiness' });
+        });
+    }
 
 });
 </script>
