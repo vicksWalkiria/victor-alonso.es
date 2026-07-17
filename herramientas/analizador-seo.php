@@ -391,10 +391,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $recommended_priority = 'Resolver el problema en el servidor, base de datos o CMS para que la URL devuelva un estado 200 OK.';
                 } elseif (count($redirect_chain) > 1) {
                     $main_risk = 'Cadena de redirecciones encadenadas o saltos indirectos';
-                    $recommended_priority = 'Apuntar todos los enlaces internos y canonicals directamente a la URL de destino final.';
+                    $recommended_priority = 'Apuntar todos los enlaces internos y canonicals directamente a la URL de destino final. (<a href="/servicios/migraciones-y-redirecciones-seo/" style="color:var(--orange); text-decoration:underline;">Ver servicio de migraciones</a>)';
                 } elseif ($ttfb > 600) {
                     $main_risk = 'TTFB y latencia del servidor web elevados';
-                    $recommended_priority = 'Optimizar el backend de base de datos, configurar caché de servidor o migrar a un alojamiento web optimizado para WPO/WordPress.';
+                    $recommended_priority = 'Optimizar el backend de base de datos, configurar caché de servidor o migrar a un alojamiento web optimizado para WPO/WordPress. (<a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange); text-decoration:underline;">Ver mantenimiento web</a>)';
                 } elseif (empty($canonical)) {
                     $main_risk = 'Inconsistencia en la etiqueta canonical';
                     $recommended_priority = 'Añadir una etiqueta canonical absoluta apuntando a la URL final indexable, sin parámetros ni redirecciones.';
@@ -403,7 +403,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $recommended_priority = 'Escribir una etiqueta Title única y descriptiva de entre 50 y 65 caracteres.';
                 } elseif (count($h1s) !== 1) {
                     $main_risk = 'Errores de estructura o jerarquía semántica H1';
-                    $recommended_priority = 'Asegurar la existencia de un único encabezado H1 por página, eliminando duplicidades en bloques hero o builders.';
+                    $recommended_priority = 'Asegurar la existencia de un único encabezado H1 por página, eliminando duplicidades en bloques hero o builders. (<a href="/servicios/seo-tecnico/" style="color:var(--orange); text-decoration:underline;">Auditoría SEO técnica</a>)';
                 }
 
                 $result = [
@@ -430,8 +430,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-    'title'        => 'Analizador SEO gratuito de TTFB y redirecciones',
-    'description'  => 'Introduce cualquier dirección y analiza al instante la respuesta HTTP, velocidad TTFB, canonicals, robots y cabeceras de seguridad web.',
+    'title'        => 'Analizador SEO de URLs: TTFB, metadatos y canonicals',
+    'description'  => 'Analiza una URL gratis: código HTTP, TTFB, title, description, H1, canonical, robots y cabeceras técnicas. Resultado inmediato.',
     'canonical'    => '/herramientas/analizador-seo/',
     'body_class'   => 'page-analizador-seo',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -444,19 +444,19 @@ $page = page_config([
     'faq_items' => [
         [
             'q' => '¿Por qué mi web obtiene una puntuación baja en la salud técnica?',
-            'a' => 'La salud técnica SEO evalúa factores críticos como el código de estado HTTP, la ausencia de etiquetas fundamentales (Title o Canonical) y la velocidad de respuesta (TTFB). Una puntuación baja indica bloqueos severos que impiden a Google rastrear o interpretar correctamente tu contenido, limitando tu posicionamiento independientemente de lo buena que sea tu redacción.'
+            'a' => 'La salud técnica SEO evalúa factores críticos como el código de estado HTTP, la ausencia de etiquetas fundamentales (Title o Canonical) y la velocidad de respuesta (TTFB). Una puntuación baja indica bloqueos severos que impiden a Google rastrear o interpretar correctamente tu contenido.'
         ],
         [
             'q' => '¿Qué significa que falta la cabecera H1 o está duplicada?',
-            'a' => 'La etiqueta H1 es el titular principal de tu página web. Solo debe haber uno por página para dar una señal clara y contundente a Google sobre la temática del contenido. Duplicarlo confunde semánticamente a los bots, y no tenerlo es perder una de las oportunidades de relevancia On-Page más fuertes que existen.'
+            'a' => 'La etiqueta H1 es el titular principal de tu página web. Un H1 principal claro es muy recomendable para ayudar a Google a entender la temática. Aunque tener varios H1 no constituye automáticamente un error de indexación en HTML5, sigue siendo una mejor práctica mantener una estructura jerárquica con un único H1.'
         ],
         [
             'q' => '¿Por qué el TTFB (Time To First Byte) es tan importante para el SEO?',
-            'a' => 'El TTFB mide el tiempo que tarda tu servidor en procesar la petición y enviar el primer byte de datos. Si tu TTFB supera los 600ms, tu servidor es lento. Google prioriza sitios rápidos; un TTFB alto agota el Crawl Budget, reduce la frecuencia de rastreo y lastra de raíz cualquier optimización web de rendimiento (Core Web Vitals).'
+            'a' => 'El TTFB mide el tiempo que tarda tu servidor en procesar la petición y enviar el primer byte. Un buen rendimiento (como las métricas de Core Web Vitals) y un TTFB bajo son señales positivas dentro de un conjunto más amplio de factores de posicionamiento. Un servidor lento agota innecesariamente el Crawl Budget.'
         ],
         [
             'q' => '¿Afectan las cabeceras de seguridad al posicionamiento orgánico?',
-            'a' => 'Directamente no, pero de forma indirecta lo son todo. Cabeceras ausentes como CSP o X-Frame-Options dejan la puerta abierta a inyecciones de código malicioso o malware. Si Google detecta vulnerabilidades activas en tu sitio web, desplomará tu visibilidad y mostrará alertas rojas de "Sitio no seguro" a tus usuarios.'
+            'a' => 'Directamente no, pero protegen tu proyecto. Cabeceras ausentes como CSP o X-Frame-Options aumentan el riesgo de vulnerabilidades. Si tu sitio sufre un ataque o inyección, Google mostrará alertas rojas de "Sitio no seguro", lo que desplomará el tráfico de forma inmediata.'
         ]
     ]
 ]);
@@ -480,7 +480,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="analizador-h1">
     <div class="container">
       <span class="hero-eyebrow">Auditoría SEO Express</span>
-      <h1 id="analizador-h1">Analizador <span>Técnico de URLs</span></h1>
+      <h1 id="analizador-h1">Analizador <span>SEO técnico de URLs</span></h1>
       <p class="page-hero-desc">Petición HTTP directa en vivo para auditar los metadatos on-page, el tiempo de respuesta del servidor (TTFB) y la seguridad de cualquier página web.</p>
     </div>
   </section>
@@ -490,7 +490,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       
       <div class="tool-intro">
         <h2>Cómo responde tu servidor a Googlebot</h2>
-        <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo.</p>
+        <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo. Nota: Esta es una herramienta de validación técnica rápida, no una auditoría SEO completa.</p>
       </div>
 
       <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
@@ -619,7 +619,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <div>
                 <span style="font-size:0.75rem; text-transform:uppercase; color:var(--muted); font-weight:700; letter-spacing:1px; display:block; margin-bottom:0.25rem;">Prioridad de Optimización</span>
                 <p style="font-size:0.95rem; line-height:1.5; color:#cbd5e1; margin:0;">
-                  <?= h($result['recommended_priority']) ?>
+                  <?= $result['recommended_priority'] ?>
                 </p>
               </div>
             </div>
@@ -791,23 +791,37 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <!-- Textos de criterio - NO COMMODITY -->
       <div class="criterio-section" style="margin-top:3.5rem">
         <span class="section-label">Desde la trinchera técnica</span>
-        <h2>Por qué estos datos determinan la salud de tu web</h2>
+        <h2>Alcance y Limitaciones de esta Revisión Técnica</h2>
         
         <div class="criterio-grid">
           <div class="criterio-card">
-            <h3>El mito del TTFB y los plugins mágicos</h3>
-            <p>Muchos consultores te dirán que instales un plugin de caché en WordPress y des por solucionado el WPO. Mentira. El TTFB (Time to First Byte) mide la velocidad del servidor procesando PHP antes de enviar el primer bit.</p>
-            <p>Si tu backend tarda más de 500ms en pensar, ningún plugin de JS o CSS va a camuflar esa latencia. El TTFB alto se arregla con hosting de calidad, optimización de queries a base de datos y eliminando código innecesario en el core de tu desarrollo.</p>
+            <h3>Lista exacta de comprobaciones</h3>
+            <p>Al analizar una URL, esta herramienta ejecuta una batería de pruebas instantáneas:</p>
+            <ul style="font-size:0.95rem; color:var(--text); line-height:1.6; padding-left:1.2rem; margin-top:0.5rem;">
+              <li>Estado HTTP y cadenas de redirección.</li>
+              <li>Tiempo de respuesta (TTFB) del servidor.</li>
+              <li>Existencia y longitud de Title y Description.</li>
+              <li>Estructura básica de encabezados (H1).</li>
+              <li>Directivas de rastreo (Robots) y Canonical.</li>
+              <li>Presencia de cabeceras de seguridad HTTP.</li>
+            </ul>
           </div>
           
           <div class="criterio-card">
-            <h3>La pesadilla oculta del Canonical</h3>
-            <p>Google suele ignorar etiquetas canonical que apuntan a páginas con errores 404, redirecciones o urls con etiquetas de noindex. Si tu canonical no es impecable, el algoritmo tomará el control, decidirá por su cuenta cuál es tu página principal y puede fragmentar o diluir la autoridad de tus enlaces.</p>
+            <h3>Lo que NO hace esta herramienta</h3>
+            <p>Es una validación puntual de URL, no una auditoría profunda. Ten en cuenta sus límites:</p>
+            <ul style="font-size:0.95rem; color:var(--text); line-height:1.6; padding-left:1.2rem; margin-top:0.5rem;">
+              <li><strong>No rastrea la web entera:</strong> Solo procesa la ruta exacta introducida.</li>
+              <li><strong>No evalúa intención ni calidad:</strong> No sabe si tu texto responde a lo que el usuario busca.</li>
+              <li><strong>No mide autoridad:</strong> Ignora el perfil de enlaces o la popularidad del dominio.</li>
+              <li><strong>No sustituye a GSC:</strong> Google Search Console sigue siendo la fuente oficial de indexación.</li>
+              <li><strong>No determina rankings:</strong> Las métricas técnicas facilitan el rastreo, pero un 100/100 no garantiza el Top 1.</li>
+            </ul>
           </div>
 
           <div class="criterio-card">
-            <h3>Cabeceras de seguridad y SEO: la conexión indirecta</h3>
-            <p>¿Qué tiene que ver `X-Frame-Options` con posicionar? Directamente, nada. Indirectamente, todo. No tener estas directivas facilita ataques como el Clickjacking o inyecciones de Scripts maliciosos que insertan enlaces ocultos. Si Google detecta malware en tu web, puede mostrar advertencias de seguridad, reducir drásticamente la confianza del resultado y hundir el tráfico orgánico hasta que se resuelva el problema.</p>
+            <h3>Rendimiento y Seguridad como Señales</h3>
+            <p>El TTFB o las cabeceras de seguridad no son factores mágicos de posicionamiento. Un servidor rápido facilita el rastreo continuo (Crawl Budget) y mejora la base para buenas métricas de usuario (Core Web Vitals). La seguridad previene hackeos y alertas disuasorias que hunden el CTR, pero no posiciona por sí misma. Son componentes higiénicos dentro de un ecosistema integral de señales SEO.</p>
           </div>
         </div>
       </div>

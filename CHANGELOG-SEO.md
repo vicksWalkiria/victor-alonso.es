@@ -49,4 +49,9 @@
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
 
-
+- **URL:** `/herramientas/analizador-seo/`
+- **Cambio:** Optimización completa de metadatos (Title y H1) para reenfocar la herramienta hacia "Analizador SEO técnico de URLs" y evitar sobreprometer "auditorías SEO" completas. Se han matizado todas las respuestas del FAQ (H1, TTFB, Seguridad) para alinearlas con la realidad técnica de Google (las cabeceras no posicionan por sí mismas, pero previenen catástrofes). Se ha añadido una sección explícita con la lista de comprobaciones y limitaciones, y se han vinculado las alertas rojas directamente con los servicios de consultoría pertinentes.
+- **Motivo:** SEO-08. Ajustar el H1 con la intención de búsqueda real de los usuarios, mejorar el rigor editorial de la landing y abrir canales de captación más directos ante alertas de redirecciones, TTFB alto o problemas de indexación.
+- **KPI Asociado:** Mejora de posición media para `analizador seo` y `analizador técnico urls`. Aumento del CTR interno hacia las landings de servicios.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
