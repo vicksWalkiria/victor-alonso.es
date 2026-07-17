@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'SEO Albacete · Consultor SEO Técnico | Víctor Alonso',
-    'description'  => '¿Buscas mejorar tu posicionamiento SEO en Albacete? Auditoría técnica y estrategia real sin humo por ingeniero informático. ¡Solicita tu diagnóstico gratis!',
+    'title'        => 'Consultor SEO en Albacete | Víctor Alonso',
+    'description'  => 'Consultor SEO técnico en Albacete. Auditorías, SEO local, WordPress e implementación directa, sin agencias ni intermediarios.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service'],
@@ -152,9 +152,9 @@ require __DIR__ . '/includes/header.php';
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
-          <h3>SEO en Albacete</h3>
+          <h3>SEO local en Albacete</h3>
           <p>SEO local técnico para negocios de Albacete: Google Business Profile, arquitectura web, contenido local, medición y mejoras reales sobre la web.</p>
-          <a href="/contacto/" class="card-link">Solicitar diagnóstico SEO →</a>
+          <a href="/servicios/seo-albacete/" class="card-link">SEO local para empresas de Albacete →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -338,8 +338,8 @@ require __DIR__ . '/includes/header.php';
   <!-- CTA final -->
   <?php
   $cta = [
-    'title'     => '¿Necesitas un consultor SEO en Albacete?',
-    'subtitle'  => 'Cuéntame qué ocurre con tu web. Revisaré el caso y te daré una primera valoración SEO gratuita y sin compromiso.',
+    'title'     => 'Cuéntame qué está frenando tu web',
+    'subtitle'  => 'Revisaré el caso y te daré una primera valoración SEO gratuita y sin compromiso, sin reuniones innecesarias.',
     'btn_label' => 'Solicitar diagnóstico SEO gratuito',
     'btn_href'  => '/contacto/',
     'whatsapp'  => true,
