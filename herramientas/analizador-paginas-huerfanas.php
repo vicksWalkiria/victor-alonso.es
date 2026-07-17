@@ -175,7 +175,7 @@ $page = page_config([
         ],
         [
             'q' => '¿Por qué las páginas huérfanas son perjudiciales para el SEO?',
-            'a' => 'Si una página no tiene enlaces internos, Google asume que no es importante y difícilmente la posicionará. Además, consumen recursos de rastreo (Crawl Budget) sin aportar valor a tu arquitectura web.'
+            'a' => 'Si una página no tiene enlaces internos, Google asume que no es importante y difícilmente la posicionará. Además, generan rastreos ineficientes sin aportar valor a tu arquitectura web.'
         ],
         [
             'q' => '¿Cómo funciona esta herramienta?',
@@ -319,7 +319,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           <div class="criterio-card">
             <h3>3. Error común: Sitemaps inflados</h3>
-            <p>Muchos CMS como WordPress incluyen por defecto páginas de autor, fechas y archivos adjuntos en el Sitemap sin enlazar a ellos desde el frontend. Esto diluye tu Crawl Budget. Configura tu plugin SEO para excluir estos tipos de contenido.</p>
+            <p>Muchos CMS como WordPress incluyen por defecto páginas de autor, fechas y archivos adjuntos en el Sitemap sin enlazar a ellos desde el frontend. Esto genera ineficiencias de rastreo. Configura tu plugin SEO para excluir estos tipos de contenido.</p>
           </div>
         </div>
       </div>
@@ -334,7 +334,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <?php
   $cta = [
-    'title'     => '¿Problemas con el Crawl Budget y la Indexación?',
+    'title'     => '¿Problemas de enlazado e indexación?',
     'subtitle'  => 'Como consultor SEO, audito en profundidad la arquitectura de tu sitio web, optimizo tu enlazado interno y maximizo el rendimiento de rastreo de Googlebot.',
     'btn_label' => 'Mejorar mi Arquitectura SEO',
     'btn_href'  => '/contacto/',

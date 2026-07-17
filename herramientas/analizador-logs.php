@@ -561,7 +561,7 @@ $page = page_config([
     ],
     [
       'q' => '¿Qué es el Crawl Budget y cómo afecta a mi web?',
-      'a' => 'El Crawl Budget (o presupuesto de rastreo) es el tiempo y recursos que Google destina a explorar tu web. Si Google gasta su presupuesto rastreando URLs con parámetros inútiles, redirecciones infinitas o recursos estáticos bloqueados, no tendrá tiempo de indexar tu contenido de valor, perjudicando tu posicionamiento.'
+      'a' => 'El Crawl Budget (o presupuesto de rastreo) es el tiempo y recursos que Google destina a explorar tu web. En sitios grandes o e-commerces, si Google gasta su cuota rastreando URLs con parámetros inútiles o redirecciones infinitas, puede tardar más tiempo en descubrir e indexar tu contenido de valor.'
     ],
     [
       'q' => '¿Están seguros mis datos al subir un log a esta herramienta?',
@@ -1774,7 +1774,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <div class="criterio-card">
             <h3>Qué decisiones puedes tomar con este informe</h3>
             <p><strong>1. Identificar páginas huérfanas o zombies:</strong> Descubre URLs que Googlebot rastrea constantemente pero que tú creías eliminadas o que no aportan valor de negocio.<br>
-            <strong>2. Reparar 404s con autoridad:</strong> Si el log muestra que bots de búsqueda llegan repetidamente a URLs con código 404, estás perdiendo crawl budget y posiblemente autoridad. Podrás aplicarles una redirección 301.<br>
+            <strong>2. Reparar 404s con autoridad:</strong> Si el log muestra que bots de búsqueda llegan repetidamente a URLs con código 404, el motor está invirtiendo tiempo en rutas sin salida, y tú podrías estar perdiendo autoridad que podrías redirigir mediante un 301.<br>
             <strong>3. Detectar spider traps:</strong> Localiza parámetros de URL (filtros, paginaciones infinitas) que están multiplicando las peticiones al servidor y agotando los recursos de rastreo.</p>
           </div>
 

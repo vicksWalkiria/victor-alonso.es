@@ -83,7 +83,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p>Los cambios de dominio, de plataforma o de estructura URL son momentos de alto riesgo para el SEO. Una migración mal planificada puede suponer meses de recuperación. Planifico el mapeamiento de redirecciones, controlo el proceso en Search Console y hago seguimiento post-migración.</p>
 
         <h3>Facetas y paginación en ecommerce</h3>
-        <p>Las páginas de filtros generan miles de URLs duplicadas o de bajo valor. Analizo qué facetas deben indexarse, cuáles deben bloquearse en robots.txt y cómo implementar la paginación sin perder autoridad.</p>
+        <p>Las páginas de filtros generan miles de URLs de bajo valor. Analizo qué facetas deben indexarse, cómo combinar reglas de robots.txt y canonicals según la necesidad de rastreo, y cómo implementar la paginación sin perder autoridad.</p>
 
       </div>
       <aside class="service-sidebar">

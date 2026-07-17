@@ -188,7 +188,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
             </div>
             <div class="case-detail">
               <h3>Acciones</h3>
-              <p>Análisis de qué parámetros de URL generaban duplicados, configuración de robots.txt para bloquear los parámetros irrelevantes, implementación de canonicals correctos en las páginas de categoría con filtros y limpieza del sitemap para que solo incluyera URLs indexables.</p>
+              <p>Análisis de qué parámetros de URL generaban duplicados, gestión del rastreo mediante robots.txt para reducir peticiones ineficientes, implementación de canonicals correctos en las páginas de categoría con filtros y limpieza del sitemap para que solo incluyera URLs indexables.</p>
             </div>
             <div class="case-detail" style="grid-column:1/-1">
               <h3>Qué aprender</h3>

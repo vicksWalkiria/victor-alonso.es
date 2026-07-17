@@ -393,13 +393,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <!-- Sección de Criterio Técnico SEO "Non-Commodity" -->
       <div class="criterio-section" style="margin-top: 5rem;">
         <span class="section-label">Fundamentos del SEO de Trinchera</span>
-        <h2>Errores críticos en Sitemaps XML que destrozan tu Crawl Budget</h2>
+        <h2>Errores críticos en Sitemaps XML que ralentizan el rastreo</h2>
         
         <div class="criterio-grid">
           <div class="criterio-card">
             <h3>URLs sin estatus 200 OK</h3>
             <p>El error básico número uno es inyectar en el sitemap URLs que devuelven redirecciones (301, 302) o errores (404, 500). El sitemap es una carta de recomendación de indexación directa a Googlebot.</p>
-            <p>Si fuerzas al bot a rastrear URLs que redirigen, estás quemando su límite de rastreo diario (Crawl Budget) en procesar redirecciones inútiles en lugar de indexar nuevos contenidos de calidad.</p>
+            <p>Si fuerzas al bot a rastrear URLs que devuelven redirecciones, estás restando eficiencia a su rastreo y obligando al motor a procesar saltos inútiles en lugar de indexar nuevos contenidos de calidad directamente.</p>
           </div>
 
           <div class="criterio-card">

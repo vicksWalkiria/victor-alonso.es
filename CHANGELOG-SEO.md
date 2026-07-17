@@ -67,3 +67,10 @@
 - **KPI Asociado:** Distribución equilibrada de clics a herramientas (`tool_hub_click`).
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** Varias (Herramientas, Casos reales, Servicios)
+- **Cambio:** Auditoría profunda de copy técnico. Se han rebajado afirmaciones absolutas ("el robots.txt soluciona duplicados", "el crawl budget hunde tu web pequeña") hacia explicaciones más ajustadas a la realidad algorítmica de Google. Sustituidos conceptos deterministas por dinámicas de eficiencia de rastreo, señales Core Web Vitals y manejo conjunto de directivas (noindex + canonical).
+- **Motivo:** SEO-13. Consolidar la credibilidad técnica de Víctor Alonso como consultor SEO de alto nivel, evitando dogmas genéricos que abundan en el sector B2C.
+- **KPI Asociado:** Ninguno directo (Mejora de E-E-A-T).
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
