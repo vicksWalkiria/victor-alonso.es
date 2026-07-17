@@ -1063,7 +1063,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
 
 
-          <div style="text-align: right; margin-top: 1.5rem;">
+          <div style="text-align: right; margin-top: 1.5rem; display: flex; justify-content: flex-end; gap: 1rem; align-items: center; flex-wrap: wrap;">
+            <button type="button" class="btn btn--secondary" onclick="document.querySelector('[name=log_text]').value = '66.249.66.1 - - [17/Jul/2026:10:15:22 +0200] &quot;GET /servicios/seo-tecnico/ HTTP/1.1&quot; 200 8452 &quot;-&quot; &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;\n157.55.39.12 - - [17/Jul/2026:10:16:01 +0200] &quot;GET /contacto-viejo HTTP/1.1&quot; 404 1250 &quot;-&quot; &quot;Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)&quot;\n192.168.1.100 - - [17/Jul/2026:10:17:45 +0200] &quot;GET /assets/style.css HTTP/1.1&quot; 200 4512 &quot;https://victor-alonso.es/&quot; &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36&quot;'; switchTab('pegar-texto');">Cargar ejemplo de prueba</button>
             <button type="submit" class="btn btn--primary" style="margin-top: 0;">Procesar y Analizar Logs</button>
           </div>
         </form>
@@ -1764,32 +1765,41 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <?php endif; ?>
 
       <!-- Secciones didácticas -->
+      <!-- Secciones didácticas -->
       <div class="criterio-section" style="margin-top: 4rem;">
         <span class="section-label">Desde la trinchera técnica</span>
-        <h2>Por qué analizar logs locales en lugar de usar herramientas externas</h2>
+        <h2>Análisis de Logs para Decisiones SEO Reales</h2>
+
+        <div class="criterio-grid" style="margin-bottom: 2.5rem;">
+          <div class="criterio-card">
+            <h3>Qué decisiones puedes tomar con este informe</h3>
+            <p><strong>1. Identificar páginas huérfanas o zombies:</strong> Descubre URLs que Googlebot rastrea constantemente pero que tú creías eliminadas o que no aportan valor de negocio.<br>
+            <strong>2. Reparar 404s con autoridad:</strong> Si el log muestra que bots de búsqueda llegan repetidamente a URLs con código 404, estás perdiendo crawl budget y posiblemente autoridad. Podrás aplicarles una redirección 301.<br>
+            <strong>3. Detectar spider traps:</strong> Localiza parámetros de URL (filtros, paginaciones infinitas) que están multiplicando las peticiones al servidor y agotando los recursos de rastreo.</p>
+          </div>
+
+          <div class="criterio-card">
+            <h3>Qué NO puede detectar un análisis de logs</h3>
+            <p><strong>1. Canibalización de palabras clave:</strong> Los logs muestran rastreo y respuestas (qué páginas descarga Googlebot), pero no indican en qué posición rankea la página ni con qué intención de búsqueda. No sirven para diagnosticar canibalizaciones.<br>
+            <strong>2. Experiencia de usuario (UX):</strong> Un log no dice cuánto tiempo pasó el usuario en la web o si rebotó; para eso necesitas analítica web (GA4 o Matomo).<br>
+            <strong>3. Errores de renderizado JavaScript:</strong> Apache devuelve un código 200 si entrega el HTML inicial, incluso si la carga posterior por JS (React/Angular) falla estrepitosamente.</p>
+          </div>
+        </div>
 
         <div class="criterio-grid">
           <div class="criterio-card">
-            <h3>1. Privacidad y Seguridad absoluta (GDPR)</h3>
-            <p>Tus logs contienen la dirección IP y el comportamiento exacto de todos tus usuarios. Subir estos logs a
-              servidores de terceros desconocidos puede suponer un incumplimiento grave del RGPD. Mi herramienta procesa
-              todo a través de PHP de forma efímera en la memoria RAM del servidor de victor-alonso.es, sin almacenar
-              una sola línea en base de datos ni archivos locales. Tu privacidad es inquebrantable.</p>
+            <h3>Privacidad y Tratamiento de Datos (RGPD)</h3>
+            <p>Tus logs contienen direcciones IP y datos de comportamiento. Esta herramienta procesa tu archivo de manera <strong>temporal en la memoria RAM del servidor</strong> para generar el reporte. Formatos admitidos: Common/Combined Log Format (Apache/Nginx). <strong>Límite: 50MB</strong> o 100.000 líneas. Los datos y el reporte PDF <strong>se borran automáticamente</strong> del servidor en menos de 1 hora.</p>
           </div>
 
           <div class="criterio-card">
-            <h3>2. La Verdad Oculta frente a Google Analytics</h3>
-            <p>Los bloqueadores de publicidad, Brave y las extensiones de privacidad impiden que Google Analytics
-              registre entre un 20% y un 40% del tráfico web. Los logs del servidor de Apache o Nginx son imposibles de
-              bloquear. Todo usuario, bot de rastreo o script malicioso deja una huella física obligatoria en tu
-              servidor, ofreciéndote métricas 100% reales.</p>
+            <h3>La precisión frente a Google Analytics</h3>
+            <p>Los bloqueadores de publicidad (AdBlockers) y navegadores con medidas de privacidad impiden que Google Analytics registre una porción significativa del tráfico real de usuarios. Los logs del servidor de Apache o Nginx no se pueden bloquear en el navegador del cliente, por lo que te ofrecen un recuento de peticiones más fiel a nivel de infraestructura.</p>
           </div>
 
           <div class="criterio-card">
-            <h3>3. Optimización Quirúrgica del Rastreo SEO</h3>
-            <p>Herramientas como Google Search Console te ofrecen una muestra pequeña de la actividad de Googlebot. Con
-              un análisis de logs puedes conocer en tiempo real la hora exacta de rastreo, qué secciones del código se
-              devuelven lentas o si estás sufriendo de canibalizaciones y bucles infinitos de redirección.</p>
+            <h3>Logs frente a Google Search Console</h3>
+            <p>El informe de Estadísticas de Rastreo (Crawl Stats) de Search Console es útil, pero solo te ofrece una muestra agregada y parcial de la actividad de Googlebot. Procesar un log en bruto te permite aplicar cruces avanzados, filtrar patrones específicos y ver al detalle todas las peticiones (incluyendo bots como Bing, Ahrefs o bots IA) sin el muestreo que aplica Google.</p>
           </div>
         </div>
       </div>

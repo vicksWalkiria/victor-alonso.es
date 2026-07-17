@@ -42,3 +42,11 @@
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
 
+- **URL:** `/herramientas/analizador-logs/`
+- **Cambio:** Mejoras editoriales en la herramienta Analizador de Logs. Sustitución de terminología determinista ("verdad absoluta") por explicaciones objetivas de las ventajas frente a GA4 y GSC. Añadido botón "Cargar ejemplo de prueba" para facilitar el onboarding y descubrimiento del dashboard sin fricción. Añadidas secciones descriptivas sobre toma de decisiones reales (huérfanas, spider traps) y limitaciones explícitas (no detecta canibalizaciones ni UX). Reforzado el copy sobre protección y borrado efímero en RAM (RGPD).
+- **Motivo:** SEO-07. Aumentar la tasa de conversión (uso de la herramienta) al reducir la barrera de entrada y generar más confianza mediante transparencia técnica estricta.
+- **KPI Asociado:** Incremento de leads y uso de la herramienta. Retención en la página.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
+
+
