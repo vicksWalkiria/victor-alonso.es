@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Configuración de Página
 $page = page_config([
-    'title'        => 'Analizador de Páginas Huérfanas y URLs no Rastreadas',
+    'title'        => 'Analizador de páginas huérfanas',
     'description'  => 'Detecta páginas huérfanas cotejando el Sitemap XML de tu web con el listado de URLs de tu crawler (Screaming Frog, Sitebulb).',
     'canonical'    => '/herramientas/analizador-paginas-huerfanas/',
     'body_class'   => 'page-analizador-huerfanas',

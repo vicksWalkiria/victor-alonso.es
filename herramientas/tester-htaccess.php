@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 require_once dirname(__DIR__) . '/includes/ratings-helper.php';
 
 $page = page_config([
-    'title'        => 'Tester .htaccess online: RewriteRule y redirecciones 301',
+    'title'        => 'Tester .htaccess: RewriteRule y redirecciones 301',
     'description'  => 'Prueba RewriteRule, RewriteCond y redirecciones 301 sin tocar el servidor. Simulador .htaccess online con traza paso a paso.',
     'canonical'    => '/herramientas/tester-htaccess/',
     'body_class'   => 'page-tester-htaccess',

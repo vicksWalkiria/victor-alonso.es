@@ -430,7 +430,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-    'title'        => 'Analizador SEO de URLs: TTFB, metadatos y canonicals',
+    'title'        => 'Analizador SEO de URLs: TTFB y canonicals',
     'description'  => 'Analiza una URL gratis: código HTTP, TTFB, title, description, H1, canonical, robots y cabeceras técnicas. Resultado inmediato.',
     'canonical'    => '/herramientas/analizador-seo/',
     'body_class'   => 'page-analizador-seo',

@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Auditoría SEO técnica y de contenidos',
-  'description'  => 'Auditoría SEO completa: estado técnico, indexación, arquitectura, contenido, WPO y datos estructurados. Entregable priorizado por impacto, no un informe de 100 páginas.',
+  'description'  => 'Auditoría SEO técnica avanzada. Detecto y soluciono errores de rastreo, indexación y WPO para que tu proyecto recupere tráfico y rentabilidad.',
   'canonical'    => '/servicios/auditoria-seo/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],

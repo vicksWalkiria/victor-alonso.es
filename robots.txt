@@ -6,5 +6,6 @@ Disallow: /gracias.php
 Disallow: /includes/
 Disallow: /?s=
 Disallow: /*?s=
+Disallow: /cdn-cgi/
 
 Sitemap: https://www.victor-alonso.es/sitemap.xml

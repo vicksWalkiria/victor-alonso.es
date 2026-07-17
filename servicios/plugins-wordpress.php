@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Desarrollo de Plugins WordPress a medida',
-  'description'  => 'Desarrollo de plugins WordPress a medida: shortcodes, formularios, integraciones con APIs, WooCommerce, paneles de administración personalizados. Código seguro y mantenible.',
+  'description'  => 'Desarrollo de plugins para WordPress a medida. Soluciones eficientes, seguras y escalables adaptadas a tus necesidades sin sobrecargar la web.',
   'canonical'    => '/servicios/plugins-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],

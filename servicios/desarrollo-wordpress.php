@@ -4,7 +4,7 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Desarrollo WordPress y Temas a Medida',
-  'description'  => 'Desarrollo WordPress técnico: temas a medida, custom post types, campos personalizados, rendimiento y SEO desde la base. Sin plantillas genéricas ni código inflado.',
+  'description'  => 'Desarrollo web WordPress enfocado a conversión y SEO. Arquitecturas ligeras, seguras y optimizadas para máxima velocidad de carga.',
   'canonical'    => '/servicios/desarrollo-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service'],

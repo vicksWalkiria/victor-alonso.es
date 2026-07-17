@@ -74,3 +74,17 @@
 - **KPI Asociado:** Ninguno directo (Mejora de E-E-A-T).
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** Múltiples URLs (Herramientas y Servicios)
+- **Cambio:** Optimización de longitud de etiquetas Title y Meta Description en 14 páginas clave para evitar truncamiento en las SERPs (límite de ~600px/985px) y eliminar sufijos redundantes. Redacción orientada a "Problema + Beneficio".
+- **Motivo:** Mejorar el CTR (Click-Through Rate) orgánico asegurando que el mensaje comercial se lea completo en resultados de búsqueda.
+- **KPI Asociado:** Mejora del CTR en GSC en las próximas 4 semanas.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
+
+- **URL:** `/robots.txt`
+- **Cambio:** Bloqueado el directorio `/cdn-cgi/` mediante `Disallow: /cdn-cgi/`.
+- **Motivo:** Evitar falsos 404 reportados en Search Console generados por los rastreadores de protección de email de Cloudflare.
+- **KPI Asociado:** Desaparición de los errores 404 en Search Console.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.

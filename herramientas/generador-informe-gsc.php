@@ -240,8 +240,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Configuración de metadatos de la página
 $page = page_config([
-    'title'        => 'Generador de Informes GSC PDF Profesional | Herramientas SEO',
-    'description'  => 'Sube el ZIP exportado de Google Search Console y obtén un informe de rendimiento y auditoría SEO en PDF maquetado profesionalmente con LaTeX y gráficas vectoriales.',
+    'title'        => 'Generador de informes de Search Console en PDF',
+    'description'  => 'Convierte tus exportaciones de Google Search Console en informes PDF con gráficas vectoriales. Detecta keywords oportunidad al instante.',
     'canonical'    => '/herramientas/generador-informe-gsc/',
     'body_class'   => 'page-tool-gsc',
     'schema_types' => ['WebApplication', 'FAQPage'],

@@ -544,7 +544,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $page = page_config([
   'title' => 'Analizador de Logs Apache y Nginx Online',
-  'description' => 'Sube o pega tu log de accesos (Apache/Nginx) y audita de forma instantánea el rastreo de bots de búsqueda, errores 404, IPs activas y consumo de crawl budget.',
+  'description' => 'Audita el rastreo de Googlebot procesando tus logs de Apache y Nginx en local. Detecta fugas de Crawl Budget, 404s ocultos y optimiza el SEO.',
   'canonical' => '/herramientas/analizador-logs/',
   'body_class' => 'page-analizador-logs',
   'schema_types' => ['WebApplication', 'FAQPage'],

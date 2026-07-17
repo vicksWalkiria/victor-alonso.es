@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Casos de estudio SEO y problemas resueltos',
-  'description'  => 'Casos reales anonimizados: WordPress infectado, caídas de tráfico, migraciones fallidas, webs lentas, proyectos sin arquitectura y ecommerce con problemas técnicos.',
+  'description'  => 'Descubre cómo he solucionado penalizaciones, problemas de migración y arquitectura técnica en proyectos reales, devolviendo la visibilidad SEO.',
   'canonical'    => '/casos-reales/',
   'body_class'   => 'page-casos',
   'schema_types' => [],

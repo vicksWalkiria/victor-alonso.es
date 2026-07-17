@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Configuración de metadatos de la página
 $page = page_config([
-    'title'        => 'Editor de Metadatos de Imágenes Gratis | Modificar EXIF y GPS',
-    'description'  => 'Edita, lee y modifica los metadatos EXIF de tus fotos en local. Herramienta ideal para añadir coordenadas gps a una imagen online, cambiar la fecha o el autor sin subir nada al servidor.',
+    'title'        => 'Editor EXIF y GPS online gratis',
+    'description'  => 'Geolocaliza y edita metadatos EXIF de imágenes desde tu navegador. Mejora tu SEO local de forma 100% privada sin subir los archivos al servidor.',
     'canonical'    => '/herramientas/editor-metadatos-imagenes/',
     'body_class'   => 'page-tool-gps-exif',
     'schema_types' => ['WebApplication', 'FAQPage'],

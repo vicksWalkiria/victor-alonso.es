@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Mantenimiento WordPress profesional | Seguridad y soporte',
+  'title'        => 'Mantenimiento WordPress: seguridad y soporte',
   'description'  => 'Mantenimiento WordPress con actualizaciones controladas, copias externas, monitorización, seguridad, WPO y soporte técnico directo.',
   'canonical'    => '/servicios/mantenimiento-wordpress/',
   'body_class'   => 'page-servicio',
