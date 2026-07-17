@@ -61,3 +61,9 @@
 - **KPI Asociado:** Eventos de uso (`schema_copy_click`, `schema_download_click`) y CTR a la landing de servicio local.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+- **URL:** `/herramientas/` (Hub)
+- **Cambio:** Reestructuración de la página índice de herramientas. Se ha priorizado el orden de las tarjetas (Tester .htaccess, Logs, Schema, Analizador SEO) y se ha incorporado un sistema de filtrado dinámico por categorías (Rastreo, Redirecciones, Rendimiento, etc.). Se ha enriquecido el diseño de las tarjetas añadiendo cajas de metadatos informativos (Entrada, Salida, Proceso local vs servidor) y un tracker de eventos de clics a cada herramienta. Se ha sincronizado el marcado `ItemList` con el nuevo orden visual.
+- **Motivo:** SEO-10. Mantener la utilidad del Hub sin sobreoptimizarlo para "suite SEO". Mejorar la experiencia de usuario y facilitar la búsqueda de utilidades para aumentar el CTR interno.
+- **KPI Asociado:** Distribución equilibrada de clics a herramientas (`tool_hub_click`).
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
