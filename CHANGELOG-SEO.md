@@ -13,3 +13,10 @@
 - **KPI Asociado:** Evolución del clúster de consultas "SEO local Albacete" en GSC; clics hacia esta landing.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** Varias (`/`, `/herramientas/analizador-logs/`, `/herramientas/tester-htaccess/`, `/herramientas/analizador-seo/`)
+- **Cambio:** Reordenado el enlazado interno comercial. En la Home se han sustituido los anchors genéricos "Ver servicio" por anchors exactos ("auditoría SEO técnica", "servicio de SEO técnico", "mantenimiento WordPress"). En las herramientas se han ajustado los enlaces para apuntar con la intención correcta (ej. "migraciones y redirecciones SEO", "auditoría SEO manual").
+- **Motivo:** SEO-03. Mejorar la distribución de PageRank interno y asegurar que cada anchor text refuerza la intención asignada a la URL de destino, eliminando señales contradictorias.
+- **KPI Asociado:** Mejora de posición media en servicios core.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.

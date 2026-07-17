@@ -170,7 +170,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Auditoría SEO</h3>
           <p>Revisión completa del estado técnico, arquitectura, contenido, indexación y WPO. Entregable priorizado por impacto.</p>
-          <a href="/servicios/auditoria-seo/" class="card-link">Ver servicio →</a>
+          <a href="/servicios/auditoria-seo/" class="card-link">auditoría SEO técnica →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -178,7 +178,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>SEO Técnico</h3>
           <p>Rastreo, indexación, renderizado, Core Web Vitals, canonicals, sitemaps, datos estructurados, JS SEO y migraciones.</p>
-          <a href="/servicios/seo-tecnico/" class="card-link">Ver servicio →</a>
+          <a href="/servicios/seo-tecnico/" class="card-link">servicio de SEO técnico →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -186,7 +186,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Mantenimiento WordPress</h3>
           <p>Actualizaciones, backups, seguridad, limpieza de malware, WPO y soporte técnico continuo.</p>
-          <a href="/servicios/mantenimiento-wordpress/" class="card-link">Ver servicio →</a>
+          <a href="/servicios/mantenimiento-wordpress/" class="card-link">mantenimiento WordPress →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">

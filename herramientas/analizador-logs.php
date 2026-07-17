@@ -557,7 +557,7 @@ $page = page_config([
   'faq_items' => [
     [
       'q' => '¿Por qué es importante analizar los logs del servidor para el SEO?',
-      'a' => 'El análisis de logs es la única forma 100% fiable de saber exactamente cómo rastrea Googlebot (y otros buscadores) tu página web. Permite descubrir fugas de crawl budget, páginas huérfanas que Google sigue visitando, errores 404 ocultos y cuellos de botella de rendimiento que no aparecen en Google Search Console.'
+      'a' => 'El análisis de logs es la única forma 100% fiable de saber exactamente cómo rastrea Googlebot (y otros buscadores) tu página web. Permite descubrir fugas de crawl budget, páginas huérfanas que Google sigue visitando, errores 404 ocultos y cuellos de botella de rendimiento que no aparecen en Google Search Console. Si tu web tiene miles de URLs, realizar una <a href="/servicios/seo-tecnico/" style="color:var(--orange)">auditoría SEO técnica y de rastreo</a> a partir de logs es fundamental.'
     ],
     [
       'q' => '¿Qué es el Crawl Budget y cómo afecta a mi web?',

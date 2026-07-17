@@ -210,7 +210,7 @@ Redirect 301 /contacto-viejo /contacto/
             <i class="fa-solid fa-circle-question" style="color: var(--orange);"></i> ¿Dudas con la configuración de tu servidor o redirecciones?
           </h3>
           <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
-            Si estás planificando una migración compleja de dominio o temes romper la indexación de tu web, contar con un soporte técnico especializado marca la diferencia. Como especialista en <a href="/servicios/seo-tecnico/">SEO técnico</a> y desarrollo web, puedo ayudarte a realizar una <a href="/servicios/auditoria-seo/">auditoría SEO</a> profunda de rastreo. En <a href="/">Víctor Alonso SEO</a> implementamos los cambios directamente en tu servidor de manera segura.
+            Si estás planificando una migración compleja de dominio o temes romper la indexación de tu web, contar con un soporte técnico especializado marca la diferencia. Como especialista en desarrollo web, puedo ayudarte a realizar una <a href="/servicios/seo-tecnico/">migraciones y redirecciones SEO</a> seguras, así como una <a href="/servicios/auditoria-seo/">auditoría SEO</a> profunda de rastreo. En <a href="/">Víctor Alonso SEO</a> implementamos los cambios directamente en tu servidor de manera segura.
           </p>
         </div>
       </div>
