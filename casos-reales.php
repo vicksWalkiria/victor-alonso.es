@@ -58,7 +58,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
             </div>
             <div class="case-detail" style="grid-column:1/-1">
               <h3>Qué aprender</h3>
-              <p>Un WordPress sin actualizar y sin backups es una bomba de relojería. No es cuestión de si pasa, sino de cuándo. El coste de un mantenimiento preventivo es siempre menor que el coste de una recuperación de emergencia.</p>
+              <p>Un WordPress sin actualizar y sin backups es una bomba de relojería. No es cuestión de si pasa, sino de cuándo. Si tu web ha sido hackeada, actúa rápido y solicita una <a href="/servicios/reparacion-wordpress-urgente/" style="text-decoration:underline">reparación urgente</a>. Si aún estás a tiempo, recuerda que el coste de un <a href="/servicios/mantenimiento-wordpress/" style="text-decoration:underline">mantenimiento preventivo</a> es siempre menor que el coste y el impacto en negocio de una recuperación de emergencia.</p>
             </div>
           </div>
         </article>
@@ -114,7 +114,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
             </div>
             <div class="case-detail" style="grid-column:1/-1">
               <h3>Qué aprender</h3>
-              <p>El rendimiento web no se arregla con un plugin de caché. Hay que analizar qué carga, en qué orden y por qué. Un diseño bonito con un rendimiento pésimo perjudica tanto la experiencia de usuario como el posicionamiento.</p>
+              <p>El rendimiento web no se arregla con un plugin de caché. Hay que analizar qué carga, en qué orden y por qué. Un diseño bonito con un rendimiento pésimo perjudica tanto la experiencia de usuario como el posicionamiento. Si quieres evitar que tu web se degrade con el tiempo, la optimización WPO debe integrarse en un <a href="/servicios/mantenimiento-wordpress/" style="text-decoration:underline">mantenimiento técnico continuo</a>.</p>
             </div>
           </div>
         </article>

@@ -20,3 +20,10 @@
 - **KPI Asociado:** Mejora de posición media en servicios core.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
+
+- **URL:** `/servicios/mantenimiento-wordpress/` y relacionados (`/casos-reales.php`)
+- **Cambio:** Reescribir contenido para centrar la intención en mantenimiento "preventivo". Añadidas secciones de "Para quién es", "Qué incluye la puesta a punto", "Lo que NO incluye", "La diferencia entre prevenir y curar" y "FAQs técnicas". Actualizados metadatos (Title y Description). Añadidos enlaces desde casos reales e integrados enlaces salientes a reparación urgente.
+- **Motivo:** SEO-04. Resolver la intención mixta que estaba lastrando la URL, separando las emergencias (malware/hackeos) de los servicios recurrentes para escalar en SERPs de "mantenimiento wordpress profesional".
+- **KPI Asociado:** Impresiones y clics del clúster de mantenimiento (Search Console).
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código.
