@@ -117,7 +117,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <h2>Caso real de WordPress infectado</h2>
         <div class="card card--dark" style="margin-top: 1.5rem; border-color: var(--orange);">
           <p style="font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 1rem;">Lee mi caso de estudio documentado sobre cómo resolví una crisis real de malware en un cliente B2B cuya web fue hackeada el fin de semana. Aprenderás por qué las copias de seguridad alojadas en su propio servidor no sirvieron para absolutamente nada frente al rescate.</p>
-          <a href="/casos-reales/#caso-1" class="btn btn--secondary" style="font-size:0.9rem">Leer caso de estudio: WordPress infectado con malware</a>
+          <a href="/casos-reales/#caso-1" class="btn btn--secondary" style="font-size:0.9rem; color:#ffffff; border-color:var(--orange);">Leer caso de estudio: WordPress infectado con malware</a>
         </div>
 
         <h2>Qué accesos necesito para empezar</h2>
