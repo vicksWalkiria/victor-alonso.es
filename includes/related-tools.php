@@ -112,7 +112,18 @@ if (count($related_tools) < 2) {
 }
 $related_tools = array_slice($related_tools, 0, 3);
 ?>
-<div class="tool-interlinking" style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+<!-- Callout a Consultor SEO Freelance en Albacete -->
+<div style="background: linear-gradient(135deg, rgba(232, 104, 26, 0.08) 0%, rgba(232, 104, 26, 0.02) 100%); border: 1px solid rgba(232, 104, 26, 0.25); border-radius: 12px; padding: 1.25rem 1.5rem; margin-top: 3rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
+  <div>
+    <h4 style="color: var(--black); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.25rem;">¿Buscas un consultor SEO freelance en Albacete?</h4>
+    <p style="color: var(--muted); font-size: 0.88rem; margin: 0;">Diagnóstico técnico e implementación directa por Víctor Alonso (ingeniero informático independiente, sin agencias ni intermediarios).</p>
+  </div>
+  <a href="/servicios/seo-albacete/" class="btn btn--primary" style="font-size: 0.85rem; padding: 0.6rem 1.25rem; white-space: nowrap; border-radius: 8px; font-weight: 700;">
+    Consultoría SEO en Albacete →
+  </a>
+</div>
+
+<div class="tool-interlinking" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
   <h4 style="color: var(--black); font-size: 1.15rem; margin-bottom: 1.25rem;">Sigue explorando:</h4>
   
   <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;">
@@ -120,6 +131,10 @@ $related_tools = array_slice($related_tools, 0, 3);
     <!-- Enlaces comerciales y de negocio -->
     <a href="<?= htmlspecialchars($service_href) ?>" class="btn btn--primary" style="font-size:0.85rem; padding: 0.5rem 1rem; height: auto; border-radius: 6px; font-weight: 700;">
       <i class="fa-solid fa-briefcase" style="margin-right:0.4rem;"></i> <?= htmlspecialchars($service_label) ?>
+    </a>
+
+    <a href="/servicios/seo-albacete/" class="btn btn--secondary" style="font-size:0.85rem; padding: 0.5rem 1rem; height: auto; border-radius: 6px; font-weight: 600; color: var(--orange); border-color: rgba(232, 104, 26, 0.3); background: rgba(232, 104, 26, 0.05);">
+      <i class="fa-solid fa-location-dot" style="margin-right:0.4rem;"></i> SEO Local Albacete
     </a>
     
     <a href="/casos-reales/" class="btn btn--secondary" style="font-size:0.85rem; padding: 0.5rem 1rem; height: auto; border-radius: 6px; font-weight: 600; color: var(--orange); border-color: rgba(232, 104, 26, 0.3); background: rgba(232, 104, 26, 0.05);">

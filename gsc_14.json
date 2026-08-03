@@ -1,0 +1,330 @@
+[https://www.victor-alonso.es/] Analizando datos del 2026-07-09 al 2026-07-23...
+=== RESULTADOS JSON (COPIAR PARA EL AGENTE) ===
+{
+  "property": "https://www.victor-alonso.es/",
+  "period": "2026-07-09 to 2026-07-23",
+  "global": {
+    "total_clicks": 6,
+    "total_impressions": 2895,
+    "avg_ctr": 0.21
+  },
+  "top_queries": [
+    {
+      "keys": [
+        "agencia de posicionamiento web en albacete"
+      ],
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0,
+      "position": 26.294117647058822
+    },
+    {
+      "keys": [
+        "agencia seo albacete"
+      ],
+      "clicks": 0,
+      "impressions": 236,
+      "ctr": 0,
+      "position": 20.04237288135593
+    },
+    {
+      "keys": [
+        "agencia seo en albacete"
+      ],
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0,
+      "position": 23.8
+    },
+    {
+      "keys": [
+        "agencia seo para administraciones de loter\u00eda albacete"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 2.666666666666667
+    },
+    {
+      "keys": [
+        "agencia+seo+albacete"
+      ],
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0,
+      "position": 8.166666666666668
+    },
+    {
+      "keys": [
+        "albacete seo"
+      ],
+      "clicks": 0,
+      "impressions": 30,
+      "ctr": 0,
+      "position": 19.066666666666666
+    },
+    {
+      "keys": [
+        "analisi seo gratis"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 87
+    },
+    {
+      "keys": [
+        "analisis pagina web gratis"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 71
+    },
+    {
+      "keys": [
+        "analisis seo"
+      ],
+      "clicks": 0,
+      "impressions": 12,
+      "ctr": 0,
+      "position": 72.25
+    },
+    {
+      "keys": [
+        "analisis seo gratis"
+      ],
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0,
+      "position": 81.14285714285714
+    },
+    {
+      "keys": [
+        "analisis seo gratuito"
+      ],
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0,
+      "position": 74
+    },
+    {
+      "keys": [
+        "analisis seo herramientas"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 62.666666666666664
+    },
+    {
+      "keys": [
+        "analisis seo web gratis"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 80.66666666666667
+    },
+    {
+      "keys": [
+        "analisis web gratis"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 73.66666666666667
+    },
+    {
+      "keys": [
+        "analisis web online gratis"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 76
+    },
+    {
+      "keys": [
+        "analizador de logs"
+      ],
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0,
+      "position": 21.962962962962962
+    },
+    {
+      "keys": [
+        "analizador de webs"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 52.666666666666664
+    },
+    {
+      "keys": [
+        "analizador en tiempo real seo"
+      ],
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "keys": [
+        "analizador paginas web"
+      ],
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 52
+    },
+    {
+      "keys": [
+        "analizador seo"
+      ],
+      "clicks": 0,
+      "impressions": 126,
+      "ctr": 0,
+      "position": 40.95238095238095
+    }
+  ],
+  "top_pages": [
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/analizador-paginas-huerfanas/"
+      ],
+      "clicks": 2,
+      "impressions": 25,
+      "ctr": 0.08,
+      "position": 12.32
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/editor-metadatos-imagenes/"
+      ],
+      "clicks": 2,
+      "impressions": 12,
+      "ctr": 0.16666666666666666,
+      "position": 4
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/analizador-seo/"
+      ],
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 0.14285714285714285,
+      "position": 6
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/tester-htaccess/"
+      ],
+      "clicks": 1,
+      "impressions": 27,
+      "ctr": 0.037037037037037035,
+      "position": 8.666666666666668
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/"
+      ],
+      "clicks": 0,
+      "impressions": 1642,
+      "ctr": 0,
+      "position": 17.307551766138854
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/casos-reales/"
+      ],
+      "clicks": 0,
+      "impressions": 15,
+      "ctr": 0,
+      "position": 21.466666666666665
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/"
+      ],
+      "clicks": 0,
+      "impressions": 455,
+      "ctr": 0,
+      "position": 62.05934065934066
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/analizador-logs/"
+      ],
+      "clicks": 0,
+      "impressions": 58,
+      "ctr": 0,
+      "position": 21.896551724137932
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/calculadora-wpo/"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/extractor-entidades/"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/generador-informe-gsc/"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/herramientas/generador-schema-local/"
+      ],
+      "clicks": 0,
+      "impressions": 29,
+      "ctr": 0,
+      "position": 18.275862068965516
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/servicios/mantenimiento-wordpress/"
+      ],
+      "clicks": 0,
+      "impressions": 372,
+      "ctr": 0,
+      "position": 69.02688172043011
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/servicios/plugins-wordpress/"
+      ],
+      "clicks": 0,
+      "impressions": 55,
+      "ctr": 0,
+      "position": 52.70909090909091
+    },
+    {
+      "keys": [
+        "https://www.victor-alonso.es/servicios/reparacion-wordpress-urgente/"
+      ],
+      "clicks": 0,
+      "impressions": 84,
+      "ctr": 0,
+      "position": 62.904761904761905
+    }
+  ]
+}

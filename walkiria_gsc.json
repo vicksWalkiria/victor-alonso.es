@@ -1,0 +1,330 @@
+[https://walkiriaapps.com/] Analizando datos del 2026-06-23 al 2026-07-23...
+=== RESULTADOS JSON (COPIAR PARA EL AGENTE) ===
+{
+  "property": "https://walkiriaapps.com/",
+  "period": "2026-06-23 to 2026-07-23",
+  "global": {
+    "total_clicks": 7,
+    "total_impressions": 2630,
+    "avg_ctr": 0.27
+  },
+  "top_queries": [
+    {
+      "keys": [
+        "agencia de posicionamiento web en albacete"
+      ],
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0,
+      "position": 86
+    },
+    {
+      "keys": [
+        "agencia seo albacete"
+      ],
+      "clicks": 0,
+      "impressions": 207,
+      "ctr": 0,
+      "position": 82.38647342995169
+    },
+    {
+      "keys": [
+        "agencia seo en albacete"
+      ],
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0,
+      "position": 83.8
+    },
+    {
+      "keys": [
+        "albacete seo"
+      ],
+      "clicks": 0,
+      "impressions": 20,
+      "ctr": 0,
+      "position": 70.8
+    },
+    {
+      "keys": [
+        "alojamiento web albacete"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 21
+    },
+    {
+      "keys": [
+        "auditoria seo albacete"
+      ],
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0,
+      "position": 65.21428571428571
+    },
+    {
+      "keys": [
+        "auditoria wpo"
+      ],
+      "clicks": 0,
+      "impressions": 32,
+      "ctr": 0,
+      "position": 78.1875
+    },
+    {
+      "keys": [
+        "auditor\u00eda wpo"
+      ],
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0,
+      "position": 55.80769230769231
+    },
+    {
+      "keys": [
+        "blindaje wordpress"
+      ],
+      "clicks": 0,
+      "impressions": 2,
+      "ctr": 0,
+      "position": 54
+    },
+    {
+      "keys": [
+        "blindar wordpress"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 140
+    },
+    {
+      "keys": [
+        "calculadora freelance"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 47
+    },
+    {
+      "keys": [
+        "cobrar por hora"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 76
+    },
+    {
+      "keys": [
+        "cobrar por hora freelance"
+      ],
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0,
+      "position": 67.4
+    },
+    {
+      "keys": [
+        "consultor seo albacete"
+      ],
+      "clicks": 0,
+      "impressions": 45,
+      "ctr": 0,
+      "position": 63.422222222222224
+    },
+    {
+      "keys": [
+        "consultor seo en albacete"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 63.333333333333336
+    },
+    {
+      "keys": [
+        "consultor\u00eda laravel"
+      ],
+      "clicks": 0,
+      "impressions": 36,
+      "ctr": 0,
+      "position": 89.52777777777777
+    },
+    {
+      "keys": [
+        "consultor\u00eda web albacete"
+      ],
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0,
+      "position": 74.3076923076923
+    },
+    {
+      "keys": [
+        "creacion paginas web en albacete"
+      ],
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0,
+      "position": 27
+    },
+    {
+      "keys": [
+        "crear p\u00e1gina web albacete"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "keys": [
+        "cuanto cobrar por hora"
+      ],
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0,
+      "position": 56.25
+    }
+  ],
+  "top_pages": [
+    {
+      "keys": [
+        "https://walkiriaapps.com/"
+      ],
+      "clicks": 6,
+      "impressions": 769,
+      "ctr": 0.007802340702210663,
+      "position": 18.407022106631988
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/sobre-mi/"
+      ],
+      "clicks": 2,
+      "impressions": 27,
+      "ctr": 0.07407407407407407,
+      "position": 6.111111111111111
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/portfolio/adsense-market/"
+      ],
+      "clicks": 1,
+      "impressions": 8,
+      "ctr": 0.125,
+      "position": 9.375
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/SCEC-privacy.html"
+      ],
+      "clicks": 0,
+      "impressions": 15,
+      "ctr": 0,
+      "position": 4.4
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/calculadora-wpo/"
+      ],
+      "clicks": 0,
+      "impressions": 70,
+      "ctr": 0,
+      "position": 57.457142857142856
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/contacta/"
+      ],
+      "clicks": 0,
+      "impressions": 20,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/curso-online/"
+      ],
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/mastergym-policy.html"
+      ],
+      "clicks": 0,
+      "impressions": 1,
+      "ctr": 0,
+      "position": 20
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/"
+      ],
+      "clicks": 0,
+      "impressions": 20,
+      "ctr": 0,
+      "position": 5.1
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/automatizacion-de-procesos/"
+      ],
+      "clicks": 0,
+      "impressions": 4,
+      "ctr": 0,
+      "position": 8.75
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/desarrollo-backend/"
+      ],
+      "clicks": 0,
+      "impressions": 10,
+      "ctr": 0,
+      "position": 6.5
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/desarrollo-laravel/"
+      ],
+      "clicks": 0,
+      "impressions": 58,
+      "ctr": 0,
+      "position": 78.74137931034483
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/desarrollo-woocommerce/"
+      ],
+      "clicks": 0,
+      "impressions": 9,
+      "ctr": 0,
+      "position": 8.88888888888889
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/desarrollo-wordpress/"
+      ],
+      "clicks": 0,
+      "impressions": 154,
+      "ctr": 0,
+      "position": 66.01948051948052
+    },
+    {
+      "keys": [
+        "https://walkiriaapps.com/servicios/mantenimiento-apps-android/"
+      ],
+      "clicks": 0,
+      "impressions": 3,
+      "ctr": 0,
+      "position": 13.333333333333334
+    }
+  ]
+}

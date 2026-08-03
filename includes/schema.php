@@ -143,6 +143,13 @@ function _node_local_business(): array {
             ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
             ['@type' => 'Country', 'name' => 'España'],
         ],
+        'knowsAbout' => [
+            'Consultoría SEO Freelance en Albacete',
+            'SEO Técnico',
+            'SEO Local en Albacete',
+            'Auditorías SEO',
+            'Desarrollo WordPress'
+        ],
         'priceRange' => '€€',
         'openingHoursSpecification' => [
             [
