@@ -1,8 +1,8 @@
 ## 2026-08-05
 
-- **URL:** `/caso-exito-desinfeccion-malware-wordpress/`, `/casos-reales/`, `/servicios/reparacion-wordpress-urgente/`, `/sitemap.xml`
-- **Cambio:** Creada nueva página de caso de éxito detallado `/caso-exito-desinfeccion-malware-wordpress/` con la desinfección forense y blindaje. Añadida ficha especial en `/casos-reales/` enlazando a la misma. Modificado el bloque de casos de estudio en `/servicios/reparacion-wordpress-urgente/` para enlazar tanto al nuevo caso detallado como al caso de WooCommerce. Añadido a `sitemap.xml`.
-- **Motivo:** SEO-07. Aumentar la autoridad técnica y conversión del clúster de seguridad/reparación WordPress mediante un caso de éxito real súper detallado y playbook práctico, mejorando el enlazado interno y la indexabilidad.
+- **URL:** `/`, `/caso-exito-desinfeccion-malware-wordpress/`, `/casos-reales/`, `/servicios/reparacion-wordpress-urgente/`, `/sitemap.xml`
+- **Cambio:** Creada nueva página de caso de éxito detallado `/caso-exito-desinfeccion-malware-wordpress/` con la desinfección forense y blindaje. Añadida ficha especial en `/casos-reales/` enlazando a la misma. Modificado el bloque de casos de estudio en `/servicios/reparacion-wordpress-urgente/` para enlazar tanto al nuevo caso detallado como al caso de WooCommerce. Añadido a `sitemap.xml`. Activados los enlaces de los tres casos reales en el preview de la Home (`/`) enlazando directamente al caso de malware y a los respectivos anchors en `/casos-reales/`.
+- **Motivo:** SEO-07. Traspasar PageRank (link equity) desde la Home (página con más autoridad según GSC) al nuevo caso de éxito técnico para acelerar su indexación y potenciar la conversión directa de visitas cualificadas.
 - **KPI Asociado:** Tráfico orgánico de consultas de seguridad, leads calificados de urgencias WordPress, posicionamiento de marca técnica.
 - **Commit:** Pendiente
 - **Estado de validación:** Implementado en código.
