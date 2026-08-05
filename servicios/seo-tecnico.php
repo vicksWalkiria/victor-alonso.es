@@ -34,7 +34,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
       <h1 id="page-h1">SEO Técnico: lo que Google necesita para <span>rastrear, entender e indexar</span> tu web</h1>
-      <p class="page-hero-desc">El SEO técnico no es solo velocidad. Es todo lo que facilita o dificulta que Google descubra, procese y posicione tu contenido correctamente.</p>
+      <p class="page-hero-desc">El SEO técnico no es solo velocidad. Realizar una <strong>auditoría SEO técnico</strong> exhaustiva es el primer paso para detectar y solucionar problemas que impiden a Google descubrir, procesar y posicionar tu contenido.</p>
     </div>
   </section>
 
