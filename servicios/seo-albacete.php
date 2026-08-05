@@ -95,6 +95,15 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item"><div>Ninguna estrategia de reseñas. Google interpreta pocas reseñas como señal de baja popularidad local.</div></li>
         </ul>
 
+        <h2>¿Por qué buscar un consultor independiente antes que una agencia SEO en Albacete?</h2>
+        <p>Cuando buscas una <strong>agencia SEO en Albacete</strong> o una empresa de posicionamiento web grande, lo habitual es que la persona que te vende el servicio no sea la misma que optimiza tu web. El trabajo a menudo se delega o se automatiza con herramientas genéricas.</p>
+        <p>Como consultor independiente e ingeniero informático te ofrezco una alternativa real:</p>
+        <ul class="checklist" style="margin:1rem 0 1.5rem">
+          <li class="checklist-item"><div><strong>Trato directo sin comerciales:</strong> Hablas y trabajas directamente conmigo. Yo realizo la auditoría, diseño la estrategia y gestiono tu proyecto.</div></li>
+          <li class="checklist-item"><div><strong>Implementación técnica directa:</strong> No te entrego un PDF de 80 páginas para que busques un programador; yo mismo meto las manos en el código para solucionar WPO, indexación o redirecciones.</div></li>
+          <li class="checklist-item"><div><strong>Honestidad y prioridades claras:</strong> Si un canal o keyword no va a traerte negocio, te lo diré directamente en lugar de inflar informes mensuales con métricas de vanidad.</div></li>
+        </ul>
+
         <h2>Para qué negocios de Albacete tiene sentido</h2>
         <p>El SEO local es especialmente adecuado cuando:</p>
         <ul class="checklist" style="margin:1rem 0 1.5rem">
