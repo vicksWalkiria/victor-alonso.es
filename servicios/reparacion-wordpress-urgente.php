@@ -86,6 +86,18 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </article>
         </div>
 
+        <!-- CTA Intermedio Crisis/Agobio -->
+        <div style="background: var(--black); border: 2px solid var(--orange); border-radius: var(--radius); padding: 2rem; text-align: center; margin: 3rem 0;">
+          <h3 style="margin-bottom: 0.5rem; color: var(--white); font-size: 1.3rem;">¿Estás agobiado o perdiendo clientes por este hackeo ahora mismo?</h3>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Entiendo perfectamente la desesperación. Escríbeme ahora describiendo tu caso o envíame un mensaje directo por WhatsApp para una primera valoración urgente.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/contacto/" class="btn btn--primary">Solicitar intervención urgente</a>
+            <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">Escribir por WhatsApp</a>
+          </div>
+        </div>
+
         <h2>Qué hago primero para contener el problema</h2>
         <p>Ante una crisis técnica, la precipitación destruye evidencias. Mi primera intervención no es reinstalar WordPress indiscriminadamente, sino <strong>preservar, aislar y contener</strong>:</p>
         <ul class="checklist" style="margin:1rem 0 2.5rem">

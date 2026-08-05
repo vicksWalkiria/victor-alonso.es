@@ -91,11 +91,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item">Desarrollo a medida de nuevas funcionalidades transaccionales o pasarelas de pago (se presupuestan de forma independiente al mantenimiento).</li>
         </ul>
 
-        <h2>La diferencia real entre prevenir y curar</h2>
+        <!-- La diferencia real entre prevenir y curar -->
         <div class="card card--dark" style="margin-top: 1.5rem; border-color: var(--orange);">
           <h3 style="color: var(--orange); margin-bottom: 0.5rem;">Caso real: El ataque de malware el fin de semana</h3>
           <p style="font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">Una empresa B2B me contactó de urgencia un lunes porque su web estaba bloqueada por la alerta roja de Google <em>"El sitio web al que vas a acceder es engañoso"</em>. Llevaban meses sin actualizar un plugin de formularios. Un bot había inyectado scripts ofuscados la madrugada del sábado anterior redirigiendo todo el tráfico de dispositivos móviles a webs de fraudes.</p>
-          <p style="font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">Si hubieran tenido el <strong>mantenimiento preventivo</strong>, el plugin se habría actualizado antes del exploit. Y en el peor escenario, nuestra monitorización de integridad de archivos habría lanzado una alerta a las 4 de la mañana, permitiéndome restaurar el backup en 10 minutos y aislar la vulnerabilidad antes de que Google rastreara el malware.</p>
+          <p style="font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;">Si hubieran tenido el <strong>mantenimiento preventivo</strong>, el plugin se habría actualizado antes del exploit. Y en el peor escenario, nuestra monitorización de integridad de archivos habría lanzado una alerta a las 4 de la mañana, permitiéndome restaurar el backup en 10 minutos y aislar la vulnerabilidad antes de que Google rastreara el malware. Puedes leer los detalles de esta auditoría y desinfección forense en mi <a href="/caso-exito-desinfeccion-malware-wordpress/" style="color: var(--orange); text-decoration: underline; font-weight: 600;">caso de éxito de desinfección de malware en WordPress</a>.</p>
         </div>
 
       </div>

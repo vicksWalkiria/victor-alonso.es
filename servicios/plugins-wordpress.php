@@ -61,7 +61,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <ul class="checklist" style="margin:1rem 0 2rem">
           <li class="checklist-item"><div><strong>Definición de requisitos</strong> Qué tiene que hacer, qué no tiene que hacer, quién lo va a usar y con qué frecuencia.</div></li>
           <li class="checklist-item"><div><strong>Validación y sanitización</strong> Todo input del usuario se valida y sanitiza antes de procesarse. No asumo que el dato viene limpio.</div></li>
-          <li class="checklist-item"><div><strong>Seguridad</strong> Nonces, verificación de permisos, escape de output. Los agujeros de seguridad más comunes en WordPress vienen de plugins mal desarrollados.</div></li>
+          <li class="checklist-item"><div><strong>Seguridad</strong> Nonces, verificación de permisos, escape de output. Los agujeros de seguridad más comunes en WordPress vienen de plugins mal desarrollados o no mantenidos (como explico en mi <a href="/caso-exito-desinfeccion-malware-wordpress/" style="color:var(--orange);text-decoration:underline;font-weight:600;">caso de éxito de desinfección de malware</a>).</div></li>
           <li class="checklist-item"><div><strong>Código documentado</strong> Comentarios en funciones, hooks, filtros y clases. El código tiene que ser mantenible por otra persona si fuera necesario.</div></li>
           <li class="checklist-item"><div><strong>Rendimiento</strong> Consultas a la base de datos optimizadas, uso de la API de WordPress correctamente, sin N+1 queries ni lógica pesada en cada carga de página.</div></li>
         </ul>
