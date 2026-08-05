@@ -33,6 +33,39 @@ require __DIR__ . '/includes/breadcrumbs.php';
 
       <div class="cases-grid">
 
+        <!-- Caso Especial: Desinfección de Malware con Persistencia -->
+        <article class="case-card" aria-labelledby="caso-7">
+          <div class="case-card-head">
+            <h2 id="caso-7">WordPress con infección recurrente de malware de persistencia</h2>
+            <p>Sector: salud y bienestar · Tipo de sitio: WordPress corporativo</p>
+          </div>
+          <div class="case-card-body">
+            <div class="case-detail">
+              <h3>Contexto</h3>
+              <p>Una clínica médica sufría caídas intermitentes, redirecciones de spam móvil y un consumo constante de CPU al 99% en su hosting.</p>
+            </div>
+            <div class="case-detail">
+              <h3>Problema</h3>
+              <p>Infección de malware recurrente con mecanismos de persistencia: el código malicioso se autogeneraba de forma inmediata al intentar borrarlo.</p>
+            </div>
+            <div class="case-detail">
+              <h3>Diagnóstico</h3>
+              <p>Auditoría forense por SSH. Se detectaron directivas de ejecución previa en archivos <code>.user.ini</code>, drop-ins corruptos, crons maliciosos y un administrador oculto.</p>
+            </div>
+            <div class="case-detail">
+              <h3>Acciones</h3>
+              <p>Reinstalación limpia del core y plugins, saneamiento de base de datos, purga de crons y blindaje perimetral mediante reglas <code>.htaccess</code> restrictivas.</p>
+            </div>
+            <div class="case-detail" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.5rem; align-items: start;">
+              <div>
+                <h3>Qué aprender</h3>
+                <p>Una desinfección superficial de carpetas no sirve contra malware avanzado. Es imprescindible limpiar la persistencia en base de datos y archivos de configuración del servidor.</p>
+              </div>
+              <a href="/caso-exito-desinfeccion-malware-wordpress/" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem; margin-top: 0.75rem;">Ver caso de estudio técnico completo →</a>
+            </div>
+          </div>
+        </article>
+
         <!-- Caso 1 -->
         <article class="case-card" aria-labelledby="caso-1">
           <div class="case-card-head">

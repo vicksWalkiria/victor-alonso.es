@@ -114,10 +114,13 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p>Una vez la plataforma vuelve a ser funcional, estable y limpia, te asisto técnicamente para pedir la reconsideración del dominio a Google (si hubo alerta roja de Safe Browsing) y acelerar el re-rastreo para limpiar las URLs spam indexadas.</p>
         <p>A partir de ahí, la responsabilidad recae en ti: un incidente de esta magnitud con este lucro cesante no puede volver a ocurrir en tu empresa. Es el momento de dejar de improvisar e invertir en un <a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange);font-weight:600;text-decoration:underline;">mantenimiento preventivo profesional recurrente</a>.</p>
 
-        <h2>Caso real de WordPress infectado</h2>
-        <div class="card card--dark" style="margin-top: 1.5rem; border-color: var(--orange);">
-          <p style="font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 1rem;">Lee mi caso de estudio documentado sobre cómo resolví una crisis real de malware en un cliente B2B cuya web fue hackeada el fin de semana. Aprenderás por qué las copias de seguridad alojadas en su propio servidor no sirvieron para absolutamente nada frente al rescate.</p>
-          <a href="/casos-reales/#caso-1" class="btn btn--secondary" style="font-size:0.9rem; color:#ffffff; border-color:var(--orange);">Leer caso de estudio: WordPress infectado con malware</a>
+        <h2>Casos reales de WordPress infectado</h2>
+        <div class="card card--dark" style="margin-top: 1.5rem; border-color: var(--orange); display: flex; flex-direction: column; gap: 1rem;">
+          <p style="font-size: 0.95rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 0;">Lee mis casos de estudio documentados sobre cómo he solucionado crisis reales de malware y desinfecciones complejas en WordPress:</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+            <a href="/caso-exito-desinfeccion-malware-wordpress/" class="btn btn--secondary" style="font-size:0.85rem; color:#ffffff; border-color:var(--orange); padding: 0.5rem 1rem;">Caso de éxito: Malware de persistencia en WordPress →</a>
+            <a href="/casos-reales/#caso-1" class="btn btn--secondary" style="font-size:0.85rem; color:#ffffff; border-color:var(--orange); padding: 0.5rem 1rem;">Caso de estudio: WordPress hackeado (WooCommerce) →</a>
+          </div>
         </div>
 
         <h2>Qué accesos necesito para empezar</h2>
