@@ -292,16 +292,19 @@ require __DIR__ . '/includes/header.php';
       <p class="section-intro" style="margin-bottom:2rem">Proyectos anonimizados con el contexto, el problema, el diagnóstico y lo que se puede aprender de cada uno.</p>
       <div class="cards-grid">
         <article class="card">
-          <h3>WordPress infectado con malware</h3>
-          <p>Un cliente llega con la web penalizada en Chrome. Revisión del servidor, limpieza de malware, hardening y restauración de la reputación en Google Safe Browsing.</p>
+          <h3>Malware de persistencia en WordPress</h3>
+          <p>Clínica médica con caídas y CPU al 99%. Limpieza forense por SSH, eliminación de scripts de autorregeneración y blindaje de seguridad perimetral.</p>
+          <a href="/caso-exito-desinfeccion-malware-wordpress/" class="card-link">Ver caso de éxito →</a>
         </article>
         <article class="card">
           <h3>Caída de tráfico tras migración de dominio</h3>
           <p>Cambio de dominio sin redirecciones bien planificadas. Pérdida de autoridad y posiciones. Diagnóstico en Search Console, análisis de cobertura y plan de recuperación.</p>
+          <a href="/casos-reales/#caso-2" class="card-link">Ver caso de estudio →</a>
         </article>
         <article class="card">
           <h3>Web lenta: LCP de 6 segundos en móvil</h3>
           <p>Análisis de cascada de carga, imágenes sin optimizar, CSS render-blocking y plugins con scripts externos innecesarios. Resultado: Core Web Vitals en verde.</p>
+          <a href="/casos-reales/#caso-3" class="card-link">Ver caso de estudio →</a>
         </article>
       </div>
       <div style="margin-top:2rem">
