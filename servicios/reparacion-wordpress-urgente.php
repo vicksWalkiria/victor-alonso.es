@@ -3,17 +3,18 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Reparación WordPress urgente y limpieza de malware',
-  'description'  => 'Recuperación de WordPress hackeado, errores críticos, caídas y malware. Contención, limpieza, hardening y soporte técnico directo.',
+  'title'        => 'Reparación de WordPress urgente y limpieza de malware | Víctor Alonso',
+  'description'  => 'Servicio de reparación de WordPress urgente. Solución de errores 500, webs hackeadas, pantallazos en blanco y desinfección de malware con diagnóstico técnico.',
   'canonical'    => '/servicios/reparacion-wordpress-urgente/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/reparacion-wordpress-urgente/#service',
-      'name'          => 'Reparación WordPress urgente',
+      'name'          => 'Reparación de WordPress urgente',
       'alternateName' => [
+          'Reparación WordPress',
+          'Reparar WordPress hackeado',
           'Limpieza de malware WordPress',
-          'Recuperar WordPress hackeado',
           'Intervención urgente WordPress'
       ],
       'serviceType'   => 'Soporte Técnico Informático',
@@ -24,7 +25,7 @@ $page = page_config([
   'active_nav'   => 'servicios',
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
-    ['label' => 'Reparación WordPress urgente', 'url' => ''],
+    ['label' => 'Reparación de WordPress urgente', 'url' => ''],
   ],
   'faq_items' => [
     [
@@ -47,8 +48,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">Reparación urgente de WordPress y limpieza de <span>malware</span></h1>
-      <p class="page-hero-desc">¿Tu web está caída, muestra un error crítico, redirige a sitios de spam o Google la marca como peligrosa? Si estás ante una crisis técnica con tu WordPress, respira y actúa con cabeza. El primer paso es contener el daño.</p>
+      <h1 id="page-h1">Servicio de reparación urgente de WordPress y limpieza de <span>malware</span></h1>
+      <p class="page-hero-desc">Servicio profesional de reparación de WordPress para arreglar webs hackeadas, errores 500, pantallazos en blanco y caídas repentinas de servidor. Si estás ante una crisis técnica con tu WordPress, respira y actúa con cabeza. El primer paso es contener el daño.</p>
     </div>
   </section>
 
@@ -58,11 +59,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
         <!-- INTRO -->
         <div class="alert alert--danger" style="margin-bottom: 2.5rem;">
-          <strong>No prometo milagros inmediatos, prometo un método seguro.</strong><br>
+          <strong>No prometo milagros inmediatos, prometo un método seguro de reparación.</strong><br>
           Si tu negocio está paralizado, tu instinto será buscar a alguien que prometa arreglarlo en "1 hora por 50€". Las reparaciones rápidas y reinstalaciones sin diagnóstico suelen borrar evidencias vitales y terminar en una nueva infección a los pocos días. Mi primer objetivo es analizar el vector de entrada y contener la amenaza.
         </div>
 
-        <h2>Problemas urgentes que puedo revisar</h2>
+        <h2>Servicio de reparación de WordPress y solución de errores</h2>
         <div style="display:grid;gap:1.5rem;margin:1.5rem 0 2.5rem;">
           <article>
             <h3 style="color:var(--orange);font-size:1.15rem;margin-bottom:0.5rem;">WordPress hackeado o con malware</h3>
