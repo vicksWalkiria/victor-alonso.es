@@ -148,7 +148,9 @@ function _node_local_business(): array {
             'SEO Técnico',
             'SEO Local en Albacete',
             'Auditorías SEO',
-            'Desarrollo WordPress'
+            'Desarrollo WordPress',
+            'Reparación de WordPress Urgente',
+            'Limpieza de Malware WordPress'
         ],
         'priceRange' => '€€',
         'openingHoursSpecification' => [
