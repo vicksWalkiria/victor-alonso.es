@@ -15,6 +15,11 @@ $_canonical  = SITE_URL . $page['canonical'];
     <!-- GA4: preconnect solo; el script se carga diferido al final para no penalizar LCP/TBT -->
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+    </script>
 <?php endif; ?>
 
     <title><?= $_full_title ?></title>

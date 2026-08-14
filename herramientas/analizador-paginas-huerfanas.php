@@ -213,7 +213,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="extractor-grid">
         
         <div class="tool-card tool-card--accent">
-            <form id="tool-form" class="tab-content active" onsubmit="event.preventDefault(); startAnalysis();">
+            <form id="tool-form" class="tab-content active" toolname="orphanPagesAnalyzer" onsubmit="event.preventDefault(); startAnalysis();">
                 <div class="tool-layout-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem;">
                     
                     <div>

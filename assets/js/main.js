@@ -153,4 +153,131 @@
     });
   }
 
+  // ── Eventos de Seguimiento de GA4 (Conversiones y Objetivos) ────────────────
+  const trackEvent = (eventName, params) => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params);
+    } else {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(['event', eventName, params]);
+    }
+  };
+
+  // Intercepta submits de formularios de herramientas
+  document.addEventListener('submit', (e) => {
+    const form = e.target;
+    const toolName = form.getAttribute('toolname');
+    
+    if (toolName) {
+      const eventParams = {};
+      
+      // Extrae la URL analizada para guardarla en GA4
+      const urlInput = form.querySelector('input[type="url"], input[name="url"], input#seo-url-input, input#test-url, input#sm-url');
+      if (urlInput && urlInput.value) {
+        eventParams.analyzed_url = urlInput.value.trim();
+      }
+      
+      const sitemapInput = form.querySelector('input[name="sitemap_url"], input#sitemap-url-input');
+      if (sitemapInput && sitemapInput.value) {
+        eventParams.sitemap_url = sitemapInput.value.trim();
+      }
+
+      const businessInput = form.querySelector('input[name="name"], input#local-business-name');
+      if (businessInput && businessInput.value) {
+        eventParams.business_name = businessInput.value.trim();
+      }
+
+      // Mapea toolname a evento específico
+      let eventName = '';
+      switch (toolName) {
+        case 'seoPageAnalyzer':
+          eventName = 'use_analizador_seo';
+          break;
+        case 'cookieConsentAuditor':
+          eventName = 'use_auditor_cookies';
+          break;
+        case 'apacheNginxLogAnalyzer':
+          eventName = 'use_analizador_logs';
+          break;
+        case 'htaccessTester':
+          eventName = 'use_tester_htaccess';
+          break;
+        case 'semanticEntityExtractor':
+          eventName = 'use_extractor_entidades';
+          break;
+        case 'localBusinessSchemaGenerator':
+          eventName = 'use_generador_schema';
+          break;
+        case 'wpoLossCalculator':
+          eventName = 'use_calculadora_wpo';
+          break;
+        case 'sitemapUrlExtractor':
+        case 'sitemapRawExtractor':
+          eventName = 'use_extractor_sitemap';
+          break;
+        case 'exifMetadataEditor':
+          eventName = 'use_editor_metadatos';
+          break;
+        case 'gscReportGenerator':
+          eventName = 'use_generador_informe_gsc';
+          break;
+        case 'orphanPagesAnalyzer':
+          eventName = 'use_analizador_huerfanas';
+          break;
+      }
+
+      if (eventName) {
+        trackEvent(eventName, eventParams);
+      }
+    }
+  });
+
+  // Intercepta clics en enlaces de salida e interacciones
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    const href = link.getAttribute('href') || '';
+    
+    // 1. WhatsApp Clicks
+    if (href.includes('wa.me') || href.includes('whatsapp.com')) {
+      trackEvent('click_whatsapp', { destination: href });
+    }
+    // 2. Phone Calls Clicks
+    else if (href.startsWith('tel:')) {
+      trackEvent('click_phone', { phone_number: href });
+    }
+    // 3. Email mailto Clicks
+    else if (href.startsWith('mailto:')) {
+      trackEvent('click_email', { email_address: href });
+    }
+    // 4. Social Links Clicks
+    else if (href.includes('linkedin.com')) {
+      trackEvent('click_social_linkedin', { destination: href });
+    }
+    else if (href.includes('twitter.com') || href.includes('x.com')) {
+      trackEvent('click_social_twitter', { destination: href });
+    }
+    // 5. Walkiria Apps Clicks
+    else if (href.includes('walkiriaapps.com') || href.includes('walkiria.io') || href.includes('walkiria')) {
+      trackEvent('click_walkiria_apps', { destination: href });
+    }
+    // 6. GMB Checker ZIP Download / GitHub clicks
+    else if (href.includes('GMB-web-checker')) {
+      trackEvent('use_auditor_seo_local', {
+        download_zip: href.endsWith('.zip') ? 1 : 0,
+        visit_github: href.endsWith('.zip') ? 0 : 1
+      });
+    }
+  });
+
+  // ── Tracking de vistas de casos de éxito ────────────────────────────────────
+  if (document.body && document.body.classList.contains('page-caso-detalle')) {
+    const h1 = document.querySelector('h1');
+    const caseTitle = h1 ? h1.textContent.trim() : document.title.split('|')[0].trim();
+    trackEvent('view_success_case', {
+      case_title: caseTitle
+    });
+  }
+
 })();

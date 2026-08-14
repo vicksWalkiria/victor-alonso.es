@@ -14,6 +14,11 @@ $page = page_config([
 ]);
 require __DIR__ . '/includes/header.php';
 ?>
+<script>
+    gtag('event', 'contact_form_submit', {
+        'contact_page': document.referrer || 'direct'
+    });
+</script>
 <main id="main">
   <div class="gracias-wrap">
     <div>
