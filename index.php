@@ -152,9 +152,9 @@ require __DIR__ . '/includes/header.php';
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
-          <h3>SEO local en Albacete</h3>
+          <h3>Consultor SEO en Albacete</h3>
           <p>SEO local técnico para negocios de Albacete: Google Business Profile, arquitectura web, contenido local, medición y mejoras reales sobre la web.</p>
-          <a href="/servicios/seo-albacete/" class="card-link">SEO local para empresas de Albacete →</a>
+          <a href="/servicios/seo-albacete/" class="card-link">Consultor SEO en Albacete para empresas →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -168,9 +168,9 @@ require __DIR__ . '/includes/header.php';
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           </div>
-          <h3>Auditoría SEO</h3>
+          <h3>Auditoría SEO Técnica</h3>
           <p>Revisión completa del estado técnico, arquitectura, contenido, indexación y WPO. Entregable priorizado por impacto.</p>
-          <a href="/servicios/auditoria-seo/" class="card-link">auditoría SEO técnica →</a>
+          <a href="/servicios/auditoria-seo/" class="card-link">Auditoría SEO técnica y web →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">

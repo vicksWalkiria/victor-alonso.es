@@ -11,8 +11,8 @@ $faq = [
 ];
 
 $page = page_config([
-  'title'        => 'SEO local en Albacete para empresas | Víctor Alonso',
-  'description'  => 'Mejora la visibilidad local de tu empresa en Albacete con una estrategia técnica: Google Business Profile, arquitectura, contenido local y medición.',
+  'title'        => 'Consultor SEO en Albacete · Posicionamiento Web Local | Víctor Alonso',
+  'description'  => 'Consultor SEO en Albacete para empresas y profesionales. Posicionamiento web local, Google Business Profile, SEO técnico y captación de clientes en Albacete.',
   'canonical'    => '/servicios/seo-albacete/',
   'body_class'   => 'page-servicio page-seo-albacete',
   'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
@@ -20,11 +20,13 @@ $page = page_config([
       '@id'           => '/servicios/seo-albacete/#service',
       'name'          => 'Consultor SEO en Albacete',
       'alternateName' => [
+          'Consultor SEO Albacete',
+          'Agencia SEO Albacete',
           'SEO en Albacete',
           'SEO local en Albacete',
           'Posicionamiento web en Albacete'
       ],
-      'serviceType'   => 'Consultoría SEO local',
+      'serviceType'   => 'Consultoría SEO y Posicionamiento Web',
       'areaServed'    => [
           ['@type' => 'City', 'name' => 'Albacete'],
           ['@type' => 'AdministrativeArea', 'name' => 'Provincia de Albacete'],
@@ -51,8 +53,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">SEO local en Albacete para empresas y negocios</h1>
-      <p class="page-hero-desc">Servicio orientado a negocios que dependen de clientes de su zona. El SEO local tiene reglas propias que lo diferencian de una consultoría SEO general: optimización de Google Business Profile, arquitectura de servicios locales y medición de llamadas.</p>
+      <h1 id="page-h1">Consultor SEO en Albacete: Posicionamiento Web Local y Estrategia para Empresas</h1>
+      <p class="page-hero-desc">Servicio integral de posicionamiento SEO en Albacete orientado a negocios que necesitan multiplicar sus clientes y llamadas locales: optimización de Google Business Profile, arquitectura web geolocalizada y SEO técnico sin intermediarios.</p>
     </div>
   </section>
 

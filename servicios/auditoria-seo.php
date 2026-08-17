@@ -2,21 +2,31 @@
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
+$faq = [
+  ['q' => '¿Qué incluye exactamente una auditoría SEO técnica?', 'a' => 'Analizo los 5 pilares críticos: rastreo e indexabilidad (robots.txt, canonicals, noindex, errores 404/500), Core Web Vitals y WPO (LCP, INP, CLS), arquitectura web y canibalizaciones, análisis de logs del servidor y datos de Search Console para detectar caídas de tráfico.'],
+  ['q' => '¿Cuánto tiempo se tarda en realizar la auditoría SEO técnica?', 'a' => 'El plazo habitual es de 5 a 7 días laborables. Al finalizar entrego un informe técnico priorizado por impacto económico vs esfuerzo y una sesión explicativa para resolver cualquier duda con tu equipo.'],
+  ['q' => '¿Qué diferencia hay entre una auditoría automática y una profesional?', 'a' => 'Las herramientas automáticas (Semrush, Ahrefs, Sitebulb) solo generan listados de alertas sin contexto de negocio. Una auditoría técnica manual interpreta los logs reales, Search Console y el código para priorizar lo que realmente te hará ganar tráfico y ventas.'],
+  ['q' => '¿Puedes implementar tú mismo las soluciones técnicas?', 'a' => 'Sí. Como ingeniero informático y desarrollador web, ofrezco la opción de implementar directamente las soluciones en WordPress, Laravel, Shopify, Prestashop o código a medida, evitando que el informe quede sin ejecutar.'],
+  ['q' => '¿Qué accesos necesitas para iniciar la auditoría?', 'a' => 'Solo necesito acceso como usuario a Google Search Console, Google Analytics 4 y, si es posible, acceso temporal al panel de control o logs del servidor web.']
+];
+
 $page = page_config([
-  'title'        => 'Auditoría SEO técnica y de contenidos',
-  'description'  => 'Auditoría SEO técnica avanzada. Detecto y soluciono errores de rastreo, indexación y WPO para que tu proyecto recupere tráfico y rentabilidad.',
+  'title'        => 'Auditoría SEO Técnica y Web: Diagnóstico Profesional | Víctor Alonso',
+  'description'  => 'Auditoría SEO técnica realizada por consultor e ingeniero. Detecto y soluciono errores de rastreo, indexación, WPO y Core Web Vitals para recuperar tráfico.',
   'canonical'    => '/servicios/auditoria-seo/',
   'body_class'   => 'page-servicio',
-  'schema_types' => ['Service'],
+  'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/auditoria-seo/#service',
       'name'          => 'Auditoría SEO técnica',
       'alternateName' => [
-          'Auditoría SEO',
+          'Auditoría SEO técnica',
+          'Auditor SEO técnico',
+          'Auditoría SEO profesional',
           'Auditoría web SEO',
           'Consultoría técnica SEO'
       ],
-      'serviceType'   => 'Auditoría SEO',
+      'serviceType'   => 'Auditoría SEO Técnica y Diagnóstico Web',
       'areaServed'    => [
           ['@type' => 'Country', 'name' => 'España']
       ],
@@ -25,6 +35,7 @@ $page = page_config([
       ]
   ],
   'active_nav'   => 'servicios',
+  'faq_items'    => $faq,
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
     ['label' => 'Auditoría SEO', 'url' => ''],
@@ -36,8 +47,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">Auditoría SEO: diagnóstico real, prioridades <span>ejecutables</span></h1>
-      <p class="page-hero-desc">El SEO útil empieza separando síntomas de causas. Una auditoría sin priorización clara es papel mojado.</p>
+      <h1 id="page-h1">Auditoría SEO Técnica: Diagnóstico Profundo y Plan de Acción</h1>
+      <p class="page-hero-desc">El SEO útil empieza separando síntomas de causas reales. Auditoría SEO técnica integral realizada por ingeniero informático para proyectos que necesitan recuperar tráfico y solucionar problemas de indexabilidad.</p>
     </div>
   </section>
 
@@ -149,6 +160,19 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
               <span style="color: var(--text);">Si buscas un consultor SEO para cuota mensual o el presupuesto no encaja, habla conmigo igualmente. Conozco a gente del sector de confianza a la que te puedo derivar.</span>
             </li>
           </ul>
+        </div>
+
+        <h2>Preguntas frecuentes sobre la auditoría SEO técnica</h2>
+        <div class="faq-list" style="margin-top:1.5rem">
+          <?php foreach ($faq as $item): ?>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              <?= h($item['q']) ?>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer"><?= h($item['a']) ?></div>
+          </div>
+          <?php endforeach; ?>
         </div>
 
       </div>
