@@ -342,10 +342,10 @@ RewriteRule ^(.*)$ - [F,L]</code></pre>
   <!-- CTA final -->
   <?php
   $cta = [
-    'title'     => '¿Tu migración web te da sudores fríos?',
-    'subtitle'  => 'El mapeo e implementación de redirecciones 301 masivas es el paso más crítico de un rediseño o migración de dominio. Puedo encargarme de blindar tu autoridad.',
-    'btn_label' => 'Quiero asesoramiento SEO Técnico',
-    'btn_href'  => '/contacto/',
+    'title'     => '¿Tu migración web o redirecciones te generan dudas?',
+    'subtitle'  => 'El mapeo e implementación de redirecciones 301 masivas y reglas .htaccess es el paso más crítico de un rediseño. Descubre mi servicio de auditoría técnica.',
+    'btn_label' => 'Ver Auditoría SEO Técnica',
+    'btn_href'  => '/servicios/auditoria-seo/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

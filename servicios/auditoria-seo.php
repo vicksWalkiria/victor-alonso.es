@@ -22,16 +22,16 @@ $page = page_config([
       'alternateName' => [
           'Auditoría SEO técnica',
           'Auditor SEO técnico',
-          'Auditoría SEO profesional',
-          'Auditoría web SEO',
-          'Consultoría técnica SEO'
+          'Auditoría técnica SEO',
+          'Auditoría SEO técnica avanzada',
+          'Consultor SEO técnico'
       ],
       'serviceType'   => 'Auditoría SEO Técnica y Diagnóstico Web',
       'areaServed'    => [
           ['@type' => 'Country', 'name' => 'España']
       ],
       'offers'        => [
-          'minPrice' => 250
+          'minPrice' => 350
       ]
   ],
   'active_nav'   => 'servicios',

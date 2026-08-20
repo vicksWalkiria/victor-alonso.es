@@ -423,10 +423,10 @@ require __DIR__ . '/../includes/breadcrumbs.php';
   <!-- CTA final -->
   <?php
   $cta = [
-    'title'     => '¿Necesitas ayuda para interpretar o implementar estas mejoras?',
-    'subtitle'  => 'Si el informe revela problemas de indexación o muchas palabras clave estancadas en la página 2 de Google, te puedo ayudar a empujarlas. Como consultor SEO en Albacete con enfoque técnico, diseño y ejecuto estrategias de SEO técnico y auditorías a medida.',
-    'btn_label' => 'Contactar ahora',
-    'btn_href'  => '/contacto/',
+    'title'     => '¿Necesitas ayuda para interpretar o implementar estas mejoras en tu SEO?',
+    'subtitle'  => 'Si el informe revela caídas de clics o palabras clave estancadas en las posiciones 11-20 de Google, podemos convertirlas en tráfico. Descubre cómo trabajo en mi servicio de Auditoría SEO Técnica.',
+    'btn_label' => 'Ver Auditoría SEO Técnica',
+    'btn_href'  => '/servicios/auditoria-seo/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

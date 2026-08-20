@@ -245,10 +245,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <!-- CTA final -->
   <?php
   $cta = [
-    'title'     => '¿Quieres optimizar tu visibilidad local?',
-    'subtitle'  => 'El SEO local va mucho más allá de una ficha en Maps. Consolidamos tu estructura web para que domines los resultados locales.',
-    'btn_label' => 'Quiero una consultoría SEO local',
-    'btn_href'  => '/contacto/',
+    'title'     => '¿Quieres dominar las búsquedas locales en tu ciudad?',
+    'subtitle'  => 'El SEO local va mucho más allá de una ficha en Maps. Optimizamos tu estructura web, datos estructurados y Google Business Profile.',
+    'btn_label' => 'Ver Consultoría SEO Local',
+    'btn_href'  => '/servicios/seo-albacete/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];

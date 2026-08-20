@@ -1818,10 +1818,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <!-- CTA final -->
   <?php
   $cta = [
-    'title' => '¿Has detectado problemas graves de rastreo o caídas 5xx?',
-    'subtitle' => 'Un log con exceso de errores técnicos es el síntoma de un servidor mal optimizado o una estructura de enlaces defectuosa.',
-    'btn_label' => 'Auditar mi servidor de forma avanzada',
-    'btn_href' => '/contacto/',
+    'title' => '¿Has detectado problemas graves de rastreo, bots o errores 5xx en tus logs?',
+    'subtitle' => 'Un log con exceso de errores técnicos desperdicia tu presupuesto de rastreo (Crawl Budget) y frena la indexación. Descubre cómo solucionarlo de raíz con una auditoría técnica.',
+    'btn_label' => 'Ver Auditoría SEO Técnica y Logs',
+    'btn_href' => '/servicios/auditoria-seo/',
     'whatsapp' => true,
     'variant' => 'orange',
   ];
