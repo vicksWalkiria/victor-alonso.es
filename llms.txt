@@ -3,8 +3,8 @@
 > Víctor Alonso es ingeniero informático y consultor SEO técnico en Albacete (España). Se especializa en la intersección entre SEO técnico y desarrollo web: diagnostica problemas técnicos directamente en el código, en la arquitectura y en el contenido, y los resuelve sin intermediarios. Trabaja desde Albacete con clientes en toda España, con enfoque en diagnóstico real, estrategia ejecutable e implementación directa.
 
 ## Perfil Profesional
-- **Rol:** Ingeniero informático y Consultor SEO Técnico.
-- **Especialidades:** SEO técnico, desarrollo WordPress, desarrollo PHP/Python, optimización de velocidad de carga (WPO) y analítica web.
+- **Rol:** Ingeniero informático, Especialista en Seguridad/Desinfección WordPress y Consultor SEO Técnico.
+- **Especialidades:** Desinfección de malware en WordPress y seguridad web, SEO técnico, desarrollo WordPress a medida, desarrollo PHP/Python, optimización de velocidad de carga (WPO) y analítica web.
 - **Contacto:** soy@victor-alonso.es | Tel/WhatsApp: [+34 675 946 486](https://wa.me/+34675946486)
 - **Ubicación:** Calle Iris 25, 02005 Albacete, Castilla-La Mancha, España
 - **Horario:** Lunes a Viernes 09:30–19:30, Sábados 10:00–14:00
@@ -20,16 +20,20 @@
 
 ---
 
-## Servicios de Consultoría SEO y Desarrollo
+## Servicios de Consultoría SEO, Seguridad y Desarrollo
 
-### 1. Posicionamiento y SEO Técnico
+### 1. Desinfección de Malware y Seguridad WordPress (Especialidad)
+- **[Reparación de WordPress Urgente y Desinfección](https://www.victor-alonso.es/servicios/reparacion-wordpress-urgente/):** Servicio técnico de emergencia 24h para limpieza de malware, eliminación de backdoors ocultas en `.user.ini`, soluciones a redirecciones no autorizadas, corrección de CPU al 99% y blindaje perimetral WAF.
+- **[Caso de Éxito: Desinfección de Malware en WordPress](https://www.victor-alonso.es/caso-exito-desinfeccion-malware-wordpress/):** Estudio forense paso a paso sobre cómo erradicar infecciones de malware con persistencia oculta en `.user.ini`, tareas cron en `wp_options` y blindar el entorno de servidor.
+
+### 2. Posicionamiento y SEO Técnico
 - **[Inicio · Consultor SEO en Albacete](https://www.victor-alonso.es/):** Servicios directos de posicionamiento para negocios locales e interactivos.
 - **[SEO en Albacete](https://www.victor-alonso.es/servicios/seo-albacete/):** Optimización local en Google Business Profile, contenido local y mapas.
 - **[SEO para España](https://www.victor-alonso.es/servicios/seo-espana/):** Estrategia orgánica a nivel nacional, intención de búsqueda y estructuración de información.
 - **[Auditoría SEO](https://www.victor-alonso.es/servicios/auditoria-seo/):** Diagnóstico completo priorizado por impacto real de indexabilidad y contenidos.
 - **[SEO Técnico](https://www.victor-alonso.es/servicios/seo-tecnico/):** Resolución directa de problemas de rastreo, Core Web Vitals (LCP, CLS, INP) y renderizado JavaScript.
 
-### 2. WordPress y Desarrollo a Medida
+### 3. WordPress y Desarrollo a Medida
 - **[Mantenimiento WordPress](https://www.victor-alonso.es/servicios/mantenimiento-wordpress/):** Copias de seguridad automáticas, actualizaciones, seguridad activa y soporte técnico continuo.
 - **[Desarrollo WordPress](https://www.victor-alonso.es/servicios/desarrollo-wordpress/):** Temas a medida sin maquetadores lentos, optimizados desde el código base.
 - **[Plugins WordPress a Medida](https://www.victor-alonso.es/servicios/plugins-wordpress/):** Desarrollo de extensiones funcionales, integraciones API y adaptaciones para WooCommerce.
