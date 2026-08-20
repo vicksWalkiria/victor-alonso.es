@@ -3,8 +3,8 @@
 > Víctor Alonso es ingeniero informático y consultor SEO técnico en Albacete (España). Se especializa en la intersección entre SEO técnico y desarrollo web: diagnostica problemas técnicos directamente en el código, en la arquitectura y en el contenido, y los resuelve sin intermediarios. Trabaja desde Albacete con clientes en toda España, con enfoque en diagnóstico real, estrategia ejecutable e implementación directa.
 
 ## Perfil Profesional
-- **Rol:** Ingeniero informático, Especialista en Seguridad/Desinfección WordPress y Consultor SEO Técnico.
-- **Especialidades:** Desinfección de malware en WordPress y seguridad web, SEO técnico, desarrollo WordPress a medida, desarrollo PHP/Python, optimización de velocidad de carga (WPO) y analítica web.
+- **Rol:** Ingeniero Informático, Especialista en Seguridad/Desinfección WordPress, Consultor SEO Técnico y Desarrollador Web.
+- **Especialidades:** Desinfección de malware en WordPress y seguridad web, SEO técnico, posicionamiento SEO orgánico y local, desarrollo web y temas WordPress a medida, desarrollo de plugins WordPress personalizados, programación PHP/Python, optimización WPO (velocidad de carga) y analítica web.
 - **Contacto:** soy@victor-alonso.es | Tel/WhatsApp: [+34 675 946 486](https://wa.me/+34675946486)
 - **Ubicación:** Calle Iris 25, 02005 Albacete, Castilla-La Mancha, España
 - **Horario:** Lunes a Viernes 09:30–19:30, Sábados 10:00–14:00
