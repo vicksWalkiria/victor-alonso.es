@@ -29,9 +29,9 @@
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Servicios SEO</h3>
                 <ul role="list">
-                    <li><a href="/">Consultor & Agencia SEO Albacete</a></li>
-                    <li><a href="/servicios/seo-albacete/">SEO en Albacete</a></li>
-                    <li><a href="/servicios/seo-espana/">SEO para España</a></li>
+                    <li><a href="/">Consultoría SEO Albacete</a></li>
+                    <li><a href="/servicios/seo-albacete/">SEO Local y Google Maps</a></li>
+                    <li><a href="/servicios/seo-espana/">SEO Nacional para España</a></li>
                     <li><a href="/servicios/auditoria-seo/">Auditoría SEO</a></li>
                     <li><a href="/servicios/seo-tecnico/">SEO Técnico</a></li>
                 </ul>

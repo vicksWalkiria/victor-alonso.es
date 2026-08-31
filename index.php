@@ -152,9 +152,9 @@ require __DIR__ . '/includes/header.php';
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
-          <h3>Consultor SEO en Albacete</h3>
-          <p>SEO local técnico para negocios de Albacete: Google Business Profile, arquitectura web, contenido local, medición y mejoras reales sobre la web.</p>
-          <a href="/servicios/seo-albacete/" class="card-link">Consultor SEO en Albacete para empresas →</a>
+          <h3>SEO Local y Google Maps</h3>
+          <p>SEO local técnico para negocios de Albacete: Google Business Profile, Local Pack, arquitectura web, contenido local y citas de autoridad.</p>
+          <a href="/servicios/seo-albacete/" class="card-link">SEO local en Albacete para empresas →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -162,7 +162,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>SEO para España</h3>
           <p>Estrategia SEO nacional con enfoque técnico, clusters de contenido, arquitectura de información y análisis de intención.</p>
-          <a href="/servicios/seo-espana/" class="card-link">Ver servicio →</a>
+          <a href="/servicios/seo-espana/" class="card-link">Servicio de SEO nacional →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
