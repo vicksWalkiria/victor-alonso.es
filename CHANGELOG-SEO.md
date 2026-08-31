@@ -1,3 +1,14 @@
+## 2026-09-01
+
+- **URL:** `/` (Home) y `/servicios/seo-albacete/`
+- **Cambio:** 
+  1. Restaurada la keyword raíz "SEO Albacete" en el `<title>` de la Home (`SEO Albacete · Consultor SEO Técnico | Víctor Alonso`) y meta description orientada a intención transaccional directa ("¿Buscas mejorar tu posicionamiento SEO en Albacete? Consultoría técnica...").
+  2. Desambiguación y eliminación de canibalización en `/servicios/seo-albacete/`: nuevo title (`SEO Local en Albacete y Google Maps para Empresas | Víctor Alonso`), H1 reenfocado a Google Maps / Local Pack y esquema `LocalBusiness`/`Service` diferenciado.
+- **Motivo:** SEO-14. Recuperar la visibilidad orgánica histórica de la keyword "SEO Albacete" (que cayó tras la eliminación de la concordancia exacta el 17 de julio) y solucionar la canibalización semántica entre la Home y la landing local.
+- **KPI Asociado:** Recuperación de la posición Top 5-10 en Search Console para `seo albacete` y `consultor seo albacete`, reactivación de impresiones (>1.000 mensuales) y captación de leads.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código y enviado a Indexing API.
+
 ## 2026-08-05
 
 - **URL:** `/`, `/caso-exito-desinfeccion-malware-wordpress/`, `/casos-reales/`, `/servicios/reparacion-wordpress-urgente/`, `/servicios/mantenimiento-wordpress/`, `/servicios/plugins-wordpress/`, `/servicios/seo-albacete/`, `/servicios/seo-tecnico/`, `/sitemap.xml`

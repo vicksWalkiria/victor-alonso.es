@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Consultor SEO en Albacete | Víctor Alonso',
-    'description'  => 'Consultor SEO técnico en Albacete. Auditorías, SEO local, WordPress e implementación directa, sin agencias ni intermediarios.',
+    'title'        => 'SEO Albacete · Consultor SEO Técnico | Víctor Alonso',
+    'description'  => '¿Buscas mejorar tu posicionamiento SEO en Albacete? Consultoría técnica, auditorías y estrategia real por ingeniero informático. ¡Solicita tu diagnóstico gratis!',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service'],
