@@ -31,6 +31,7 @@
                 <ul role="list">
                     <li><a href="/">Consultoría SEO Albacete</a></li>
                     <li><a href="/servicios/seo-albacete/">SEO Local y Google Maps</a></li>
+                    <li><a href="/servicios/seo-loterias-albacete/">SEO para Loterías</a></li>
                     <li><a href="/servicios/seo-espana/">SEO Nacional para España</a></li>
                     <li><a href="/servicios/auditoria-seo/">Auditoría SEO</a></li>
                     <li><a href="/servicios/seo-tecnico/">SEO Técnico</a></li>
