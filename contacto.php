@@ -91,7 +91,6 @@ require __DIR__ . '/includes/breadcrumbs.php';
           </div>
 
           <input type="hidden" name="_subject" value="Nuevo contacto — victor-alonso.es">
-          <input type="hidden" name="_replyto" value="<?= h(SITE_EMAIL) ?>">
           <input type="hidden" name="_next" value="<?= h(SITE_URL) ?>/gracias/">
 
           <button type="submit" class="btn btn--primary btn--lg">Enviar mensaje</button>
