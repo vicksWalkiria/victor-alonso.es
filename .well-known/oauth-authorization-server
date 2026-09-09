@@ -17,8 +17,12 @@
   "agent_auth": {
     "skill": "https://www.victor-alonso.es/auth.md",
     "register_uri": "https://www.victor-alonso.es/api",
+    "claim_uri": "https://www.victor-alonso.es/contacto/",
     "identity_types_supported": [
       "anonymous"
+    ],
+    "credential_types_supported": [
+      "none"
     ],
     "anonymous": {
       "credential_types_supported": [
