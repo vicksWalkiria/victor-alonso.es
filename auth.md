@@ -1,23 +1,26 @@
 # auth.md
 
-Authentication and access policy for AI agents, crawlers, and LLM applications interacting with victor-alonso.es.
+Welcome to Víctor Alonso SEO. This service provides automated discovery and agent-ready capabilities for AI agents.
 
-## Audience and Scope
-This document outlines authentication requirements and machine access policies for `https://www.victor-alonso.es`.
+## Agent Registration
 
-## Authentication Policy
-- **Public & Anonymous Access:** All public tools (WebMCP tools, SEO Page Analyzer, Log Analyzer, Schema Generator) and content representation endpoints (HTML, Markdown content negotiation, `llms.txt`) are free and open. No API keys, OAuth tokens, or account registration are required for public agent usage.
-- **Supported Identity Types:** `["anonymous"]`
-- **Credential Types:** `["none"]`
-- **Protected Resources:** For custom, high-volume programmatic batch analysis or dedicated consulting endpoints, authentication is coordinated directly via OAuth or mutual agreement.
+AI agents and automated systems can access public resources and tools anonymously without prior registration.
 
-## Endpoints
-- **Agent Discovery:** `https://www.victor-alonso.es/.well-known/agent-skills/index.json`
+### Registration Endpoint
+- **Register URI:** `https://www.victor-alonso.es/api`
+- **Claim URI:** `https://www.victor-alonso.es/contacto/`
+- **Identity Types Supported:** `anonymous`
+- **Credential Types Supported:** `none`
+
+### How to Authenticate
+Public tools and endpoints do not require credentials:
+- **Authorization Header:** Not required for public access
+- **Authentication Method:** Anonymous agent access
+
+### Machine Discovery
+- **OAuth Protected Resource:** `https://www.victor-alonso.es/.well-known/oauth-protected-resource`
+- **OAuth Authorization Server:** `https://www.victor-alonso.es/.well-known/oauth-authorization-server`
+- **Agent Skills:** `https://www.victor-alonso.es/.well-known/agent-skills/index.json`
 - **API Catalog:** `https://www.victor-alonso.es/.well-known/api-catalog`
 - **MCP Server Card:** `https://www.victor-alonso.es/.well-known/mcp/server-card.json`
-- **A2A Agent Card:** `https://www.victor-alonso.es/.well-known/agent-card.json`
-- **Contact & Provisioning:** `soy@victor-alonso.es` | `https://www.victor-alonso.es/contacto/`
-
-## Rate Limits and Etiquette
-- Please maintain a polite crawl rate (< 20 requests per minute).
-- Respect directives declared in `robots.txt` and `Content-Signal`.
+- **ARD Manifest:** `https://www.victor-alonso.es/.well-known/ai-catalog.json`

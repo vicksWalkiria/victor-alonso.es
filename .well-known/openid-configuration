@@ -13,5 +13,18 @@
   "token_endpoint_auth_methods_supported": [
     "none",
     "client_secret_basic"
-  ]
+  ],
+  "agent_auth": {
+    "skill": "https://www.victor-alonso.es/auth.md",
+    "register_uri": "https://www.victor-alonso.es/api",
+    "identity_types_supported": [
+      "anonymous"
+    ],
+    "anonymous": {
+      "credential_types_supported": [
+        "none"
+      ],
+      "claim_uri": "https://www.victor-alonso.es/contacto/"
+    }
+  }
 }
