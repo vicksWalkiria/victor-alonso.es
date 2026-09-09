@@ -8,4 +8,65 @@ Disallow: /?s=
 Disallow: /*?s=
 Disallow: /cdn-cgi/
 
+# Content Signals for AI & Search preferences
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+# ARD Capability Manifest
+Agentmap: https://www.victor-alonso.es/.well-known/ai-catalog.json
+
+# Explicit rules for major AI Agents & Crawlers
+User-agent: GPTBot
+Allow: /
+Disallow: /gracias/
+Disallow: /gracias.php
+Disallow: /includes/
+Disallow: /?s=
+Disallow: /*?s=
+Disallow: /cdn-cgi/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /gracias/
+Disallow: /gracias.php
+Disallow: /includes/
+Disallow: /?s=
+Disallow: /*?s=
+Disallow: /cdn-cgi/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /gracias/
+Disallow: /gracias.php
+Disallow: /includes/
+Disallow: /?s=
+Disallow: /*?s=
+Disallow: /cdn-cgi/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /gracias/
+Disallow: /gracias.php
+Disallow: /includes/
+Disallow: /?s=
+Disallow: /*?s=
+Disallow: /cdn-cgi/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /gracias/
+Disallow: /gracias.php
+Disallow: /includes/
+Disallow: /?s=
+Disallow: /*?s=
+Disallow: /cdn-cgi/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /gracias/
+Disallow: /gracias.php
+Disallow: /includes/
+Disallow: /?s=
+Disallow: /*?s=
+Disallow: /cdn-cgi/
+
 Sitemap: https://www.victor-alonso.es/sitemap.xml

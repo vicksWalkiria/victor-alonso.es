@@ -29,6 +29,11 @@ $_canonical  = SITE_URL . $page['canonical'];
     <meta name="robots" content="noindex, follow">
 <?php endif; ?>
 
+    <!-- AI Agent Discovery & Protocols -->
+    <link rel="ai-catalog" href="/.well-known/ai-catalog.json">
+    <link rel="describedby" href="/llms.txt" type="text/markdown">
+    <link rel="agent-skills" href="/.well-known/agent-skills/index.json">
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="<?= h($_canonical) ?>">
@@ -69,6 +74,48 @@ $_canonical  = SITE_URL . $page['canonical'];
 
     <!-- JSON-LD Schemas -->
     <?php render_schemas($page); ?>
+
+    <!-- WebMCP: Expose site tools to AI agents -->
+    <script>
+    (function(){
+      if ('modelContext' in navigator && navigator.modelContext && typeof navigator.modelContext.registerTool === 'function') {
+        try {
+          navigator.modelContext.registerTool({
+            name: "seoPageAnalyzer",
+            description: "Audita cabeceras de respuesta HTTP, tiempos TTFB en milisegundos, metaetiquetas principales (Title, Description, H1), directivas robots y cabeceras de seguridad web.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                url: { type: "string", format: "uri", description: "La dirección web completa a auditar (ej. https://tuweb.com/pagina)" }
+              },
+              required: ["url"]
+            },
+            execute: async function(params) {
+              window.location.href = "/herramientas/analizador-seo/?url=" + encodeURIComponent(params.url);
+              return { status: "navigating", url: params.url };
+            }
+          });
+          navigator.modelContext.registerTool({
+            name: "apacheNginxLogAnalyzer",
+            description: "Extrae estadísticas avanzadas de archivos de registro (Common o Combined) de servidores web Apache o Nginx para estimar el crawl budget de Googlebot y detectar errores 404 recurrentes o IPs hostiles.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                logText: { type: "string", description: "Líneas de texto de log de servidor Apache o Nginx a procesar" }
+              },
+              required: ["logText"]
+            },
+            execute: async function(params) {
+              window.location.href = "/herramientas/analizador-logs/";
+              return { status: "navigating" };
+            }
+          });
+        } catch (e) {
+          console.debug("WebMCP registration:", e);
+        }
+      }
+    })();
+    </script>
 </head>
 <body class="<?= h($page['body_class']) ?>"<?= GA_MEASUREMENT_ID !== '' ? ' data-ga-id="' . h(GA_MEASUREMENT_ID) . '"' : '' ?>>
 

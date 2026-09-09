@@ -1,0 +1,29 @@
+{
+  "$schema": "https://a2a-protocol.org/latest/schema/agent-card.json",
+  "name": "Victor Alonso SEO Agent",
+  "version": "1.0.0",
+  "description": "Agente autónomo de consultoría SEO técnica, análisis de servidores y seguridad web de Víctor Alonso",
+  "url": "https://www.victor-alonso.es/",
+  "supportedInterfaces": [
+    {
+      "url": "https://www.victor-alonso.es/mcp",
+      "protocol": "http"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false
+  },
+  "skills": [
+    {
+      "id": "seo-page-analyzer",
+      "name": "SEO Page Analyzer",
+      "description": "Audita cabeceras de respuesta HTTP, tiempos TTFB y metaetiquetas principales"
+    },
+    {
+      "id": "apache-nginx-log-analyzer",
+      "name": "Apache and Nginx Log Analyzer",
+      "description": "Analizador de logs de acceso para optimizar el crawl budget"
+    }
+  ]
+}

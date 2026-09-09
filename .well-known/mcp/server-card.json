@@ -1,0 +1,56 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/server-card.json",
+  "serverInfo": {
+    "name": "victor-alonso-seo-tools",
+    "version": "1.0.0",
+    "description": "Herramientas de auditoría SEO técnica y análisis de logs para agentes de IA por Víctor Alonso"
+  },
+  "endpoint": "https://www.victor-alonso.es/mcp",
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://www.victor-alonso.es/mcp"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "subscribe": false,
+      "listChanged": false
+    },
+    "prompts": {
+      "listChanged": false
+    }
+  },
+  "tools": [
+    {
+      "name": "seoPageAnalyzer",
+      "description": "Audita cabeceras HTTP, tiempos TTFB en milisegundos, metaetiquetas principales (Title, Description, H1), directivas robots y cabeceras de seguridad web.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL pública completa a auditar (ej. https://tuweb.com/pagina)"
+          }
+        },
+        "required": ["url"]
+      }
+    },
+    {
+      "name": "apacheNginxLogAnalyzer",
+      "description": "Extrae estadísticas avanzadas de archivos de registro (Common o Combined) de servidores web Apache o Nginx para estimar el crawl budget de Googlebot y detectar errores 404 recurrentes o IPs hostiles.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "logText": {
+            "type": "string",
+            "description": "Líneas de texto de log de servidor Apache o Nginx a procesar"
+          }
+        },
+        "required": ["logText"]
+      }
+    }
+  ]
+}

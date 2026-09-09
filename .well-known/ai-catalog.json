@@ -1,0 +1,50 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Víctor Alonso SEO",
+    "identifier": "did:web:www.victor-alonso.es"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:victor-alonso.es:server:seo-tools",
+      "displayName": "Víctor Alonso SEO Tools MCP Server",
+      "type": "application/mcp-server-card+json",
+      "url": "https://www.victor-alonso.es/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "analizar seo tecnico de una url",
+        "auditar encabezados http y ttfb",
+        "analizar logs apache nginx crawl budget"
+      ]
+    },
+    {
+      "identifier": "urn:air:victor-alonso.es:agent:seo-consultant",
+      "displayName": "Victor Alonso SEO Agent",
+      "type": "application/agent-card+json",
+      "url": "https://www.victor-alonso.es/.well-known/agent-card.json",
+      "representativeQueries": [
+        "consultoria seo tecnico albacete espana",
+        "desinfeccion malware wordpress seguridad web"
+      ]
+    },
+    {
+      "identifier": "urn:air:victor-alonso.es:skill:seo-page-analyzer",
+      "displayName": "SEO Page Analyzer Skill",
+      "type": "text/markdown",
+      "url": "https://www.victor-alonso.es/.well-known/agent-skills/seo-page-analyzer/SKILL.md",
+      "representativeQueries": [
+        "auditoria de metaetiquetas encabezados y directivas robots",
+        "verificar tiempo de respuesta y seguridad de una web"
+      ]
+    },
+    {
+      "identifier": "urn:air:victor-alonso.es:skill:log-analyzer",
+      "displayName": "Apache and Nginx Log Analyzer Skill",
+      "type": "text/markdown",
+      "url": "https://www.victor-alonso.es/.well-known/agent-skills/log-analyzer/SKILL.md",
+      "representativeQueries": [
+        "analizar crawl budget de googlebot en logs de servidor",
+        "detectar errores 404 recurrentes en access log"
+      ]
+    }
+  ]
+}

@@ -33,6 +33,9 @@ Options -Indexes
   RewriteCond %{REQUEST_URI} ^(.*)//(.*)$
   RewriteRule . %1/%2 [R=301,L]
 
+  # 3.4. Excluir .well-known de redirecciones de trailing slash
+  RewriteRule ^\.well-known/ - [L]
+
   # 3.5. Forzar barra final (trailing slash) si no es un archivo físico ni extensión estática (omitir redirect https en localhost)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !\.(ico|png|jpg|jpeg|webp|svg|css|js|xml|json|txt|pdf|woff2?)$ [NC]
@@ -84,9 +87,37 @@ Options -Indexes
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-XSS-Protection "1; mode=block"
+  # AI Agent Discovery Link Headers (RFC 8288 / RFC 9727)
+  Header set Link '</.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/markdown", </.well-known/agent-skills/index.json>; rel="agent-skills", </.well-known/ai-catalog.json>; rel="ai-catalog"'
+  Header append Vary "Accept"
   # Strict-Transport-Security solo si el certificado es permanente
   # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
+
+# ─── Formatos y Cabeceras para Agentes de IA ─────────────────────────────────
+<Files "api-catalog">
+  ForceType application/linkset+json
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "application/linkset+json; charset=utf-8"
+  </IfModule>
+</Files>
+
+<Files "auth.md">
+  ForceType text/markdown
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "text/markdown; charset=utf-8"
+  </IfModule>
+</Files>
+
+<FilesMatch "^(oauth-protected-resource|oauth-authorization-server|openid-configuration|server-card\.json|server-cards\.json|mcp\.json|agent-card\.json|ai-catalog\.json|index\.json|jwks\.json)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "application/json; charset=utf-8"
+  </IfModule>
+</FilesMatch>
+
 
 # ─── Proteger archivos sensibles ──────────────────────────────────────────────
 <FilesMatch "^\.(?!well-known)">

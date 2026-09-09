@@ -1,0 +1,13 @@
+{
+  "resource": "https://www.victor-alonso.es",
+  "authorization_servers": [
+    "https://www.victor-alonso.es"
+  ],
+  "scopes_supported": [
+    "read:public",
+    "tools:execute"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ]
+}

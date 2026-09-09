@@ -1,0 +1,73 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Víctor Alonso SEO Tools API",
+    "version": "1.0.0",
+    "description": "API y utilidades de análisis SEO técnico, servidor y seguridad web para agentes de IA",
+    "contact": {
+      "name": "Víctor Alonso",
+      "url": "https://www.victor-alonso.es",
+      "email": "soy@victor-alonso.es"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.victor-alonso.es"
+    }
+  ],
+  "paths": {
+    "/herramientas/analizador-seo/": {
+      "get": {
+        "summary": "Analizador SEO de URLs",
+        "description": "Audita cabeceras de respuesta HTTP, tiempos TTFB en milisegundos, metaetiquetas principales (Title, Description, H1), directivas robots y cabeceras de seguridad web.",
+        "operationId": "seoPageAnalyzer",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "query",
+            "required": true,
+            "description": "La dirección web completa a auditar",
+            "schema": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Informe SEO completo"
+          }
+        }
+      }
+    },
+    "/herramientas/analizador-logs/": {
+      "post": {
+        "summary": "Analizador de logs Apache y Nginx",
+        "description": "Extrae estadísticas avanzadas de archivos de registro para estimar crawl budget de Googlebot y detectar errores 404.",
+        "operationId": "apacheNginxLogAnalyzer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "logText": {
+                    "type": "string",
+                    "description": "Líneas de texto de log de servidor web"
+                  }
+                },
+                "required": ["logText"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Informe de análisis de logs"
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,6 +6,29 @@
 // ─── Ruta base del proyecto ─────────────────────────────────────────────────
 define('BASE_DIR', dirname(__DIR__));  // public_html/
 
+// ─── Cabeceras de descubrimiento para Agentes IA (RFC 8288 / RFC 9727) ───────
+if (!headers_sent()) {
+    header('Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/markdown", </.well-known/agent-skills/index.json>; rel="agent-skills", </.well-known/ai-catalog.json>; rel="ai-catalog"', false);
+    header('Vary: Accept', false);
+}
+
+// ─── Negociación de contenido Markdown (Accept: text/markdown) ───────────────
+$_accept = $_SERVER['HTTP_ACCEPT'] ?? '';
+if (strpos($_accept, 'text/markdown') !== false) {
+    $_llms_file = BASE_DIR . '/llms.txt';
+    if (file_exists($_llms_file)) {
+        $_md_content = file_get_contents($_llms_file);
+        $_token_count = (int)ceil(strlen($_md_content) / 3.8);
+        header('Content-Type: text/markdown; charset=utf-8');
+        header('Vary: Accept');
+        header('x-markdown-tokens: ' . $_token_count);
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'HEAD') {
+            echo $_md_content;
+        }
+        exit;
+    }
+}
+
 // ─── Carga de variables de entorno (.env fuera del repo) ──────────────────────
 // Hestia/PHP-FPM: open_basedir suele permitir private/ pero no el .env del directorio padre.
 $_env_candidates = [

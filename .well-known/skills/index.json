@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "seo-page-analyzer",
+      "type": "skill-md",
+      "description": "Audita cabeceras de respuesta HTTP, tiempos TTFB en milisegundos, metaetiquetas principales (Title, Description, H1), directivas robots y cabeceras de seguridad web.",
+      "url": "/.well-known/agent-skills/seo-page-analyzer/SKILL.md",
+      "digest": "sha256:b88ea673f277284a28416f1cafd57a6ed47860788e5b7d41e1ddc1e109f67954"
+    },
+    {
+      "name": "log-analyzer",
+      "type": "skill-md",
+      "description": "Analizador de logs de servidor web Apache y Nginx para auditar rastreo de Googlebot, detectar errores 404 recurrentes y optimizar el crawl budget.",
+      "url": "/.well-known/agent-skills/log-analyzer/SKILL.md",
+      "digest": "sha256:b9883b923ebe6d1dba364ebd28fcdff8001a355f453f2f7868123bcb7b7b82f4"
+    }
+  ]
+}
