@@ -154,7 +154,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <h3 style="color:var(--orange);margin-bottom:.75rem">Solicitar primera valoración</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Cuéntame qué ocurre con tu web y te respondo con un diagnóstico sin compromiso directo de <a href="/" style="color:inherit;text-decoration:underline;">Víctor Alonso, consultor SEO</a>.</p>
            <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
-          <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp</a>
+          <a href="<?= wa_url('seo') ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp</a>
         </div>
         <div class="card">
           <h3 style="margin-bottom:.75rem">Otros servicios</h3>

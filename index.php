@@ -346,6 +346,7 @@ require __DIR__ . '/includes/header.php';
     'btn_label' => 'Solicitar diagnóstico SEO gratuito',
     'btn_href'  => '/contacto/',
     'whatsapp'  => true,
+    'wa_context'=> 'general',
     'variant'   => 'orange',
   ];
   require __DIR__ . '/includes/cta.php';

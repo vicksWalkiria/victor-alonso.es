@@ -3,8 +3,8 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Reparación de WordPress urgente y limpieza de malware | Víctor Alonso',
-  'description'  => 'Servicio de reparación de WordPress urgente. Solución de errores 500, webs hackeadas, pantallazos en blanco y desinfección de malware con diagnóstico técnico.',
+  'title'        => 'Reparación WordPress urgente: malware, errores y caídas — Hoy mismo',
+  'description'  => '¿Tu web de WordPress está caída, hackeada o con pantallazos en blanco? Intervengo hoy mismo por SSH: diagnóstico, limpieza de malware y reparación en 24h.',
   'canonical'    => '/servicios/reparacion-wordpress-urgente/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
@@ -95,7 +95,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           </p>
           <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
             <a href="/contacto/" class="btn btn--primary">Solicitar intervención urgente</a>
-            <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">Escribir por WhatsApp</a>
+            <a href="<?= wa_url('malware') ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp">Escribir por WhatsApp</a>
           </div>
         </div>
 
@@ -145,7 +145,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <h3 style="color:var(--orange);margin-bottom:.75rem;font-size:1.25rem;">Solicitar ayuda de emergencia</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Si necesitas intervención urgente, envíame la URL afectada, qué está fallando exactamente y si dispones de alguna copia de seguridad reciente descargable.</p>
           <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center;">Escribir por correo urgente</a>
-          <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp Urgencias</a>
+          <a href="<?= wa_url('malware') ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp Urgencias</a>
         </div>
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Servicios relacionados</h3>

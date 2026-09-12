@@ -11,8 +11,8 @@ $faq = [
 ];
 
 $page = page_config([
-  'title'        => 'Auditoría SEO Técnica y Web: Diagnóstico Profesional | Víctor Alonso',
-  'description'  => 'Auditoría SEO técnica realizada por consultor e ingeniero. Detecto y soluciono errores de rastreo, indexación, WPO y Core Web Vitals para recuperar tráfico.',
+  'title'        => 'Auditoría SEO Técnica: detecta por qué tu web no posiciona',
+  'description'  => 'Auditoría SEO técnica realizada por consultor e ingeniero. Detecto errores de rastreo, indexación, Core Web Vitals y canibalizaciones y los corrijo directamente. Informe priorizado por impacto.',
   'canonical'    => '/servicios/auditoria-seo/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],

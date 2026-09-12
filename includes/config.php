@@ -82,6 +82,15 @@ define('SITE_IMAGE',        'https://www.victor-alonso.es/social.webp');
 define('SITE_AUTHOR_IMAGE', 'https://www.victor-alonso.es/assets/img/victor-alonso-v3.webp');
 define('FORMSPREE',         'https://formspree.io/f/xwpkllpr');
 
+// ─── Mensajes WhatsApp pre-rellenados por contexto ───────────────────────────
+// Permite pasar una clave de contexto para obtener un enlace wa.me con texto predefinido
+// Contextos: 'general', 'malware', 'seo', 'herramienta'
+define('WA_MSG_GENERAL',     rawurlencode('Hola Víctor, he visto tu web y me gustaría hablar sobre el SEO o la web de mi negocio.'));
+define('WA_MSG_MALWARE',     rawurlencode('Hola Víctor, tengo mi WordPress infectado o con errores graves y necesito ayuda urgente.'));
+define('WA_MSG_SEO',         rawurlencode('Hola Víctor, me interesa contratar tus servicios de SEO. ¿Podemos hablar?'));
+define('WA_MSG_HERRAMIENTA', rawurlencode('Hola Víctor, he estado usando tu herramienta de SEO y me gustaría consultarte algo.'));
+define('WA_MSG_MANTENIMIENTO', rawurlencode('Hola Víctor, me interesa el servicio de mantenimiento WordPress. ¿Podemos hablar?'));
+
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 /**
@@ -90,6 +99,25 @@ define('FORMSPREE',         'https://formspree.io/f/xwpkllpr');
 function h(string $str): string {
     return htmlspecialchars($str, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }
+
+/**
+ * Genera un enlace de WhatsApp con mensaje pre-rellenado según contexto.
+ * @param string $context  'general' | 'malware' | 'seo' | 'herramienta' | 'mantenimiento'
+ * @return string  URL completa de wa.me con ?text=...
+ */
+function wa_url(string $context = 'general'): string {
+    $phone = SITE_PHONE_RAW;
+    $msgs = [
+        'general'      => WA_MSG_GENERAL,
+        'malware'      => WA_MSG_MALWARE,
+        'seo'          => WA_MSG_SEO,
+        'herramienta'  => WA_MSG_HERRAMIENTA,
+        'mantenimiento'=> WA_MSG_MANTENIMIENTO,
+    ];
+    $msg = $msgs[$context] ?? WA_MSG_GENERAL;
+    return "https://wa.me/{$phone}?text={$msg}";
+}
+
 
 /**
  * Configura los metadatos de la página.

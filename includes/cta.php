@@ -2,25 +2,29 @@
 /**
  * cta.php — Bloque CTA reutilizable
  *
- * Uso: require con variables previas o pasando $cta_config:
+ * Uso: require con variables previas:
  *   $cta = [
  *     'title'      => 'Texto del CTA',
  *     'subtitle'   => 'Subtexto opcional',
  *     'btn_label'  => 'Texto botón principal',
- *     'btn_href'   => '/contacto',
- *     'whatsapp'   => true,   // Mostrar botón WhatsApp secundario
- *     'variant'    => 'dark', // 'dark' | 'light' | 'orange'
+ *     'btn_href'   => '/contacto/',
+ *     'whatsapp'   => true,
+ *     'wa_context' => 'general', // 'general' | 'malware' | 'seo' | 'herramienta' | 'mantenimiento'
+ *     'variant'    => 'dark',    // 'dark' | 'light' | 'orange'
  *   ];
  */
 $cta = $cta ?? [
-    'title'     => '¿Tienes dudas sobre tu posicionamiento web?',
-    'subtitle'  => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración sin compromiso.',
-    'btn_label' => 'Solicitar diagnóstico SEO',
-    'btn_href'  => '/contacto',
-    'whatsapp'  => true,
-    'variant'   => 'dark',
+    'title'      => '¿Tienes dudas sobre tu posicionamiento web?',
+    'subtitle'   => 'Cuéntame qué ocurre con tu web. Te respondo con una primera valoración sin compromiso.',
+    'btn_label'  => 'Solicitar diagnóstico SEO',
+    'btn_href'   => '/contacto/',
+    'whatsapp'   => true,
+    'wa_context' => 'general',
+    'variant'    => 'dark',
 ];
-$_variant = h($cta['variant'] ?? 'dark');
+$_variant    = h($cta['variant'] ?? 'dark');
+$_wa_context = $cta['wa_context'] ?? 'general';
+$_wa_href    = wa_url($_wa_context);
 ?>
 <section class="cta-block cta-block--<?= $_variant ?>" aria-labelledby="cta-title">
     <div class="container cta-inner">
@@ -31,7 +35,7 @@ $_variant = h($cta['variant'] ?? 'dark');
         <div class="cta-actions">
             <a href="<?= h($cta['btn_href']) ?>" class="btn btn--primary btn--lg"><?= h($cta['btn_label']) ?></a>
             <?php if (!empty($cta['whatsapp'])): ?>
-            <a href="https://wa.me/<?= SITE_PHONE_RAW ?>"
+            <a href="<?= h($_wa_href) ?>"
                target="_blank"
                rel="noopener noreferrer"
                class="btn btn--whatsapp btn--lg"

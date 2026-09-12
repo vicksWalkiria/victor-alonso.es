@@ -543,8 +543,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-  'title' => 'Analizador de Logs Apache y Nginx Online',
-  'description' => 'Audita el rastreo de Googlebot procesando tus logs de Apache y Nginx en local. Detecta fugas de Crawl Budget, 404s ocultos y optimiza el SEO.',
+  'title' => 'Analizador de Logs SEO gratis: detecta qué rastrea Googlebot en tu web',
+  'description' => 'Analiza tus logs de Apache o Nginx y descubre qué URLs rastrea Googlebot, cuándo, con qué frecuencia y dónde malgasta tu Crawl Budget. Herramienta gratuita.',
   'canonical' => '/herramientas/analizador-logs/',
   'body_class' => 'page-analizador-logs',
   'schema_types' => ['WebApplication', 'FAQPage'],

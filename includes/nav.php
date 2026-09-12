@@ -51,7 +51,7 @@ $_services = [
                     <a href="/contacto/" class="nav-link nav-link--cta<?= $_nav === 'contacto' ? ' active' : '' ?>">Contacto</a>
                 </li>
                 <li class="nav-item nav-item--whatsapp">
-                    <a href="https://wa.me/<?= SITE_PHONE_RAW ?>"
+                    <a href="<?= wa_url('general') ?>"
                        target="_blank"
                        rel="noopener noreferrer"
                        class="nav-link nav-link--whatsapp-menu"

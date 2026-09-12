@@ -113,7 +113,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <h3 style="color:var(--orange);margin-bottom:.75rem">Solicitar diagnóstico de tu web</h3>
           <p style="font-size:.88rem;color:var(--muted);margin-bottom:1.25rem">Analizo tu plataforma de loterías y te explico qué está impidiendo que posiciones en Albacete.</p>
            <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center">Contactar</a>
-          <a href="https://wa.me/<?= SITE_PHONE_RAW ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp</a>
+          <a href="<?= wa_url('seo') ?>" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;justify-content:center;margin-top:.5rem">WhatsApp</a>
         </div>
         <div class="card">
           <h3 style="margin-bottom:.75rem">Otros servicios relacionados</h3>
