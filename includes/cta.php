@@ -23,7 +23,7 @@ $cta = $cta ?? [
     'variant'    => 'dark',
 ];
 $_variant    = h($cta['variant'] ?? 'dark');
-$_wa_context = $cta['wa_context'] ?? 'general';
+$_wa_context = $cta['wa_context'] ?? ($GLOBALS['page']['wa_context'] ?? ($page['wa_context'] ?? 'general'));
 $_wa_href    = wa_url($_wa_context);
 ?>
 <section class="cta-block cta-block--<?= $_variant ?>" aria-labelledby="cta-title">

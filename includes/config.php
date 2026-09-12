@@ -137,6 +137,18 @@ function wa_url(string $context = 'general'): string {
  *   service_name string  Nombre del servicio (para schema Service)
  */
 function page_config(array $opts): array {
+    $can = $opts['canonical'] ?? '';
+    $default_wa = 'general';
+    if (strpos($can, '/herramientas/') === 0) {
+        $default_wa = 'herramienta';
+    } elseif (strpos($can, 'reparacion-wordpress') !== false || strpos($can, 'malware') !== false) {
+        $default_wa = 'malware';
+    } elseif (strpos($can, 'mantenimiento-wordpress') !== false) {
+        $default_wa = 'mantenimiento';
+    } elseif (strpos($can, '/servicios/') === 0) {
+        $default_wa = 'seo';
+    }
+
     $defaults = [
         'title'        => SITE_NAME,
         'description'  => '',
@@ -150,6 +162,7 @@ function page_config(array $opts): array {
         'map'          => false,
         'faq_items'    => [],
         'service_name' => '',
+        'wa_context'   => $default_wa,
     ];
     return array_merge($defaults, $opts);
 }
