@@ -493,6 +493,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo. Nota: Esta es una herramienta de validación técnica rápida, no una auditoría SEO completa.</p>
       </div>
 
+      <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>
+
       <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
         <form id="seo-analyzer-form" action="/herramientas/analizador-seo/" method="POST" class="tool-form" style="margin-bottom:0;"
           toolname="seoPageAnalyzer"

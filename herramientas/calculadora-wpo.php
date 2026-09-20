@@ -145,6 +145,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <p>Introduce los datos aproximados de tu negocio para estimar el dinero que dejas de ingresar por cada segundo de retraso en la carga.</p>
       </div>
 
+      <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>
+
       <!-- CALCULATOR COMPONENT -->
       <div class="wpo-calculator-wrapper">
         

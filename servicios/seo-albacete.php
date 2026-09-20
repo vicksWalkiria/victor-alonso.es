@@ -11,21 +11,23 @@ $faq = [
 ];
 
 $page = page_config([
-  'title'        => 'SEO Local en Albacete y Google Maps para Empresas | Víctor Alonso',
-  'description'  => 'Servicio de SEO local en Albacete para empresas y negocios. Optimización de Google Business Profile, Local Pack, citas locales y captación de clientes.',
+  'title'        => 'Agencia SEO en Albacete y Posicionamiento Web',
+  'description'  => 'Servicio integral de agencia SEO en Albacete y posicionamiento web para empresas. Optimización de Google Business Profile, Local Pack y captación de clientes.',
   'canonical'    => '/servicios/seo-albacete/',
   'body_class'   => 'page-servicio page-seo-albacete',
   'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/seo-albacete/#service',
-      'name'          => 'SEO Local en Albacete para Empresas',
+      'name'          => 'Servicios de Agencia SEO y Posicionamiento Web en Albacete',
       'alternateName' => [
+          'Agencia SEO Albacete',
+          'Empresa Posicionamiento Web Albacete',
+          'Servicios SEO Albacete',
+          'Posicionamiento SEO Albacete',
           'SEO Local Albacete',
-          'Posicionamiento Google Maps Albacete',
-          'Google Business Profile Albacete',
-          'SEO en Google Maps Albacete'
+          'Posicionamiento Google Maps Albacete'
       ],
-      'serviceType'   => 'SEO Local y Posicionamiento en Google Maps',
+      'serviceType'   => 'Agencia SEO, Posicionamiento Web y Google Maps',
       'areaServed'    => [
           ['@type' => 'City', 'name' => 'Albacete'],
           ['@type' => 'AdministrativeArea', 'name' => 'Provincia de Albacete'],
@@ -40,7 +42,7 @@ $page = page_config([
   'faq_items'    => $faq,
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
-    ['label' => 'SEO local en Albacete', 'url' => ''],
+    ['label' => 'Agencia SEO en Albacete', 'url' => ''],
   ],
 ]);
 
@@ -52,8 +54,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">SEO Local en Albacete: Posicionamiento en Google Maps y Estrategia para Empresas</h1>
-      <p class="page-hero-desc">Servicio de SEO local en Albacete orientado a negocios que necesitan multiplicar sus clientes y llamadas locales: optimización de Google Business Profile, visibilidad en el Local Pack y arquitectura geolocalizada.</p>
+      <h1 id="page-h1">Agencia SEO en Albacete: Posicionamiento Web y Google Maps para Empresas</h1>
+      <p class="page-hero-desc">Servicio de posicionamiento web y agencia SEO en Albacete orientado a empresas que necesitan multiplicar sus clientes y llamadas: optimización de Google Business Profile, visibilidad en el Local Pack y arquitectura geolocalizada.</p>
     </div>
   </section>
 

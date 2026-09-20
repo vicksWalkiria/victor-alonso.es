@@ -82,7 +82,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="section">
     <div class="container">
-      
+      <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>
+
       <!-- Filtros Visuales por Categoría -->
       <div id="tool-filters" style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:3rem;justify-content:center;background:rgba(0,0,0,0.1);padding:1rem;border-radius:12px;">
         <button class="filter-btn active" data-filter="all">Todas</button>

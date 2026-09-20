@@ -1024,6 +1024,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           permitiéndote optimizar tu SEO técnico al instante.</p>
       </div>
 
+      <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>
+
       <!-- Formulario de entrada -->
       <div class="card"
         style="margin-bottom: 3rem; background: #ffffff !important; border: 1px solid #111111 !important; border-top: 4px solid #e8681a !important; box-shadow: 0 4px 20px rgba(0,0,0,0.02) !important; border-radius: 8px !important; padding: 2rem;">

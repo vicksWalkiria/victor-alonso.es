@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'SEO Albacete · Consultor SEO Técnico | Víctor Alonso',
-    'description'  => '¿Buscas mejorar tu posicionamiento SEO en Albacete? Consultoría técnica, auditorías y estrategia real por ingeniero informático. ¡Solicita tu diagnóstico gratis!',
+    'title'        => 'Consultor SEO en Albacete',
+    'description'  => '¿Tu negocio no aparece en Google? Consultor SEO local e Ingeniero Informático en Albacete. Auditoría técnica y estrategia sin humo. Diagnóstico gratis.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service'],
@@ -152,9 +152,9 @@ require __DIR__ . '/includes/header.php';
           <div class="card-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
           </div>
-          <h3>SEO Local y Google Maps</h3>
-          <p>SEO local técnico para negocios de Albacete: Google Business Profile, Local Pack, arquitectura web, contenido local y citas de autoridad.</p>
-          <a href="/servicios/seo-albacete/" class="card-link">SEO local en Albacete para empresas →</a>
+          <h3>Agencia & Posicionamiento SEO Local</h3>
+          <p>Servicio integral de posicionamiento web para empresas de Albacete: optimización de Google Business Profile, Local Pack, visibilidad y captación de clientes locales.</p>
+          <a href="/servicios/seo-albacete/" class="card-link">Servicios de posicionamiento web en Albacete →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">

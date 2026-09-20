@@ -60,6 +60,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </div>
       </div>
 
+      <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>
+
       <!-- WORKSPACE DEL TESTER (Unified side-by-side workspace) -->
       <div class="htaccess-panel htaccess-tester-grid" style="margin-bottom: 2rem;">
         
