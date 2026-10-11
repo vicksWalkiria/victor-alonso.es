@@ -29,8 +29,7 @@
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Servicios SEO</h3>
                 <ul role="list">
-                    <li><a href="/">Consultor SEO Albacete</a></li>
-                    <li><a href="/servicios/seo-albacete/">Agencia SEO y Posicionamiento Albacete</a></li>
+                    <li><a href="/">Consultor SEO Freelance Albacete</a></li>
                     <li><a href="/servicios/seo-loterias-albacete/">SEO para Loterías</a></li>
                     <li><a href="/servicios/seo-espana/">SEO Nacional para España</a></li>
                     <li><a href="/servicios/auditoria-seo/">Auditoría SEO</a></li>
