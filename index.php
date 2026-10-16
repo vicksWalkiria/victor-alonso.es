@@ -3,17 +3,18 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Consultor SEO en Albacete · Freelance e Ingeniero Informático',
-    'description'  => '¿Tu negocio no aparece en Google? Consultor SEO freelance e Ingeniero Informático en Albacete. Auditoría técnica y trato directo sin agencias ni costes inflados.',
+    'title'        => 'Consultor y Agencia SEO en Albacete · Posicionamiento Web',
+    'description'  => '⚡ Agencia y Consultor SEO en Albacete. Posicionamiento web en Google, auditoría SEO técnica y desarrollo WordPress para empresas de Albacete. Diagnóstico directo.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service'],
     'service_data' => [
         '@id' => '/#seo-service',
-        'name' => 'Consultoría SEO Freelance en Albacete',
-        'serviceType' => 'Consultor SEO técnico, WPO y WordPress Freelance',
+        'name' => 'Agencia y Consultoría SEO en Albacete · Víctor Alonso',
+        'serviceType' => 'Agencia SEO en Albacete, Consultor SEO técnico, Posicionamiento Web y WordPress',
         'areaServed' => [
-            ['@type' => 'Place', 'name' => 'Albacete']
+            ['@type' => 'Place', 'name' => 'Albacete'],
+            ['@type' => 'Country', 'name' => 'España']
         ]
     ],
     'active_nav'   => 'inicio',
@@ -29,17 +30,17 @@ require __DIR__ . '/includes/header.php';
   <section class="hero" aria-labelledby="hero-heading">
     <div class="container hero-inner">
       <div class="hero-content">
-        <span class="hero-eyebrow">Consultor SEO en Albacete · Freelance · Ingeniero Informático</span>
+        <span class="hero-eyebrow">Agencia & Consultor SEO en Albacete · Ingeniero Informático Freelance</span>
         <h1 id="hero-heading">
-          Consultor SEO en Albacete
+          Consultor y Agencia SEO en Albacete
         </h1>
         <p class="hero-desc">
-          Soy Víctor Alonso: ingeniero informático y consultor SEO técnico freelance en Albacete.
+          Soy Víctor Alonso: consultor SEO técnico e ingeniero informático en Albacete.
           Mejoro el posicionamiento web de tu empresa con diagnóstico técnico real,
-          estrategia ejecutable e implementación directa. Sin comerciales, sin intermediarios de agencia y sin humo.
+          estrategia SEO basada en datos e implementación directa en tu web. La solvencia de una agencia con la cercanía y agilidad de un profesional independiente.
         </p>
         <p class="hero-desc" style="margin-top:1rem;">
-          Trato directo de profesional independiente especializado en posicionamiento SEO técnico, auditorías web, SEO local y desarrollo WordPress optimizado para empresas de Albacete.
+          Especialista en posicionamiento web en Albacete, auditorías técnicas, SEO local para Google Maps y optimización WPO / WordPress para empresas y profesionales.
         </p>
         <div class="hero-actions" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
           <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico gratuito</a>
@@ -225,9 +226,9 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="auth-text">
         <span class="section-label">Por qué trabajar conmigo</span>
-        <h2 id="diferencial-heading">Por qué trabajar conmigo como consultor SEO en Albacete</h2>
-        <p>Me llamo Víctor Alonso. Soy ingeniero informático con años de experiencia en SEO técnico, WordPress, PHP y analítica web. Trabajo desde Albacete para empresas en España y fuera.</p>
-        <p>La diferencia frente a una agencia SEO: detecto problemas directamente en el código, en la arquitectura y en el contenido, y los resuelvo yo mismo sin pasar por cadenas de subcontratación.</p>
+        <h2 id="diferencial-heading">Tu alternativa de confianza a una agencia SEO en Albacete</h2>
+        <p>Me llamo Víctor Alonso. Soy consultor SEO e ingeniero informático con años de experiencia en posicionamiento web, desarrollo WordPress, PHP y analítica digital para empresas en Albacete y toda España.</p>
+        <p>La ventaja frente a una agencia SEO convencional: detecto los problemas directamente en el código, en la arquitectura y en el contenido, resolviéndolos yo mismo sin comerciales ni cadenas de subcontratación.</p>
         <ul style="margin:1rem 0 1.5rem; padding-left:1.25rem; display:flex; flex-direction:column; gap:.5rem;">
           <li>Ingeniero informático: entiendo el código, no solo los informes</li>
           <li>Desarrollo plugins, herramientas SEO propias y automatizaciones</li>
