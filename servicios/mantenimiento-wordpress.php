@@ -32,12 +32,20 @@ $page = page_config([
       'a' => 'El mantenimiento es un trabajo preventivo mensual para evitar que tu web se rompa o sea hackeada. La reparación urgente es una intervención de emergencia cuando la web ya está caída, rota o infectada por malware.'
     ],
     [
+      'q' => '¿Por qué externalizar el mantenimiento WordPress con un informático y no con una agencia genérica?',
+      'a' => 'Muchas agencias delegan el mantenimiento en personal no técnico o activan actualizaciones automáticas a ciegas. Como ingeniero informático, reviso los changelogs antes de actualizar, pruebo saltos de versión mayor en entornos Staging y aplico políticas de hardening y backups externos que protegen la continuidad de tu facturación.'
+    ],
+    [
       'q' => '¿Dónde se almacenan las copias de seguridad?',
       'a' => 'Las copias de seguridad (backups) completas se envían a un almacenamiento en la nube cifrado y totalmente externo a tu servidor (ej. Amazon S3). Guardar los backups en el mismo servidor donde está alojada tu web es un riesgo inaceptable de pérdida total de datos si el disco falla o es hackeado.'
     ],
     [
       'q' => '¿Cómo gestionas las actualizaciones de riesgo en plugins y plantillas?',
       'a' => 'Nunca activo la actualización automática a ciegas. Previamente leo el changelog del desarrollador. Si hay un cambio estructural o un salto de versión mayor (ej. de v2 a v3), clono tu web en un entorno seguro (Staging), aplico la actualización, y compruebo que la web y los procesos de compra sigan funcionando correctamente antes de subirlo a producción.'
+    ],
+    [
+      'q' => '¿Qué ocurre si mi web se cae mientras tengo el mantenimiento activo?',
+      'a' => 'Al contar con monitorización Uptime 24/7 y copias de seguridad verificadas fuera de tu hosting, recibo una alerta inmediata para intervenir y restablecer el servicio en minutos, evitando pérdidas de ventas o penalizaciones en Google.'
     ]
   ]
 ]);
@@ -62,10 +70,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           Si estás en medio de una crisis (pantalla en blanco, redirecciones a webs de apuestas, alertas rojas de seguridad en Google Chrome), no necesitas un mantenimiento preventivo mensual, necesitas un rescate inmediato. <a href="/servicios/reparacion-wordpress-urgente/" style="text-decoration: underline; font-weight: bold; color: inherit;">Accede al servicio de reparación urgente de WordPress</a>.
         </div>
 
-        <h2>Para quién es este servicio de soporte</h2>
+        <h2>A quién va dirigido el servicio de mantenimiento WordPress</h2>
         <p>Este servicio de mantenimiento no está enfocado en blogs personales ni en webs abandonadas. Está diseñado exclusivamente para <strong>empresas, e-commerces y profesionales</strong> que dependen de su página web para vender, captar leads o sostener su reputación comercial. Si tu web deja de funcionar un viernes por la tarde y supone una pérdida económica para ti, necesitas un profesional técnico cubriéndote las espaldas.</p>
 
-        <h2>Qué incluye la puesta a punto inicial</h2>
+        <h2>Puesta a punto inicial del mantenimiento WordPress</h2>
         <p>Antes de asumir el mantenimiento periódico de cualquier plataforma, necesito garantizar que la base técnica sea higiénica y sólida. Por ello, el servicio incluye una auditoría y alta técnica:</p>
         <ul class="checklist" style="margin:1rem 0 2rem">
           <li class="checklist-item"><div><strong>Auditoría de seguridad profunda:</strong> Identificación y cierre de vulnerabilidades activas, reconfiguración de permisos de archivos y blindaje del panel.</div></li>
@@ -74,7 +82,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item"><div><strong>Baseline de rendimiento WPO:</strong> Medición inicial de los tiempos de respuesta del servidor (TTFB) y renderizado de la interfaz.</div></li>
         </ul>
 
-        <h2>Qué incluye el mantenimiento preventivo mensual</h2>
+        <h2>Qué incluye el mantenimiento web WordPress mensual</h2>
         <ul class="checklist" style="margin:1rem 0 2rem">
           <li class="checklist-item"><div><strong>Actualizaciones controladas y probadas:</strong> WordPress core, temas y plugins se actualizan bajo supervisión. Las versiones de alto riesgo se prueban siempre en un entorno clonado aislado (Staging) para evitar roturas en la web real.</div></li>
           <li class="checklist-item"><div><strong>Backups programados y comprobados:</strong> Copias completas incrementales fuera de tu infraestructura de alojamiento. Si el centro de datos de tu proveedor se quema, tu web seguirá a salvo en otra ubicación geográfica.</div></li>
@@ -83,7 +91,11 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item"><div><strong>Auditoría de rendimiento recurrente:</strong> Comprobación para evitar que nuevos contenidos o funcionalidades introduzcan cuellos de botella técnicos o lentitud.</div></li>
         </ul>
 
-        <h2>Lo que NO incluye este plan</h2>
+        <h2>Por qué contratar un mantenimiento WordPress profesional y especializado</h2>
+        <p>A diferencia de las agencias de marketing generalistas que delegan el soporte en perfiles junior o activan actualizaciones automáticas sin control, yo gestiono cada sitio como ingeniero informático. Reviso los changelogs antes de actualizar, realizo pruebas previas en entornos de pruebas (Staging) cuando hay saltos de versión críticos, y mantengo copias de seguridad redundantes e inmutables en almacenamiento externo.</p>
+        <p>Un mantenimiento preventivo profesional no es un gasto prescindible: es el seguro de continuidad de tu negocio en internet para evitar caídas imprevistas, pérdidas de ventas y penalizaciones de Google.</p>
+
+        <h2>Qué tareas no incluye el mantenimiento de WordPress</h2>
         <p>La delimitación clara evita falsas expectativas. El plan preventivo no cubre:</p>
         <ul class="checklist" style="margin:1rem 0 2rem">
           <li class="checklist-item">La creación de nuevas landing pages, rediseños estéticos de la plantilla web o labores de diseño gráfico.</li>

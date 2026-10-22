@@ -1,3 +1,14 @@
+## 2026-10-22
+
+- **URL:** `/servicios/mantenimiento-wordpress/`, `/caso-exito-desinfeccion-malware-wordpress.php`, `/servicios/desarrollo-wordpress.php`, `/sobre-mi.php`
+- **Cambio:** 
+  1. Optimización on-page en `/servicios/mantenimiento-wordpress/`: Reforzados los encabezados H2 con concordancia semántica de la keyword raíz ("mantenimiento WordPress", "mantenimiento web WordPress mensual"), añadido bloque de valor diferenciador como ingeniero vs. agencias y ampliadas las FAQs con intención transaccional y dudas sobre caídas críticas.
+  2. Enlazado interno contextual cruzado: Inyectados enlaces dofollow con anchor exacto y natural ("servicio de mantenimiento WordPress profesional") desde la sección de prevención del caso de éxito de malware, desde la ficha técnica de desarrollo WordPress y desde la presentación de servicios en "Sobre mí".
+- **Motivo:** Oportunidad SEO detectada en el digest diario de Search Console: query "mantenimiento wordpress" disparada en impresiones (+30.000% en 14d, 0 -> 300 imp, pos #43.3). Aceleración mediante topical authority y link equity interno para escalar posiciones y captar tráfico transaccional cualificado (+9 clics/mes est.).
+- **KPI Asociado:** Escalar "mantenimiento wordpress" de posición #43 a Top 10/Top 3, aumentar impresiones y conseguir los primeros clics/conversiones orgánicas en este servicio.
+- **Commit:** Pendiente
+- **Estado de validación:** Implementado en código y listo para desplegar.
+
 ## 2026-09-01
 
 - **URL:** `/` (Home) y `/servicios/seo-albacete/`

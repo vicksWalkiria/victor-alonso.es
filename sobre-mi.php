@@ -40,7 +40,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
       <div class="about-content">
         <span class="section-label">Quién soy</span>
         <h2>Experto SEO en Albacete e Ingeniero Informático</h2>
-        <p>Me llamo Víctor Alonso. Soy ingeniero informático, <a href="/" style="color:var(--orange);font-weight:600;">consultor SEO en Albacete</a> y desarrollador WordPress y PHP. Trabajo desde Albacete con clientes en toda España.</p>
+        <p>Me llamo Víctor Alonso. Soy ingeniero informático, <a href="/" style="color:var(--orange);font-weight:600;">consultor SEO en Albacete</a> y desarrollador especializado en arquitectura web, desarrollo y <a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange);font-weight:600;">mantenimiento WordPress profesional</a>. Trabajo desde Albacete con clientes en toda España.</p>
         <p>Empecé desarrollando webs y apps, aprendí SEO porque necesitaba que lo que construía también se encontrara, y acabé especializándome en la intersección de los dos mundos: el SEO que entiende el código y el desarrollo que tiene en cuenta el posicionamiento desde el principio.</p>
 
         <h2>Por qué combino SEO y desarrollo</h2>
