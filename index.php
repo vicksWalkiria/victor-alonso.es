@@ -159,7 +159,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Agencia & Posicionamiento SEO Local</h3>
           <p>Servicio integral de posicionamiento web para empresas de Albacete: optimización de Google Business Profile, Local Pack, visibilidad y captación de clientes locales.</p>
-          <a href="/servicios/seo-albacete/" class="card-link">Servicios de posicionamiento web en Albacete →</a>
+          <a href="/contacto/" class="card-link">Consultar posicionamiento local en Albacete →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">

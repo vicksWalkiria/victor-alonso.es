@@ -226,7 +226,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
             <i class="fa-solid fa-map-location-dot" style="color: var(--orange);"></i> ¿Quieres consolidar tu presencia local frente a tus competidores?
           </h3>
-            La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/servicios/seo-albacete/" style="color:var(--orange); text-decoration:underline;">servicio de SEO Local</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos frente a la competencia de tu sector.
+            La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/contacto/" style="color:var(--orange); text-decoration:underline;">servicio de SEO Local</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos frente a la competencia de tu sector.
           </p>
         </div>
       </div>
@@ -248,7 +248,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     'title'     => '¿Quieres dominar las búsquedas locales en tu ciudad?',
     'subtitle'  => 'El SEO local va mucho más allá de una ficha en Maps. Optimizamos tu estructura web, datos estructurados y Google Business Profile.',
     'btn_label' => 'Ver Consultoría SEO Local',
-    'btn_href'  => '/servicios/seo-albacete/',
+    'btn_href'  => '/contacto/',
     'whatsapp'  => true,
     'variant'   => 'orange',
   ];
