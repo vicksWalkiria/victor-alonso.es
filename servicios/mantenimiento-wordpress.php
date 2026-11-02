@@ -3,8 +3,8 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Mantenimiento WordPress: actualizaciones, seguridad y soporte técnico',
-  'description'  => 'Servicio de mantenimiento WordPress profesional: actualizaciones controladas, backups diarios, monitoreo de seguridad, WPO y soporte técnico directo. Sin agencias. Sin intermediarios.',
+  'title'        => 'Mantenimiento WordPress Profesional: Planes, Soporte y Seguridad Web',
+  'description'  => 'Servicio de mantenimiento WordPress profesional para empresas: actualizaciones controladas, backups diarios, monitoreo de seguridad, WPO y soporte técnico directo.',
   'canonical'    => '/servicios/mantenimiento-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
@@ -55,7 +55,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">Mantenimiento WordPress profesional: seguridad, soporte y <span>rendimiento</span></h1>
+      <h1 id="page-h1">Mantenimiento WordPress Profesional: <span>Seguridad, Soporte y Rendimiento</span></h1>
       <p class="page-hero-desc">Un servicio preventivo para que tu negocio online funcione sin interrupciones. Actualizaciones seguras, copias externas y un soporte técnico al que puedes llamar cuando lo necesitas.</p>
     </div>
   </section>

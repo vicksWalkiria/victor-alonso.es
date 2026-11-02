@@ -430,8 +430,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-    'title'        => 'Analizador SEO de URLs: TTFB y canonicals',
-    'description'  => 'Analiza una URL gratis: código HTTP, TTFB, title, description, H1, canonical, robots y cabeceras técnicas. Resultado inmediato.',
+    'title'        => 'Herramienta para Auditar Canonicals, TTFB y SEO On-Page Gratis',
+    'description'  => 'Herramienta online para auditar canonicals, encabezados HTTP, TTFB, title, meta description, H1 y directivas robots. Diagnóstico SEO técnico gratis.',
     'canonical'    => '/herramientas/analizador-seo/',
     'body_class'   => 'page-analizador-seo',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -480,7 +480,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="analizador-h1">
     <div class="container">
       <span class="hero-eyebrow">Auditoría SEO Express</span>
-      <h1 id="analizador-h1">Analizador <span>SEO técnico de URLs</span></h1>
+      <h1 id="analizador-h1">Herramienta para <span>Auditar Canonicals</span> y SEO On-Page</h1>
       <p class="page-hero-desc">Petición HTTP directa en vivo para auditar los metadatos on-page, el tiempo de respuesta del servidor (TTFB) y la seguridad de cualquier página web.</p>
     </div>
   </section>

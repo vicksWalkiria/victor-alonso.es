@@ -543,8 +543,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-  'title' => 'Analizador de Logs SEO gratis: detecta qué rastrea Googlebot en tu web',
-  'description' => 'Analiza tus logs de Apache o Nginx y descubre qué URLs rastrea Googlebot, cuándo, con qué frecuencia y dónde malgasta tu Crawl Budget. Herramienta gratuita.',
+  'title' => 'Auditoría de Logs SEO: Analizador Gratis de Rastreo de Googlebot',
+  'description' => 'Realiza una auditoría de logs SEO gratis para tu web. Analiza logs de Apache o Nginx y descubre qué URLs rastrea Googlebot, frecuencia y Crawl Budget.',
   'canonical' => '/herramientas/analizador-logs/',
   'body_class' => 'page-analizador-logs',
   'schema_types' => ['WebApplication', 'FAQPage'],
@@ -1007,8 +1007,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="logs-h1">
     <div class="container">
-      <span class="hero-eyebrow">Auditoría de Tráfico y Crawling</span>
-      <h1 id="logs-h1">Analizador de <span>Logs Apache y Nginx</span></h1>
+      <span class="hero-eyebrow">Auditoría de Logs SEO y Crawling</span>
+      <h1 id="logs-h1">Auditoría de Logs SEO: <span>Analizador de Servidor</span></h1>
       <p class="page-hero-desc">Audita la salud técnica de tu web de manera 100% local y segura. Sube tu archivo log y
         visualiza el comportamiento de los motores de búsqueda, errores 404 y actividad de IPs.</p>
     </div>

@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Consultor y Agencia SEO en Albacete · Posicionamiento Web',
-    'description'  => '⚡ Agencia y Consultor SEO en Albacete. Posicionamiento web en Google, auditoría SEO técnica y desarrollo WordPress para empresas de Albacete. Diagnóstico directo.',
+    'title'        => 'SEO Albacete: Consultor y Agencia SEO · Posicionamiento Web',
+    'description'  => '⚡ SEO en Albacete: Consultor SEO y agencia de posicionamiento web. Auditoría técnica, SEO local en Google Maps y desarrollo WordPress para empresas de Albacete.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service'],
@@ -32,7 +32,7 @@ require __DIR__ . '/includes/header.php';
       <div class="hero-content">
         <span class="hero-eyebrow">Agencia & Consultor SEO en Albacete · Ingeniero Informático Freelance</span>
         <h1 id="hero-heading">
-          Consultor y Agencia SEO en Albacete
+          SEO Albacete: Consultor y Agencia de Posicionamiento Web
         </h1>
         <p class="hero-desc">
           Soy Víctor Alonso: consultor SEO técnico e ingeniero informático en Albacete.

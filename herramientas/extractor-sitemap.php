@@ -180,8 +180,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Configuración de Página
 $page = page_config([
-    'title'        => 'Extractor de Sitemaps XML y Auditor de URLs',
-    'description'  => 'Extrae gratis todas las URLs de cualquier Sitemap XML o Índice de Sitemaps de forma recursiva. Filtra, audita longitudes y exporta a CSV/TXT.',
+    'title'        => 'Herramienta para Auditar el Sitemap XML y Extraer URLs Gratis',
+    'description'  => 'Herramienta para auditar el sitemap XML de tu web y extraer URLs gratis. Analiza índices recursivos, detecta longitudes, códigos HTTP y exporta a CSV.',
     'canonical'    => '/herramientas/extractor-sitemap/',
     'body_class'   => 'page-extractor-sitemap',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -220,7 +220,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="sitemap-h1">
     <div class="container">
       <span class="hero-eyebrow">Auditoría de Rastreo y Arquitectura</span>
-      <h1 id="sitemap-h1">Extractor de <span>Sitemaps XML</span></h1>
+      <h1 id="sitemap-h1">Herramienta para <span>Auditar el Sitemap XML</span> y Extraer URLs</h1>
       <p class="page-hero-desc">Bypassea restricciones CORS y cortafuegos. Extrae, unifica y audita sitemaps anidados de forma recursiva simulando Googlebot.</p>
     </div>
   </section>
