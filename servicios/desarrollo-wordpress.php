@@ -3,11 +3,11 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Desarrollo WordPress y Temas a Medida',
-  'description'  => 'Desarrollo web WordPress enfocado a conversión y SEO. Arquitecturas ligeras, seguras y optimizadas para máxima velocidad de carga.',
+  'title'        => 'Desarrollo WordPress a Medida en 2026: Webs Rápidas y SEO Técnico',
+  'description'  => 'Servicio de desarrollo WordPress a medida en España: temas propios en PHP sin Elementor, velocidad de carga extrema (Core Web Vitals) y arquitectura SEO.',
   'canonical'    => '/servicios/desarrollo-wordpress/',
   'body_class'   => 'page-servicio',
-  'schema_types' => ['Service'],
+  'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/desarrollo-wordpress/#service',
       'name'          => 'Desarrollo WordPress',
@@ -26,6 +26,16 @@ $page = page_config([
     ['label' => 'Servicios', 'url' => '/#servicios'],
     ['label' => 'Desarrollo WordPress', 'url' => ''],
   ],
+  'faq_items' => [
+    [
+      'q' => '¿Qué diferencia a un desarrollo WordPress a medida frente a usar plantillas como Elementor o Divi?',
+      'a' => 'En un desarrollo WordPress a medida programo el tema en PHP, HTML5 semántico y CSS limpio sin cargar megabytes de scripts ni consultas SQL innecesarias. Esto garantiza puntuaciones sobresalientes en Core Web Vitals (LCP e INP), menor superficie de ataque frente a vulnerabilidades y una estructura pensada desde el primer día para posicionar en Google.'
+    ],
+    [
+      'q' => '¿Podré editar los textos y páginas de mi web WordPress sin saber programar?',
+      'a' => 'Sí. Estructuro el panel de administración mediante Custom Post Types (CPT) y campos personalizados limpios para que puedas modificar textos, imágenes, servicios o artículos con total autonomía sin riesgo de descuadrar el diseño.'
+    ]
+  ],
 ]);
 require dirname(__DIR__) . '/includes/header.php';
 require dirname(__DIR__) . '/includes/breadcrumbs.php';
@@ -33,8 +43,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="page-h1">
     <div class="container">
-      <h1 id="page-h1">Desarrollo WordPress técnico: sin plantillas genéricas, sin <span>código innecesario</span></h1>
-      <p class="page-hero-desc">La mayoría de los problemas de rendimiento y SEO en WordPress vienen del código, no del contenido. Un desarrollo técnico sólido es la base que todo lo demás necesita.</p>
+      <h1 id="page-h1">Desarrollo WordPress a medida: sin plantillas genéricas, sin <span>código innecesario</span></h1>
+      <p class="page-hero-desc">La mayoría de los problemas de rendimiento y SEO en WordPress vienen del código, no del contenido. Un desarrollo WordPress técnico y ligero es la base que tu negocio necesita para posicionar y convertir.</p>
     </div>
   </section>
 
@@ -42,8 +52,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     <div class="container service-detail">
       <div class="service-content">
 
-        <h2>Qué puede significar "desarrollo WordPress" y qué significa para mí</h2>
-        <p>Hay muchas formas de "hacer una web en WordPress": instalar un page builder, comprar una plantilla de Themeforest y rellenar. El resultado es una web que funciona aceptablemente bien durante 6 meses y empieza a tener problemas cuando crece.</p>
+        <h2>Desarrollo WordPress en 2026: qué significa hacerlo a medida</h2>
+        <p>Cuando una empresa busca <strong>desarrollo WordPress</strong> profesional en 2026, necesita una web rápida, segura, escalable y preparada para el posicionamiento orgánico desde el código. Hay muchas formas de "hacer una web en WordPress": instalar un page builder, comprar una plantilla multipropósito y rellenar huecos. El resultado suele ser una web pesada que empieza a dar problemas técnicos y de velocidad en cuanto crece.</p>
         <p>Mi enfoque es diferente: desarrollo con código PHP propio, HTML semántico, CSS organizado y JavaScript mínimo. Sin bloat de page builders, sin dependencias innecesarias, sin código que nadie sabe qué hace.</p>
 
         <h2>Qué desarrollo</h2>
@@ -134,6 +144,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </aside>
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <?php
   $cta = ['title' => '¿Tienes un proyecto WordPress en mente?', 'subtitle' => 'Cuéntame qué necesitas. Sin compromiso, te digo si puedo ayudarte y cómo lo plantearía.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];

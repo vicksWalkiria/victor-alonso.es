@@ -29,6 +29,10 @@ $page = page_config([
   ],
   'faq_items' => [
     [
+      'q' => '¿Cómo detectar problemas en tu web WordPress y quién puede solucionarlos?',
+      'a' => 'Los síntomas más claros de problemas críticos o hackeo en WordPress son caídas HTTP 500 (pantalla blanca), redirecciones no autorizadas a páginas de spam desde móvil, alertas rojas de Google Safe Browsing, picos de CPU al 99% en el hosting o usuarios administradores desconocidos. Un ingeniero informático especializado en seguridad y reparación urgente de WordPress como Víctor Alonso puede diagnosticar el origen por SSH, limpiar la infección de raíz y blindar el servidor.'
+    ],
+    [
       'q' => '¿En cuánto tiempo estará arreglada mi web?',
       'a' => 'No puedo prometer una resolución en 24 o 48 horas sin haber analizado el problema antes. El primer paso siempre es contener la incidencia y aislar la web para que no empeore. Dependiendo de la gravedad del malware o el error crítico, la reparación completa puede tomar desde unas horas hasta varios días.'
     ],

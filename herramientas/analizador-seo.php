@@ -443,6 +443,10 @@ $page = page_config([
     ],
     'faq_items' => [
         [
+            'q' => '¿Cómo funciona esta herramienta para auditar canonicals desde España (Spain)?',
+            'a' => 'Esta herramienta para auditar canonicals realiza peticiones HTTP directas desde servidores en España/Europa para verificar la etiqueta rel="canonical" en el HTML y en las cabeceras HTTP, comprobando que apunte a una URL 200 OK indexable y detectando cadenas de redirección 301/302 o discrepancias de protocolo y dominio.'
+        ],
+        [
             'q' => '¿Por qué mi web obtiene una puntuación baja en la salud técnica?',
             'a' => 'La salud técnica SEO evalúa factores críticos como el código de estado HTTP, la ausencia de etiquetas fundamentales (Title o Canonical) y la velocidad de respuesta (TTFB). Una puntuación baja indica bloqueos severos que impiden a Google rastrear o interpretar correctamente tu contenido.'
         ],

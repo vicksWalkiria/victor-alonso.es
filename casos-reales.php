@@ -3,14 +3,24 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Casos de estudio SEO y problemas resueltos',
-  'description'  => 'Descubre cómo he solucionado penalizaciones, problemas de migración y arquitectura técnica en proyectos reales, devolviendo la visibilidad SEO.',
+  'title'        => 'Casos de Estudio SEO Reales: Datos, Diagnóstico y Resultados',
+  'description'  => 'Estudios de caso SEO y mercadeo con datos técnicos y resultados reales: recuperación de migraciones, desinfección WordPress, Core Web Vitals y Crawl Budget.',
   'canonical'    => '/casos-reales/',
   'body_class'   => 'page-casos',
-  'schema_types' => [],
+  'schema_types' => ['FAQPage'],
   'active_nav'   => 'casos',
   'breadcrumbs'  => [
     ['label' => 'Casos reales', 'url' => ''],
+  ],
+  'faq_items' => [
+    [
+      'q' => 'Estudio de caso SEO y mercadeo: ¿qué datos y resultados reales se analizan?',
+      'a' => 'Cada estudio de caso SEO documenta el contexto real del negocio, el problema técnico o de mercadeo orgánico detectado (caídas por migración sin redirecciones 301, infecciones de malware con persistencia, LCP superior a 7 segundos, canibalizaciones tras Core Updates o drenaje de Crawl Budget en WooCommerce), el diagnóstico con datos de Google Search Console y logs de servidor, y las acciones técnicas ejecutadas para recuperar la visibilidad y captación.'
+    ],
+    [
+      'q' => '¿Por qué estos casos de estudio SEO se centran en el diagnóstico técnico y la arquitectura?',
+      'a' => 'Porque en proyectos reales los mayores bloqueos de crecimiento orgánico provienen de errores en código, indexabilidad, redirecciones o intención de búsqueda mal estructurada. Corregir la base técnica permite que la autoridad y el contenido conviertan las impresiones en tráfico cualificado y clientes.'
+    ]
   ],
 ]);
 require __DIR__ . '/includes/header.php';
@@ -147,7 +157,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
             </div>
             <div class="case-detail" style="grid-column:1/-1">
               <h3>Qué aprender</h3>
-              <p>El rendimiento web no se arregla con un plugin de caché. Hay que analizar qué carga, en qué orden y por qué. Un diseño bonito con un rendimiento pésimo perjudica tanto la experiencia de usuario como el posicionamiento. Si quieres evitar que tu web se degrade con el tiempo, la optimización WPO debe integrarse en un <a href="/servicios/mantenimiento-wordpress/" style="text-decoration:underline">mantenimiento técnico continuo</a>.</p>
+              <p>El rendimiento web no se arregla con un plugin de caché. Hay que analizar qué carga, en qué orden y por qué. Un diseño bonito con un rendimiento pésimo perjudica tanto la experiencia de usuario como el posicionamiento. Cuando la base está lastrada por maquetadores pesados, apostar por un <a href="/servicios/desarrollo-wordpress/" style="text-decoration:underline">desarrollo WordPress a medida</a> y acompañarlo de un <a href="/servicios/mantenimiento-wordpress/" style="text-decoration:underline">mantenimiento técnico continuo</a> marca la diferencia en tiempos de carga y conversión.</p>
             </div>
           </div>
         </article>
@@ -233,6 +243,8 @@ require __DIR__ . '/includes/breadcrumbs.php';
       </div>
     </div>
   </section>
+
+  <?php require __DIR__ . '/includes/faq.php'; ?>
 
   <?php
   $cta = ['title' => '¿Tu caso se parece a alguno de estos?', 'subtitle' => 'Cuéntame qué está pasando con tu web. Identificar bien el problema es el primer paso.', 'btn_label' => 'Hablar sobre mi situación', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];

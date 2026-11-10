@@ -556,6 +556,10 @@ $page = page_config([
   ],
   'faq_items' => [
     [
+      'q' => '¿Cómo hacer una auditoría de logs SEO en 2026 con esta herramienta?',
+      'a' => 'Sube tu archivo access.log de Apache o Nginx (o pega las líneas en bruto) y el analizador identificará al instante los hits de Googlebot, Bingbot y bots de IA, desglosando códigos HTTP (200, 301, 404, 5xx), consumo de ancho de banda y las URLs que más presupuesto de rastreo absorben.'
+    ],
+    [
       'q' => '¿Por qué es importante analizar los logs del servidor para el SEO?',
       'a' => 'El análisis de logs es la única forma 100% fiable de saber exactamente cómo rastrea Googlebot (y otros buscadores) tu página web. Permite descubrir fugas de crawl budget, páginas huérfanas que Google sigue visitando, errores 404 ocultos y cuellos de botella de rendimiento que no aparecen en Google Search Console. Si tu web tiene miles de URLs, realizar una <a href="/servicios/seo-tecnico/" style="color:var(--orange);font-weight:600;">auditoría de SEO técnico</a> a partir de logs es fundamental.'
     ],
@@ -1018,10 +1022,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     <div class="container">
 
       <div class="tool-intro" style="margin-bottom: 2rem;">
-        <h2>Audita tu presupuesto de rastreo y errores técnicos</h2>
-        <p>Los archivos de logs de tu servidor contienen la verdad absoluta de lo que ocurre en tu web. Esta herramienta
-          procesa tu log Common o Combined directamente en la sesión de PHP (sin guardar registros en disco)
-          permitiéndote optimizar tu SEO técnico al instante.</p>
+        <h2>Auditoría de Logs SEO en 2026: analiza tu presupuesto de rastreo y errores técnicos</h2>
+        <p>Realizar una <strong>auditoría de logs SEO</strong> periódica es la única forma exacta de comprobar qué URLs rastrea realmente Googlebot en tu servidor. Esta herramienta
+          procesa tu log Common o Combined de Apache y Nginx directamente en la sesión de PHP (sin guardar registros permanentes en disco),
+          permitiéndote detectar errores 404 ocultos, cadenas 301 y fugas de Crawl Budget al instante.</p>
       </div>
 
       <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>
