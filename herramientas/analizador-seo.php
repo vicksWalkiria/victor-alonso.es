@@ -430,8 +430,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-    'title'        => 'Herramienta para Auditar Canonicals, TTFB y SEO On-Page Gratis',
-    'description'  => 'Herramienta online para auditar canonicals, encabezados HTTP, TTFB, title, meta description, H1 y directivas robots. Diagnóstico SEO técnico gratis.',
+    'title'        => 'Herramienta para Auditar Canonicals, TTFB y SEO Gratis',
+    'description'  => 'Herramienta online gratis para auditar canonicals (rel="canonical"), cadenas 301/302, TTFB, title, H1 y directivas robots en tiempo real sin registro.',
     'canonical'    => '/herramientas/analizador-seo/',
     'body_class'   => 'page-analizador-seo',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -443,8 +443,12 @@ $page = page_config([
     ],
     'faq_items' => [
         [
-            'q' => '¿Cómo funciona esta herramienta para auditar canonicals desde España (Spain)?',
-            'a' => 'Esta herramienta para auditar canonicals realiza peticiones HTTP directas desde servidores en España/Europa para verificar la etiqueta rel="canonical" en el HTML y en las cabeceras HTTP, comprobando que apunte a una URL 200 OK indexable y detectando cadenas de redirección 301/302 o discrepancias de protocolo y dominio.'
+            'q' => '¿Cómo funciona esta herramienta para auditar canonicals online?',
+            'a' => 'Introduce cualquier URL y el analizador realiza una petición HTTP en vivo (siguiendo hasta 5 saltos de redirección) para extraer la etiqueta rel="canonical" del DOM y de las cabeceras HTTP, verificando si es autorreferente, si apunta a otra URL canónica o si entra en conflicto con directivas noindex o códigos 3xx/4xx.'
+        ],
+        [
+            'q' => '¿Qué errores de etiqueta canonical detecta esta herramienta?',
+            'a' => 'Detecta ausencia de etiqueta canonical, discrepancias entre HTTP/HTTPS o versiones con y sin www, canonicalización hacia URLs redirigidas o rotas, y contradicciones entre rel="canonical" y meta robots noindex que impiden consolidar señales en Google.'
         ],
         [
             'q' => '¿Por qué mi web obtiene una puntuación baja en la salud técnica?',
@@ -493,8 +497,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
     <div class="container">
       
       <div class="tool-intro">
-        <h2>Cómo responde tu servidor a Googlebot</h2>
-        <p style="margin-bottom:1.5rem">Analiza la velocidad de respuesta, directivas de indexación y cabeceras de seguridad técnica de cualquier URL en vivo. Nota: Esta es una herramienta de validación técnica rápida, no una auditoría SEO completa.</p>
+        <h2>Herramienta para auditar canonicals, cabeceras HTTP y respuesta a Googlebot</h2>
+        <p style="margin-bottom:1.5rem">Comprueba en vivo si la etiqueta <code>rel="canonical"</code> es autorreferente o consolida hacia otra URL, detecta saltos 301/302, mide el TTFB real y valida directivas <code>robots</code> y cabeceras de seguridad. Nota: es una validación técnica puntual por URL, complementaria a una auditoría completa de rastreo.</p>
       </div>
 
       <?php require dirname(__DIR__) . '/includes/rescue-banner.php'; ?>

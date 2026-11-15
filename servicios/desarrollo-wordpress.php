@@ -3,8 +3,8 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Desarrollo WordPress a Medida en 2026: Webs Rápidas y SEO Técnico',
-  'description'  => 'Servicio de desarrollo WordPress a medida en España: temas propios en PHP sin Elementor, velocidad de carga extrema (Core Web Vitals) y arquitectura SEO.',
+  'title'        => 'Desarrollo WordPress a Medida (Sin Elementor · Desde 450 €)',
+  'description'  => 'Servicio de desarrollo WordPress profesional en PHP nativo sin constructores lentos (Elementor o Divi). Temas a medida, Core Web Vitals en verde y SEO desde 450 €.',
   'canonical'    => '/servicios/desarrollo-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
@@ -34,6 +34,10 @@ $page = page_config([
     [
       'q' => '¿Podré editar los textos y páginas de mi web WordPress sin saber programar?',
       'a' => 'Sí. Estructuro el panel de administración mediante Custom Post Types (CPT) y campos personalizados limpios para que puedas modificar textos, imágenes, servicios o artículos con total autonomía sin riesgo de descuadrar el diseño.'
+    ],
+    [
+      'q' => '¿Cuánto cuesta un desarrollo WordPress profesional y cuál es el plazo de entrega?',
+      'a' => 'El desarrollo WordPress a medida parte desde 450 € según el alcance funcional (migración desde Elementor/Divi, nuevo tema corporativo en PHP o arquitectura de CPTs). El plazo habitual oscila entre 2 y 4 semanas con validación previa en servidor staging sin interrumpir tu web en producción.'
     ]
   ],
 ]);
@@ -113,7 +117,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             </li>
             <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
               <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-tag" style="color: var(--muted); margin-right: 0.5rem;"></i> Inversión ("Desde"):</span>
-              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange);">450 €</span>
+              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange); font-variant-numeric: tabular-nums;">450 €</span>
             </li>
             <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
               <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-handshake" style="color: var(--muted); margin-right: 0.5rem;"></i> Proceso de contratación:</span>

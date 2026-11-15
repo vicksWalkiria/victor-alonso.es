@@ -543,8 +543,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-  'title' => 'Auditoría de Logs SEO: Analizador Gratis de Rastreo de Googlebot',
-  'description' => 'Realiza una auditoría de logs SEO gratis para tu web. Analiza logs de Apache o Nginx y descubre qué URLs rastrea Googlebot, frecuencia y Crawl Budget.',
+  'title' => 'Auditoría de Logs SEO Online Gratis (Apache y Nginx)',
+  'description' => 'Herramienta gratuita de auditoría de logs SEO online (sin registro). Sube tu access.log de Apache o Nginx, analiza el rastreo de Googlebot, errores 404/5xx y descarga PDF.',
   'canonical' => '/herramientas/analizador-logs/',
   'body_class' => 'page-analizador-logs',
   'schema_types' => ['WebApplication', 'FAQPage'],

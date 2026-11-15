@@ -3,14 +3,14 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'SEO Albacete: Consultor y Agencia SEO · Posicionamiento Web',
-    'description'  => '⚡ SEO en Albacete: Consultor SEO y agencia de posicionamiento web. Auditoría técnica, SEO local en Google Maps y desarrollo WordPress para empresas de Albacete.',
+    'title'        => 'Agencia SEO en Albacete · Consultor SEO Técnico',
+    'description'  => 'Agencia SEO en Albacete con trato directo de ingeniero informático (sin intermediarios). Posicionamiento web en Google, SEO Local Maps y WordPress. Diagnóstico gratis.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
-    'schema_types' => ['LocalBusiness', 'Service'],
+    'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
     'service_data' => [
         '@id' => '/#seo-service',
-        'name' => 'Agencia y Consultoría SEO en Albacete · Víctor Alonso',
+        'name' => 'Agencia SEO en Albacete y Consultoría Técnica · Víctor Alonso',
         'serviceType' => 'Agencia SEO en Albacete, Consultor SEO técnico, Posicionamiento Web y WordPress',
         'areaServed' => [
             ['@type' => 'Place', 'name' => 'Albacete'],
@@ -19,6 +19,20 @@ $page = page_config([
     ],
     'active_nav'   => 'inicio',
     'breadcrumbs'  => [],
+    'faq_items'    => [
+        [
+            'q' => '¿Qué diferencia hay entre contratar una agencia SEO en Albacete tradicional y trabajar conmigo?',
+            'a' => 'En una agencia SEO tradicional suele haber comerciales, gestores de cuentas y perfiles junior ejecutando tareas estándar. Conmigo tratas directamente con un ingeniero informático y consultor SEO sénior en Albacete que diagnostica el código, la arquitectura, los logs de servidor y la intención de búsqueda, e implementa los cambios técnicos sin intermediarios.'
+        ],
+        [
+            'q' => '¿Qué incluye el servicio de posicionamiento web y SEO local en Albacete?',
+            'a' => 'Incluye auditoría técnica inicial, optimización de Core Web Vitals y código (WordPress/PHP), arquitectura de páginas transaccionales, optimización de ficha Google Business Profile para aparecer en el Local Pack de Albacete, marcado Schema LocalBusiness y seguimiento mensual con datos reales de Search Console y conversiones.'
+        ],
+        [
+            'q' => '¿Haces una valoración inicial antes de contratar?',
+            'a' => 'Sí. Reviso el estado técnico e indexación de tu web sin coste ni compromiso para decirte con claridad qué está frenando tu visibilidad orgánica y si realmente tiene retorno trabajar el SEO en tu caso.'
+        ]
+    ],
 ]);
 
 require __DIR__ . '/includes/header.php';
@@ -30,9 +44,9 @@ require __DIR__ . '/includes/header.php';
   <section class="hero" aria-labelledby="hero-heading">
     <div class="container hero-inner">
       <div class="hero-content">
-        <span class="hero-eyebrow">Agencia & Consultor SEO en Albacete · Ingeniero Informático Freelance</span>
+        <span class="hero-eyebrow">Agencia SEO en Albacete · Ingeniero Informático & Consultor Técnico</span>
         <h1 id="hero-heading">
-          SEO Albacete: Consultor y Agencia de Posicionamiento Web
+          Agencia SEO en Albacete y Consultor de Posicionamiento Web
         </h1>
         <p class="hero-desc">
           Soy Víctor Alonso: consultor SEO técnico e ingeniero informático en Albacete.
@@ -199,7 +213,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Desarrollo WordPress</h3>
           <p>Temas a medida, CPT, campos personalizados, rendimiento y SEO técnico desde la base del código.</p>
-          <a href="/servicios/desarrollo-wordpress/" class="card-link">Ver servicio →</a>
+          <a href="/servicios/desarrollo-wordpress/" class="card-link">Desarrollo WordPress a medida →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -226,7 +240,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="auth-text">
         <span class="section-label">Por qué trabajar conmigo</span>
-        <h2 id="diferencial-heading">Tu alternativa de confianza a una agencia SEO en Albacete</h2>
+        <h2 id="diferencial-heading">Agencia SEO en Albacete sin intermediarios: ingeniería y trato directo</h2>
         <p>Me llamo Víctor Alonso. Soy consultor SEO e ingeniero informático con años de experiencia en posicionamiento web, desarrollo WordPress, PHP y analítica digital para empresas en Albacete y toda España.</p>
         <p>La ventaja frente a una agencia SEO convencional: detecto los problemas directamente en el código, en la arquitectura y en el contenido, resolviéndolos yo mismo sin comerciales ni cadenas de subcontratación.</p>
         <ul style="margin:1rem 0 1.5rem; padding-left:1.25rem; display:flex; flex-direction:column; gap:.5rem;">
@@ -264,7 +278,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Analizador de logs</h3>
           <p>Analiza los logs de acceso de tu servidor para detectar qué URLs rastrea Googlebot, con qué frecuencia y dónde pierde el tiempo.</p>
-          <a href="/herramientas/analizador-logs/" class="card-link">Usar herramienta →</a>
+          <a href="/herramientas/analizador-logs/" class="card-link">Auditoría de logs SEO gratis →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -272,7 +286,7 @@ require __DIR__ . '/includes/header.php';
           </div>
           <h3>Analizador SEO</h3>
           <p>Revisión técnica básica de cualquier URL: title, meta description, H1, canonicals, robots y velocidad de carga.</p>
-          <a href="/herramientas/analizador-seo/" class="card-link">Usar herramienta →</a>
+          <a href="/herramientas/analizador-seo/" class="card-link">Auditar canonicals y SEO →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -313,10 +327,12 @@ require __DIR__ . '/includes/header.php';
         </article>
       </div>
       <div style="margin-top:2rem">
-        <a href="/casos-reales/" class="btn btn--secondary">Ver casos reales</a>
+        <a href="/casos-reales/" class="btn btn--secondary">Ver estudios de caso SEO reales</a>
       </div>
     </div>
   </section>
+
+  <?php require __DIR__ . '/includes/faq.php'; ?>
 
   <!-- Testimonios -->
   <section class="section section--dark" aria-labelledby="testimonios-heading">

@@ -3,8 +3,8 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Casos de Estudio SEO Reales: Datos, Diagnóstico y Resultados',
-  'description'  => 'Estudios de caso SEO y mercadeo con datos técnicos y resultados reales: recuperación de migraciones, desinfección WordPress, Core Web Vitals y Crawl Budget.',
+  'title'        => 'Estudios de Caso SEO Reales: Datos, Diagnóstico y Resultados',
+  'description'  => 'Estudios de caso SEO y mercadeo orgánico con datos técnicos y resultados reales: recuperación de migraciones, desinfección WordPress, Core Web Vitals y Crawl Budget.',
   'canonical'    => '/casos-reales/',
   'body_class'   => 'page-casos',
   'schema_types' => ['FAQPage'],
@@ -16,6 +16,10 @@ $page = page_config([
     [
       'q' => 'Estudio de caso SEO y mercadeo: ¿qué datos y resultados reales se analizan?',
       'a' => 'Cada estudio de caso SEO documenta el contexto real del negocio, el problema técnico o de mercadeo orgánico detectado (caídas por migración sin redirecciones 301, infecciones de malware con persistencia, LCP superior a 7 segundos, canibalizaciones tras Core Updates o drenaje de Crawl Budget en WooCommerce), el diagnóstico con datos de Google Search Console y logs de servidor, y las acciones técnicas ejecutadas para recuperar la visibilidad y captación.'
+    ],
+    [
+      'q' => '¿Qué métricas técnicas se auditan para validar los resultados de un caso SEO?',
+      'a' => 'Se contrastan datos verificables de Google Search Console (impresiones, clics, CTR y cobertura de indexación), registros de acceso de Apache/Nginx (hits reales de Googlebot por tipo de plantilla y códigos 200/301/404), métricas de campo CrUX / Core Web Vitals (LCP, INP y CLS) y evolución de contactos o ventas orgánicas.'
     ],
     [
       'q' => '¿Por qué estos casos de estudio SEO se centran en el diagnóstico técnico y la arquitectura?',
@@ -37,9 +41,12 @@ require __DIR__ . '/includes/breadcrumbs.php';
 
   <section class="section">
     <div class="container">
-      <p style="color:var(--muted);font-size:.9rem;margin-bottom:3rem;max-width:640px">
-        <strong>Nota:</strong> Los casos están anonimizados para proteger la privacidad de los clientes. No se incluyen cifras de tráfico concretas ni resultados garantizados. Cada caso es diferente.
-      </p>
+      <div style="margin-bottom:2.25rem; max-width:760px;">
+        <h2 style="font-size:1.35rem; margin-bottom:0.5rem;">Estudios de caso de SEO y mercadeo orgánico: datos y resultados técnicos</h2>
+        <p style="color:var(--muted);font-size:.92rem;margin:0;">
+          Recopilación de intervenciones reales basadas en datos de Search Console, auditoría de logs y código fuente. <strong>Nota:</strong> los proyectos están anonimizados por confidencialidad; cada negocio parte de una arquitectura y competencia distintas.
+        </p>
+      </div>
 
       <div class="cases-grid">
 
