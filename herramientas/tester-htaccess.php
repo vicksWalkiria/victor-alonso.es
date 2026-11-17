@@ -4,8 +4,9 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 require_once dirname(__DIR__) . '/includes/ratings-helper.php';
 
 $page = page_config([
-    'title'        => 'Tester .htaccess: RewriteRule y redirecciones 301',
-    'description'  => 'Prueba RewriteRule, RewriteCond y redirecciones 301 sin tocar el servidor. Simulador .htaccess online con traza paso a paso.',
+    'title'        => 'Tester .htaccess Online Gratis: Simulador RewriteRule y 301',
+    'raw_title'    => true,
+    'description'  => 'Simulador y tester .htaccess online gratis sin tocar tu servidor Apache. Prueba RewriteRule, RewriteCond y redirecciones 301 con traza paso a paso.',
     'canonical'    => '/herramientas/tester-htaccess/',
     'body_class'   => 'page-tester-htaccess',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -68,7 +69,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <!-- PANEL IZQUIERDO: EDITOR Y RECETAS -->
         <div class="htaccess-editor-panel">
           <div class="panel-header">
-            <h3><i class="fa-solid fa-code" style="color: var(--orange);"></i> Archivo .htaccess</h3>
+            <h3><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Archivo .htaccess</h3>
             
             <div class="presets-container">
               <select id="htaccess-presets" class="form-input form-input--sm" style="width: auto; display: inline-block;">
@@ -99,7 +100,7 @@ Redirect 301 /contacto-viejo /contacto/
           <div style="margin-top: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
             <span class="text-muted" style="font-size: 0.78rem;">Prueba en cliente. Ninguna regla se guarda en el servidor.</span>
             <button type="button" id="btn-clear-code" class="wpo-btn-share" style="background: transparent; color: var(--muted); border: none; font-size: 0.8rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.25rem;">
-              <i class="fa-solid fa-trash-can"></i> Limpiar editor
+              <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg> Limpiar editor
             </button>
           </div>
         </div>
@@ -107,7 +108,7 @@ Redirect 301 /contacto-viejo /contacto/
         <!-- PANEL DERECHO: PRUEBA Y RESULTADOS -->
         <div class="htaccess-results-panel">
           <div class="panel-header">
-            <h3><i class="fa-solid fa-vial" style="color: var(--orange);"></i> Escenario de Prueba</h3>
+            <h3><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><path d="M10 2v7.31l-4.89 8.15A2 2 0 0 0 6.83 20.5h10.34a2 2 0 0 0 1.72-3.04L14 9.31V2"/><line x1="8.5" y1="2" x2="15.5" y2="2"/></svg> Escenario de Prueba</h3>
           </div>
 
           <form id="htaccess-test-form" class="card wpo-form-card" style="margin-bottom: 0; background: rgba(232, 104, 26, 0.02); border: 1.5px solid rgba(232, 104, 26, 0.2); box-shadow: none;"
@@ -141,11 +142,11 @@ Redirect 301 /contacto-viejo /contacto/
 
             <div style="display: flex; gap: 1rem; margin-top: 1.25rem;">
               <button type="submit" class="btn btn--primary" style="flex: 1; justify-content: center; font-weight: 700;">
-                <i class="fa-solid fa-play" style="margin-right: 0.25rem;"></i> Simular Redirecciones
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><polygon points="5 3 19 12 5 21 5 3"/></svg> Simular Redirecciones
               </button>
               
               <button type="button" id="btn-share-test" class="btn btn--secondary" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-                <i class="fa-solid fa-share-nodes"></i> Compartir Test
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Compartir Test
               </button>
             </div>
           </form>
@@ -169,7 +170,7 @@ Redirect 301 /contacto-viejo /contacto/
           </div>
           <div id="flow-arrow-1" class="flow-arrow">
             <span id="flow-arrow-label" class="arrow-label">301</span>
-            <i class="fa-solid fa-arrow-right"></i>
+            <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </div>
           <div id="flow-node-end" class="flow-node">
             <span class="node-label" id="node-end-label">URL de Salida</span>
@@ -180,7 +181,7 @@ Redirect 301 /contacto-viejo /contacto/
         <!-- DETALLE DEL DESGLOSE PASO A PASO -->
         <div style="margin-top: 2.5rem;">
           <h4 style="color: var(--black); font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
-            <i class="fa-solid fa-list-check" style="color: var(--orange);"></i> Traza de Ejecución Explicativa (Paso a Paso):
+            <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></svg> Traza de Ejecución Explicativa (Paso a Paso):
           </h4>
           <div id="trace-logs-container" class="trace-logs">
             <!-- Se rellena dinámicamente -->
@@ -223,7 +224,7 @@ Redirect 301 /contacto-viejo /contacto/
 
         <div style="margin-top: 3rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
           <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
-            <i class="fa-solid fa-circle-question" style="color: var(--orange);"></i> ¿Dudas con la configuración de tu servidor o redirecciones?
+            <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ¿Dudas con la configuración de tu servidor o redirecciones?
           </h3>
           <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
             Si estás planificando una migración compleja de dominio o temes romper la indexación de tu web, contar con un soporte técnico especializado marca la diferencia. Como especialista en desarrollo web, puedo ayudarte a realizar una <a href="/servicios/seo-tecnico/">migraciones y redirecciones SEO</a> seguras, así como una <a href="/servicios/auditoria-seo/">auditoría SEO</a> profunda de rastreo. En <a href="/">Víctor Alonso SEO</a> implementamos los cambios directamente en tu servidor de manera segura.
@@ -267,7 +268,7 @@ Redirect 301 /contacto-viejo /contacto/
           <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-lock" style="color: #10b981;"></i> Forzar tráfico HTTPS (SSL)
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Forzar tráfico HTTPS (SSL)
               </h3>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Indispensable para asegurar que toda tu web se sirve bajo una conexión cifrada SSL. Redirige de forma permanente (301) cualquier petición insegura HTTP a la versión segura HTTPS.
@@ -285,7 +286,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]</code></pre>
           <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-globe" style="color: var(--orange);"></i> Forzar dominio sin WWW
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Forzar dominio sin WWW
               </h3>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Evita problemas de contenido duplicado consolidando tu fuerza de marca bajo una sola variante. Este ejemplo redirige de forma permanente las visitas que incluyan www. a la versión limpia sin www.
@@ -303,7 +304,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
           <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-folder-open" style="color: #3b82f6;"></i> Redirección 301 de Categoría completa
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #3b82f6;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> Redirección 301 de Categoría completa
               </h3>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Ideal para reestructuraciones de blog o e-commerce. Esta directiva captura cualquier subcarpeta o archivo dentro de un directorio antiguo y lo mueve de forma inteligente a su nueva ruta, conservando la query string de analítica.
@@ -319,7 +320,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]</code></pre>
           <div style="background: #ffffff; border: 1.5px solid rgba(232, 104, 26, 0.2); border-radius: 12px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div>
               <h3 style="color: var(--black); margin-bottom: 0.5rem; font-size: 1.15rem; display: flex; align-items: center; gap: 0.5rem;">
-                <i class="fa-solid fa-robot" style="color: #ef4444;"></i> Bloquear rastreo de Bots de IA
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ef4444;"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg> Bloquear rastreo de Bots de IA
               </h3>
               <p style="font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">
                 Protege tus derechos de autor y ahorra recursos de tu servidor denegando explícitamente el acceso a bots agresivos de raspado de IA (como ChatGPT de OpenAI) devolviendo un código 403 Forbidden.
@@ -1434,23 +1435,23 @@ document.addEventListener('DOMContentLoaded', function() {
         res.trace.forEach(t => {
             let lineIndicator = t.line ? `<span class="trace-line-num">Línea ${t.line}</span>` : '';
             let rawCode = t.raw ? `<pre class="trace-raw"><code>${escapeHtml(t.raw.trim())}</code></pre>` : '';
-            let icon = '<i class="fa-solid fa-circle-info text-muted"></i>';
+            let icon = '<svg class="svg-icon text-muted" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
             let itemClass = '';
 
             if (t.type === 'init' || t.type === 'loop_start') {
-                icon = '<i class="fa-solid fa-play text-muted"></i>';
+                icon = '<svg class="svg-icon text-muted" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>';
                 itemClass = 'trace-item--init';
             } else if (t.type === 'match_start' || t.type === 'cond_ok') {
-                icon = '<i class="fa-solid fa-circle-check" style="color: #10b981;"></i>';
+                icon = '<svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #10b981;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>';
                 itemClass = 'trace-item--success';
             } else if (t.type === 'cond_fail' || t.type === 'skip') {
-                icon = '<i class="fa-solid fa-circle-xmark text-muted"></i>';
+                icon = '<svg class="svg-icon text-muted" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
                 itemClass = 'trace-item--skip';
             } else if (t.type === 'rewrite_redirect' || t.type === 'rewrite_internal' || t.type === 'match_redirect') {
-                icon = '<i class="fa-solid fa-circle-right" style="color: var(--orange);"></i>';
+                icon = '<svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><circle cx="12" cy="12" r="10"/><polyline points="12 16 16 12 12 8"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
                 itemClass = 'trace-item--rewrite';
             } else if (t.type.startsWith('error') || t.type === 'rewrite_stop') {
-                icon = '<i class="fa-solid fa-circle-exclamation" style="color: #ef4444;"></i>';
+                icon = '<svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #ef4444;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
                 itemClass = 'trace-item--error';
             }
 

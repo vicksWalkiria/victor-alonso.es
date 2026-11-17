@@ -75,9 +75,18 @@ require __DIR__ . '/includes/breadcrumbs.php';
         <p>Además de proyectos propios como <a href="<?= h(SITE_WALKIRIA) ?>" target="_blank" rel="noopener noreferrer" style="color:var(--orange)">Walkiria Apps</a>, mantengo mi trayectoria profesional completamente actualizada y automatizada en internet. Puedes explorar mi <a href="https://vickswalkiria.github.io/cv-victor/" target="_blank" rel="noopener noreferrer" style="color:var(--orange)">CV Web Interactivo</a> o descargar directamente la versión en PDF que mejor se adapte a tu perfil:</p>
         
         <div class="about-cv-downloads" style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.2rem 0;">
-          <a href="https://vickswalkiria.github.io/cv-victor/dist/cv-victor-android-es.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" aria-label="Descargar CV Especialista Android de Víctor Alonso">📄 CV Especialista Android (PDF)</a>
-          <a href="https://vickswalkiria.github.io/cv-victor/dist/cv-victor-fullstack-seo-es.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" aria-label="Descargar CV FullStack y SEO de Víctor Alonso">📄 CV FullStack & SEO (PDF)</a>
-          <a href="https://vickswalkiria.github.io/cv-victor/dist/cv-victor-ats-es.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" aria-label="Descargar CV Formato ATS de Víctor Alonso">📄 CV Formato ATS (PDF)</a>
+          <a href="https://vickswalkiria.github.io/cv-victor/dist/cv-victor-android-es.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.55rem 1rem;" aria-label="Descargar CV Especialista Android de Víctor Alonso">
+            <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            CV Especialista Android (PDF)
+          </a>
+          <a href="https://vickswalkiria.github.io/cv-victor/dist/cv-victor-fullstack-seo-es.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.55rem 1rem;" aria-label="Descargar CV FullStack y SEO de Víctor Alonso">
+            <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            CV FullStack &amp; SEO (PDF)
+          </a>
+          <a href="https://vickswalkiria.github.io/cv-victor/dist/cv-victor-ats-es.pdf" target="_blank" rel="noopener noreferrer" class="btn btn--secondary" style="font-size: 0.85rem; padding: 0.55rem 1rem;" aria-label="Descargar CV Formato ATS de Víctor Alonso">
+            <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            CV Formato ATS (PDF)
+          </a>
         </div>
 
         <div class="about-links" style="margin-top: 1.5rem;">

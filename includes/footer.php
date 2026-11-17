@@ -29,10 +29,11 @@
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Servicios SEO</h3>
                 <ul role="list">
-                    <li><a href="/">Consultor SEO Freelance Albacete</a></li>
+                    <li><a href="/">Agencia SEO en Albacete</a></li>
+                    <li><a href="/servicios/seo-ciudad-real/">Consultor SEO en Ciudad Real</a></li>
                     <li><a href="/servicios/seo-loterias-albacete/">SEO para Loterías</a></li>
                     <li><a href="/servicios/seo-espana/">SEO Nacional para España</a></li>
-                    <li><a href="/servicios/auditoria-seo/">Auditoría SEO</a></li>
+                    <li><a href="/servicios/auditoria-seo/">Auditoría SEO Técnica</a></li>
                     <li><a href="/servicios/seo-tecnico/">SEO Técnico</a></li>
                 </ul>
             </div>
@@ -84,7 +85,7 @@
 <!-- Widget flotante de Contacto cerrable -->
 <div id="floating-contact" class="floating-whatsapp" style="bottom: 96px; z-index: 998;" aria-label="Contacto por Correo">
     <button class="floating-whatsapp__close" id="floating-contact-close" aria-label="Cerrar widget de contacto">×</button>
-    <a href="/contacto/" class="floating-whatsapp__link" style="background:#E8681A; box-shadow: 0 4px 16px rgba(232, 104, 26, 0.4);" aria-label="Ir a la página de contacto">
+    <a href="/contacto/" class="floating-whatsapp__link" style="background:var(--orange); box-shadow: 0 6px 18px rgba(20, 22, 25, 0.25);" aria-label="Ir a la página de contacto">
         <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
             <polyline points="22,6 12,13 2,6"></polyline>

@@ -180,8 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Configuración de Página
 $page = page_config([
-    'title'        => 'Herramienta para Auditar el Sitemap XML y Extraer URLs Gratis',
-    'description'  => 'Herramienta para auditar el sitemap XML de tu web y extraer URLs gratis. Analiza índices recursivos, detecta longitudes, códigos HTTP y exporta a CSV.',
+    'title'        => 'Herramienta para Auditar Sitemap XML y Extraer URLs Gratis',
+    'raw_title'    => true,
+    'description'  => 'Herramienta online gratis para auditar el sitemap XML de tu web sin registro. Extrae URLs de sitemaps anidados simulando Googlebot, mide longitud y exporta CSV.',
     'canonical'    => '/herramientas/extractor-sitemap/',
     'body_class'   => 'page-extractor-sitemap',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -219,9 +220,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="sitemap-h1">
     <div class="container">
-      <span class="hero-eyebrow">Auditoría de Rastreo y Arquitectura</span>
       <h1 id="sitemap-h1">Herramienta para <span>Auditar el Sitemap XML</span> y Extraer URLs</h1>
-      <p class="page-hero-desc">Bypassea restricciones CORS y cortafuegos. Extrae, unifica y audita sitemaps anidados de forma recursiva simulando Googlebot.</p>
+      <p class="page-hero-desc">Evita restricciones CORS y cortafuegos. Extrae, unifica y audita sitemaps XML e índices anidados de forma recursiva simulando Googlebot.</p>
     </div>
   </section>
 
@@ -303,30 +303,30 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <div class="tool-layout-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 2.5rem;">
                 
                 <!-- Stat 1: Total URLs -->
-                <div class="tool-card" style="border-left: 4px solid var(--orange);">
+                <div class="tool-card" style="border: 1px solid var(--border);">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Total URLs Únicas</span>
-                    <span id="stat-total" style="display: block; font-size: 2.25rem; font-weight: 900; color: var(--black); margin-top: .25rem;">0</span>
-                    <span id="stat-processed-sitemaps" style="display: block; font-size: .78rem; color: #2ecc71; margin-top: .25rem;">1 sitemap procesado</span>
+                    <span id="stat-total" class="tabular-nums" style="display: block; font-size: 2.25rem; font-weight: 900; color: var(--black); margin-top: .25rem;">0</span>
+                    <span id="stat-processed-sitemaps" style="display: block; font-size: .78rem; color: #15803d; font-weight: 600; margin-top: .25rem;">1 sitemap procesado</span>
                 </div>
 
                 <!-- Stat 2: Auditoría de Longitud -->
-                <div class="tool-card" style="border-left: 4px solid #e74c3c;">
-                    <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">URLs Críticas (>75 chars)</span>
-                    <span id="stat-long-urls" style="display: block; font-size: 2.25rem; font-weight: 900; color: #e74c3c; margin-top: .25rem;">0</span>
+                <div class="tool-card" style="border: 1px solid var(--border);">
+                    <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">URLs Críticas (&gt;75 chars)</span>
+                    <span id="stat-long-urls" class="tabular-nums" style="display: block; font-size: 2.25rem; font-weight: 900; color: #b91c1c; margin-top: .25rem;">0</span>
                     <span style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">Riesgo de truncado en Google SERPs</span>
                 </div>
 
                 <!-- Stat 3: Frescura de Contenidos -->
-                <div class="tool-card" style="border-left: 4px solid #2ecc71;">
+                <div class="tool-card" style="border: 1px solid var(--border);">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Actualizado en 30 días</span>
-                    <span id="stat-fresh" style="display: block; font-size: 2.25rem; font-weight: 900; color: #2ecc71; margin-top: .25rem;">0</span>
+                    <span id="stat-fresh" class="tabular-nums" style="display: block; font-size: 2.25rem; font-weight: 900; color: #15803d; margin-top: .25rem;">0</span>
                     <span id="stat-fresh-pct" style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">0% del total de contenidos</span>
                 </div>
 
                 <!-- Stat 4: Longitud Media -->
-                <div class="tool-card" style="border-left: 4px solid #3498db;">
+                <div class="tool-card" style="border: 1px solid var(--border);">
                     <span style="display: block; font-size: .8rem; font-weight: 800; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em;">Longitud Media URL</span>
-                    <span id="stat-avg-len" style="display: block; font-size: 2.25rem; font-weight: 900; color: #3498db; margin-top: .25rem;">0</span>
+                    <span id="stat-avg-len" class="tabular-nums" style="display: block; font-size: 2.25rem; font-weight: 900; color: var(--orange); margin-top: .25rem;">0</span>
                     <span style="display: block; font-size: .78rem; color: var(--muted); margin-top: .25rem;">Caracteres de media</span>
                 </div>
 
@@ -386,30 +386,37 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
             </div>
 
+            <div class="tool-cta-banner">
+                <div style="max-width: 640px;">
+                    <h3 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.35rem;">¿Tu sitemap incluye URLs que Google marca como «Rastreada: actualmente sin indexar»?</h3>
+                    <p style="color: #CBD5E1; font-size: 0.9rem; margin: 0;">Cruzo tu sitemap con Search Console y los logs reales de Googlebot para depurar contenido duplicado, páginas huérfanas y arquitectura en una auditoría técnica.</p>
+                </div>
+                <a href="/servicios/auditoria-seo/" class="btn btn--primary" style="white-space: nowrap;">Ver Auditoría SEO Técnica →</a>
+            </div>
+
         </div>
 
       </div>
 
-      <!-- Sección de Criterio Técnico SEO "Non-Commodity" -->
+      <!-- Sección de Criterio Técnico SEO -->
       <div class="criterio-section" style="margin-top: 5rem;">
-        <span class="section-label">Fundamentos del SEO de Trinchera</span>
-        <h2>Errores críticos en Sitemaps XML que ralentizan el rastreo</h2>
+        <h2>Qué comprobar en una herramienta para auditar el sitemap XML en 2026</h2>
         
         <div class="criterio-grid">
           <div class="criterio-card">
-            <h3>URLs sin estatus 200 OK</h3>
-            <p>El error básico número uno es inyectar en el sitemap URLs que devuelven redirecciones (301, 302) o errores (404, 500). El sitemap es una carta de recomendación de indexación directa a Googlebot.</p>
-            <p>Si fuerzas al bot a rastrear URLs que devuelven redirecciones, estás restando eficiencia a su rastreo y obligando al motor a procesar saltos inútiles en lugar de indexar nuevos contenidos de calidad directamente.</p>
+            <h3>URLs sin código 200 OK</h3>
+            <p>El error número uno al auditar un sitemap es encontrar URLs que devuelven redirecciones (301, 302) o errores (404, 500). El sitemap es una declaración directa de tus URLs canónicas principales para Googlebot.</p>
+            <p>Si obligas al robot a rastrear redirecciones dentro del XML, reduces la eficiencia del presupuesto de rastreo y retrasas el descubrimiento de páginas transaccionales nuevas.</p>
           </div>
 
           <div class="criterio-card">
-            <h3>Directivas 'noindex' contradictorias</h3>
-            <p>Si una URL tiene la cabecera o metaetiqueta `noindex`, **nunca** debe incluirse en el sitemap XML. Esto confunde al robot de indexación, provocando avisos de indexación contradictorios en Google Search Console y retrasando la desindexación de las páginas que realmente deseas ocultar.</p>
+            <h3>Directivas «noindex» contradictorias</h3>
+            <p>Si una URL envía la cabecera o metaetiqueta <code>noindex</code>, <strong>nunca</strong> debe incluirse en el sitemap XML. Esta contradicción dispara alertas de cobertura en Google Search Console y retrasa tanto la desindexación limpia como la evaluación de tus secciones prioritarias.</p>
           </div>
 
           <div class="criterio-card">
-            <h3>Sitemaps inflados y desactualizados</h3>
-            <p>Un sitemap que pesa más de 50MB o que supera las 50,000 URLs viola las especificaciones de Schema.org. Utiliza Sitemap Indexes para segmentar tus contenidos lógicamente (páginas, posts, categorías) y mantén la etiqueta `<lastmod>` actualizada de forma sincrónica con tu base de datos para notificar solo los cambios reales.</p>
+            <h3>Sitemaps inflados y <code>&lt;lastmod&gt;</code> falsos</h3>
+            <p>Un archivo que supere los 50 MB o las 50.000 URLs incumple el estándar oficial. Divide tu mapa mediante un Sitemap Index por plantillas (servicios, categorías, productos) y actualiza la fecha <code>&lt;lastmod&gt;</code> únicamente cuando el contenido principal cambie de verdad.</p>
           </div>
         </div>
       </div>
@@ -805,7 +812,7 @@ function sortAndRenderTable() {
             </td>
             <td style="color: var(--muted);">${displayDate}</td>
             <td style="text-align: center; font-weight: 800; color: ${item.images > 0 ? 'var(--orange)' : 'var(--muted)'};">
-                ${item.images > 0 ? `<i class="fa-solid fa-image"></i> ${item.images}` : '-'}
+                ${item.images > 0 ? `<svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> ${item.images}` : '-'}
             </td>
             <td style="color: var(--muted); font-size: .8rem;">${item.sitemap}</td>
         `;

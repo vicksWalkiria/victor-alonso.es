@@ -3,23 +3,27 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Reparación WordPress urgente: malware, errores y caídas — Hoy mismo',
-  'description'  => '¿Tu web de WordPress está caída, hackeada o con pantallazos en blanco? Intervengo hoy mismo por SSH: diagnóstico, limpieza de malware y reparación en 24h.',
+  'title'        => 'Reparación e Intervención Urgente WordPress (Malware y 500)',
+  'raw_title'    => true,
+  'description'  => 'Intervención urgente en WordPress por ingeniero informático vía SSH: limpieza forense de malware recurrente, errores 500, pantalla blanca y bloqueo Google.',
   'canonical'    => '/servicios/reparacion-wordpress-urgente/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/reparacion-wordpress-urgente/#service',
-      'name'          => 'Reparación de WordPress urgente',
+      'name'          => 'Reparación e intervención urgente de WordPress',
       'alternateName' => [
-          'Reparación WordPress',
+          'Reparación WordPress urgente',
+          'Intervención urgente WordPress',
           'Reparar WordPress hackeado',
-          'Limpieza de malware WordPress',
-          'Intervención urgente WordPress'
+          'Limpieza de malware WordPress'
       ],
-      'serviceType'   => 'Soporte Técnico Informático',
+      'serviceType'   => 'Soporte Técnico y Seguridad WordPress',
       'areaServed'    => [
           ['@type' => 'Country', 'name' => 'España']
+      ],
+      'offers'        => [
+          'minPrice' => 150
       ]
   ],
   'active_nav'   => 'servicios',

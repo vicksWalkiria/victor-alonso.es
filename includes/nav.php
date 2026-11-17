@@ -5,10 +5,12 @@
 $_nav = $page['active_nav'] ?? 'inicio';
 
 $_services = [
+    ['href' => '/servicios/seo-ciudad-real/',         'label' => 'SEO en Ciudad Real'],
     ['href' => '/servicios/seo-espana/',              'label' => 'SEO para España'],
-    ['href' => '/servicios/auditoria-seo/',           'label' => 'Auditoría SEO'],
+    ['href' => '/servicios/auditoria-seo/',           'label' => 'Auditoría SEO Técnica'],
     ['href' => '/servicios/seo-tecnico/',             'label' => 'SEO Técnico'],
     ['href' => '/servicios/mantenimiento-wordpress/', 'label' => 'Mantenimiento WordPress'],
+    ['href' => '/servicios/reparacion-wordpress-urgente/', 'label' => 'Reparación WordPress Urgente'],
     ['href' => '/servicios/desarrollo-wordpress/',    'label' => 'Desarrollo WordPress'],
     ['href' => '/servicios/plugins-wordpress/',       'label' => 'Plugins a medida'],
 ];

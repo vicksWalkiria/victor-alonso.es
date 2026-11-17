@@ -1,11 +1,28 @@
 node_modules/
 .DS_Store
 .env
+.user.ini
+.oracle_ssh.txt
+.~lock.*
 data/wpo-psi-cache/
 data/wpo-psi-rate/
 data/auditor_logs.json
 data/ratings.json
+data/*.csv
+data/*.txt
 scratch/
+
+# Ficheros internos, notas y scripts de test que no deben desplegarse en public_html
+auth.md
+CHANGELOG-SEO.md
+caso-exito-osteofisiomedrano.md
+datos_landings_comerciales.csv
+gsc_7.json
+gsc_14.json
+walkiria_gsc.json
+test-puppeteer*.js
+herramientas/auditor-v2/*.log
+herramientas/auditor-v2/test-puppeteer*.js
 
 # Exports y datos externos (no deben ir al repo)
 *.zip

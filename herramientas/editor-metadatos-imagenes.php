@@ -30,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Configuración de metadatos de la página
 $page = page_config([
-    'title'        => 'Editor EXIF y GPS online gratis',
-    'description'  => 'Edita metadatos EXIF de imágenes desde tu navegador para mantener el control sobre la autoría y privacidad. 100% privado sin subir archivos al servidor.',
+    'title'        => 'Editar EXIF y GPS de Fotos Online Gratis (100% en Navegador)',
+    'raw_title'    => true,
+    'description'  => 'Herramienta para editar EXIF de fotos online gratis y sin registro: añade, modifica o borra coordenadas GPS, autor, fecha y cámara 100% en tu navegador.',
     'canonical'    => '/herramientas/editor-metadatos-imagenes/',
     'body_class'   => 'page-tool-gps-exif',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -100,9 +101,8 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 <main id="main">
   <section class="page-hero" aria-labelledby="gps-h1">
     <div class="container">
-      <span class="page-hero-eyebrow">Privacidad y Control de Autoría</span>
-      <h1 id="gps-h1">Editor de Metadatos de Imágenes (EXIF y GPS)</h1>
-      <p class="page-hero-desc">Modifica todos los metadatos internos de tus fotos (cámara, autor, fecha) directamente en tu navegador. Útil para la organización del archivo digital y para <strong>añadir o limpiar coordenadas GPS</strong> de una imagen online sin perder privacidad.</p>
+      <h1 id="gps-h1">Editar EXIF y Metadatos GPS de Imágenes Online</h1>
+      <p class="page-hero-desc">Herramienta gratuita para <strong>editar EXIF</strong> (cámara, autor, copyright, fecha) y <strong>añadir o limpiar coordenadas GPS</strong> directamente desde tu navegador sin subir fotos a ningún servidor externo.</p>
     </div>
   </section>
 
@@ -110,24 +110,26 @@ require __DIR__ . '/../includes/breadcrumbs.php';
     <div class="container" style="max-width: 900px;">
       
       <!-- Cartel de Privacidad TOP -->
-      <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; gap: 1.25rem; align-items: flex-start; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.02);">
-        🛡️
+      <div style="background: rgba(21, 128, 61, 0.05); border: 1px solid rgba(21, 128, 61, 0.25); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; gap: 1rem; align-items: flex-start;">
+        <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-top:2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
         <div>
-          <h3 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">✨ 100% Privado: Todo ocurre en tu navegador</h3>
+          <h2 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.4rem; font-weight: 700;">100% Privado: editar EXIF en local dentro de tu navegador</h2>
           <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
-            A diferencia de otras webs de edición EXIF que te piden subir la imagen a su servidor, yo he desarrollado esto en JavaScript. <strong>La imagen nunca sale de tu dispositivo</strong>. Es instantáneo, seguro y privado. (PD: Si quieres geolocalizar imágenes en lote/bulk automáticamente, ¡escríbeme!).
+            A diferencia de otros editores online que suben tus fotografías a la nube, este editor procesa los binarios JPG en cliente con JavaScript. <strong>Tu imagen jamás sale de tu dispositivo</strong>: instantáneo, gratuito y privado.
           </p>
         </div>
       </div>
 
       <!-- Sistema de Pestañas (Tabs) -->
       <div class="tabs-container" style="margin-bottom: 2rem;">
-        <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--bordergray); margin-bottom: 1.5rem;">
+        <div style="display: flex; gap: 0.5rem; border-bottom: 2px solid var(--border); margin-bottom: 1.5rem;">
           <button id="tab-write-btn" class="tab-btn active" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 700; color: var(--orange); border-bottom: 3px solid var(--orange); cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
-            📝 Añadir / Editar EXIF
+            <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Añadir / Editar EXIF
           </button>
           <button id="tab-read-btn" class="tab-btn" style="padding: 1rem 1.5rem; background: transparent; border: none; font-size: 1.05rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; cursor: pointer; transform: translateY(2px); transition: all 0.2s;">
-            🔍 Leer Metadatos
+            <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Leer Metadatos
           </button>
           
         </div>
@@ -143,7 +145,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
                 <input type="file" id="gps-img-write" accept="image/jpeg, image/jpg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
                 
                 <div id="preview-write-container" style="display: none; position: relative; z-index: 5;">
-                   <img id="img-preview" src="" style="max-height: 200px; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: 0 auto 1rem auto; display: block;" />
+                   <img id="img-preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Vista previa de la imagen seleccionada" style="max-height: 200px; max-width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin: 0 auto 1rem auto; display: block;" />
                    <p id="filename-preview" style="font-weight: 600; color: var(--black); margin-bottom: 0;"></p>
                 </div>
 
@@ -240,40 +242,40 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
   
       <!-- Contenido Adicional SEO / Casos de Uso -->
-      <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03); margin-top: 3rem; margin-bottom: 3rem;">
-        <h2 style="font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--black);">💡 ¿Para qué utilizar este Editor de Metadatos EXIF?</h2>
-        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text); margin-bottom: 2rem;">
-          Los metadatos EXIF son información oculta incrustada dentro de cada fotografía. No todas las herramientas de compresión (como WhatsApp o el guardado para web) los conservan. Manipular estos datos te abre un abanico de posibilidades tanto para marketing y posicionamiento web, como para proteger tu trabajo o privacidad personal.
+      <div class="card" style="padding: 2.5rem; border-radius: 16px; box-shadow: var(--shadow); margin-top: 3rem; margin-bottom: 3rem;">
+        <h2 style="font-size: 1.6rem; margin-bottom: 1rem; color: var(--black);">Cómo editar EXIF en 2026: usos prácticos en privacidad, autoría y archivo local</h2>
+        <p style="font-size: 1.02rem; line-height: 1.7; color: var(--text); margin-bottom: 2rem;">
+          Al <strong>editar EXIF</strong> modificas la cabecera técnica incrustada dentro de un archivo JPEG (coordenadas de latitud/longitud GPS, fecha de captura <code>DateTimeOriginal</code>, modelo de lente y derechos de autor). Controlar estas etiquetas antes de publicar una foto te permite proteger tu ubicación privada o documentar la autoría profesional de tu catálogo.
         </p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;">
           <div>
-            <div style="width: 48px; height: 48px; background: rgba(232, 104, 26, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <span style="font-size: 1.5rem;">🏪</span>
+            <div style="width: 44px; height: 44px; background: var(--orange-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--orange);">
+              <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
-            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Control del contexto fotográfico</h3>
-            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
-              Aunque Google usa el contexto de la página y el texto alternativo como señales principales para indexar las imágenes, mantener unos metadatos limpios, ordenados y geolocalizados te permite gestionar tu archivo digital y preservar datos técnicos de la fotografía para tu organización interna o portfolios.
+            <h3 style="font-size: 1.12rem; color: var(--black); margin-bottom: 0.6rem;">Geolocalización GPS y SEO Local</h3>
+            <p style="font-size: 0.94rem; line-height: 1.6; color: var(--muted); margin: 0;">
+              Organiza tus fotografías comerciales con coordenadas exactas de calle y localidad o elimina el rastro GPS de fotos tomadas desde tu móvil personal antes de subirlas a internet.
             </p>
           </div>
           
           <div>
-            <div style="width: 48px; height: 48px; background: rgba(16, 185, 129, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <span style="font-size: 1.5rem;">©️</span>
+            <div style="width: 44px; height: 44px; background: rgba(21, 128, 61, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: #15803D;">
+              <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9.354a4 4 0 1 0 0 5.292"/></svg>
             </div>
-            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Protección de Autoría</h3>
-            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
-              Si eres creador de contenido o fotógrafo, puedes inyectar tu nombre en el campo <code>Artist</code> o <code>Copyright</code>. Aunque a simple vista no se vea, el archivo siempre llevará tu firma incrustada en su código binario.
+            <h3 style="font-size: 1.12rem; color: var(--black); margin-bottom: 0.6rem;">Autoría y Copyright en binario</h3>
+            <p style="font-size: 0.94rem; line-height: 1.6; color: var(--muted); margin: 0;">
+              Inyecta tu nombre o el de tu empresa en <code>Artist</code> y <code>Copyright</code> para mantener trazabilidad sobre fotografías propias en portfolios, e-commerce y fichas de negocio.
             </p>
           </div>
           
           <div>
-            <div style="width: 48px; height: 48px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-              <span style="font-size: 1.5rem;">📸</span>
+            <div style="width: 44px; height: 44px; background: var(--bg-hover); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; color: var(--text);">
+              <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
             </div>
-            <h3 style="font-size: 1.15rem; color: var(--black); margin-bottom: 0.75rem;">Corrección de Cámara</h3>
-            <p style="font-size: 0.95rem; line-height: 1.6; color: var(--muted); margin: 0;">
-              ¿Tiraste fotos con la cámara mal configurada o usaste una imagen de stock sin datos? Puedes falsificar o corregir el fabricante (<code>Make</code>), el modelo (<code>Model</code>) y arreglar una <code>DateTimeOriginal</code> errónea gracias al calendario integrado.
+            <h3 style="font-size: 1.12rem; color: var(--black); margin-bottom: 0.6rem;">Fechas y equipo fotográfico</h3>
+            <p style="font-size: 0.94rem; line-height: 1.6; color: var(--muted); margin: 0;">
+              Corrige una fecha mal configurada en la cámara (<code>DateTimeOriginal</code>) o estandariza campos <code>Make</code> y <code>Model</code> usando el formulario interactivo en segundos.
             </p>
           </div>
         </div>

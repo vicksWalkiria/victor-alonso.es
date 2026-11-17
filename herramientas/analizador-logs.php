@@ -543,8 +543,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $page = page_config([
-  'title' => 'Auditoría de Logs SEO Online Gratis (Apache y Nginx)',
-  'description' => 'Herramienta gratuita de auditoría de logs SEO online (sin registro). Sube tu access.log de Apache o Nginx, analiza el rastreo de Googlebot, errores 404/5xx y descarga PDF.',
+  'title' => 'Auditoría y Análisis de Logs SEO Gratis (Apache y Nginx)',
+  'raw_title' => true,
+  'description' => 'Analizador y auditoría de logs SEO online gratis (sin registro). Sube tu access.log de Apache o Nginx, mide el Crawl Budget de Googlebot, errores 404/5xx y baja PDF.',
   'canonical' => '/herramientas/analizador-logs/',
   'body_class' => 'page-analizador-logs',
   'schema_types' => ['WebApplication', 'FAQPage'],
@@ -561,7 +562,7 @@ $page = page_config([
     ],
     [
       'q' => '¿Por qué es importante analizar los logs del servidor para el SEO?',
-      'a' => 'El análisis de logs es la única forma 100% fiable de saber exactamente cómo rastrea Googlebot (y otros buscadores) tu página web. Permite descubrir fugas de crawl budget, páginas huérfanas que Google sigue visitando, errores 404 ocultos y cuellos de botella de rendimiento que no aparecen en Google Search Console. Si tu web tiene miles de URLs, realizar una <a href="/servicios/seo-tecnico/" style="color:var(--orange);font-weight:600;">auditoría de SEO técnico</a> a partir de logs es fundamental.'
+      'a' => 'El análisis de logs es la única forma 100% fiable de saber exactamente cómo rastrea Googlebot (y otros buscadores) tu página web. Permite descubrir fugas de crawl budget, páginas huérfanas que Google sigue visitando, errores 404 ocultos y cuellos de botella de rendimiento que no aparecen en Google Search Console. Si tu web tiene miles de URLs, realizar una auditoría de SEO técnico a partir de logs es fundamental.'
     ],
     [
       'q' => '¿Qué es el Crawl Budget y cómo afecta a mi web?',
@@ -1104,13 +1105,14 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           <div
             style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
-            <h3 style="margin: 0; color: #e8681a; display: flex; align-items: center; gap: 0.5rem;">
-              <span>📊</span> Dashboard de Análisis: <span
-                style="color: #111111; font-weight: 400;"><?= h($result['source_name']) ?></span>
+            <h3 style="margin: 0; color: var(--orange); display: flex; align-items: center; gap: 0.5rem;">
+              <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              Dashboard de Análisis: <span
+                style="color: var(--black); font-weight: 400;"><?= h($result['source_name']) ?></span>
             </h3>
             <?php if (!empty($result['pdf_download'])): ?>
-            <div id="leadMagnetBox" style="background: #fff9f5; border: 2px solid #e8681a; border-radius: 8px; padding: 1.5rem; text-align: left; width: 100%; max-width: 500px; box-shadow: 0 4px 15px rgba(232,104,26,0.1);">
-              <h4 style="margin: 0 0 0.5rem 0; color: #111111; font-size: 1.1rem;">📄 ¿Quieres el informe PDF completo en alta calidad?</h4>
+            <div id="leadMagnetBox" style="background: var(--orange-light); border: 1px solid var(--orange); border-radius: 8px; padding: 1.5rem; text-align: left; width: 100%; max-width: 500px; box-shadow: var(--shadow);">
+              <h4 style="margin: 0 0 0.5rem 0; color: var(--black); font-size: 1.1rem;">¿Quieres el informe PDF completo en alta calidad?</h4>
               <p style="margin: 0 0 1rem 0; font-size: 0.9rem; color: #4b5563;">Te lo envío gratis a tu correo (incluye gráficas y listado completo de top IPs y bots).</p>
               <form id="leadMagnetForm" onsubmit="sendPdfEmail(event, '<?= h($result['audit_id'] ?? '') ?>')" style="display: flex; gap: 0.5rem;">
                 <input type="email" id="lm_email" required placeholder="Tu mejor correo..." style="flex: 1; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem;">
@@ -1690,17 +1692,24 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
                 </tbody>
               </table>
             </div>
+
+            <div class="tool-cta-banner">
+              <div style="max-width: 640px;">
+                <h3 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 0.35rem;">¿Googlebot malgasta presupuesto en errores 404, 5xx o parámetros inútiles?</h3>
+                <p style="color: #CBD5E1; font-size: 0.9rem; margin: 0;">Interpreto tus logs reales de Apache o Nginx junto con Google Search Console e implemento las correcciones en servidor y código.</p>
+              </div>
+              <a href="/servicios/auditoria-seo/" class="btn btn--primary" style="white-space: nowrap;">Solicitar Auditoría de Logs y SEO →</a>
+            </div>
           </div>
 
           <!-- Glosario Didáctico de Análisis de Logs y SEO -->
           <div class="criterio-section" style="margin-top:4rem; border-top: 1px solid var(--border); padding-top:3rem;">
-            <span class="section-label">Glosario de trinchera</span>
-            <h2 style="margin-bottom:1.5rem">¿Cómo interpretar estos datos para tu SEO técnico?</h2>
+            <h2 style="margin-bottom:1.5rem">Cómo interpretar tu análisis y auditoría de logs SEO</h2>
 
             <div class="criterio-grid" style="grid-template-columns: 1fr 1fr; gap:2.5rem;">
               <div>
                 <h3
-                  style="color:#111; font-size:1.15rem; margin-bottom:1rem; border-left:3px solid var(--orange); padding-left:0.5rem">
+                  style="color:var(--black); font-size:1.15rem; margin-bottom:1rem; padding-bottom:0.4rem; border-bottom:1px solid var(--border);">
                   El Presupuesto de Rastreo (Crawl Budget)</h3>
                 <ul style="list-style:none; padding:0; display:grid; gap:1.25rem;">
                   <li>

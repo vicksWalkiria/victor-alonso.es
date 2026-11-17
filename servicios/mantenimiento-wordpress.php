@@ -3,22 +3,29 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Mantenimiento WordPress Profesional: Planes, Soporte y Seguridad Web',
-  'description'  => 'Servicio de mantenimiento WordPress profesional para empresas: actualizaciones controladas, backups diarios, monitoreo de seguridad, WPO y soporte técnico directo.',
+  'title'        => 'Servicio Mantenimiento WordPress Empresas (Desde 59 €/mes)',
+  'raw_title'    => true,
+  'description'  => 'Servicio de mantenimiento WordPress para empresas desde 59 €/mes: actualizaciones en Staging, backups externos diarios S3, seguridad activa, WPO y soporte directo.',
   'canonical'    => '/servicios/mantenimiento-wordpress/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/mantenimiento-wordpress/#service',
-      'name'          => 'Mantenimiento WordPress profesional',
+      'name'          => 'Servicio de Mantenimiento WordPress para Empresas',
       'alternateName' => [
+          'Servicio mantenimiento WordPress',
           'Soporte técnico WordPress',
           'Mantenimiento web WordPress',
           'Mantenimiento preventivo WordPress'
       ],
-      'serviceType'   => 'Mantenimiento Web',
+      'serviceType'   => 'Mantenimiento Web WordPress',
       'areaServed'    => [
           ['@type' => 'Country', 'name' => 'España']
+      ],
+      'offers'        => [
+          'minPrice'   => 59,
+          'maxPrice'   => 149,
+          'offerCount' => 3
       ]
   ],
   'active_nav'   => 'servicios',
@@ -91,9 +98,127 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item"><div><strong>Auditoría de rendimiento recurrente:</strong> Comprobación para evitar que nuevos contenidos o funcionalidades introduzcan cuellos de botella técnicos o lentitud.</div></li>
         </ul>
 
-        <h2>Por qué contratar un mantenimiento WordPress profesional y especializado</h2>
-        <p>A diferencia de las agencias de marketing generalistas que delegan el soporte en perfiles junior o activan actualizaciones automáticas sin control, yo gestiono cada sitio como ingeniero informático. Reviso los changelogs antes de actualizar, realizo pruebas previas en entornos de pruebas (Staging) cuando hay saltos de versión críticos, y mantengo copias de seguridad redundantes e inmutables en almacenamiento externo.</p>
-        <p>Un mantenimiento preventivo profesional no es un gasto prescindible: es el seguro de continuidad de tu negocio en internet para evitar caídas imprevistas, pérdidas de ventas y penalizaciones de Google.</p>
+        <h2>Planes y tarifas de mantenimiento WordPress (sin permanencia)</h2>
+        <p>Precios claros según la criticidad de tu web. Todos los planes son ejecutados personalmente por mí como ingeniero informático, sin permanencia obligatoria y con factura deducible mensual:</p>
+        <div class="plans-grid">
+          <article class="plan-card">
+            <div>
+              <span class="plan-badge">Web Corporativa</span>
+              <h3 class="plan-title">Esencial</h3>
+              <div class="plan-price">59 € <span>/ mes + IVA</span></div>
+              <ul class="plan-features">
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Backups diarios cifrados en nube externa (Amazon S3)</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Actualizaciones revisadas quincenales de core, tema y plugins</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Monitorización Uptime 24/7 y blindaje WAF perimetral</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Respuesta ante caída crítica &lt; 12 h laborables</span>
+                </li>
+              </ul>
+            </div>
+            <a href="/contacto/" class="btn btn--secondary" style="width:100%;justify-content:center;">Contratar Esencial</a>
+          </article>
+
+          <article class="plan-card plan-card--featured">
+            <div>
+              <span class="plan-badge">Más contratado · Pymes</span>
+              <h3 class="plan-title">Negocio Activo</h3>
+              <div class="plan-price">99 € <span>/ mes + IVA</span></div>
+              <ul class="plan-features">
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Todo lo incluido en Esencial + <strong>pruebas en entorno Staging</strong></span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Actualizaciones semanales y revisión de changelogs críticos</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Supervisión mensual de Core Web Vitals y base de datos</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>1 h/mes incluida</strong> de ajustes técnicos y soporte directo WhatsApp</span>
+                </li>
+              </ul>
+            </div>
+            <a href="/contacto/" class="btn btn--primary" style="width:100%;justify-content:center;">Elegir Plan Negocio</a>
+          </article>
+
+          <article class="plan-card">
+            <div>
+              <span class="plan-badge">Tiendas &amp; Alto Tráfico</span>
+              <h3 class="plan-title">WooCommerce Crítico</h3>
+              <div class="plan-price">149 € <span>/ mes + IVA</span></div>
+              <ul class="plan-features">
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Backups cada 6–12 horas sin perder pedidos ni clientes</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Test funcional de checkout, Redsys/Stripe y emails en Staging</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Auditoría de logs de servidor y limpieza de transients SQL</span>
+                </li>
+                <li>
+                  <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>SLA prioritario &lt; 4 h</strong> + 2 h/mes de bolsa técnica incluida</span>
+                </li>
+              </ul>
+            </div>
+            <a href="/contacto/" class="btn btn--secondary" style="width:100%;justify-content:center;">Consultar WooCommerce</a>
+          </article>
+        </div>
+
+        <h2>Por qué contratar un servicio de mantenimiento WordPress con ingeniería real</h2>
+        <p>A diferencia de las agencias de marketing generalistas o los planes básicos de hosting que se limitan a activar actualizaciones automáticas sin supervisión, gestiono cada instalación por SSH como ingeniero informático:</p>
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Tarea crítica</th>
+                <th>Mantenimiento Genérico / Auto-Update</th>
+                <th>Mi Servicio de Mantenimiento WordPress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Actualización de plugins</strong></td>
+                <td>Automática en producción (si rompe el checkout, nadie se entera hasta que un cliente avisa)</td>
+                <td>Lectura previa de changelog + clonado en Staging para versiones mayores + verificación visual</td>
+              </tr>
+              <tr>
+                <td><strong>Copias de seguridad</strong></td>
+                <td>Guardadas en el mismo servidor o sin probar su restauración</td>
+                <td>Cifradas y enviadas fuera de tu hosting (S3 externo) con prueba periódica de integridad</td>
+              </tr>
+              <tr>
+                <td><strong>Seguridad frente a malware</strong></td>
+                <td>Instalar un plugin pesado que consume CPU</td>
+                <td>Hardening en <code>.htaccess</code> / <code>wp-config.php</code>, bloqueo de ejecución PHP en uploads y revisión de logs</td>
+              </tr>
+              <tr>
+                <td><strong>Interlocución ante crisis</strong></td>
+                <td>Sistema de tickets nivel 1 con respuestas prefabricadas</td>
+                <td>Contacto directo conmigo por WhatsApp o teléfono con acceso inmediato por SSH</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Un mantenimiento preventivo profesional no es un gasto prescindible: es el seguro de continuidad de tu negocio en internet para evitar caídas imprevistas, pérdidas de ventas y bloqueos de seguridad en Google. Si necesitas además refactorizar una plantilla lenta, revisa mi servicio de <a href="/servicios/desarrollo-wordpress/" style="color:var(--orange);text-decoration:underline;font-weight:600;">desarrollo WordPress a medida</a>.</p>
 
         <h2>Qué tareas no incluye el mantenimiento de WordPress</h2>
         <p>La delimitación clara evita falsas expectativas. El plan preventivo no cubre:</p>

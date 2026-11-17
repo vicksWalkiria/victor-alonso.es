@@ -327,7 +327,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
       <!-- Cartel de Privacidad -->
       <div style="background: rgba(232, 104, 26, 0.05); border: 1px solid rgba(232, 104, 26, 0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; display: flex; gap: 1.25rem; align-items: flex-start; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
-        <i class="fa-solid fa-shield-halved" style="color: var(--orange); font-size: 1.75rem; margin-top: 0.2rem;"></i>
+        <svg class="svg-icon" aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange); font-size: 1.75rem; margin-top: 0.2rem;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <div>
           <h3 style="color: var(--black); font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem; font-weight: 700;">🔒 No me quedo con tus datos</h3>
           <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
@@ -338,7 +338,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
       <?php if (isset($error_msg)): ?>
         <div style="background: #fdf2f2; border: 1px solid #f8b4b4; color: #9b1c1c; padding: 1.25rem; border-radius: 8px; margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.5;">
-          <i class="fa-solid fa-circle-exclamation" style="margin-right: 0.5rem;"></i> <?= h($error_msg) ?>
+          <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> <?= h($error_msg) ?>
         </div>
       <?php endif; ?>
 
@@ -357,12 +357,12 @@ require __DIR__ . '/../includes/breadcrumbs.php';
           <div id="dropzone" style="border: 2px dashed rgba(34, 49, 63, 0.2); border-radius: 12px; padding: 3rem 1.5rem; text-align: center; background: var(--lightgray); cursor: pointer; transition: all 0.25s ease; position: relative;">
             <input type="file" id="gsc_zip" name="gsc_zip" accept=".zip" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;">
             <div id="dropzone-prompt">
-              <i class="fa-solid fa-file-zipper" style="font-size: 3rem; color: var(--orange); margin-bottom: 1.25rem; display: block;"></i>
+              <svg class="svg-icon" aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: auto; margin-right: auto; color: var(--orange); margin-bottom: 1.25rem; display: block;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M10 12h4"/><path d="M10 16h4"/></svg>
               <span style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">Arrastra tu archivo ZIP aquí</span>
               <span style="font-size: 0.9rem; color: var(--muted);">o haz clic para explorar en tu equipo</span>
             </div>
             <div id="file-info" style="display: none;">
-              <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: #10b981; margin-bottom: 1.25rem; display: block;"></i>
+              <svg class="svg-icon" aria-hidden="true" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: auto; margin-right: auto; color: #10b981; margin-bottom: 1.25rem; display: block;"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
               <span id="selected-file-name" style="font-size: 1.1rem; font-weight: 700; color: var(--black); display: block; margin-bottom: 0.5rem;">archivo.zip</span>
               <span style="font-size: 0.9rem; color: var(--muted);">Listo para procesar. Haz clic para cambiarlo.</span>
             </div>
@@ -381,7 +381,7 @@ require __DIR__ . '/../includes/breadcrumbs.php';
 
           <div style="margin-top: 2rem; display: flex; justify-content: center;">
             <button type="submit" id="btn-submit" class="btn btn--primary btn--lg" style="min-width: 250px; justify-content: center;" disabled>
-              <i class="fa-solid fa-gears" style="margin-right: 0.5rem;"></i> Generar Informe PDF
+              <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.5rem;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Generar Informe PDF
             </button>
           </div>
         </form>
@@ -399,15 +399,15 @@ require __DIR__ . '/../includes/breadcrumbs.php';
         <h2 style="font-size: 1.5rem; color: var(--black); margin-bottom: 1.5rem;">¿Qué analiza este informe de rendimiento?</h2>
         <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
           <div class="card" style="padding: 1.5rem; border-radius: 8px;">
-            <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><i class="fa-solid fa-chart-line" style="color: var(--orange); margin-right: 0.5rem;"></i> KPIs y Tendencias Mensuales</h3>
+            <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange); margin-right: 0.5rem;"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> KPIs y Tendencias Mensuales</h3>
             <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Agrupo las métricas del periodo para calcular tu CTR ponderado y la evolución mensual de clics frente a impresiones con gráficas vectoriales.</p>
           </div>
           <div class="card" style="padding: 1.5rem; border-radius: 8px;">
-            <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><i class="fa-solid fa-arrow-trend-up" style="color: var(--orange); margin-right: 0.5rem;"></i> Oportunidades en Página 2</h3>
+            <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange); margin-right: 0.5rem;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg> Oportunidades en Página 2</h3>
             <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Extraigo las consultas con alto volumen de impresiones situadas entre los puestos 11 y 20, listas para subir a primera página con pequeños cambios On-Page.</p>
           </div>
           <div class="card" style="padding: 1.5rem; border-radius: 8px;">
-            <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><i class="fa-solid fa-mobile-screen" style="color: var(--orange); margin-right: 0.5rem;"></i> Distribución de Dispositivos</h3>
+            <h3 style="font-size: 1.1rem; color: var(--black); margin-top: 0; margin-bottom: 0.75rem;"><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange); margin-right: 0.5rem;"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg> Distribución de Dispositivos</h3>
             <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text);">Comparo la visibilidad y tasa de clics entre ordenadores, móviles y tablets para guiar la optimización de fragmentos y el WPO móvil.</p>
           </div>
         </div>
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 try {
                     const response = JSON.parse(xhr.responseText);
                     if (response.success && response.download_url) {
-                        loadingStatus.innerHTML = '<span style="color:#10b981;"><i class="fa-solid fa-circle-check"></i> ¡Informe compilado con éxito!</span>';
+                        loadingStatus.innerHTML = '<span style="color:#10b981;"><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg> ¡Informe compilado con éxito!</span>';
                         loadingStatus.nextElementSibling.textContent = "Iniciando descarga del PDF. Los archivos temporales se han borrado del servidor de forma segura.";
                         
                         // Redirigir para forzar la descarga del PDF

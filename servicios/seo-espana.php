@@ -2,12 +2,28 @@
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
+$faq = [
+  [
+    'q' => '¿Cómo trabajas con empresas de fuera de Albacete en proyectos de SEO nacional?',
+    'a' => 'Trabajo de forma 100% directa (sin gestores intermedios) con empresas B2B, e-commerce y startups de Madrid, Barcelona, Valencia y toda España. Combinamos comunicación directa por correo/WhatsApp, informes ejecutivos sobre datos reales de Search Console y despliegues técnicos seguros mediante Git o entornos Staging.'
+  ],
+  [
+    'q' => '¿Cómo contactar directamente contigo para consultoría SEO técnica o desarrollo de producto web?',
+    'a' => 'Puedes escribirme directamente a soy@victor-alonso.es, al teléfono/WhatsApp +34 675 946 486 o desde el formulario de contacto en victor-alonso.es/contacto/. Respondo personalmente en menos de 24 horas laborables tras revisar la arquitectura e indexación de tu dominio.'
+  ],
+  [
+    'q' => '¿Implementas tú mismo las mejoras de código o necesitamos equipo interno de desarrollo?',
+    'a' => 'Ambas opciones son válidas. Si tienes equipo in-house (PHP, Laravel, WordPress, React), documento las tareas técnicas con precisión de ingeniería y valido los PRs. Si no dispones de desarrollador, ejecuto yo mismo los cambios en código, servidor y base de datos.'
+  ]
+];
+
 $page = page_config([
-  'title'        => 'Consultor SEO en España para empresas',
-  'description'  => 'Servicio de SEO nacional con arquitectura de información, clusters de contenido, SEO técnico, análisis de intención y medición real. Sin contenido IA genérico.',
+  'title'        => 'Consultor SEO en España para Empresas (SEO Técnico y Negocio)',
+  'raw_title'    => true,
+  'description'  => 'Consultor SEO técnico en España e ingeniero informático. Arquitectura web, clusters transaccionales, WPO e implementación en código sin intermediarios.',
   'canonical'    => '/servicios/seo-espana/',
   'body_class'   => 'page-servicio',
-  'schema_types' => ['Service'],
+  'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/seo-espana/#service',
       'name'          => 'SEO para empresas en España',
@@ -19,9 +35,13 @@ $page = page_config([
       'serviceType'   => 'Consultoría SEO Nacional',
       'areaServed'    => [
           ['@type' => 'Country', 'name' => 'España']
+      ],
+      'offers'        => [
+          'minPrice' => 300
       ]
   ],
   'active_nav'   => 'servicios',
+  'faq_items'    => $faq,
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
     ['label' => 'SEO para España', 'url' => ''],
@@ -80,14 +100,17 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Servicios relacionados</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/auditoria-seo/" style="color:var(--orange)">→ Auditoría SEO</a></li>
+            <li><a href="/servicios/auditoria-seo/" style="color:var(--orange)">→ Auditoría SEO Técnica</a></li>
             <li><a href="/servicios/seo-tecnico/" style="color:var(--orange)">→ SEO Técnico</a></li>
+            <li><a href="/servicios/seo-ciudad-real/" style="color:var(--orange)">→ Consultor SEO en Ciudad Real</a></li>
             <li><a href="/servicios/seo-loterias-albacete/" style="color:var(--orange)">→ Caso SEO en Albacete</a></li>
           </ul>
         </div>
       </aside>
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <?php
   $cta = ['title' => '¿Quieres analizar tu situación SEO?', 'subtitle' => 'Sin compromiso. Te digo qué está frenando tu posicionamiento y qué acciones tienen más sentido para tu negocio.', 'btn_label' => 'Solicitar primera valoración', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];

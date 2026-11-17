@@ -3,28 +3,32 @@
    Paleta: negro + naranja corporativo
 ═══════════════════════════════════════════ */
 
-/* ── Variables ──────────────────────────── */
+/* ── Variables (Calibradas WCAG AA — ver DESIGN.md) ── */
 :root {
-  --black: #111111;
-  --orange: #E8681A;
-  --orange-dark: #C8580E;
-  --orange-light: #FFF0E6;
+  --black: #141619;
+  --orange: #C84B09;
+  --orange-dark: #A63C05;
+  --orange-light: #FFF3EB;
+  --whatsapp: #15803D;
+  --whatsapp-dark: #166534;
   --white: #FFFFFF;
-  --bg: #F9FAFB;
-  --text: #1F2937;
-  --muted: #6B7280;
-  --border: #E5E7EB;
-  --dark-card: #1A1A1A;
+  --bg: #F8FAFC;
+  --bg-hover: #F1F5F9;
+  --text: #1E293B;
+  --muted: #475569;
+  --border: #E2E8F0;
+  --dark-card: #1C1F24;
 
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --radius: 8px;
-  --shadow: 0 2px 12px rgba(0, 0, 0, .08);
-  --shadow-md: 0 4px 24px rgba(0, 0, 0, .12);
+  --shadow: 0 2px 12px rgba(20, 22, 25, .07);
+  --shadow-md: 0 6px 24px rgba(20, 22, 25, .11);
   --max-w: 1120px;
   --transition: .2s ease;
 }
 
-/* ── Reset ──────────────────────────────── */
+/* ── Reset y Superficies del Navegador ──────────────── */
 *,
 *::before,
 *::after {
@@ -36,6 +40,13 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  accent-color: var(--orange);
+  scrollbar-color: #94A3B8 var(--bg);
+}
+
+::selection {
+  background: var(--orange);
+  color: var(--white);
 }
 
 body {
@@ -186,6 +197,7 @@ strong {
   display: inline-flex;
   align-items: center;
   gap: .5rem;
+  min-height: 44px;
   padding: .75rem 1.5rem;
   border-radius: var(--radius);
   font-weight: 600;
@@ -202,7 +214,7 @@ strong {
 .btn--primary {
   background: var(--orange);
   color: var(--white);
-  box-shadow: 0 0 18px rgba(232, 104, 26, 0.45);
+  box-shadow: 0 4px 12px rgba(20, 22, 25, 0.14);
 }
 
 .btn--primary:hover {
@@ -244,13 +256,13 @@ strong {
 }
 
 .btn--whatsapp {
-  background: #25D366;
+  background: var(--whatsapp);
   color: var(--white);
-  box-shadow: 0 0 18px rgba(37, 211, 102, 0.45);
+  box-shadow: 0 4px 12px rgba(20, 22, 25, 0.14);
 }
 
 .btn--whatsapp:hover {
-  background: #1EBE5B;
+  background: var(--whatsapp-dark);
 }
 
 .btn--lg {
@@ -769,7 +781,7 @@ strong {
   border-radius: 12px;
   background: var(--dark-card);
   color: var(--white);
-  border-left: 3px solid var(--orange);
+  border: 1px solid rgba(255, 255, 255, .1);
 }
 
 .testimonial-stars {
@@ -781,7 +793,7 @@ strong {
 
 .testimonial-text {
   font-size: .95rem;
-  color: rgba(255, 255, 255, .8);
+  color: rgba(255, 255, 255, .86);
   font-style: italic;
   margin-bottom: 1rem;
 }
@@ -789,7 +801,7 @@ strong {
 .testimonial-author {
   font-size: .85rem;
   font-weight: 600;
-  color: var(--orange);
+  color: #FB923C;
 }
 
 /* ── CTA Block ───────────────────────────── */
@@ -812,7 +824,7 @@ strong {
   background: var(--white);
   color: var(--black);
   font-weight: 800;
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 14px rgba(20, 22, 25, 0.18);
   transition: all 0.3s ease;
 }
 
@@ -1478,7 +1490,7 @@ strong {
     position: static;
     box-shadow: none;
     border: none;
-    border-left: 2px solid var(--orange);
+    border-left: 1px solid var(--border);
     border-radius: 0;
     padding: 0 0 .5rem 1rem;
     margin: 0 1rem;
@@ -1659,25 +1671,25 @@ strong {
 .diag-alert {
   padding: 1.25rem 1.5rem;
   border-radius: 8px;
-  border-left: 5px solid var(--border);
+  border: 1px solid var(--border);
   background: var(--bg);
   margin-bottom: 1.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 8px rgba(20, 22, 25, 0.03);
 }
 
 .diag-alert--success {
-  border-left-color: #15803d;
-  background: rgba(21, 128, 61, 0.04);
+  border-color: rgba(21, 128, 61, 0.35);
+  background: rgba(21, 128, 61, 0.05);
 }
 
 .diag-alert--warning {
-  border-left-color: #e67e22;
-  background: rgba(230, 126, 34, 0.04);
+  border-color: rgba(200, 75, 9, 0.35);
+  background: rgba(200, 75, 9, 0.05);
 }
 
 .diag-alert--danger {
-  border-left-color: #e74c3c;
-  background: rgba(231, 76, 60, 0.04);
+  border-color: rgba(185, 28, 28, 0.35);
+  background: rgba(185, 28, 28, 0.05);
 }
 
 .diag-alert-title {
@@ -2316,4 +2328,144 @@ strong {
   .tool-legal-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── Iconos SVG inline, Números Tabulares y Tablas Comerciales (2026) ── */
+.svg-icon {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.15em;
+  flex-shrink: 0;
+}
+
+.tabular-nums,
+table td,
+table th,
+.plan-price,
+.stat-number,
+address a[href^="tel:"] {
+  font-variant-numeric: tabular-nums;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.plan-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+
+.plan-card--featured {
+  border-color: var(--orange);
+  background: var(--orange-light);
+}
+
+.plan-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--orange);
+  background: rgba(200, 75, 9, 0.12);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.65rem;
+}
+
+.plan-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 0.35rem;
+}
+
+.plan-price {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.plan-price span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.plan-features {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text);
+  margin: 0.75rem 0 1.25rem;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  line-height: 1.45;
+}
+
+.comparison-wrap {
+  overflow-x: auto;
+  margin: 1.25rem 0 2.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.comparison-table th {
+  background: var(--bg);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tool-cta-banner {
+  background: var(--black);
+  color: var(--white);
+  border: 1px solid rgba(200, 75, 9, 0.45);
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
 }

@@ -2,26 +2,46 @@
 require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
+$faq = [
+  [
+    'q' => '¿Cuánto cuesta desarrollar un plugin WordPress a medida?',
+    'a' => 'El desarrollo de plugins WordPress ligeros o integraciones específicas parte desde 150 € + IVA para módulos acotados (shortcodes dinámicos, hooks personalizados en WooCommerce o conexión con una API REST), escalando según la complejidad lógica y el panel de administración requerido.'
+  ],
+  [
+    'q' => '¿Se romperá mi plugin a medida cuando actualice WordPress o WooCommerce?',
+    'a' => 'No si está bien programado. Utilizo exclusivamente las APIs oficiales de WordPress (Hooks, Actions, Filters, WP_Query, Settings API y HPOS de WooCommerce) sin modificar jamás archivos del core ni depender de librerías obsoletas.'
+  ],
+  [
+    'q' => '¿Puedo mantener la propiedad completa del código fuente del plugin?',
+    'a' => 'Sí. Te entrego el paquete instalable .zip con el código PHP limpio, comentado y sin licencias anuales cautivas ni ofuscación, listo para auditar o ampliar en el futuro.'
+  ]
+];
+
 $page = page_config([
-  'title'        => 'Desarrollo de Plugins WordPress a medida',
-  'description'  => 'Desarrollo de plugins para WordPress a medida. Soluciones eficientes, seguras y escalables adaptadas a tus necesidades sin sobrecargar la web.',
+  'title'        => 'Desarrollo de Plugins WordPress a Medida (Desde 150 €)',
+  'raw_title'    => true,
+  'description'  => 'Programador de plugins WordPress y WooCommerce a medida en PHP limpio (desde 150 €). Integraciones API, automatizaciones y paneles sin lastrar el WPO.',
   'canonical'    => '/servicios/plugins-wordpress/',
   'body_class'   => 'page-servicio',
-  'schema_types' => ['Service'],
+  'schema_types' => ['Service', 'FAQPage'],
   'service_data' => [
       '@id'           => '/servicios/plugins-wordpress/#service',
-      'name'          => 'Plugins WordPress a medida',
+      'name'          => 'Desarrollo de Plugins WordPress a medida',
       'alternateName' => [
           'Desarrollo de plugins WordPress',
-          'Programador de plugins',
-          'Plugins a medida'
+          'Programador de plugins WordPress',
+          'Plugins WooCommerce a medida'
       ],
-      'serviceType'   => 'Desarrollo Web',
+      'serviceType'   => 'Desarrollo de Software WordPress',
       'areaServed'    => [
           ['@type' => 'Country', 'name' => 'España']
+      ],
+      'offers'        => [
+          'minPrice' => 150
       ]
   ],
   'active_nav'   => 'servicios',
+  'faq_items'    => $faq,
   'breadcrumbs'  => [
     ['label' => 'Servicios', 'url' => '/#servicios'],
     ['label' => 'Plugins a medida', 'url' => ''],
@@ -80,49 +100,33 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <h2>Ficha técnica del servicio</h2>
         <div class="service-ficha" style="background: var(--bg-hover); border-radius: 12px; padding: 2rem; margin-top: 2rem; border: 1px solid var(--border);">
           <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; font-size: 0.95rem;">
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-check" style="color: var(--orange); margin-right: 0.5rem;"></i> Qué incluye exactamente:</span>
-              <span style="color: var(--text);">Creación o edición de plugins de WordPress para aumentar su funcionalidad, adaptarla a las necesidades exactas del cliente o eliminar carga de código innecesaria.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Qué incluye exactamente:</span>
+              <span style="color: var(--text);">Creación o refactorización de plugins de WordPress para adaptar la lógica exacta de tu negocio, integrar APIs o sustituir plugins pesados por código ligero.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-xmark" style="color: #ef4444; margin-right: 0.5rem;"></i> Qué NO incluye:</span>
-              <span style="color: var(--text);">Diseños de plugins que necesiten un contenido visual muy fuerte (mi enfoque es la eficiencia técnica y funcional).</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Entregables y despliegue:</span>
+              <span style="color: var(--text);">Plugin funcional documentado en <code>.zip</code>, probado primero en una copia Staging de la web del cliente para evitar cualquier impacto en producción.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-box-open" style="color: var(--muted); margin-right: 0.5rem;"></i> Entregables y despliegue:</span>
-              <span style="color: var(--text);">Plugin funcional, testeado primero en una copia de la web del cliente para minimizar cualquier impacto y evitar caídas en producción.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Duración habitual:</span>
+              <span style="color: var(--text);">De 1 a 3 semanas según alcance funcional.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-clock" style="color: var(--muted); margin-right: 0.5rem;"></i> Duración habitual:</span>
-              <span style="color: var(--text);">Entre 2 y 4 semanas.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Cuándo NO merece la pena:</span>
+              <span style="color: var(--text);">Cuando ya existe en el repositorio oficial un plugin gratuito, mantenido y ligero que resuelve exactamente lo que necesitas.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-list-check" style="color: var(--muted); margin-right: 0.5rem;"></i> Requisitos del cliente:</span>
-              <span style="color: var(--text);">Acceso para realizar una copia de su sitio web y los diseños previos (si fuesen necesarios para la interfaz del plugin).</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Stack Tecnológico:</span>
+              <span style="color: var(--text);">WordPress Core APIs, WooCommerce HPOS, PHP 8.x, REST API, SQL optimizado y JS nativo.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-triangle-exclamation" style="color: var(--orange); margin-right: 0.5rem;"></i> Cuándo NO merece la pena:</span>
-              <span style="color: var(--text);">Cuando ya existe un plugin gratuito, seguro y ligero que hace exactamente la función que necesitas.</span>
-            </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-code" style="color: var(--muted); margin-right: 0.5rem;"></i> Stack Tecnológico:</span>
-              <span style="color: var(--text);">WordPress, PHP, CSS, HTML.</span>
-            </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-star" style="color: var(--orange); margin-right: 0.5rem;"></i> Casos de uso / Ejemplos:</span>
-              <span style="color: var(--text);">Por ejemplo, mi propio <a href="https://aprendizdeseo.gumroad.com/l/plugin-reviews" target="_blank" rel="noopener noreferrer" style="color:var(--orange);text-decoration:underline;">Plugin de Reseñas</a>.</span>
-            </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-tag" style="color: var(--muted); margin-right: 0.5rem;"></i> Inversión ("Desde"):</span>
-              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange);">150 €</span>
-            </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-handshake" style="color: var(--muted); margin-right: 0.5rem;"></i> Proceso de contratación:</span>
-              <span style="color: var(--text);">Siempre trabajo solicitando un 50% por adelantado antes de empezar, y el 50% restante cuando la funcionalidad se valida en el servidor de pruebas.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Inversión («Desde»):</span>
+              <span class="tabular-nums" style="font-size: 1.15rem; font-weight: 800; color: var(--orange);">150 € + IVA</span>
             </li>
             <li style="display: flex; flex-direction: column; gap: 0.25rem;">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-arrow-right-arrow-left" style="color: var(--muted); margin-right: 0.5rem;"></i> Alternativa si no encajamos:</span>
-              <span style="color: var(--text);">Si no te encaja mi servicio, contacta conmigo igualmente. Conozco a gente del sector de absoluta confianza a los que te puedo derivar.</span>
+              <span style="font-weight: 700; color: var(--black);">Proceso de contratación:</span>
+              <span style="color: var(--text);">50 % al inicio tras cerrar la especificación funcional y 50 % cuando validas el funcionamiento en entorno de pruebas.</span>
             </li>
           </ul>
         </div>
@@ -144,6 +148,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </aside>
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
   <?php
   $cta = ['title' => '¿Necesitas una funcionalidad que ningún plugin cubre bien?', 'subtitle' => 'Cuéntame qué hace falta. Te digo si tiene sentido desarrollarlo a medida.', 'btn_label' => 'Hablar sobre mi proyecto', 'btn_href' => '/contacto/', 'whatsapp' => true, 'variant' => 'dark'];

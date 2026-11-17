@@ -3,8 +3,9 @@ require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
-    'title'        => 'Agencia SEO en Albacete · Consultor SEO Técnico',
-    'description'  => 'Agencia SEO en Albacete con trato directo de ingeniero informático (sin intermediarios). Posicionamiento web en Google, SEO Local Maps y WordPress. Diagnóstico gratis.',
+    'title'        => 'Agencia SEO en Albacete (Sin Intermediarios) · Víctor Alonso',
+    'raw_title'    => true,
+    'description'  => 'Posicionamiento web y SEO Local en Albacete directo con ingeniero informático. Sin comerciales ni permanencia. Diagnóstico técnico gratuito de tu web en 24h.',
     'canonical'    => '/',
     'body_class'   => 'page-home',
     'schema_types' => ['LocalBusiness', 'Service', 'FAQPage'],
@@ -13,8 +14,13 @@ $page = page_config([
         'name' => 'Agencia SEO en Albacete y Consultoría Técnica · Víctor Alonso',
         'serviceType' => 'Agencia SEO en Albacete, Consultor SEO técnico, Posicionamiento Web y WordPress',
         'areaServed' => [
-            ['@type' => 'Place', 'name' => 'Albacete'],
+            ['@type' => 'City', 'name' => 'Albacete'],
+            ['@type' => 'City', 'name' => 'Ciudad Real'],
+            ['@type' => 'State', 'name' => 'Castilla-La Mancha'],
             ['@type' => 'Country', 'name' => 'España']
+        ],
+        'offers' => [
+            'minPrice' => 250
         ]
     ],
     'active_nav'   => 'inicio',
@@ -22,15 +28,19 @@ $page = page_config([
     'faq_items'    => [
         [
             'q' => '¿Qué diferencia hay entre contratar una agencia SEO en Albacete tradicional y trabajar conmigo?',
-            'a' => 'En una agencia SEO tradicional suele haber comerciales, gestores de cuentas y perfiles junior ejecutando tareas estándar. Conmigo tratas directamente con un ingeniero informático y consultor SEO sénior en Albacete que diagnostica el código, la arquitectura, los logs de servidor y la intención de búsqueda, e implementa los cambios técnicos sin intermediarios.'
+            'a' => 'En una agencia SEO tradicional suele haber comerciales, gestores de cuentas y perfiles junior ejecutando tareas estándar con plantillas. Conmigo tratas directamente con un ingeniero informático y consultor SEO sénior en Albacete que diagnostica el código, la arquitectura, los logs de servidor y la intención de búsqueda, e implementa los cambios técnicos sin intermediarios ni permanencias.'
         ],
         [
             'q' => '¿Qué incluye el servicio de posicionamiento web y SEO local en Albacete?',
-            'a' => 'Incluye auditoría técnica inicial, optimización de Core Web Vitals y código (WordPress/PHP), arquitectura de páginas transaccionales, optimización de ficha Google Business Profile para aparecer en el Local Pack de Albacete, marcado Schema LocalBusiness y seguimiento mensual con datos reales de Search Console y conversiones.'
+            'a' => 'Incluye auditoría técnica inicial, optimización de Core Web Vitals y código (WordPress/PHP), arquitectura de páginas transaccionales, optimización de ficha Google Business Profile para aparecer en el Local Pack de Google Maps en Albacete, marcado Schema LocalBusiness y seguimiento mensual con datos reales de Search Console y conversiones.'
         ],
         [
-            'q' => '¿Haces una valoración inicial antes de contratar?',
-            'a' => 'Sí. Reviso el estado técnico e indexación de tu web sin coste ni compromiso para decirte con claridad qué está frenando tu visibilidad orgánica y si realmente tiene retorno trabajar el SEO en tu caso.'
+            'q' => '¿Cuánto cuesta contratar posicionamiento SEO en Albacete y hay permanencia?',
+            'a' => 'Trabajo sin contratos de permanencia forzosa. Las auditorías SEO técnicas puntuales parten desde 350 € y el acompañamiento mensual de posicionamiento web y SEO local desde 250 €/mes según la competencia del sector y el tamaño del sitio web.'
+        ],
+        [
+            'q' => '¿Haces una valoración inicial gratuita antes de contratar?',
+            'a' => 'Sí. Reviso el estado técnico, la velocidad y la indexación de tu web en menos de 24 horas laborables sin coste ni compromiso para decirte con claridad qué está frenando tu visibilidad en Google y si realmente tiene retorno invertir en SEO en tu caso.'
         ]
     ],
 ]);
@@ -44,17 +54,16 @@ require __DIR__ . '/includes/header.php';
   <section class="hero" aria-labelledby="hero-heading">
     <div class="container hero-inner">
       <div class="hero-content">
-        <span class="hero-eyebrow">Agencia SEO en Albacete · Ingeniero Informático & Consultor Técnico</span>
         <h1 id="hero-heading">
           Agencia SEO en Albacete y Consultor de Posicionamiento Web
         </h1>
         <p class="hero-desc">
           Soy Víctor Alonso: consultor SEO técnico e ingeniero informático en Albacete.
-          Mejoro el posicionamiento web de tu empresa con diagnóstico técnico real,
-          estrategia SEO basada en datos e implementación directa en tu web. La solvencia de una agencia con la cercanía y agilidad de un profesional independiente.
+          Mejoro el posicionamiento web de tu empresa con diagnóstico técnico en código,
+          estrategia basada en datos de Search Console e implementación directa sin comerciales ni intermediarios.
         </p>
         <p class="hero-desc" style="margin-top:1rem;">
-          Especialista en posicionamiento web en Albacete, auditorías técnicas, SEO local para Google Maps y optimización WPO / WordPress para empresas y profesionales.
+          Especialista en posicionamiento web en Albacete y <a href="/servicios/seo-ciudad-real/" style="color:#FB923C; text-decoration:underline; font-weight:600;">Ciudad Real</a>, SEO local para Google Maps, <a href="/servicios/auditoria-seo/" style="color:#FB923C; text-decoration:underline; font-weight:600;">auditorías SEO técnicas</a> y optimización WPO / WordPress para empresas.
         </p>
         <div class="hero-actions" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
           <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico gratuito</a>
@@ -79,9 +88,8 @@ require __DIR__ . '/includes/header.php';
   <!-- Problemas reales -->
   <section class="section" aria-labelledby="problemas-heading">
     <div class="container">
-      <span class="section-label">El diagnóstico primero</span>
-      <h2 class="section-title" id="problemas-heading">Síntomas que veo con frecuencia</h2>
-      <p class="section-intro">Antes de proponer soluciones, reviso por qué tu web no está funcionando como debería. Estos son los problemas más habituales que encuentro.</p>
+      <h2 class="section-title" id="problemas-heading">Síntomas frecuentes que diagnostico en empresas de Albacete y España</h2>
+      <p class="section-intro">Antes de proponer cuotas mensuales, reviso en el código y en Search Console por qué tu web no está convirtiendo impresiones en clientes.</p>
       <div class="problems-grid" style="margin-top:2rem">
         <div class="problem-item">
           <div class="problem-bullet" aria-hidden="true"></div>
@@ -132,9 +140,8 @@ require __DIR__ . '/includes/header.php';
   <!-- Metodología -->
   <section class="section section--dark" aria-labelledby="metodologia-heading">
     <div class="container">
-      <span class="section-label" style="color:var(--orange)">Cómo trabajo</span>
-      <h2 class="section-title" id="metodologia-heading" style="color:#fff">Metodología, no ocurrencias</h2>
-      <p class="section-intro" style="color:rgba(255,255,255,.65);margin-bottom:2.5rem">Prefiero priorizar 10 acciones ejecutables antes que entregar una auditoría de 80 páginas que nadie implementa.</p>
+      <h2 class="section-title" id="metodologia-heading" style="color:#fff">Metodología técnica, no ocurrencias</h2>
+      <p class="section-intro" style="color:rgba(255,255,255,.75);margin-bottom:2.5rem">Prefiero priorizar 10 acciones ejecutables antes que entregar una auditoría de 80 páginas que nadie implementa.</p>
       <div class="method-steps">
         <div class="method-step">
           <h3>Diagnóstico</h3>
@@ -163,9 +170,8 @@ require __DIR__ . '/includes/header.php';
   <!-- Servicios -->
   <section class="section section--alt" id="servicios" aria-labelledby="servicios-heading">
     <div class="container">
-      <span class="section-label">Lo que hago</span>
       <h2 class="section-title" id="servicios-heading">Servicios de posicionamiento SEO en Albacete y optimización técnica</h2>
-      <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento web en Albacete, desarrollo WordPress y mantenimiento para negocios que necesitan algo más que textos bonitos.</p>
+      <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento web en Albacete y <a href="/servicios/seo-ciudad-real/" style="color:var(--orange);text-decoration:underline;font-weight:600;">Ciudad Real</a>, desarrollo WordPress y mantenimiento para negocios que necesitan resultados medibles.</p>
       <div class="cards-grid">
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -239,7 +245,6 @@ require __DIR__ . '/includes/header.php';
         >
       </div>
       <div class="auth-text">
-        <span class="section-label">Por qué trabajar conmigo</span>
         <h2 id="diferencial-heading">Agencia SEO en Albacete sin intermediarios: ingeniería y trato directo</h2>
         <p>Me llamo Víctor Alonso. Soy consultor SEO e ingeniero informático con años de experiencia en posicionamiento web, desarrollo WordPress, PHP y analítica digital para empresas en Albacete y toda España.</p>
         <p>La ventaja frente a una agencia SEO convencional: detecto los problemas directamente en el código, en la arquitectura y en el contenido, resolviéndolos yo mismo sin comerciales ni cadenas de subcontratación.</p>
@@ -252,15 +257,45 @@ require __DIR__ . '/includes/header.php';
         </ul>
         <div class="auth-tags" aria-label="Especialidades">
           <span class="auth-tag">SEO Técnico</span>
+          <span class="auth-tag">SEO Local Albacete</span>
           <span class="auth-tag">PHP / WordPress</span>
           <span class="auth-tag">Core Web Vitals</span>
           <span class="auth-tag">Laravel</span>
           <span class="auth-tag">Datos estructurados</span>
-          <span class="auth-tag">Google Analytics 4</span>
-          <span class="auth-tag">Search Console</span>
-          <span class="auth-tag">WPO</span>
+          <span class="auth-tag">Search Console &amp; Logs</span>
         </div>
-        <a href="/sobre-mi/" class="btn btn--primary">Más sobre mí</a>
+        <div class="comparison-wrap" style="margin-top:1.5rem; margin-bottom:1.5rem;">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Qué comparas</th>
+                <th>Agencia SEO Tradicional</th>
+                <th>Víctor Alonso (Albacete)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Quién toca tu web</strong></td>
+                <td>Comercial + becario o gestor sin perfil técnico</td>
+                <td>Ingeniero informático sénior de principio a fin</td>
+              </tr>
+              <tr>
+                <td><strong>Implementación</strong></td>
+                <td>Te mandan un PDF para que lo aplique tu informático</td>
+                <td>Implemento directamente código, WPO, Schema y servidor</td>
+              </tr>
+              <tr>
+                <td><strong>Compromiso</strong></td>
+                <td>Permanencias cerradas de 6 a 12 meses</td>
+                <td>Sin permanencia: te quedas por resultados verificables</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="/contacto/" class="btn btn--primary">Pedir diagnóstico gratuito</a>
+          <a href="/sobre-mi/" class="btn btn--secondary">Más sobre mi trayectoria</a>
+        </div>
       </div>
     </div>
   </section>
@@ -268,9 +303,8 @@ require __DIR__ . '/includes/header.php';
   <!-- Herramientas SEO propias -->
   <section class="section section--alt" aria-labelledby="herramientas-heading">
     <div class="container">
-      <span class="section-label">Herramientas creadas por mí</span>
-      <h2 class="section-title" id="herramientas-heading">Herramientas SEO gratuitas</h2>
-      <p class="section-intro" style="margin-bottom:2rem">Como consultor SEO en Albacete con perfil técnico, desarrollo mis propias herramientas de análisis. Úsalas gratis.</p>
+      <h2 class="section-title" id="herramientas-heading">Herramientas SEO gratuitas programadas a medida</h2>
+      <p class="section-intro" style="margin-bottom:2rem">Como consultor SEO en Albacete con perfil de ingeniería, desarrollo mis propias utilidades de auditoría técnica. Úsalas gratis y sin registro.</p>
       <div class="cards-grid">
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -306,7 +340,6 @@ require __DIR__ . '/includes/header.php';
   <!-- Casos reales preview -->
   <section class="section" aria-labelledby="casos-heading">
     <div class="container">
-      <span class="section-label">Sin inventar cifras</span>
       <h2 class="section-title" id="casos-heading">Casos reales de posicionamiento web y SEO técnico</h2>
       <p class="section-intro" style="margin-bottom:2rem">Proyectos anonimizados con el contexto, el problema, el diagnóstico y lo que se puede aprender de cada uno.</p>
       <div class="cards-grid">
@@ -337,8 +370,7 @@ require __DIR__ . '/includes/header.php';
   <!-- Testimonios -->
   <section class="section section--dark" aria-labelledby="testimonios-heading">
     <div class="container">
-      <span class="section-label" style="color:var(--orange)">Lo que dicen</span>
-      <h2 class="section-title" id="testimonios-heading" style="color:#fff">Clientes reales</h2>
+      <h2 class="section-title" id="testimonios-heading" style="color:#fff">Opiniones de clientes reales</h2>
       <div class="testimonials-grid" style="margin-top:2rem">
         <blockquote class="testimonial">
           <p class="testimonial-stars" aria-label="5 de 5 estrellas">★★★★★</p>

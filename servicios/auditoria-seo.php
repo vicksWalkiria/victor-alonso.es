@@ -3,16 +3,18 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $faq = [
+  ['q' => '¿Cómo saber si mi web está bien posicionada en Google?', 'a' => 'Para saber si tu web está bien posicionada no basta con buscar tu nombre comercial: debes revisar en Google Search Console cuántas impresiones y clics captas por búsquedas sin marca (servicios o productos reales), qué porcentaje de tus URLs estratégicas están indexadas en Top 10, si existen páginas huérfanas o canibalizaciones restando autoridad, y si cumples Core Web Vitals (LCP menor de 2,5 s). En mi auditoría SEO cruzo todos estos datos para entregarte un diagnóstico exacto.'],
   ['q' => '¿Qué incluye exactamente una auditoría SEO técnica?', 'a' => 'Analizo los 5 pilares críticos: rastreo e indexabilidad (robots.txt, canonicals, noindex, errores 404/500), Core Web Vitals y WPO (LCP, INP, CLS), arquitectura web y canibalizaciones, análisis de logs del servidor y datos de Search Console para detectar caídas de tráfico.'],
   ['q' => '¿Cuánto tiempo se tarda en realizar la auditoría SEO técnica?', 'a' => 'El plazo habitual es de 5 a 7 días laborables. Al finalizar entrego un informe técnico priorizado por impacto económico vs esfuerzo y una sesión explicativa para resolver cualquier duda con tu equipo.'],
   ['q' => '¿Qué diferencia hay entre una auditoría automática y una profesional?', 'a' => 'Las herramientas automáticas (Semrush, Ahrefs, Sitebulb) solo generan listados de alertas sin contexto de negocio. Una auditoría técnica manual interpreta los logs reales, Search Console y el código para priorizar lo que realmente te hará ganar tráfico y ventas.'],
   ['q' => '¿Puedes implementar tú mismo las soluciones técnicas?', 'a' => 'Sí. Como ingeniero informático y desarrollador web, ofrezco la opción de implementar directamente las soluciones en WordPress, Laravel, Shopify, Prestashop o código a medida, evitando que el informe quede sin ejecutar.'],
-  ['q' => '¿Qué accesos necesitas para iniciar la auditoría?', 'a' => 'Solo necesito acceso como usuario a Google Search Console, Google Analytics 4 y, si es posible, acceso temporal al panel de control o logs del servidor web.']
+  ['q' => '¿Qué accesos necesitas para iniciar la auditoría?', 'a' => 'Solo necesito acceso como usuario lector a Google Search Console, Google Analytics 4 y, si es posible, acceso temporal al panel de control o logs del servidor web.']
 ];
 
 $page = page_config([
-  'title'        => 'Auditoría SEO Técnica: detecta por qué tu web no posiciona',
-  'description'  => 'Auditoría SEO técnica realizada por consultor e ingeniero. Detecto errores de rastreo, indexación, Core Web Vitals y canibalizaciones y los corrijo directamente. Informe priorizado por impacto.',
+  'title'        => 'Auditoría SEO Técnica Profesional (Desde 350 €) · Víctor Alonso',
+  'raw_title'    => true,
+  'description'  => 'Auditoría SEO técnica realizada por ingeniero informático (desde 350 €). Detecto fallos de indexación, logs, Core Web Vitals y canibalizaciones con plan claro.',
   'canonical'    => '/servicios/auditoria-seo/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
@@ -113,51 +115,51 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <li class="checklist-item">Sesión de revisión para resolver dudas sobre el informe.</li>
         </ul>
 
+        <h2>¿Cómo saber si tu web está bien posicionada hoy? (Autodiagnóstico rápido)</h2>
+        <p>Antes incluso de contratar una auditoría, puedes comprobar en 2 minutos si tu dominio sufre bloqueos técnicos graves usando las herramientas gratuitas que he programado:</p>
+        <ul class="checklist" style="margin:1rem 0 2rem">
+          <li class="checklist-item"><div><strong>¿Tus canonicals y cabeceras HTTP son limpios?</strong> Compruébalo en vivo con mi <a href="/herramientas/analizador-seo/" style="color:var(--orange);font-weight:600;text-decoration:underline;">Analizador SEO de URLs y TTFB</a>.</div></li>
+          <li class="checklist-item"><div><strong>¿Tu sitemap XML incluye páginas rotas o más de 75 caracteres?</strong> Audítalo recursivamente en el <a href="/herramientas/extractor-sitemap/" style="color:var(--orange);font-weight:600;text-decoration:underline;">Extractor y Auditor de Sitemaps XML</a>.</div></li>
+          <li class="checklist-item"><div><strong>¿Dónde malgasta Googlebot su presupuesto de rastreo?</strong> Sube tu <code>access.log</code> a mi <a href="/herramientas/analizador-logs/" style="color:var(--orange);font-weight:600;text-decoration:underline;">Analizador de Logs SEO</a>.</div></li>
+        </ul>
+
         <h2>Opción de implementación incluida</h2>
         <p>Si no tienes equipo técnico o tu desarrollador actual no tiene experiencia en SEO técnico, puedo implementar directamente los cambios prioritarios. Esto evita el cuello de botella habitual: el informe se hace, el cliente lo recibe, y nadie lo ejecuta.</p>
 
         <h2>Ficha técnica del servicio</h2>
         <div class="service-ficha" style="background: var(--bg-hover); border-radius: 12px; padding: 2rem; margin-top: 2rem; border: 1px solid var(--border);">
           <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; font-size: 0.95rem;">
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-check" style="color: var(--orange); margin-right: 0.5rem;"></i> Qué incluye exactamente:</span>
-              <span style="color: var(--text);">Auditoría técnica SEO integral: detección de errores de enlazado interno, bucles de redirecciones, problemas técnicos estructurales, lentitud (WPO/Core Web Vitals), duplicidades y páginas huérfanas.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Qué incluye exactamente:</span>
+              <span style="color: var(--text);">Auditoría técnica SEO integral: detección de errores de enlazado interno, bucles de redirecciones, problemas técnicos estructurales, lentitud (WPO/Core Web Vitals), duplicidades, logs de servidor y páginas huérfanas.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-xmark" style="color: #ef4444; margin-right: 0.5rem;"></i> Qué NO incluye:</span>
-              <span style="color: var(--text);">Los arreglos y ejecuciones en el código (la implementación se puede contratar y presupuestar aparte).</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Qué NO incluye:</span>
+              <span style="color: var(--text);">Los arreglos y ejecuciones en el código (la implementación se puede contratar y presupuestar aparte sin compromiso).</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-box-open" style="color: var(--muted); margin-right: 0.5rem;"></i> Entregables:</span>
-              <span style="color: var(--text);">Informe PDF ejecutivo con los detalles de los problemas detectados y la especificación técnica exacta de la solución para cada uno.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Entregables:</span>
+              <span style="color: var(--text);">Informe ejecutivo en PDF priorizado por retorno económico vs. esfuerzo, con especificación técnica exacta para cada incidencia y videollamada de revisión.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-clock" style="color: var(--muted); margin-right: 0.5rem;"></i> Duración habitual:</span>
-              <span style="color: var(--text);">1 semana de trabajo intensivo.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Duración habitual:</span>
+              <span style="color: var(--text);">5 a 7 días laborables de análisis intensivo.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-list-check" style="color: var(--muted); margin-right: 0.5rem;"></i> Requisitos del cliente:</span>
-              <span style="color: var(--text);">No importa el tipo de web. Solo necesito accesos a Google Search Console, Google Analytics y (si es posible) al backend/servidor.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Requisitos del cliente:</span>
+              <span style="color: var(--text);">Acceso de lectura a Google Search Console, Google Analytics 4 y (opcionalmente) logs del servidor web.</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-bullseye" style="color: var(--orange); margin-right: 0.5rem;"></i> Cuándo ES MÁS NECESARIA:</span>
-              <span style="color: var(--text);">Es indispensable cuando el equipo de desarrollo no ha tenido en cuenta el SEO o cuando mucha gente ha pasado por la web creando contenido y artículos a lo largo del tiempo sin una estructura lógica.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Tecnologías / CMS compatibles:</span>
+              <span style="color: var(--text);">Cualquier tecnología web (WordPress, WooCommerce, Shopify, Prestashop, Laravel, PHP a medida o frameworks JS).</span>
             </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-code" style="color: var(--muted); margin-right: 0.5rem;"></i> Tecnologías / CMS compatibles:</span>
-              <span style="color: var(--text);">Cualquier tecnología WEB (WordPress, Shopify, Prestashop, desarrollos a medida en React/Angular/PHP, etc.).</span>
-            </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-tag" style="color: var(--muted); margin-right: 0.5rem;"></i> Inversión ("Desde"):</span>
-              <span style="font-size: 1.1rem; font-weight: 800; color: var(--orange);">350 €</span>
-            </li>
-            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(0,0,0,0.05);">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-handshake" style="color: var(--muted); margin-right: 0.5rem;"></i> Proceso de contratación:</span>
-              <span style="color: var(--text);">Siempre trabajo solicitando un 50% por adelantado antes de empezar la auditoría, y el 50% restante a la entrega del informe final.</span>
+            <li style="display: flex; flex-direction: column; gap: 0.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+              <span style="font-weight: 700; color: var(--black);">Inversión («Desde»):</span>
+              <span class="tabular-nums" style="font-size: 1.15rem; font-weight: 800; color: var(--orange);">350 € + IVA</span>
             </li>
             <li style="display: flex; flex-direction: column; gap: 0.25rem;">
-              <span style="font-weight: 700; color: var(--black);"><i class="fa-solid fa-arrow-right-arrow-left" style="color: var(--muted); margin-right: 0.5rem;"></i> Alternativa si no encajamos:</span>
-              <span style="color: var(--text);">Si buscas un consultor SEO para cuota mensual o el presupuesto no encaja, habla conmigo igualmente. Conozco a gente del sector de confianza a la que te puedo derivar.</span>
+              <span style="font-weight: 700; color: var(--black);">Proceso de contratación:</span>
+              <span style="color: var(--text);">50 % al inicio tras validar el alcance de tu dominio y 50 % a la entrega y revisión del informe final.</span>
             </li>
           </ul>
         </div>

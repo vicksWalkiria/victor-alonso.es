@@ -3,7 +3,7 @@
  * header.php — Cabecera HTML común
  * Requiere: $page = page_config([...]) ya definido en la página que lo incluye.
  */
-$_full_title = h($page['title']) . ' | ' . h(SITE_NAME);
+$_full_title = !empty($page['raw_title']) ? h($page['title']) : (h($page['title']) . ' | ' . h(SITE_NAME));
 $_canonical  = SITE_URL . $page['canonical'];
 ?><!DOCTYPE html>
 <html lang="es">
@@ -50,8 +50,10 @@ $_canonical  = SITE_URL . $page['canonical'];
     <meta name="twitter:description" content="<?= h($page['description']) ?>">
     <meta name="twitter:image" content="<?= h($page['og_image']) ?>">
 
-    <!-- Cookie Consent CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <!-- Cookie Consent CSS (diferido para cero bloqueo de renderizado LCP) -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css"></noscript>
 
     <!-- CSS con Cache Busting dinámico -->
     <?php 

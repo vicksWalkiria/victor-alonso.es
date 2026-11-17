@@ -231,7 +231,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             <!-- Prioridad Recomendada UX -->
             <div style="margin: 1rem auto 1.5rem; max-width: 480px; background: rgba(232,104,26,0.06); border: 1px dashed rgba(232,104,26,0.3); border-radius: 8px; padding: 0.9rem 1.1rem; font-size: 0.85rem; text-align: left; line-height: 1.45;">
               <span style="display: block; color: var(--orange); font-weight: 700; margin-bottom: 0.25rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
-                <i class="fa-solid fa-circle-exclamation"></i> Prioridad recomendada para mitigar pérdidas:
+                <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Prioridad recomendada para mitigar pérdidas:
               </span>
               <span style="color: var(--text);">Revisar tiempo LCP, eliminar recursos que bloquean el renderizado, optimizar la carga de la imagen hero principal, activar la caché del servidor y auditar scripts de JavaScript de terceros.</span>
             </div>
@@ -271,18 +271,18 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           <!-- COMPARTE -->
           <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem; padding: 1.25rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; font-size: 0.9rem;">
-            <span style="color: var(--muted); font-weight: 600;"><i class="fa-solid fa-share-nodes" style="color: var(--orange); margin-right: 0.25rem;"></i> Compartir informe:</span>
+            <span style="color: var(--muted); font-weight: 600;"><svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange); margin-right: 0.25rem;"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Compartir informe:</span>
             
             <button type="button" onclick="wpoCopyReport()" class="wpo-btn-share" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; background: #222; color: #fff; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s; cursor: pointer;">
-              <i class="fa-solid fa-copy"></i> Copiar
+              <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copiar
             </button>
 
             <a id="share-tw" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; background: rgba(29,161,242,0.1); color: #1da1f2; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s;">
-              <i class="fa-brands fa-twitter"></i> Twitter / X
+              <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"/></svg> Twitter / X
             </a>
 
             <a id="share-li" href="#" target="_blank" style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; background: rgba(10,102,194,0.1); color: #0a66c2; padding: 0.5rem 1rem; border-radius: 20px; transition: all 0.2s;">
-              <i class="fa-brands fa-linkedin"></i> LinkedIn
+              <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg> LinkedIn
             </a>
           </div>
 
@@ -304,7 +304,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
           <div style="text-align: center; margin-top: 2rem;">
             <button type="button" id="wpo-reset-btn" style="color: var(--muted); font-weight: 600; font-size: 0.9rem; transition: color 0.2s;" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--muted)'">
-              <i class="fa-solid fa-rotate-left" style="margin-right: 0.25rem;"></i> Analizar otra página web
+              <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.25rem;"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Analizar otra página web
             </button>
           </div>
 
@@ -336,7 +336,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
         <div style="margin-top: 3.5rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
           <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
-            <i class="fa-solid fa-gauge-high" style="color: var(--orange);"></i> ¿Tu web arroja pérdidas financieras por velocidad de carga?
+            <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><path d="M12 14l4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg> ¿Tu web arroja pérdidas financieras por velocidad de carga?
           </h3>
           <p style="font-size: 0.95rem; line-height: 1.6; margin: 0; color: var(--text);">
             La velocidad de carga no solo es crucial para la experiencia de usuario, sino también para mejorar tu visibilidad en buscadores. Si notas lentitud en el móvil o tu servidor tiene un tiempo de respuesta elevado, contar con soporte experto es vital. En <a href="/">Víctor Alonso SEO</a> diseñamos auditorías de optimización <a href="/servicios/seo-tecnico/">WPO y SEO técnico</a> adaptadas a las Core Web Vitals para mejorar el rendimiento de tu negocio online.

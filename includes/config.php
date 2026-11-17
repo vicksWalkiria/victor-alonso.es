@@ -90,6 +90,7 @@ define('WA_MSG_MALWARE',     rawurlencode('Hola Víctor, tengo mi WordPress infe
 define('WA_MSG_SEO',         rawurlencode('Hola Víctor, me interesa contratar tus servicios de SEO. ¿Podemos hablar?'));
 define('WA_MSG_HERRAMIENTA', rawurlencode('Hola Víctor, he estado usando tu herramienta de SEO y me gustaría consultarte algo.'));
 define('WA_MSG_MANTENIMIENTO', rawurlencode('Hola Víctor, me interesa el servicio de mantenimiento WordPress. ¿Podemos hablar?'));
+define('WA_MSG_CIUDAD_REAL', rawurlencode('Hola Víctor, busco consultor SEO para mi negocio en Ciudad Real y me gustaría pedir diagnóstico.'));
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -102,7 +103,7 @@ function h(string $str): string {
 
 /**
  * Genera un enlace de WhatsApp con mensaje pre-rellenado según contexto.
- * @param string $context  'general' | 'malware' | 'seo' | 'herramienta' | 'mantenimiento'
+ * @param string $context  'general' | 'malware' | 'seo' | 'herramienta' | 'mantenimiento' | 'ciudad_real'
  * @return string  URL completa de wa.me con ?text=...
  */
 function wa_url(string $context = 'general'): string {
@@ -113,6 +114,7 @@ function wa_url(string $context = 'general'): string {
         'seo'          => WA_MSG_SEO,
         'herramienta'  => WA_MSG_HERRAMIENTA,
         'mantenimiento'=> WA_MSG_MANTENIMIENTO,
+        'ciudad_real'  => WA_MSG_CIUDAD_REAL,
     ];
     $msg = $msgs[$context] ?? WA_MSG_GENERAL;
     return "https://wa.me/{$phone}?text={$msg}";
@@ -145,12 +147,15 @@ function page_config(array $opts): array {
         $default_wa = 'malware';
     } elseif (strpos($can, 'mantenimiento-wordpress') !== false) {
         $default_wa = 'mantenimiento';
+    } elseif (strpos($can, 'seo-ciudad-real') !== false) {
+        $default_wa = 'ciudad_real';
     } elseif (strpos($can, '/servicios/') === 0) {
         $default_wa = 'seo';
     }
 
     $defaults = [
         'title'        => SITE_NAME,
+        'raw_title'    => false,
         'description'  => '',
         'canonical'    => '/',
         'og_image'     => SITE_IMAGE,

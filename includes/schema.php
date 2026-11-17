@@ -48,7 +48,7 @@ function render_schemas(array $page): void {
         $nodes[] = _node_contact_page($page['canonical']);
     }
 
-    if (in_array('WebApplication', $types)) {
+    if (in_array('WebApplication', $types) || in_array('SoftwareApplication', $types)) {
         $rating_data = null;
         if (!empty($page['rating_id'])) {
             require_once __DIR__ . '/ratings-helper.php';
@@ -57,7 +57,8 @@ function render_schemas(array $page): void {
         }
         $category = $page['applicationCategory'] ?? 'DeveloperApplication';
         $features = $page['featureList'] ?? null;
-        $nodes[] = _node_web_application($page['title'], $page['description'], $page['canonical'], $rating_data, $category, $features);
+        $app_type = in_array('SoftwareApplication', $types) ? 'SoftwareApplication' : 'WebApplication';
+        $nodes[] = _node_web_application($page['title'], $page['description'], $page['canonical'], $rating_data, $category, $features, $app_type);
     }
 
     if (in_array('ItemList', $types) && !empty($page['item_list'])) {
@@ -140,14 +141,17 @@ function _node_local_business(): array {
         ],
         'areaServed' => [
             ['@type' => 'City',    'name' => 'Albacete'],
+            ['@type' => 'City',    'name' => 'Ciudad Real'],
             ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
             ['@type' => 'Country', 'name' => 'España'],
         ],
         'knowsAbout' => [
-            'Consultoría SEO Freelance en Albacete',
+            'Agencia y Consultoría SEO en Albacete',
+            'Consultor SEO en Ciudad Real y Castilla-La Mancha',
             'SEO Técnico',
             'SEO Local en Albacete',
             'Auditorías SEO',
+            'Mantenimiento WordPress Profesional',
             'Desarrollo WordPress',
             'Reparación de WordPress Urgente',
             'Limpieza de Malware WordPress'
@@ -207,7 +211,15 @@ function _node_service(array $data, string $description): array {
         $node['areaServed'] = $data['areaServed'];
     }
 
-    if (!empty($data['offers']['minPrice'])) {
+    if (!empty($data['offers']['maxPrice']) && !empty($data['offers']['minPrice'])) {
+        $node['offers'] = [
+            '@type'         => 'AggregateOffer',
+            'lowPrice'      => (string)$data['offers']['minPrice'],
+            'highPrice'     => (string)$data['offers']['maxPrice'],
+            'offerCount'    => (string)($data['offers']['offerCount'] ?? 3),
+            'priceCurrency' => 'EUR',
+        ];
+    } elseif (!empty($data['offers']['minPrice'])) {
         $node['offers'] = [
             '@type'              => 'Offer',
             'priceCurrency'      => 'EUR',
@@ -233,12 +245,17 @@ function _node_service(array $data, string $description): array {
 function _node_faq(array $items): array {
     $entities = [];
     foreach ($items as $item) {
+        $q = $item['q'] ?? $item['question'] ?? '';
+        $a = $item['a'] ?? $item['answer'] ?? '';
+        if ($q === '' || $a === '') {
+            continue;
+        }
         $entities[] = [
             '@type'          => 'Question',
-            'name'           => $item['q'],
+            'name'           => trim(strip_tags($q)),
             'acceptedAnswer' => [
                 '@type' => 'Answer',
-                'text'  => $item['a'],
+                'text'  => trim(strip_tags($a)),
             ],
         ];
     }
@@ -297,14 +314,14 @@ function _node_contact_page(string $canonical): array {
     ];
 }
 
-function _node_web_application(string $name, string $description, string $canonical, ?array $rating_data = null, string $category = 'DeveloperApplication', ?array $features = null): array {
+function _node_web_application(string $name, string $description, string $canonical, ?array $rating_data = null, string $category = 'DeveloperApplication', ?array $features = null, string $app_type = 'WebApplication'): array {
     $node = [
-        '@type'                => 'WebApplication',
+        '@type'                => $app_type,
         'name'                 => $name,
         'description'          => $description,
         'url'                  => SITE_URL . $canonical,
         'applicationCategory'  => $category,
-        'operatingSystem'      => 'Web',
+        'operatingSystem'      => $app_type === 'SoftwareApplication' ? 'Chrome, Brave, Edge (Chromium)' : 'Web',
         'browserRequirements'  => 'Requiere JavaScript',
         'isAccessibleForFree'  => true,
         'creator'              => ['@id' => SITE_URL . '/#person'],

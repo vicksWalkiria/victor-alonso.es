@@ -224,7 +224,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
         <div style="margin-top: 3.5rem; background: rgba(232, 104, 26, 0.02); border: 1px dashed rgba(232, 104, 26, 0.3); padding: 1.75rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(232, 104, 26, 0.02);">
           <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
-            <i class="fa-solid fa-map-location-dot" style="color: var(--orange);"></i> ¿Quieres consolidar tu presencia local frente a tus competidores?
+            <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ¿Quieres consolidar tu presencia local frente a tus competidores?
           </h3>
             La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/contacto/" style="color:var(--orange); text-decoration:underline;">servicio de SEO Local</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos frente a la competencia de tu sector.
           </p>
