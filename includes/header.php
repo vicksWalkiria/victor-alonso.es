@@ -64,7 +64,7 @@ $_canonical  = SITE_URL . $page['canonical'];
     <link rel="stylesheet" href="/assets/css/styles.css?v=<?= $_css_version ?>">
 
     <!-- Favicons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="shortcut icon" href="/favicon.ico">
 
