@@ -89,7 +89,7 @@ Options -Indexes
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-XSS-Protection "1; mode=block"
   # AI Agent Discovery Link Headers (RFC 8288 / RFC 9727)
-  Header set Link '</.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/markdown", </.well-known/agent-skills/index.json>; rel="agent-skills", </.well-known/ai-catalog.json>; rel="ai-catalog"'
+  Header set Link '</.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/markdown", </llms-full.txt>; rel="alternate"; type="text/markdown", </.well-known/agent-skills/index.json>; rel="agent-skills", </.well-known/ai-catalog.json>; rel="ai-catalog"'
   Header append Vary "Accept"
   # Strict-Transport-Security solo si el certificado es permanente
   # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
@@ -103,6 +103,13 @@ Options -Indexes
     Header set Content-Type "application/linkset+json; charset=utf-8"
   </IfModule>
 </Files>
+
+<FilesMatch "^(llms\.txt|llms-full\.txt)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "text/plain; charset=utf-8"
+  </IfModule>
+</FilesMatch>
 
 <Files "auth.md">
   ForceType text/markdown

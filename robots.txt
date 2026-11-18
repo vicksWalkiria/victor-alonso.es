@@ -9,13 +9,25 @@ Disallow: /?s=
 Disallow: /*?s=
 Disallow: /cdn-cgi/
 
-# Content Signals for AI & Search preferences
-Content-Signal: ai-train=no, search=yes, ai-input=yes
+# Content Signals for AI & Search preferences (Full visibility for RAG & Model Knowledge)
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
-# ARD Capability Manifest
+# ARD Capability Manifest & LLM Dossiers
 Agentmap: https://www.victor-alonso.es/.well-known/ai-catalog.json
 
-# Explicit rules for major AI Agents & Crawlers
+# Explicit rules for major AI Search, Assistants & Foundation Models
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /gracias/
+Disallow: /includes/
+Disallow: /data/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /gracias/
+Disallow: /includes/
+Disallow: /data/
+
 User-agent: GPTBot
 Allow: /
 Disallow: /gracias/
@@ -75,5 +87,17 @@ Disallow: /data/
 Disallow: /?s=
 Disallow: /*?s=
 Disallow: /cdn-cgi/
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /gracias/
+Disallow: /includes/
+Disallow: /data/
+
+User-agent: DuckAssistBot
+Allow: /
+Disallow: /gracias/
+Disallow: /includes/
+Disallow: /data/
 
 Sitemap: https://www.victor-alonso.es/sitemap.xml
