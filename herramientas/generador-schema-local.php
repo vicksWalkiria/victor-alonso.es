@@ -30,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 }
 
 $page = page_config([
-    'title'        => 'Generador de Schema LocalBusiness JSON-LD',
-    'description'  => 'Genera gratis el marcado estructurado de datos de Schema.org en formato JSON-LD recomendado por Google para posicionamiento SEO local.',
+    'title'        => 'Generador Schema LocalBusiness JSON-LD Gratis (Sin Registro)',
+    'raw_title'    => true,
+    'description'  => 'Crea gratis y sin registro el código Schema LocalBusiness en formato JSON-LD con horarios y coordenadas GPS, validado y listo para copiar en tu web.',
     'canonical'    => '/herramientas/generador-schema-local/',
     'body_class'   => 'page-generador-schema',
     'schema_types' => ['WebApplication', 'FAQPage'],
@@ -69,9 +70,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="schema-h1">
     <div class="container">
-      <span class="hero-eyebrow">SEO Local Semántico</span>
       <h1 id="schema-h1">Generador Schema <span>LocalBusiness</span></h1>
-      <p class="page-hero-desc">Genera el marcado estructurado recomendado por Google para ayudar a los buscadores a procesar y entender mejor la información básica de tu negocio físico.</p>
+      <p class="page-hero-desc">Genera gratis y sin registro el marcado estructurado JSON-LD recomendado por Google para ayudar a los buscadores a procesar y entender la información oficial de tu negocio físico.</p>
     </div>
   </section>
 
@@ -226,6 +226,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
           <h3 style="color: var(--black); font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
             <svg class="svg-icon" aria-hidden="true" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--orange);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ¿Quieres consolidar tu presencia local frente a tus competidores?
           </h3>
+          <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: var(--text);">
             La correcta inyección de Schema JSON-LD es solo el primer paso. Para dominar el Local Pack de Google y las búsquedas locales en tu zona, necesitas una estrategia integral. Si quieres llevar tu negocio al siguiente nivel, puedo ofrecerte mi <a href="/contacto/" style="color:var(--orange); text-decoration:underline;">servicio de SEO Local</a> para optimizar tu ficha, tu web y la relevancia de tus contenidos frente a la competencia de tu sector.
           </p>
         </div>
@@ -335,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let jsonString = JSON.stringify(schema, null, 4);
         jsonString = jsonString.replace(/<\/script>/ig, '<\\/script>');
 
-        const fullScript = `<script type="application/ld+json">\n${jsonString}\n<\/script>`;
+        const fullScript = '<' + 'script type="application/ld+json">\n' + jsonString + '\n</' + 'script>';
         schemaCode.textContent = fullScript;
     }
 

@@ -180,9 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Configuración de Página
 $page = page_config([
-    'title'        => 'Herramienta para Auditar Sitemap XML y Extraer URLs Gratis',
+    'title'        => 'Extractor y Auditor Sitemap XML Gratis · Exporta URLs a CSV',
     'raw_title'    => true,
-    'description'  => 'Herramienta online gratis para auditar el sitemap XML de tu web sin registro. Extrae URLs de sitemaps anidados simulando Googlebot, mide longitud y exporta CSV.',
+    'description'  => 'Extrae las URLs de cualquier Sitemap XML o índice anidado gratis y sin registro. Simula Googlebot, audita etiquetas lastmod y descarga en CSV al instante.',
     'canonical'    => '/herramientas/extractor-sitemap/',
     'body_class'   => 'page-extractor-sitemap',
     'schema_types' => ['WebApplication', 'FAQPage'],
