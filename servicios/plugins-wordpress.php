@@ -141,13 +141,16 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Relacionado</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/servicios/desarrollo-wordpress/" style="color:var(--orange)">→ Desarrollo WordPress</a></li>
             <li><a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">→ Mantenimiento WordPress</a></li>
+            <li><a href="/servicios/reparacion-wordpress-urgente/" style="color:var(--orange)">→ Reparación WordPress Urgente</a></li>
+            <li><a href="https://walkiriaapps.com/servicios/desarrollo-wordpress/" target="_blank" rel="noopener noreferrer" style="color:var(--orange)">→ Desarrollo WordPress (Walkiria Apps)</a></li>
           </ul>
         </div>
       </aside>
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/related-wordpress.php'; ?>
 
   <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 

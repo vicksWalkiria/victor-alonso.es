@@ -3,9 +3,9 @@ require_once dirname(__DIR__) . '/includes/config.php';
 require_once dirname(__DIR__) . '/includes/schema.php';
 
 $page = page_config([
-  'title'        => 'Reparación e Intervención Urgente WordPress (Malware y 500)',
+  'title'        => 'Reparación WordPress Urgente: Limpieza Malware y Error 500',
   'raw_title'    => true,
-  'description'  => 'Intervención urgente en WordPress por ingeniero informático vía SSH: limpieza forense de malware recurrente, errores 500, pantalla blanca y bloqueo Google.',
+  'description'  => '¿WordPress hackeado, pantalla blanca o Error 500? Intervención urgente por ingeniero vía SSH: contención, limpieza manual de malware y blindaje real.',
   'canonical'    => '/servicios/reparacion-wordpress-urgente/',
   'body_class'   => 'page-servicio',
   'schema_types' => ['Service', 'FAQPage'],
@@ -66,9 +66,9 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       <div class="service-content">
 
         <!-- INTRO -->
-        <div class="alert alert--danger" style="margin-bottom: 2.5rem;">
-          <strong>No prometo milagros inmediatos, prometo un método seguro de reparación.</strong><br>
-          Si tu negocio está paralizado, tu instinto será buscar a alguien que prometa arreglarlo en "1 hora por 50€". Las reparaciones rápidas y reinstalaciones sin diagnóstico suelen borrar evidencias vitales y terminar en una nueva infección a los pocos días. Mi primer objetivo es analizar el vector de entrada y contener la amenaza.
+        <div class="diag-alert diag-alert--danger" style="margin-bottom: 2.5rem;">
+          <div class="diag-alert-title">No prometo milagros inmediatos, prometo un método seguro de reparación.</div>
+          <p class="diag-alert-desc" style="margin:0;">Si tu negocio está paralizado, tu instinto será buscar a alguien que prometa arreglarlo en «1 hora por 50 €». Las reparaciones rápidas y reinstalaciones sin diagnóstico suelen borrar evidencias vitales y terminar en una nueva infección a los pocos días. Mi primer objetivo es analizar el vector de entrada y contener la amenaza.</p>
         </div>
 
         <h2>Servicio de reparación de WordPress y solución de errores</h2>
@@ -165,6 +165,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
       </aside>
     </div>
   </section>
+
+  <?php require dirname(__DIR__) . '/includes/related-wordpress.php'; ?>
 
   <?php require dirname(__DIR__) . '/includes/faq.php'; ?>
 
