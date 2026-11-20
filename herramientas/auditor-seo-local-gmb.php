@@ -79,7 +79,6 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
 
   <section class="page-hero" aria-labelledby="gmb-h1">
     <div class="container">
-      <span class="hero-eyebrow">Auditoría SEO Local en 1 clic</span>
       <h1 id="gmb-h1">Extensión <span>GMB-Web Checker</span></h1>
       <p class="page-hero-desc">Audita la coherencia técnica entre cualquier ficha de Google Maps y su página web asociada directamente desde tu navegador.</p>
     </div>
@@ -97,7 +96,10 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         
         <!-- Descarga y Uso -->
         <div class="tool-card">
-          <h3 style="margin-bottom:1.5rem;color:var(--orange)">📥 Descarga e Instalación</h3>
+          <h3 style="margin-bottom:1.5rem;color:var(--orange);display:flex;align-items:center;gap:0.5rem;">
+            <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Descarga e Instalación</span>
+          </h3>
           
           <p style="margin-bottom:1.5rem;">La extensión es de código abierto y totalmente gratuita. Al no estar (todavía) publicada en la Chrome Web Store oficial, debes instalarla en <strong>Modo Desarrollador</strong>.</p>
           
@@ -145,22 +147,34 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         
         <div class="criterio-grid">
           <div class="criterio-card">
-            <h3>🤖 Mini-crawler interno inteligente</h3>
-            <p>La extensión no solo audita la Home. Descarga la página principal, detecta todos los enlaces internos y <strong>puntúa y clasifica semánticamente</strong> las páginas candidatas para rastrear las más relevantes (p.ej. <code>/contacto/</code> o <code>/servicios/seo-albacete/</code>).</p>
+            <h3 style="display:inline-flex;align-items:center;gap:0.45rem;">
+              <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span>Mini-crawler interno inteligente</span>
+            </h3>
+            <p>La extensión no solo audita la Home. Descarga la página principal, detecta todos los enlaces internos y <strong>puntúa y clasifica semánticamente</strong> las páginas candidatas para rastrear las más relevantes (p.ej. <code>/contacto/</code> o <code>/servicios/seo-ciudad-real/</code>).</p>
           </div>
 
           <div class="criterio-card">
-            <h3>🔎 Coherencia NAP estricta</h3>
+            <h3 style="display:inline-flex;align-items:center;gap:0.45rem;">
+              <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <span>Coherencia NAP estricta</span>
+            </h3>
             <p>Verifica si el nombre de tu negocio en Maps está respaldado semánticamente en el H1 o Title de la web. Además, extrae recursivamente todos los teléfonos visibles de la web para asegurar que el teléfono local de la ficha esté presente en el código.</p>
           </div>
 
           <div class="criterio-card">
-            <h3>📦 Deep Schema Analysis</h3>
+            <h3 style="display:inline-flex;align-items:center;gap:0.45rem;">
+              <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>Deep Schema Analysis</span>
+            </h3>
             <p>Detecta y parsea cualquier JSON-LD presente en la web. Comprueba la existencia de esquemas <code>LocalBusiness</code>, verifica si declaran correctamente el mismo número de teléfono que GMB, y valida si enlazan los perfiles sociales con <code>sameAs</code>.</p>
           </div>
           
           <div class="criterio-card">
-            <h3>📝 Exportación a Markdown</h3>
+            <h3 style="display:inline-flex;align-items:center;gap:0.45rem;">
+              <svg class="svg-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <span>Exportación a Markdown</span>
+            </h3>
             <p>Genera en un clic un informe profesional y trazable en formato Markdown. Te indica no solo el veredicto (Aprobado/Fallo), sino <strong>exactamente en qué URL</strong> se ha detectado el Schema Markup o la categoría local para máxima transparencia.</p>
           </div>
         </div>

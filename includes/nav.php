@@ -11,7 +11,6 @@ $_services = [
     ['href' => '/servicios/seo-tecnico/',             'label' => 'SEO Técnico'],
     ['href' => '/servicios/mantenimiento-wordpress/', 'label' => 'Mantenimiento WordPress'],
     ['href' => '/servicios/reparacion-wordpress-urgente/', 'label' => 'Reparación WordPress Urgente'],
-    ['href' => '/servicios/desarrollo-wordpress/',    'label' => 'Desarrollo WordPress'],
     ['href' => '/servicios/plugins-wordpress/',       'label' => 'Plugins a medida'],
 ];
 ?>

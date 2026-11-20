@@ -17,8 +17,7 @@ auth.md
 CHANGELOG-SEO.md
 caso-exito-osteofisiomedrano.md
 datos_landings_comerciales.csv
-gsc_7.json
-gsc_14.json
+gsc_*.json
 walkiria_gsc.json
 test-puppeteer*.js
 herramientas/auditor-v2/*.log

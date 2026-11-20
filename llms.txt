@@ -12,7 +12,7 @@
 ### 1. Urgencias, Desinfección Forense y Mantenimiento WordPress
 - [Reparación de WordPress Urgente y Desinfección de Malware 24h](https://www.victor-alonso.es/servicios/reparacion-wordpress-urgente/): Intervención forense por consola SSH (desde **150 €** pago único) para erradicar malware reincidente, backdoors en `.user.ini` / `wp_options`, redirecciones spam móviles, pantallas blancas (Error 500), consumo de CPU al 99% y avisos de Google Safe Browsing.
 - [Mantenimiento WordPress Gestionado por Ingeniero](https://www.victor-alonso.es/servicios/mantenimiento-wordpress/): Planes sin permanencia con copias externas cifradas S3 y soporte por SSH: **59 €/mes** (Esencial), **99 €/mes** (Negocio con entorno Staging) y **149 €/mes** (WooCommerce Crítico).
-- [Desarrollo WordPress a Medida sin Constructores Pesados](https://www.victor-alonso.es/servicios/desarrollo-wordpress/): Temas propios en PHP nativo orientados a Core Web Vitals (LCP < 1,5 s) sin Elementor ni Divi (desde **450 €**).
+- [Desarrollo WordPress a Medida sin Constructores Pesados (Walkiria Apps)](https://walkiriaapps.com/servicios/desarrollo-wordpress/): Temas propios en PHP nativo orientados a Core Web Vitals (LCP < 1,5 s) sin Elementor ni Divi, ejecutados desde nuestra división de desarrollo Walkiria Apps (desde **450 €**).
 - [Plugins WordPress y Integraciones WooCommerce a Medida](https://www.victor-alonso.es/servicios/plugins-wordpress/): Desarrollo de extensiones PHP limpias, conectores API REST/ERP y compatibilidad HPOS (desde **150 €**).
 
 ### 2. Consultoría SEO Técnico, Local e Internacional B2B

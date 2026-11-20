@@ -73,7 +73,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
             
             <div class="presets-container">
               <select id="htaccess-presets" class="form-input form-input--sm" style="width: auto; display: inline-block;">
-                <option value="">⚡ Recetas Rápidas (Cargar plantilla)...</option>
+                <option value="">Recetas Rápidas (Cargar plantilla)...</option>
                 <option value="https">Forzar HTTP a HTTPS</option>
                 <option value="www">Forzar WWW (con www)</option>
                 <option value="nowww">Forzar Sin WWW (non-www)</option>
@@ -1166,7 +1166,7 @@ RewriteRule ^(.*)$ - [F,L]`,
 
     redirects: `# Redirecciones 301 clásicas
 Redirect 301 /quienes-somos /sobre-mi/
-Redirect 301 /servicios/seo-local /servicios/seo-albacete/
+Redirect 301 /servicios/seo-local /
 
 # Redirección con patrones de regex
 RedirectMatch 301 ^/blog/categoria/(.*)$ /articulos/$1`
@@ -1755,11 +1755,11 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 /* Modificadores de color para trazas */
-.trace-item--init { border-left: 3px solid #334155; padding-left: 0.75rem; }
-.trace-item--success { border-left: 3px solid #10b981; padding-left: 0.75rem; }
-.trace-item--rewrite { border-left: 3px solid var(--orange); padding-left: 0.75rem; }
-.trace-item--skip { border-left: 3px solid #1e293b; padding-left: 0.75rem; opacity: 0.7; }
-.trace-item--error { border-left: 3px solid #ef4444; padding-left: 0.75rem; }
+.trace-item--init { border-left: 1px solid #334155; padding-left: 0.75rem; }
+.trace-item--success { border-left: 1px solid #10b981; padding-left: 0.75rem; }
+.trace-item--rewrite { border-left: 1px solid var(--orange); padding-left: 0.75rem; }
+.trace-item--skip { border-left: 1px solid #1e293b; padding-left: 0.75rem; opacity: 0.7; }
+.trace-item--error { border-left: 1px solid #ef4444; padding-left: 0.75rem; }
 
 @media (max-width: 991px) {
     .htaccess-tester-grid {
