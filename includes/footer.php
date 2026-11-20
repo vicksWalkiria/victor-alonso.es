@@ -11,7 +11,7 @@
             <a href="/" class="site-logo footer-logo" aria-label="Víctor Alonso SEO — Inicio">
                 <span class="logo-name">Víctor Alonso</span><span class="logo-tag">SEO</span>
             </a>
-            <p class="footer-tagline"><a href="/" style="color:inherit;text-decoration:none;">Consultor SEO en Albacete</a> e ingeniero informático.<br>Diagnóstico técnico, estrategia real, implementación.</p>
+            <p class="footer-tagline">Consultor SEO técnico e ingeniero informático.<br>Diagnóstico en código, estrategia real, implementación.</p>
             <div class="footer-social" aria-label="Redes sociales">
                 <a href="<?= h(SITE_LINKEDIN) ?>" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Víctor Alonso">
                     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
@@ -25,13 +25,16 @@
             </div>
         </div>
 
+        <?php $_is_cr_page = (($page['canonical'] ?? '') === '/servicios/seo-ciudad-real/'); ?>
         <nav class="footer-nav" aria-label="Navegación del pie de página">
             <div class="footer-nav-col">
                 <h3 class="footer-nav-title">Servicios SEO</h3>
                 <ul role="list">
-                    <li><a href="/">Agencia SEO en Albacete</a></li>
+                    <li><a href="/"><?= $_is_cr_page ? 'Consultoría SEO Principal' : 'Agencia SEO en Albacete' ?></a></li>
                     <li><a href="/servicios/seo-ciudad-real/">Consultor SEO en Ciudad Real</a></li>
+                    <?php if (!$_is_cr_page): ?>
                     <li><a href="/servicios/seo-loterias-albacete/">SEO para Loterías</a></li>
+                    <?php endif; ?>
                     <li><a href="/servicios/seo-espana/">SEO Nacional para España</a></li>
                     <li><a href="/servicios/auditoria-seo/">Auditoría SEO Técnica</a></li>
                     <li><a href="/servicios/seo-tecnico/">SEO Técnico</a></li>
@@ -42,8 +45,8 @@
                 <ul role="list">
                     <li><a href="/servicios/reparacion-wordpress-urgente/">Reparación WordPress Urgente</a></li>
                     <li><a href="/servicios/mantenimiento-wordpress/">Mantenimiento WordPress</a></li>
-                    <li><a href="/servicios/desarrollo-wordpress/">Desarrollo WordPress</a></li>
                     <li><a href="/servicios/plugins-wordpress/">Plugins a medida</a></li>
+                    <li><a href="https://walkiriaapps.com/servicios/desarrollo-wordpress/" target="_blank" rel="noopener noreferrer">Desarrollo WordPress (Walkiria Apps)</a></li>
                 </ul>
             </div>
             <div class="footer-nav-col">
@@ -53,7 +56,7 @@
                     <li><a href="/casos-reales/">Casos reales</a></li>
                     <li><a href="/herramientas/">Herramientas SEO</a></li>
                     <li><a href="/contacto/">Contacto</a></li>
-                    <li><a href="<?= h(SITE_WALKIRIA) ?>" target="_blank" rel="noopener noreferrer">Walkiria Apps</a></li>
+                    <li><a href="https://walkiriaapps.com/" target="_blank" rel="noopener noreferrer">Walkiria Apps</a></li>
                 </ul>
             </div>
             <div class="footer-nav-col footer-contact">
@@ -61,7 +64,7 @@
                 <address>
                     <p><strong>Víctor Alonso SEO</strong></p>
                     <p><?= h(SITE_ADDRESS) ?></p>
-                    <p><?= h(SITE_LOCALITY) ?>, España</p>
+                    <p>Castilla-La Mancha, España</p>
                     <p><a href="tel:<?= h(SITE_PHONE_RAW) ?>"><?= h(SITE_PHONE) ?></a></p>
                     <p><a href="mailto:<?= h(SITE_EMAIL) ?>"><?= h(SITE_EMAIL) ?></a></p>
                 </address>
@@ -72,7 +75,7 @@
 
     <div class="footer-bottom">
         <div class="container footer-bottom-inner">
-            <p>&copy; <?= date('Y') ?> Víctor Alonso SEO. Albacete, España.</p>
+            <p>&copy; <?= date('Y') ?> Víctor Alonso SEO · Ingeniería y Posicionamiento Web.</p>
             <nav class="footer-legal" aria-label="Páginas legales">
                 <a href="/aviso-legal/">Aviso legal</a>
                 <a href="/politica-privacidad/">Privacidad</a>

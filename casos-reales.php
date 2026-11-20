@@ -164,7 +164,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
             </div>
             <div class="case-detail" style="grid-column:1/-1">
               <h3>Qué aprender</h3>
-              <p>El rendimiento web no se arregla con un plugin de caché. Hay que analizar qué carga, en qué orden y por qué. Un diseño bonito con un rendimiento pésimo perjudica tanto la experiencia de usuario como el posicionamiento. Cuando la base está lastrada por maquetadores pesados, apostar por un <a href="/servicios/desarrollo-wordpress/" style="text-decoration:underline">desarrollo WordPress a medida</a> y acompañarlo de un <a href="/servicios/mantenimiento-wordpress/" style="text-decoration:underline">mantenimiento técnico continuo</a> marca la diferencia en tiempos de carga y conversión.</p>
+              <p>El rendimiento web no se arregla con un plugin de caché. Hay que analizar qué carga, en qué orden y por qué. Un diseño bonito con un rendimiento pésimo perjudica tanto la experiencia de usuario como el posicionamiento. Cuando la base está lastrada por maquetadores pesados, apostar por un <a href="https://walkiriaapps.com/servicios/desarrollo-wordpress/" target="_blank" rel="noopener noreferrer" style="text-decoration:underline">desarrollo WordPress a medida</a> y acompañarlo de un <a href="/servicios/mantenimiento-wordpress/" style="text-decoration:underline">mantenimiento técnico continuo</a> marca la diferencia en tiempos de carga y conversión.</p>
             </div>
           </div>
         </article>
@@ -216,7 +216,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
             </div>
             <div class="case-detail" style="grid-column:1/-1">
               <h3>Qué aprender</h3>
-              <p>El blog no es la estrategia SEO. Es una parte de ella. Publicar artículos sin tener una arquitectura clara de qué páginas quieres posicionar es construir sin cimientos.</p>
+              <p>El blog no es la estrategia SEO. Es una parte de ella. Publicar artículos sin tener una arquitectura clara de qué páginas quieres posicionar es construir sin cimientos. Es un error que corrijo con frecuencia al estructurar landings transaccionales como <a href="/servicios/seo-ciudad-real/" style="text-decoration:underline">consultor SEO en Ciudad Real</a> y Castilla-La Mancha para pymes que dependen de captar presupuestos locales.</p>
             </div>
           </div>
         </article>

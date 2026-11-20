@@ -4,7 +4,7 @@ require_once __DIR__ . '/includes/schema.php';
 
 $page = page_config([
   'title'        => 'Contacto y primera valoración gratuita',
-  'description'  => 'Contacta con Víctor Alonso para servicios de SEO, desarrollo WordPress o mantenimiento web. Teléfono, WhatsApp o formulario. Albacete y toda España.',
+  'description'  => 'Contacta con Víctor Alonso para servicios de SEO, mantenimiento o reparación WordPress urgente. Teléfono, WhatsApp o formulario. Albacete, Ciudad Real y España.',
   'canonical'    => '/contacto/',
   'body_class'   => 'page-contacto',
   'schema_types' => ['ContactPage'],
@@ -22,7 +22,7 @@ require __DIR__ . '/includes/breadcrumbs.php';
   <section class="page-hero" aria-labelledby="contacto-h1">
     <div class="container">
       <h1 id="contacto-h1">Cuéntame qué ocurre con tu web</h1>
-      <p class="page-hero-desc">¿Necesitas ayuda con el <a href="/" style="color:var(--orange)">SEO en Albacete</a> o con tu web? Te respondo con una primera valoración. Sin compromiso. Sin formularios de 20 campos. Solo cuéntame el problema.</p>
+      <p class="page-hero-desc">¿Necesitas ayuda con el <a href="/" style="color:var(--orange)">SEO en Albacete</a>, buscas un <a href="/servicios/seo-ciudad-real/" style="color:var(--orange)">consultor SEO en Ciudad Real</a> o sufres un problema técnico en tu web? Te respondo con una primera valoración. Sin compromiso y sin formularios interminables.</p>
     </div>
   </section>
 

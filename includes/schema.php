@@ -29,7 +29,7 @@ function render_schemas(array $page): void {
     $types = $page['schema_types'] ?? [];
 
     if (in_array('LocalBusiness', $types) || in_array('Service', $types)) {
-        $nodes[] = _node_local_business();
+        $nodes[] = _node_local_business($page);
     }
 
     if (in_array('Service', $types) && !empty($page['service_data'])) {
@@ -97,16 +97,11 @@ function _node_person(): array {
         '@id'         => SITE_URL . '/#person',
         'name'        => 'Víctor Alonso',
         'jobTitle'    => 'Consultor SEO e Ingeniero Informático',
-        'description' => 'Ingeniero informático, consultor SEO técnico y desarrollador WordPress/PHP especializado en diagnóstico, optimización y mantenimiento web para negocios en Albacete y toda España.',
+        'description' => 'Ingeniero informático, consultor SEO técnico y especialista en seguridad y mantenimiento WordPress/PHP para empresas en España.',
         'url'         => SITE_URL,
         'image'       => SITE_AUTHOR_IMAGE,
         'telephone'   => SITE_PHONE_RAW,
         'email'       => SITE_EMAIL,
-        'address'     => [
-            '@type'           => 'PostalAddress',
-            'addressLocality' => SITE_LOCALITY,
-            'addressCountry'  => SITE_COUNTRY,
-        ],
         'sameAs' => [
             SITE_LINKEDIN,
             SITE_TWITTER_URL,
@@ -116,7 +111,38 @@ function _node_person(): array {
     ];
 }
 
-function _node_local_business(): array {
+function _node_local_business(array $page = []): array {
+    $is_ciudad_real = (($page['canonical'] ?? '') === '/servicios/seo-ciudad-real/');
+
+    $area_served = $is_ciudad_real
+        ? [
+            ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
+            ['@type' => 'Country', 'name' => 'España'],
+        ]
+        : [
+            ['@type' => 'City',    'name' => 'Albacete'],
+            ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
+            ['@type' => 'Country', 'name' => 'España'],
+        ];
+
+    $knows_about = $is_ciudad_real
+        ? [
+            'Consultoría SEO Técnico y Local',
+            'Auditorías SEO y Logs de Servidor',
+            'Mantenimiento WordPress Profesional',
+            'Reparación de WordPress Urgente',
+            'Limpieza Forense de Malware WordPress'
+        ]
+        : [
+            'Agencia y Consultoría SEO en Albacete',
+            'SEO Técnico',
+            'SEO Local en Albacete',
+            'Auditorías SEO',
+            'Mantenimiento WordPress Profesional',
+            'Reparación de WordPress Urgente',
+            'Limpieza de Malware WordPress'
+        ];
+
     return [
         '@type'     => ['LocalBusiness', 'ProfessionalService'],
         '@id'       => SITE_URL . '/#localbusiness',
@@ -139,23 +165,8 @@ function _node_local_business(): array {
             'latitude'  => '38.9978354',
             'longitude' => '-1.8567414',
         ],
-        'areaServed' => [
-            ['@type' => 'City',    'name' => 'Albacete'],
-            ['@type' => 'City',    'name' => 'Ciudad Real'],
-            ['@type' => 'State',   'name' => 'Castilla-La Mancha'],
-            ['@type' => 'Country', 'name' => 'España'],
-        ],
-        'knowsAbout' => [
-            'Agencia y Consultoría SEO en Albacete',
-            'Consultor SEO en Ciudad Real y Castilla-La Mancha',
-            'SEO Técnico',
-            'SEO Local en Albacete',
-            'Auditorías SEO',
-            'Mantenimiento WordPress Profesional',
-            'Desarrollo WordPress',
-            'Reparación de WordPress Urgente',
-            'Limpieza de Malware WordPress'
-        ],
+        'areaServed' => $area_served,
+        'knowsAbout' => $knows_about,
         'priceRange' => '€€',
         'openingHoursSpecification' => [
             [

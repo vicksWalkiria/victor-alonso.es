@@ -4,20 +4,28 @@ require_once dirname(__DIR__) . '/includes/schema.php';
 
 $faq = [
   [
-    'q' => '¿Trabajas con empresas de toda la provincia de Ciudad Real o solo en la capital?',
-    'a' => 'Trabajo con empresas, clínicas, bodegas, industrias B2B y despachos profesionales tanto en Ciudad Real capital como en los principales núcleos económicos de la provincia: Puertollano, Tomelloso, Alcázar de San Juan, Valdepeñas, Manzanares y Daimiel. Al tener base en Albacete (conectado directamente por la A-43), combino seguimiento técnico ágil en remoto con reuniones presenciales cuando el proyecto lo requiere.'
+    'q' => '¿Cómo mejoras la captación en Google Maps (Local Pack) para empresas en Ciudad Real capital?',
+    'a' => 'Alineo las páginas transaccionales de servicio con tu ficha de Google Business Profile en Ciudad Real capital, estandarizo la coherencia NAP en directorios relevantes, despliego marcado estructurado JSON-LD específico (LocalBusiness y Service con coordenadas y áreas verificadas) y optimizo los Core Web Vitals en móvil para convertir búsquedas cercanas en llamadas y reservas.'
+  ],
+  [
+    'q' => '¿Qué estrategia SEO funciona mejor para empresas industriales y de ingeniería en Puertollano?',
+    'a' => 'En el polo industrial, petroquímico y energético de Puertollano las búsquedas tienen menor volumen masivo pero un ticket medio muy alto. Estructuro landings técnicas indexables por servicio industrial, homologación, mantenimiento o suministro B2B (evitando encerrar la información técnica en catálogos PDF mudos para Google) para captar responsables de compras y proyectos en la comarca y en toda España.'
+  ],
+  [
+    'q' => 'Tengo una clínica, despacho o comercio en Alcázar de San Juan: ¿puedo captar clientes de toda La Mancha Centro?',
+    'a' => 'Sí. Alcázar de San Juan actúa como cabecera sanitaria, ferroviaria y comercial de La Mancha Centro (Campo de Criptana, Herencia, Pedro Muñoz y Socuéllamos). Diseño una arquitectura local que consolida tu ficha principal en Google Maps para Alcázar y posiciona tus especialidades en las búsquedas comarcales sin recurrir a páginas puerta duplicadas.'
+  ],
+  [
+    'q' => '¿Trabajas el SEO nacional y de e-commerce para bodegas, cooperativas y pymes de Tomelloso?',
+    'a' => 'Sí. Para bodegas, cooperativas agroalimentarias, empresas metalmecánicas y tiendas WooCommerce o PrestaShop en Tomelloso y Valdepeñas combino SEO técnico de catálogo (control de facetas duplicadas, presupuesto de rastreo, datos estructurados Product y velocidad de carga móvil) con arquitectura transaccional para impulsar la venta directa y la distribución nacional.'
   ],
   [
     'q' => '¿Qué diferencia tu consultoría frente a una agencia SEO en Ciudad Real generalista?',
-    'a' => 'Muchas agencias locales de publicidad o diseño gráfico ofrecen SEO como un complemento secundario o dependen de plantillas lentas del Kit Digital sin tocar el servidor. Como ingeniero informático, audito el código fuente, los logs de rastreo de Googlebot, la velocidad real (Core Web Vitals) y la arquitectura transaccional, implementando yo mismo cada mejora sin intermediarios.'
+    'a' => 'Muchas agencias locales de publicidad o diseño gráfico ofrecen SEO como un complemento secundario o entregan webs lentas basadas en plantillas del Kit Digital sin tocar el servidor. Como ingeniero informático, audito el código fuente, los logs de rastreo de Googlebot, la velocidad real y la intención de búsqueda, implementando personalmente cada mejora sin intermediarios.'
   ],
   [
-    'q' => '¿Cuánto cuesta un consultor SEO en Ciudad Real y qué permanencia exiges?',
-    'a' => 'No aplico contratos de permanencia obligatoria. Las auditorías SEO técnicas puntuales parten desde 350 € y los planes mensuales de posicionamiento local y orgánico para pymes en Ciudad Real parten desde 250 €/mes, adaptados al volumen de URLs y competencia real de tu sector.'
-  ],
-  [
-    'q' => '¿Cómo mejoras la captación en Google Maps (Local Pack) en Ciudad Real?',
-    'a' => 'Alineo la arquitectura de landings de servicio locales con tu ficha de Google Business Profile, estandarizo la coherencia NAP, despliego marcado estructurado JSON-LD específico (LocalBusiness y Service con coordenadas y áreas de servicio reales) y optimizo la velocidad móvil para convertir búsquedas cercanas en llamadas y formularios.'
+    'q' => '¿Cuánto cuesta contratar un consultor SEO en Ciudad Real y qué permanencia exiges?',
+    'a' => 'No aplico contratos de permanencia obligatoria. Las auditorías SEO técnicas puntuales parten desde 350 € y los planes mensuales de posicionamiento local y orgánico para pymes en la provincia de Ciudad Real parten desde 250 €/mes, adaptados al volumen de URLs y a la competencia real de tu sector.'
   ]
 ];
 
@@ -133,7 +141,7 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         </ul>
 
         <h2>Cercanía real en Castilla-La Mancha</h2>
-        <p>Trabajo desde Albacete —a poco más de hora y media por la A-43— con clientes de toda Castilla-La Mancha y España. Esto te permite contar con un perfil técnico sénior que conoce la realidad empresarial de nuestra región, con comunicación inmediata por WhatsApp, teléfono o videollamada y disponibilidad presencial cuando un hito estratégico lo aconseja.</p>
+        <p>Opero en Castilla-La Mancha —conectado directamente con Ciudad Real, Manzanares, Tomelloso y Alcázar de San Juan por el eje de la A-43 desde mi despacho principal como <a href="/" style="color:var(--orange);text-decoration:underline;font-weight:600;">consultor SEO en Albacete</a>— atendiendo a empresas de toda la provincia. Esto te permite trabajar con un ingeniero informático sénior que conoce de primera mano el tejido empresarial manchego, con comunicación directa por WhatsApp, teléfono o videollamada y disponibilidad presencial cuando un hito estratégico lo requiere.</p>
 
       </div>
 
@@ -147,8 +155,8 @@ require dirname(__DIR__) . '/includes/breadcrumbs.php';
         <div class="card" style="margin-top:1rem">
           <h3 style="margin-bottom:.75rem">Servicios complementarios</h3>
           <ul style="display:grid;gap:.5rem;font-size:.88rem">
-            <li><a href="/" style="color:var(--orange)">→ Agencia SEO en Albacete</a></li>
             <li><a href="/servicios/auditoria-seo/" style="color:var(--orange)">→ Auditoría SEO Técnica (desde 350 €)</a></li>
+            <li><a href="/servicios/seo-espana/" style="color:var(--orange)">→ SEO Nacional e Industrial B2B</a></li>
             <li><a href="/servicios/mantenimiento-wordpress/" style="color:var(--orange)">→ Mantenimiento WordPress Empresas</a></li>
             <li><a href="/casos-reales/" style="color:var(--orange)">→ Estudios de caso reales</a></li>
           </ul>

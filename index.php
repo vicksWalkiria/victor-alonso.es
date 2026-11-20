@@ -15,7 +15,6 @@ $page = page_config([
         'serviceType' => 'Agencia SEO en Albacete, Consultor SEO técnico, Posicionamiento Web y WordPress',
         'areaServed' => [
             ['@type' => 'City', 'name' => 'Albacete'],
-            ['@type' => 'City', 'name' => 'Ciudad Real'],
             ['@type' => 'State', 'name' => 'Castilla-La Mancha'],
             ['@type' => 'Country', 'name' => 'España']
         ],
@@ -63,7 +62,7 @@ require __DIR__ . '/includes/header.php';
           estrategia basada en datos de Search Console e implementación directa sin comerciales ni intermediarios.
         </p>
         <p class="hero-desc" style="margin-top:1rem;">
-          Especialista en posicionamiento web en Albacete y <a href="/servicios/seo-ciudad-real/" style="color:#FB923C; text-decoration:underline; font-weight:600;">Ciudad Real</a>, SEO local para Google Maps, <a href="/servicios/auditoria-seo/" style="color:#FB923C; text-decoration:underline; font-weight:600;">auditorías SEO técnicas</a> y optimización WPO / WordPress para empresas.
+          Especialista en posicionamiento web en Albacete, SEO local para Google Maps, <a href="/servicios/auditoria-seo/" style="color:#FB923C; text-decoration:underline; font-weight:600;">auditorías SEO técnicas</a> y optimización WPO / WordPress para empresas.
         </p>
         <div class="hero-actions" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
           <a href="/contacto/" class="btn btn--primary btn--lg">Solicitar diagnóstico gratuito</a>
@@ -171,7 +170,7 @@ require __DIR__ . '/includes/header.php';
   <section class="section section--alt" id="servicios" aria-labelledby="servicios-heading">
     <div class="container">
       <h2 class="section-title" id="servicios-heading">Servicios de posicionamiento SEO en Albacete y optimización técnica</h2>
-      <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento web en Albacete y <a href="/servicios/seo-ciudad-real/" style="color:var(--orange);text-decoration:underline;font-weight:600;">Ciudad Real</a>, desarrollo WordPress y mantenimiento para negocios que necesitan resultados medibles.</p>
+      <p class="section-intro" style="margin-bottom:2rem">SEO técnico, posicionamiento local en Albacete (y atención provincial como <a href="/servicios/seo-ciudad-real/" style="color:var(--orange);text-decoration:underline;font-weight:600;">consultor SEO en Ciudad Real</a>), mantenimiento y seguridad WordPress para empresas que necesitan resultados medibles.</p>
       <div class="cards-grid">
         <article class="card">
           <div class="card-icon" aria-hidden="true">
@@ -218,8 +217,8 @@ require __DIR__ . '/includes/header.php';
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
           </div>
           <h3>Desarrollo WordPress</h3>
-          <p>Temas a medida, CPT, campos personalizados, rendimiento y SEO técnico desde la base del código.</p>
-          <a href="/servicios/desarrollo-wordpress/" class="card-link">Desarrollo WordPress a medida →</a>
+          <p>Temas en PHP nativo sin maquetadores pesados, CPT, rendimiento y SEO técnico desde la base del código en Walkiria Apps.</p>
+          <a href="https://walkiriaapps.com/servicios/desarrollo-wordpress/" target="_blank" rel="noopener noreferrer" class="card-link">Desarrollo WordPress en Walkiria Apps →</a>
         </article>
         <article class="card">
           <div class="card-icon" aria-hidden="true">
